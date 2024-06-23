@@ -3,16 +3,20 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LandingComponent } from './landing/landing.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { CarouselComponent } from './carousel/carousel.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { CardComponent } from './components/card/card.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     NavbarComponent,
-    CarouselComponent
+    CarouselComponent,
+    CardComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
