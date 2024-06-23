@@ -14,7 +14,13 @@
     <div class="right-group">
         <div class="contact">
             <span class="phone">1-800-111-1111</span>
-            <button class="btn btn-secondary">Account</button>
+            <div class="btn-group" role="group">
+                <button id="btnAccountDropdown" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Account</button>
+                <ul class="dropdown-menu" aria-labelledby="btnAccountDropdown">
+                    <li><a class="dropdown-item" href="#">Dropdown</a></li>
+                    <li><a class="dropdown-item" href="#">Dropdown</a></li>
+                </ul>
+            </div>
         </div>
         <div class="search">
             <input type="text" placeholder="Search">
