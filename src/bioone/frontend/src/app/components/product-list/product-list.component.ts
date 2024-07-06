@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { ProductService } from '../../services/product.service';
+import { Component, inject, Input } from '@angular/core';
+import { LandingPageService } from '../../services/landing.service';
 
 @Component({
   selector: 'product-list',
@@ -7,7 +7,9 @@ import { ProductService } from '../../services/product.service';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
-  private productService = inject(ProductService);
+  @Input() heading = "";
+
+  private productService = inject(LandingPageService);
 
   productsData = this.productService.get_products();
 }
