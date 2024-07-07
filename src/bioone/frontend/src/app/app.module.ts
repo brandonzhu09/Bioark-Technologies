@@ -12,6 +12,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FunctionListComponent } from './components/function-list/function-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ProductDropdownComponent } from './components/product-dropdown/product-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     ProductListComponent,
     FooterComponent,
     FunctionListComponent,
+    ProductDropdownComponent,
   ],
   imports: [
     BrowserModule,

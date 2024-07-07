@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  showProducts = false;
+
+  toggleProducts = () => {
+    this.showProducts = !this.showProducts;
+  };
 }
