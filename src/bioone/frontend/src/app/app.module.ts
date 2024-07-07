@@ -10,6 +10,8 @@ import { CardComponent } from './components/card/card.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FunctionListComponent } from './components/function-list/function-list.component';
+import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,12 +22,16 @@ import { FunctionListComponent } from './components/function-list/function-list.
     CardComponent,
     ProductListComponent,
     FooterComponent,
-    FunctionListComponent
+    FunctionListComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive
+    ],
   providers: [
     provideClientHydration()
   ],
