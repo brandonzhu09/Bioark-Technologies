@@ -8,10 +8,11 @@
                 <li><a href="#">DESIGN</a></li>
                 <li><a href="#">SUPPORT</a></li>
                 <li><a href="#">ABOUT US</a></li>
-                <li><a routerLink="/carousel" routerLinkActive="active">TESTING</a></li>
+                <li><a routerLink="/product" routerLinkActive="active">TESTING</a></li>
             </ul>
         </nav>
     </div>
+    <product-dropdown *ngIf="showProducts"></product-dropdown>
     <div class="right-group">
         <div class="contact">
             <span class="phone">1-800-111-1111</span>
@@ -32,5 +33,4 @@
         </div>
         <div class="cart bi-cart2"></div>
     </div>
-    <product-dropdown *ngIf="showProducts"></product-dropdown>
 </div>

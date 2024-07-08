@@ -13,6 +13,7 @@ import { FunctionListComponent } from './components/function-list/function-list.
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ProductDropdownComponent } from './components/product-dropdown/product-dropdown.component';
+import { ProductModeModule } from './product-mode/product-mode.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ProductDropdownComponent } from './components/product-dropdown/product-
     ProductDropdownComponent,
   ],
   imports: [
+    ProductModeModule,
     BrowserModule,
     AppRoutingModule,
     CommonModule,
