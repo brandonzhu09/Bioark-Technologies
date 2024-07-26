@@ -1,0 +1,36 @@
+<div class="navbar">
+    <div class="left-group">
+        <div class="logo">Logo</div>
+        <nav>
+            <ul>
+                <li class="products" (click)="toggleProducts()"><a href="#">PRODUCTS</a></li>
+                <li><a href="#">SERVICES</a></li>
+                <li><a href="#">DESIGN</a></li>
+                <li><a href="#">SUPPORT</a></li>
+                <li><a href="#">ABOUT US</a></li>
+                <li><a routerLink="/product" routerLinkActive="active">TESTING</a></li>
+            </ul>
+        </nav>
+    </div>
+    <product-dropdown *ngIf="showProducts"></product-dropdown>
+    <div class="right-group">
+        <div class="contact">
+            <span class="phone">1-800-111-1111</span>
+            <div class="btn-group" role="group">
+                <button id="btnAccountDropdown" type="button" class="btn btn-secondary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Account
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btnAccountDropdown">
+                    <li><a class="dropdown-item" href="#">Dropdown</a></li>
+                    <li><a class="dropdown-item" href="#">Dropdown</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search" />
+            <button class="bi-search" type="submit"></button>
+        </div>
+        <div class="cart bi-cart2"></div>
+    </div>
+</div>

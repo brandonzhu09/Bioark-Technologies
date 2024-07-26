@@ -1,0 +1,110 @@
+body {
+    /* margin: 0; */
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    font-size: 24px;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin-top: 30px;
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.left-group {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.right-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.contact {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.phone {
+    font-size: 16px;
+}
+
+.account {
+    font-size: 16px;
+    background-color: #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.search button {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #fff;
+    /* cursor: pointer; */
+}
+
+.cart {
+    font-size: 24px;
+}
+
+.products {
+    position: relative;
+    display: inline-block;
+}
