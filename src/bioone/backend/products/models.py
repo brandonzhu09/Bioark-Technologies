@@ -6,6 +6,9 @@ class Promoter(models.Model):
     promoter_name = models.CharField()
     promoter_code = models.CharField()
 
+    class Meta:
+        db_table = 'promoter'
+
 class PromoterSpecialCase(models.Model):
     promoter_id = models.AutoField(primary_key=True)
     promoter_name = models.CharField()
@@ -13,30 +16,54 @@ class PromoterSpecialCase(models.Model):
     function_type = models.CharField()
     delivery_type = models.CharField()
 
+    class Meta:
+        db_table = 'promoter_special_case'
+
+
 class Property(models.Model):
     property_id = models.AutoField(primary_key=True)
     property_name = models.CharField()
     property_code = models.CharField()
+
+    class Meta:
+        db_table = 'property'
+
 
 class ProteinTag(models.Model):
     protein_tag_id = models.AutoField(primary_key=True)
     protein_tag_name = models.CharField()
     protein_tag_code = models.CharField()
 
+    class Meta:
+        db_table = 'protein_tag'
+
+
 class FluoresceneMarker(models.Model):
     fluorescene_marker_id = models.AutoField(primary_key=True)
     fluorescene_marker_name = models.CharField()
     fluorescene_marker_code = models.CharField()
+
+    class Meta:
+        db_table = 'fluorescene_marker'
+
 
 class SelectionMarker(models.Model):
     selection_marker_id = models.AutoField(primary_key=True)
     selection_marker_name = models.CharField()
     selection_marker_code = models.CharField()
 
+    class Meta:
+        db_table = 'selection_marker'
+
+
 class BacterialMarker(models.Model):
     bacterial_marker_id = models.AutoField(primary_key=True)
     bacterial_marker_name = models.CharField()
     bacterial_marker_code = models.CharField()
+
+    class Meta:
+        db_table = 'bacterial_marker'
+
 
 class BacterialMarkerSpecialCase(models.Model):
     bacterial_marker_id = models.AutoField(primary_key=True)
@@ -44,6 +71,10 @@ class BacterialMarkerSpecialCase(models.Model):
     bacterial_marker_code = models.CharField()
     function_type = models.CharField()
     delivery_type = models.CharField()
+
+    class Meta:
+        db_table = 'bacterial_marker_special_case'
+
 
 class Gene(models.Model):
     gene_id = models.AutoField(primary_key=True)
@@ -56,6 +87,9 @@ class Gene(models.Model):
     target_sequence = models.CharField()
     reference_link = models.CharField()
 
+    class Meta:
+        db_table = 'gene'
+
 
 class ProductInventory(models.Model):
     inventory_id = models.AutoField(primary_key=True)
@@ -65,11 +99,17 @@ class ProductInventory(models.Model):
     currency = models.CharField()
     manufacturer = models.CharField()
 
+    class Meta:
+        db_table = 'product_inventory'
+
 
 class ProductCategory(models.Model):
     category_id = models.AutoField(primary_key=True)
     category_name = models.CharField()
     description = models.CharField()
+
+    class Meta:
+        db_table = 'product_category'
 
 
 class Product(models.Model):
@@ -92,3 +132,6 @@ class Product(models.Model):
     inventory = models.ForeignKey(ProductInventory, on_delete=models.PROTECT)
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
     gene = models.ForeignKey(Gene, null=True, on_delete=models.PROTECT)
+
+    class Meta:
+        db_table = 'product'
