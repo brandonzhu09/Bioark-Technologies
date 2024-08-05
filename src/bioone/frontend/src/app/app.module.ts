@@ -14,6 +14,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ProductDropdownComponent } from './components/product-dropdown/product-dropdown.component';
 import { ProductModeModule } from './product-mode/product-mode.module';
+import { StepperComponent } from './design-mode/stepper/stepper.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { ProductModeModule } from './product-mode/product-mode.module';
   ],
   imports: [
     ProductModeModule,
+    StepperComponent,
     BrowserModule,
     AppRoutingModule,
     CommonModule,
@@ -37,7 +41,9 @@ import { ProductModeModule } from './product-mode/product-mode.module';
     RouterLinkActive
     ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideAnimationsAsync(),
+    provideHttpClient(),
   ],
   bootstrap: [AppComponent]
 })

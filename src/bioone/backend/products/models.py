@@ -105,30 +105,48 @@ class ProductInventory(models.Model):
 
 class ProductCategory(models.Model):
     category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField()
-    description = models.CharField()
+    category_name = models.CharField(unique=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'product_category'
+
+class FunctionType(models.Model):
+    function_type_id = models.AutoField(primary_key=True)
+    symbol = models.CharField(unique=True) # TODO: enum
+    function_type_name = models.CharField(unique=True)
+    description = models.CharField(blank=True, null=True)
+    load_status = models.CharField(blank=True, null=True, default="Loaded")
+    category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
+
+    class Meta:
+        db_table = 'function_type'
+
+# class DeliveryType(models.Model):
+#     delivery_type_id = models.AutoField(primary_key=True)
+#     code = models.CharField(unique=True) # TODO: enum
+#     code_name = models.CharField(unique=True)
 
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_sku = models.CharField()
     product_name = models.CharField()
-    function_type = models.CharField()
-    structure_type = models.CharField()
-    delivery_type = models.CharField()
-    promoter_name = models.CharField()
-    property_name = models.CharField()
-    protein_tag_name = models.CharField()
-    fluorescene_marker_name = models.CharField()
-    selection_marker_name = models.CharField()
-    bacterial_marker_name = models.CharField()
+    function_category = models.CharField()
+    function_type_code = models.CharField()
+    delivery_type_code = models.CharField()
+    serial_id = models.CharField()
+    promoter_code = models.CharField()
+    property_code = models.CharField()
+    protein_tag_code = models.CharField()
+    fluorescene_marker_code = models.CharField()
+    selection_marker_code = models.CharField()
+    bacterial_marker_code = models.CharField()
     delivery_format = models.CharField()
     base_price = models.DecimalField(max_digits=8, decimal_places=2)
     adjusted_price = models.DecimalField(max_digits=8, decimal_places=2)
     unit_weight = models.DecimalField(max_digits=8, decimal_places=2)
+    load_status = models.CharField(blank=True, null=True, default="Loaded")
     inventory = models.ForeignKey(ProductInventory, on_delete=models.PROTECT)
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
     gene = models.ForeignKey(Gene, null=True, on_delete=models.PROTECT)
