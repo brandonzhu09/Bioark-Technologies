@@ -127,6 +127,17 @@ class FunctionType(models.Model):
 #     code = models.CharField(unique=True) # TODO: enum
 #     code_name = models.CharField(unique=True)
 
+class DeliveryLibrary(models.Model):
+    delivery_library_id = models.AutoField(primary_key=True)
+    delivery_type_symbol = models.CharField()
+    delivery_type_name = models.CharField()
+    delivery_format_symbol = models.CharField()
+    delivery_format_name = models.CharField()
+    function_type = models.ForeignKey(FunctionType, on_delete=models.PROTECT)
+
+    class Meta:
+        db_table = 'delivery_library'
+
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)

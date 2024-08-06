@@ -6,7 +6,7 @@ from products.serializers import *
 
 # Create your views here.
 @api_view(['GET'])
-def get_product_categories(request):
+def load_product_categories(request):
     queryset = ProductCategory.objects.all()
     serializer = ProductCategorySerializer(queryset, many=True)
     return Response(serializer.data)
@@ -16,4 +16,11 @@ def get_function_types_by_category(request):
     category_id = request.GET["category_id"]
     queryset = FunctionType.objects.filter(category_id=category_id)
     serializer = FunctionCategorySerializer(queryset, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_delivery_library_by_function_type(request):
+    function_type_id = request.GET["function_type_id"]
+    queryset = DeliveryLibrary.objects.filter(function_type_id=function_type_id)
+    serializer = DeliveryLibrarySerializer(queryset, many=True)
     return Response(serializer.data)

@@ -19,7 +19,7 @@
                 <input matInput placeholder="Last name, First name" formControlName="name" required>
             </mat-form-field> -->
             <div>
-                <button mat-button matStepperNext (click)="submitProductCategory()">Next</button>
+                <button mat-button matStepperNext (click)="submitFirstForm()">Next</button>
             </div>
         </form>
     </mat-step>
@@ -39,7 +39,7 @@
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="submitSecondForm()">Next</button>
             </div>
         </form>
     </mat-step>

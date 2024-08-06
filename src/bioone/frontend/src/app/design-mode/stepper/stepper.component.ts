@@ -29,9 +29,11 @@ export class StepperComponent {
 
   selectedFirstFormId: number | null = null;
   selectedSecondFormId: number | null = null;
+  selectedThirdFormId: number | null = null;
 
   productCategoryCards: any;
   functionTypeCards: any;
+  deliveryLibrary: any;
   
   firstFormGroup = new FormGroup({
     productCategoryId: new FormControl('', [
@@ -60,6 +62,9 @@ export class StepperComponent {
     else if (index == 2) {
       return cardId == this.selectedSecondFormId;
     }
+    else if (index == 3) {
+      return cardId == this.selectedThirdFormId;
+    }
     return cardId === this.selectedFirstFormId;
   }
 
@@ -70,7 +75,7 @@ export class StepperComponent {
     // console.log('Card clicked:', card.text);
   }
 
-  submitProductCategory() {
+  submitFirstForm() {
     let category_id = this.firstFormGroup.value['productCategoryId'];
     if (category_id != '' && category_id != null) {
       this.designFormService.getFunctionTypesByCategory(category_id).subscribe(
@@ -83,6 +88,16 @@ export class StepperComponent {
   handleFunctionTypeClick(card: any) {
     this.secondFormGroup.controls['functionTypeId'].setValue(card.function_type_id);
     this.selectedSecondFormId = card.function_type_id;
+  }
+
+  submitSecondForm() {
+    let function_type_id = this.secondFormGroup.value['functionTypeId'];
+    if (function_type_id != '' && function_type_id != null) {
+      this.designFormService.getDeliveryLibraryByFunctionType(function_type_id).subscribe(
+        (response) => {this.deliveryLibrary = response; console.log(response)}
+      )
+    }
+    console.log(this.firstFormGroup.value);
   }
 
   onSubmit() {
