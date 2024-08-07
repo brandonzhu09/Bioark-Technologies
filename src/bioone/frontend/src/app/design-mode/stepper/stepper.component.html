@@ -56,19 +56,73 @@
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="submitThirdForm()">Next</button>
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="fourthFormGroup" label="Select delivery type">
+    <mat-step [stepControl]="fourthFormGroup" label="CodeP">
         <form [formGroup]="fourthFormGroup">
             <mat-tab-group>
-                <mat-tab label="Promoter">Content</mat-tab>
-                <mat-tab label="Property">Content</mat-tab>
-                <mat-tab label="Protein Tag">Content</mat-tab>
-                <mat-tab label="Fluorescene Marker">Content</mat-tab>
-                <mat-tab label="Selection Marker">Content</mat-tab>
-                <mat-tab label="Antibiotics">Content</mat-tab>
+                <mat-tab label="Promoter">
+                    <div class="container">
+                        @for (card of promoterCards; track card.promoter_code) {
+                        <button class="button-card"
+                            [ngClass]="{'selected': fourthFormGroup.value.promoterCode === card.promoter_code}"
+                            (click)="handlePromoterClick(card)">
+                            <i class="bi bi-box-seam h1"></i>
+                            <div class="text">{{card.promoter_name}}</div>
+                        </button>
+                        }
+                    </div>
+                </mat-tab>
+                <mat-tab label="Protein Tag">
+                    <div class="container">
+                        @for (card of proteinTagCards; track card.protein_tag_code) {
+                        <button class="button-card"
+                            [ngClass]="{'selected': fourthFormGroup.value.proteinTagCode === card.protein_tag_code}"
+                            (click)="handleProteinTagClick(card)">
+                            <i class="bi bi-box-seam h1"></i>
+                            <div class="text">{{card.protein_tag_name}}</div>
+                        </button>
+                        }
+                    </div>
+                </mat-tab>
+                <mat-tab label="Fluorescene Marker">
+                    <div class="container">
+                        @for (card of fluoresceneMarkerCards; track card.fluorescene_marker_code) {
+                        <button class="button-card"
+                            [ngClass]="{'selected': fourthFormGroup.value.fluoresceneMarkerCode === card.fluorescene_marker_code}"
+                            (click)="handleFluoresceneMarkerClick(card)">
+                            <i class="bi bi-box-seam h1"></i>
+                            <div class="text">{{card.fluorescene_marker_name}}</div>
+                        </button>
+                        }
+                    </div>
+                </mat-tab>
+                <mat-tab label="Selection Marker">
+                    <div class="container">
+                        @for (card of selectionMarkerCards; track card.selection_marker_code) {
+                        <button class="button-card"
+                            [ngClass]="{'selected': fourthFormGroup.value.selectionMarkerCode === card.selection_marker_code}"
+                            (click)="handleSelectionMarkerClick(card)">
+                            <i class="bi bi-box-seam h1"></i>
+                            <div class="text">{{card.selection_marker_name}}</div>
+                        </button>
+                        }
+                    </div>
+                </mat-tab>
+                <mat-tab label="Antibiotics">
+                    <div class="container">
+                        @for (card of bacterialMarkerCards; track card.bacterial_marker_code) {
+                        <button class="button-card"
+                            [ngClass]="{'selected': fourthFormGroup.value.bacterialMarkerCode === card.bacterial_marker_code}"
+                            (click)="handleBacterialMarkerClick(card)">
+                            <i class="bi bi-box-seam h1"></i>
+                            <div class="text">{{card.bacterial_marker_name}}</div>
+                        </button>
+                        }
+                    </div>
+                </mat-tab>
             </mat-tab-group>
             <div>
                 <button mat-button matStepperPrevious>Back</button>

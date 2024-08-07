@@ -38,9 +38,9 @@ def get_code_p_by_function_delivery(request):
     data = {
         "promoters": get_promoters(function_type_symbol, delivery_type_symbol),
         "protein_tags": get_protein_tags(),
-        "fluorescene_marker": get_fluorescene_markers(),
-        "selection_marker": get_selection_markers(),
-        "bacterial_marker": get_bacterial_markers(delivery_type_symbol),
+        "fluorescene_markers": get_fluorescene_markers(),
+        "selection_markers": get_selection_markers(),
+        "bacterial_markers": get_bacterial_markers(delivery_type_symbol),
     }
     return Response(data)
 

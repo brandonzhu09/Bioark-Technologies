@@ -18,4 +18,9 @@ export class DesignFormService {
   getDeliveryTypesByFunctionType(functionTypeId: string) {
     return this.http.get(`http://localhost:8000/products/get-delivery-types-by-function-type/`, {params: {function_type_id: functionTypeId}});
   }
+
+  getCodeP(functionTypeId: string, deliveryTypeSymbol: string) {
+    return this.http.get<any>(`http://localhost:8000/products/get-code-p-by-function-delivery/`, {params: {function_type_id: functionTypeId, delivery_type_symbol: deliveryTypeSymbol}});
+  }
+
 }
