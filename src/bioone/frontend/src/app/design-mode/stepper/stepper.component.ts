@@ -83,6 +83,11 @@ export class StepperComponent {
     }
   }
 
+  submitThirdForm() {
+    let delivery_type_symbol = this.thirdFormGroup.value.deliveryTypeSymbol;
+    console.log([this.secondFormGroup.value])
+  }
+
   onSubmit() {
     console.log([this.firstFormGroup.value, this.secondFormGroup.value]); 
   }
