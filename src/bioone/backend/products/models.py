@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 
 class Promoter(models.Model):
@@ -13,11 +14,17 @@ class PromoterSpecialCase(models.Model):
     promoter_id = models.AutoField(primary_key=True)
     promoter_name = models.CharField()
     promoter_code = models.CharField()
-    function_type = models.CharField()
-    delivery_type = models.CharField()
+    function_type_symbol = models.CharField(null=True)
+    delivery_type_symbol = models.CharField(null=True)
 
     class Meta:
         db_table = 'promoter_special_case'
+        constraints = [
+            models.CheckConstraint(
+                check=Q(function_type_symbol__isnull=False) | Q(delivery_type_symbol__isnull=False),
+                name='not_both_null'
+            )
+        ]
 
 
 class Property(models.Model):
@@ -69,8 +76,7 @@ class BacterialMarkerSpecialCase(models.Model):
     bacterial_marker_id = models.AutoField(primary_key=True)
     bacterial_marker_name = models.CharField()
     bacterial_marker_code = models.CharField()
-    function_type = models.CharField()
-    delivery_type = models.CharField()
+    delivery_type_symbol = models.CharField()
 
     class Meta:
         db_table = 'bacterial_marker_special_case'
