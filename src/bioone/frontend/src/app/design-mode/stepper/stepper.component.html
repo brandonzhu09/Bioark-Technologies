@@ -4,7 +4,8 @@
             <ng-template matStepLabel>Select function category</ng-template>
             <div class="container">
                 @for (card of productCategoryCards; track card.category_id) {
-                <button class="button-card" [class.selected]="isSelected(1, card.category_id)"
+                <button class="button-card"
+                    [ngClass]="{'selected': firstFormGroup.value.productCategoryId === card.category_id}"
                     (click)="handleProductCategoryClick(card)">
                     <i class="bi bi-boxes h1"></i>
                     <!-- <div class="logo">
@@ -27,12 +28,10 @@
         <form [formGroup]="secondFormGroup">
             <div class="container">
                 @for (card of functionTypeCards; track card.function_type_id) {
-                <button class="button-card" [class.selected]="isSelected(2, card.function_type_id)"
+                <button class="button-card"
+                    [ngClass]="{'selected': secondFormGroup.value.functionTypeId === card.function_type_id}"
                     (click)="handleFunctionTypeClick(card)">
                     <i class="bi bi-boxes h1"></i>
-                    <!-- <div class="logo">
-                                <img src="{{card.logoUrl}}" alt="Logo">
-                            </div> -->
                     <div class="text">{{card.function_type_name}}</div>
                 </button>
                 }
@@ -45,6 +44,32 @@
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup" label="Select delivery type">
         <form [formGroup]="thirdFormGroup">
+            <div class="container">
+                @for (card of deliveryTypeCards; track card.delivery_type_symbol) {
+                <button class="button-card"
+                    [ngClass]="{'selected': thirdFormGroup.value.deliveryTypeSymbol === card.delivery_type_symbol}"
+                    (click)="handleDeliveryTypeClick(card)">
+                    <i class="bi bi-boxes h1"></i>
+                    <div class="text">{{card.delivery_type_name}}</div>
+                </button>
+                }
+            </div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="fourthFormGroup" label="Select delivery type">
+        <form [formGroup]="fourthFormGroup">
+            <mat-tab-group>
+                <mat-tab label="Promoter">Content</mat-tab>
+                <mat-tab label="Property">Content</mat-tab>
+                <mat-tab label="Protein Tag">Content</mat-tab>
+                <mat-tab label="Fluorescene Marker">Content</mat-tab>
+                <mat-tab label="Selection Marker">Content</mat-tab>
+                <mat-tab label="Antibiotics">Content</mat-tab>
+            </mat-tab-group>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>

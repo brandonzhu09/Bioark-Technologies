@@ -15,7 +15,7 @@ export class DesignFormService {
     return this.http.get(`http://localhost:8000/products/get-function-types-by-category/`, {params: {category_id: categoryId}});
   }
 
-  getDeliveryLibraryByFunctionType(functionTypeId: string) {
-    return this.http.get(`http://localhost:8000/products/get-delivery-library-by-function-type/`, {params: {function_type_id: functionTypeId}});
+  getDeliveryTypesByFunctionType(functionTypeId: string) {
+    return this.http.get(`http://localhost:8000/products/get-delivery-types-by-function-type/`, {params: {function_type_id: functionTypeId}});
   }
 }

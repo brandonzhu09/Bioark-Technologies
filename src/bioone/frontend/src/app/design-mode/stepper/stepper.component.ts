@@ -5,6 +5,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import { DesignFormService } from '../design-form.service';
+import { CommonModule } from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @Component({
@@ -19,6 +21,8 @@ import { DesignFormService } from '../design-form.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    CommonModule,
+    MatTabsModule,
   ]
 })
 export class StepperComponent {
@@ -27,13 +31,9 @@ export class StepperComponent {
 
   isLinear = true;
 
-  selectedFirstFormId: number | null = null;
-  selectedSecondFormId: number | null = null;
-  selectedThirdFormId: number | null = null;
-
   productCategoryCards: any;
   functionTypeCards: any;
-  deliveryLibrary: any;
+  deliveryTypeCards: any;
   
   firstFormGroup = new FormGroup({
     productCategoryId: new FormControl('', [
@@ -48,56 +48,39 @@ export class StepperComponent {
     ])
   })
   thirdFormGroup = new FormGroup({
-    deliveryTypeId: new FormControl('', [
+    deliveryTypeSymbol: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1)
+    ])
+  })
+  fourthFormGroup = new FormGroup({
+    promoterId: new FormControl('', [
       Validators.required,
       Validators.minLength(3)
     ])
   })
 
-  // User Interaction
-  isSelected(index: number, cardId: number): boolean {
-    if (index == 1) {
-      return cardId == this.selectedFirstFormId;
-    }
-    else if (index == 2) {
-      return cardId == this.selectedSecondFormId;
-    }
-    else if (index == 3) {
-      return cardId == this.selectedThirdFormId;
-    }
-    return cardId === this.selectedFirstFormId;
-  }
-
   // Forms
-  handleProductCategoryClick(card: any) {
-    this.firstFormGroup.controls['productCategoryId'].setValue(card.category_id);
-    this.selectedFirstFormId = card.category_id;
-    // console.log('Card clicked:', card.text);
-  }
+  handleProductCategoryClick = (card: any) => { this.firstFormGroup.controls.productCategoryId.setValue(card.category_id);}
+  handleFunctionTypeClick = (card: any) => {this.secondFormGroup.controls.functionTypeId.setValue(card.function_type_id);}
+  handleDeliveryTypeClick = (card: any) => {this.thirdFormGroup.controls.deliveryTypeSymbol.setValue(card.delivery_type_symbol);}
 
   submitFirstForm() {
-    let category_id = this.firstFormGroup.value['productCategoryId'];
+    let category_id = this.firstFormGroup.value.productCategoryId;
     if (category_id != '' && category_id != null) {
       this.designFormService.getFunctionTypesByCategory(category_id).subscribe(
         (response) => {this.functionTypeCards = response; console.log(response)}
       )
     }
-    console.log(this.firstFormGroup.value);
-  }
-
-  handleFunctionTypeClick(card: any) {
-    this.secondFormGroup.controls['functionTypeId'].setValue(card.function_type_id);
-    this.selectedSecondFormId = card.function_type_id;
   }
 
   submitSecondForm() {
-    let function_type_id = this.secondFormGroup.value['functionTypeId'];
+    let function_type_id = this.secondFormGroup.value.functionTypeId;
     if (function_type_id != '' && function_type_id != null) {
-      this.designFormService.getDeliveryLibraryByFunctionType(function_type_id).subscribe(
-        (response) => {this.deliveryLibrary = response; console.log(response)}
+      this.designFormService.getDeliveryTypesByFunctionType(function_type_id).subscribe(
+        (response) => {this.deliveryTypeCards = response; console.log(response)}
       )
     }
-    console.log(this.firstFormGroup.value);
   }
 
   onSubmit() {

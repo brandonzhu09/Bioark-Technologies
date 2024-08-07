@@ -19,8 +19,7 @@ def get_function_types_by_category(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def get_delivery_library_by_function_type(request):
+def get_delivery_types_by_function_type(request):
     function_type_id = request.GET["function_type_id"]
-    queryset = DeliveryLibrary.objects.filter(function_type_id=function_type_id)
-    serializer = DeliveryLibrarySerializer(queryset, many=True)
-    return Response(serializer.data)
+    queryset = DeliveryLibrary.objects.filter(function_type_id=function_type_id).values("delivery_type_symbol", "delivery_type_name").distinct()
+    return Response(list(queryset))
