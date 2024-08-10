@@ -82,19 +82,18 @@ class BacterialMarkerSpecialCase(models.Model):
         db_table = 'bacterial_marker_special_case'
 
 
-class Gene(models.Model):
-    gene_id = models.AutoField(primary_key=True)
-    gene_number = models.IntegerField()
+class GeneLibrary(models.Model):
+    gene_library_id = models.AutoField(primary_key=True)
+    target_sequence = models.CharField()
     gene_name = models.CharField()
     symbol = models.CharField()
     locus_id = models.IntegerField()
     species = models.CharField()
-    description = models.CharField()
-    target_sequence = models.CharField()
-    reference_link = models.CharField()
+    description = models.CharField(blank=True, null=True)
+    reference_link = models.CharField(null=True)
 
     class Meta:
-        db_table = 'gene'
+        db_table = 'gene_library'
 
 
 class ProductInventory(models.Model):
@@ -166,7 +165,7 @@ class Product(models.Model):
     load_status = models.CharField(blank=True, null=True, default="Loaded")
     inventory = models.ForeignKey(ProductInventory, on_delete=models.PROTECT)
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
-    gene = models.ForeignKey(Gene, null=True, on_delete=models.PROTECT)
+    gene = models.ForeignKey(GeneLibrary, null=True, on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'product'
