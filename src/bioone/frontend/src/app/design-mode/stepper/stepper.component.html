@@ -1,16 +1,13 @@
 <mat-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
+        <form [formGroup]="firstFormGroup" (ngSubmit)="submitFirstForm()">
             <ng-template matStepLabel>Select function category</ng-template>
             <div class="container">
                 @for (card of productCategoryCards; track card.category_id) {
                 <button class="button-card"
                     [ngClass]="{'selected': firstFormGroup.value.productCategoryId === card.category_id}"
-                    (click)="handleProductCategoryClick(card)">
+                    (click)="resetFormsAfter(1); handleProductCategoryClick(card);">
                     <i class="bi bi-boxes h1"></i>
-                    <!-- <div class="logo">
-                        <img src="{{card.logoUrl}}" alt="Logo">
-                    </div> -->
                     <div class="text">{{card.category_name}}</div>
                 </button>
                 }
@@ -20,12 +17,12 @@
                 <input matInput placeholder="Last name, First name" formControlName="name" required>
             </mat-form-field> -->
             <div>
-                <button mat-button matStepperNext (click)="submitFirstForm()">Next</button>
+                <button mat-button matStepperNext>Next</button>
             </div>
         </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" label="Select function type">
-        <form [formGroup]="secondFormGroup">
+        <form [formGroup]="secondFormGroup" (ngSubmit)="submitSecondForm()">
             <div class="container">
                 @for (card of functionTypeCards; track card.function_type_id) {
                 <button class="button-card"
@@ -38,12 +35,12 @@
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="submitSecondForm()">Next</button>
+                <button mat-button matStepperNext>Next</button>
             </div>
         </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup" label="Select delivery type">
-        <form [formGroup]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup" (ngSubmit)="submitThirdForm()">
             <div class="container">
                 @for (card of deliveryTypeCards; track card.delivery_type_symbol) {
                 <button class="button-card"
@@ -56,11 +53,11 @@
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="submitThirdForm()">Next</button>
+                <button mat-button matStepperNext>Next</button>
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="fourthFormGroup" label="CodeP">
+    <mat-step [stepControl]="fourthFormGroup" label="Select structure">
         <form [formGroup]="fourthFormGroup">
             <mat-tab-group>
                 <mat-tab label="Promoter">

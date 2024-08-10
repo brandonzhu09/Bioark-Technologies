@@ -1,13 +1,12 @@
-import { Component, Input } from '@angular/core';
-import {FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup} from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import {Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import {MatStepper, MatStepperModule} from '@angular/material/stepper';
 import { DesignFormService } from '../design-form.service';
 import { CommonModule } from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
-import { HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -30,6 +29,7 @@ export class StepperComponent {
 
   constructor(private designFormService: DesignFormService) { }
 
+  @ViewChild('stepper') stepper!: MatStepper;
   isLinear = true;
 
   productCategoryCards: any;
@@ -91,6 +91,12 @@ export class StepperComponent {
   handleFluoresceneMarkerClick = (card: any) => {this.fourthFormGroup.controls.fluoresceneMarkerCode.setValue(card.fluorescene_marker_code);}
   handleSelectionMarkerClick = (card: any) => {this.fourthFormGroup.controls.selectionMarkerCode.setValue(card.selection_marker_code);}
   handleBacterialMarkerClick = (card: any) => {this.fourthFormGroup.controls.bacterialMarkerCode.setValue(card.bacterial_marker_code);}
+
+  resetFormsAfter(index: number) {
+    if (index <= 3) {this.fourthFormGroup.reset();}
+    if (index <= 2) {this.thirdFormGroup.reset();}
+    if (index == 1) {this.secondFormGroup.reset();}
+  }
 
   submitFirstForm() {
     let category_id = this.firstFormGroup.value.productCategoryId;
