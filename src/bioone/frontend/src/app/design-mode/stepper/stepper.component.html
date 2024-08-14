@@ -12,10 +12,6 @@
                 </button>
                 }
             </div>
-            <!-- <mat-form-field>
-                <mat-label>Name</mat-label>
-                <input matInput placeholder="Last name, First name" formControlName="name" required>
-            </mat-form-field> -->
             <div>
                 <button mat-button matStepperNext>Next</button>
             </div>
@@ -127,6 +123,78 @@
             </div>
         </form>
     </mat-step>
+
+    <mat-step [stepControl]="fifthFormGroup" label="Select gene type">
+        <form [formGroup]="fifthFormGroup" (ngSubmit)="submitFifthForm()">
+            <div class="container">
+                <button class="button-card"
+                    [ngClass]="{'selected': fifthFormGroup.value.targetSequence === 'geneSearch'}"
+                    (click)="handleTargetSequenceClick('geneSearch')">
+                    <i class="bi bi-virus h1"></i>
+                    <div class="text">Search Target Gene</div>
+                </button>
+                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.targetSequence === '000000'}"
+                    (click)="handleTargetSequenceClick('000000')">
+                    <i class="bi bi-virus h1"></i>
+                    <div class="text">Scramble</div>
+                </button>
+                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.targetSequence === 'XXXXXX'}"
+                    (click)="handleTargetSequenceClick('XXXXXX')">
+                    <i class="bi bi-ban h1"></i>
+                    <div class="text">None</div>
+                </button>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    @if (showSearchGeneGroup) {
+    <mat-step [stepControl]="searchGeneGroup" label="Search for target gene">
+        <form [formGroup]="searchGeneGroup" (ngSubmit)="submitSearchGeneForm()">
+            <label class="form-label fs-5 mb-3">Enter Gene Symbol</label>
+            <div class="input-group">
+                <input type="text" formControlName="geneSymbol" class="form-control border-end-0" placeholder="Search">
+                <button class="btn btn-outline-secondary border bi bi-search" type="submit"></button>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Sequence Number</th>
+                        <th scope="col">Symbol</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Locus ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (geneTable.length > 0) {
+                    <tr *ngFor="let row of geneTable">
+                        <td>
+                            <div class="form-check"><input class="form-check-input" name="targetSequence"
+                                    formControlName="targetSequence" [value]="row['target_sequence']" type="radio">
+                            </div>
+                        </td>
+                        <td *ngFor="let column of geneColumns">{{ row[column] }}</td>
+                    </tr>
+                    }
+                    @else {
+                    <tr>
+                        <td colspan="5" style="text-align: center;">
+                            <em>No results found. Please try again.</em>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    }
     <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>

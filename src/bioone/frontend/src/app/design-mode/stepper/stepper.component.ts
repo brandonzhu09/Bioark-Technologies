@@ -7,6 +7,7 @@ import {MatStepper, MatStepperModule} from '@angular/material/stepper';
 import { DesignFormService } from '../design-form.service';
 import { CommonModule } from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -40,6 +41,10 @@ export class StepperComponent {
   fluoresceneMarkerCards: any;
   selectionMarkerCards: any;
   bacterialMarkerCards: any;
+  showSearchGeneGroup: boolean = false;
+  geneColumns: string[] = ['target_sequence', 'symbol', 'gene_name', 'locus_id'];
+  geneTable: any[] = [];
+  initialGeneSymbol: string = "";
   
   firstFormGroup = new FormGroup({
     productCategoryId: new FormControl('', [
@@ -81,6 +86,22 @@ export class StepperComponent {
       Validators.minLength(1)
     ]),
   })
+  fifthFormGroup = new FormGroup({
+    targetSequence: new FormControl('XXXXXX', [
+      Validators.required,
+      Validators.minLength(6)
+    ])
+  })
+  searchGeneGroup = new FormGroup({
+    geneSymbol: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1)
+    ]),
+    targetSequence: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6)
+    ])
+  })
 
   // Forms
   handleProductCategoryClick = (card: any) => { this.firstFormGroup.controls.productCategoryId.setValue(card.category_id);}
@@ -91,6 +112,7 @@ export class StepperComponent {
   handleFluoresceneMarkerClick = (card: any) => {this.fourthFormGroup.controls.fluoresceneMarkerCode.setValue(card.fluorescene_marker_code);}
   handleSelectionMarkerClick = (card: any) => {this.fourthFormGroup.controls.selectionMarkerCode.setValue(card.selection_marker_code);}
   handleBacterialMarkerClick = (card: any) => {this.fourthFormGroup.controls.bacterialMarkerCode.setValue(card.bacterial_marker_code);}
+  handleTargetSequenceClick = (option: string) => {this.fifthFormGroup.controls.targetSequence.setValue(option);}
 
   resetFormsAfter(index: number) {
     if (index <= 3) {this.fourthFormGroup.reset();}
@@ -127,6 +149,33 @@ export class StepperComponent {
           this.fluoresceneMarkerCards = response.fluorescene_markers;
           this.selectionMarkerCards = response.selection_markers;
           this.bacterialMarkerCards = response.bacterial_markers;
+        }
+      )
+    }
+  }
+
+  submitFifthForm() {
+    if (this.fifthFormGroup.value.targetSequence == 'geneSearch') {
+      this.showSearchGeneGroup = true;
+    }
+    else {
+      this.showSearchGeneGroup = false;
+    }
+  }
+
+  submitSearchGeneForm() {
+    let gene_symbol = this.searchGeneGroup.value.geneSymbol;
+    if (gene_symbol != '' && gene_symbol != null && gene_symbol != this.initialGeneSymbol) {
+      this.searchGeneGroup.controls.targetSequence.reset();
+      this.initialGeneSymbol = gene_symbol;
+      this.designFormService.getGeneTableBySymbol(gene_symbol).subscribe(
+        (response) => {
+          if (response.length == 0) {
+            this.geneTable = [];
+          }
+          else {
+            this.geneTable = response; console.log(this.geneTable)
+          }
         }
       )
     }

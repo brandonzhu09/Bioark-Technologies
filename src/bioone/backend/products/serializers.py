@@ -16,3 +16,8 @@ class DeliveryLibrarySerializer(serializers.ModelSerializer):
     class Meta:
         model = DeliveryLibrary
         fields = ['delivery_type_symbol', 'delivery_type_name', 'delivery_format_symbol', 'delivery_format_name']
+
+class GeneLibrarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GeneLibrary
+        fields = ['target_sequence', 'symbol', 'gene_name', 'locus_id']

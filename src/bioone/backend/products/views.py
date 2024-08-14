@@ -45,6 +45,14 @@ def get_code_p_by_function_delivery(request):
     return Response(data)
 
 
+@api_view(['GET'])
+def get_gene_table_by_symbol(request):
+    symbol = request.GET["symbol"]
+    queryset = GeneLibrary.objects.filter(symbol__contains=symbol)[:5]
+    serializer = GeneLibrarySerializer(queryset, many=True)
+    return Response(serializer.data)
+
+
 def get_promoters(function_type_symbol, delivery_type_symbol):
     # check the special case for promoter options
     function_type_count = PromoterSpecialCase.objects.filter(function_type_symbol=function_type_symbol).count()

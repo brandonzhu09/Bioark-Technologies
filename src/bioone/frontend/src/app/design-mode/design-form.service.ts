@@ -23,4 +23,8 @@ export class DesignFormService {
     return this.http.get<any>(`http://localhost:8000/products/get-code-p-by-function-delivery/`, {params: {function_type_id: functionTypeId, delivery_type_symbol: deliveryTypeSymbol}});
   }
 
+  getGeneTableBySymbol(symbol: string) {
+    return this.http.get<any[]>(`http://localhost:8000/products/get-gene-table-by-symbol/`, {params: {symbol: symbol}});
+  }
+
 }
