@@ -1,12 +1,12 @@
 <mat-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup" (ngSubmit)="submitFirstForm()">
+        <form [formGroup]="firstFormGroup" (ngSubmit)="submitFirstForm(); resetFormsAfter(1)">
             <ng-template matStepLabel>Select function category</ng-template>
             <div class="container">
                 @for (card of productCategoryCards; track card.category_id) {
                 <button class="button-card"
                     [ngClass]="{'selected': firstFormGroup.value.productCategoryId === card.category_id}"
-                    (click)="resetFormsAfter(1); handleProductCategoryClick(card);">
+                    (click)="handleProductCategoryClick(card);">
                     <i class="bi bi-boxes h1"></i>
                     <div class="text">{{card.category_name}}</div>
                 </button>
@@ -18,7 +18,7 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" label="Select function type">
-        <form [formGroup]="secondFormGroup" (ngSubmit)="submitSecondForm()">
+        <form [formGroup]="secondFormGroup" (ngSubmit)="submitSecondForm(); resetFormsAfter(2)">
             <div class="container">
                 @for (card of functionTypeCards; track card.function_type_id) {
                 <button class="button-card"
@@ -36,7 +36,7 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup" label="Select delivery type">
-        <form [formGroup]="thirdFormGroup" (ngSubmit)="submitThirdForm()">
+        <form [formGroup]="thirdFormGroup" (ngSubmit)="submitThirdForm(); resetFormsAfter(3)">
             <div class="container">
                 @for (card of deliveryTypeCards; track card.delivery_type_symbol) {
                 <button class="button-card"
@@ -54,13 +54,13 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup" label="Select structure">
-        <form [formGroup]="fourthFormGroup">
+        <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4);">
             <mat-tab-group>
                 <mat-tab label="Promoter">
                     <div class="container">
                         @for (card of promoterCards; track card.promoter_code) {
                         <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.promoterCode === card.promoter_code}"
+                            [ngClass]="{'selected': fourthFormGroup.value.promoterName === card.promoter_name}"
                             (click)="handlePromoterClick(card)">
                             <i class="bi bi-box-seam h1"></i>
                             <div class="text">{{card.promoter_name}}</div>
@@ -72,7 +72,7 @@
                     <div class="container">
                         @for (card of proteinTagCards; track card.protein_tag_code) {
                         <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.proteinTagCode === card.protein_tag_code}"
+                            [ngClass]="{'selected': fourthFormGroup.value.proteinTagName === card.protein_tag_name}"
                             (click)="handleProteinTagClick(card)">
                             <i class="bi bi-box-seam h1"></i>
                             <div class="text">{{card.protein_tag_name}}</div>
@@ -84,7 +84,7 @@
                     <div class="container">
                         @for (card of fluoresceneMarkerCards; track card.fluorescene_marker_code) {
                         <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.fluoresceneMarkerCode === card.fluorescene_marker_code}"
+                            [ngClass]="{'selected': fourthFormGroup.value.fluoresceneMarkerName === card.fluorescene_marker_name}"
                             (click)="handleFluoresceneMarkerClick(card)">
                             <i class="bi bi-box-seam h1"></i>
                             <div class="text">{{card.fluorescene_marker_name}}</div>
@@ -96,7 +96,7 @@
                     <div class="container">
                         @for (card of selectionMarkerCards; track card.selection_marker_code) {
                         <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.selectionMarkerCode === card.selection_marker_code}"
+                            [ngClass]="{'selected': fourthFormGroup.value.selectionMarkerName === card.selection_marker_name}"
                             (click)="handleSelectionMarkerClick(card)">
                             <i class="bi bi-box-seam h1"></i>
                             <div class="text">{{card.selection_marker_name}}</div>
@@ -108,7 +108,7 @@
                     <div class="container">
                         @for (card of bacterialMarkerCards; track card.bacterial_marker_code) {
                         <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.bacterialMarkerCode === card.bacterial_marker_code}"
+                            [ngClass]="{'selected': fourthFormGroup.value.bacterialMarkerName === card.bacterial_marker_name}"
                             (click)="handleBacterialMarkerClick(card)">
                             <i class="bi bi-box-seam h1"></i>
                             <div class="text">{{card.bacterial_marker_name}}</div>
@@ -125,21 +125,20 @@
     </mat-step>
 
     <mat-step [stepControl]="fifthFormGroup" label="Select gene type">
-        <form [formGroup]="fifthFormGroup" (ngSubmit)="submitFifthForm()">
+        <form [formGroup]="fifthFormGroup" (ngSubmit)="submitFifthForm(); resetFormsAfter(5)">
             <div class="container">
-                <button class="button-card"
-                    [ngClass]="{'selected': fifthFormGroup.value.targetSequence === 'geneSearch'}"
-                    (click)="handleTargetSequenceClick('geneSearch')">
+                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'geneSearch'}"
+                    (click)="handleTargetSequenceClick('geneSearch', 'IGNORE')">
                     <i class="bi bi-virus h1"></i>
                     <div class="text">Search Target Gene</div>
                 </button>
-                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.targetSequence === '000000'}"
-                    (click)="handleTargetSequenceClick('000000')">
+                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'scramble'}"
+                    (click)="handleTargetSequenceClick('scramble', '000000')">
                     <i class="bi bi-virus h1"></i>
                     <div class="text">Scramble</div>
                 </button>
-                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.targetSequence === 'XXXXXX'}"
-                    (click)="handleTargetSequenceClick('XXXXXX')">
+                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'none'}"
+                    (click)="handleTargetSequenceClick('none', 'XXXXXX')">
                     <i class="bi bi-ban h1"></i>
                     <div class="text">None</div>
                 </button>
@@ -196,8 +195,27 @@
     </mat-step>
     }
     <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
+        <ng-template matStepLabel>Confirm</ng-template>
+        <h1>Review Design Form</h1>
+        <h2>Products</h2>
+        <p>Product Category: {{firstFormGroup.value.productCategoryName}}</p>
+        <p>Function Type: {{secondFormGroup.value.functionTypeName}}</p>
+        <p>Delivery Type: {{thirdFormGroup.value.deliveryTypeName}}</p>
+        <h2>Structure</h2>
+        <p>Promoter: {{fourthFormGroup.value.promoterName}}</p>
+        <p>Protein Tag: {{fourthFormGroup.value.proteinTagName}}</p>
+        <p>Fluorescene Marker: {{fourthFormGroup.value.fluoresceneMarkerName}}</p>
+        <p>Selection Marker: {{fourthFormGroup.value.selectionMarkerName}}</p>
+        <p>Antibiotics: {{fourthFormGroup.value.bacterialMarkerName}}</p>
+        <h2>Target Gene</h2>
+        <p>Gene Option: {{fifthFormGroup.value.geneOption}}</p>
+        @if (fifthFormGroup.value.geneOption == 'geneSearch') {
+        <p>Target Gene: {{searchGeneGroup.value.targetSequence}}</p>
+        }
+        @else {
+        <p>Target Gene: {{fifthFormGroup.value.targetSequence}}</p>
+        }
+        <p>Ready to proceed? Click submit to confirm your selection.</p>
         <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext (click)="onSubmit()">Submit</button>

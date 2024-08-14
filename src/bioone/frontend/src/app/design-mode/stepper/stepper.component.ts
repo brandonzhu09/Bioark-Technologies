@@ -7,7 +7,6 @@ import {MatStepper, MatStepperModule} from '@angular/material/stepper';
 import { DesignFormService } from '../design-form.service';
 import { CommonModule } from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
-import { distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -50,10 +49,18 @@ export class StepperComponent {
     productCategoryId: new FormControl('', [
       Validators.required,
       Validators.minLength(3)
+    ]),
+    productCategoryName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
     ])
   })
   secondFormGroup = new FormGroup({
     functionTypeId: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    functionTypeName: new FormControl('', [
       Validators.required,
       Validators.minLength(3)
     ])
@@ -62,31 +69,39 @@ export class StepperComponent {
     deliveryTypeSymbol: new FormControl('', [
       Validators.required,
       Validators.minLength(1)
+    ]),
+    deliveryTypeName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1)
     ])
   })
   fourthFormGroup = new FormGroup({
-    promoterCode: new FormControl('', [
+    promoterName: new FormControl('', [
       Validators.required,
       Validators.minLength(1)
     ]),
-    proteinTagCode: new FormControl('', [
+    proteinTagName: new FormControl('None', [
       Validators.required,
       Validators.minLength(1)
     ]),
-    fluoresceneMarkerCode: new FormControl('', [
+    fluoresceneMarkerName: new FormControl('None', [
       Validators.required,
       Validators.minLength(1)
     ]),
-    selectionMarkerCode: new FormControl('', [
+    selectionMarkerName: new FormControl('None', [
       Validators.required,
       Validators.minLength(1)
     ]),
-    bacterialMarkerCode: new FormControl('', [
+    bacterialMarkerName: new FormControl('', [
       Validators.required,
       Validators.minLength(1)
     ]),
   })
   fifthFormGroup = new FormGroup({
+    geneOption: new FormControl('none', [
+      Validators.required,
+      Validators.minLength(1)
+    ]),
     targetSequence: new FormControl('XXXXXX', [
       Validators.required,
       Validators.minLength(6)
@@ -104,17 +119,31 @@ export class StepperComponent {
   })
 
   // Forms
-  handleProductCategoryClick = (card: any) => { this.firstFormGroup.controls.productCategoryId.setValue(card.category_id);}
-  handleFunctionTypeClick = (card: any) => {this.secondFormGroup.controls.functionTypeId.setValue(card.function_type_id);}
-  handleDeliveryTypeClick = (card: any) => {this.thirdFormGroup.controls.deliveryTypeSymbol.setValue(card.delivery_type_symbol);}
-  handlePromoterClick = (card: any) => {this.fourthFormGroup.controls.promoterCode.setValue(card.promoter_code);}
-  handleProteinTagClick = (card: any) => {this.fourthFormGroup.controls.proteinTagCode.setValue(card.protein_tag_code);}
-  handleFluoresceneMarkerClick = (card: any) => {this.fourthFormGroup.controls.fluoresceneMarkerCode.setValue(card.fluorescene_marker_code);}
-  handleSelectionMarkerClick = (card: any) => {this.fourthFormGroup.controls.selectionMarkerCode.setValue(card.selection_marker_code);}
-  handleBacterialMarkerClick = (card: any) => {this.fourthFormGroup.controls.bacterialMarkerCode.setValue(card.bacterial_marker_code);}
-  handleTargetSequenceClick = (option: string) => {this.fifthFormGroup.controls.targetSequence.setValue(option);}
+  handleProductCategoryClick = (card: any) => {
+    this.firstFormGroup.controls.productCategoryId.setValue(card.category_id);
+    this.firstFormGroup.controls.productCategoryName.setValue(card.category_name);
+  }
+  handleFunctionTypeClick = (card: any) => {
+    this.secondFormGroup.controls.functionTypeId.setValue(card.function_type_id);
+    this.secondFormGroup.controls.functionTypeName.setValue(card.function_type_name);
+  }
+  handleDeliveryTypeClick = (card: any) => {
+    this.thirdFormGroup.controls.deliveryTypeSymbol.setValue(card.delivery_type_symbol);
+    this.thirdFormGroup.controls.deliveryTypeName.setValue(card.delivery_type_name);
+  }
+  handlePromoterClick = (card: any) => {this.fourthFormGroup.controls.promoterName.setValue(card.promoter_name);}
+  handleProteinTagClick = (card: any) => {this.fourthFormGroup.controls.proteinTagName.setValue(card.protein_tag_name);}
+  handleFluoresceneMarkerClick = (card: any) => {this.fourthFormGroup.controls.fluoresceneMarkerName.setValue(card.fluorescene_marker_name);}
+  handleSelectionMarkerClick = (card: any) => {this.fourthFormGroup.controls.selectionMarkerName.setValue(card.selection_marker_name);}
+  handleBacterialMarkerClick = (card: any) => {this.fourthFormGroup.controls.bacterialMarkerName.setValue(card.bacterial_marker_name);}
+  handleTargetSequenceClick = (option: string, sequence: string) => {
+    this.fifthFormGroup.controls.geneOption.setValue(option);
+    this.fifthFormGroup.controls.targetSequence.setValue(sequence);
+  }
 
   resetFormsAfter(index: number) {
+    if (index <= 5) {this.searchGeneGroup.reset();}
+    if (index <= 4) {this.fifthFormGroup.reset();}
     if (index <= 3) {this.fourthFormGroup.reset();}
     if (index <= 2) {this.thirdFormGroup.reset();}
     if (index == 1) {this.secondFormGroup.reset();}
@@ -155,7 +184,7 @@ export class StepperComponent {
   }
 
   submitFifthForm() {
-    if (this.fifthFormGroup.value.targetSequence == 'geneSearch') {
+    if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
       this.showSearchGeneGroup = true;
     }
     else {
