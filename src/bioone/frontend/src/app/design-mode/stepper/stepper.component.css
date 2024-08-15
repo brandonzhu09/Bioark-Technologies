@@ -35,3 +35,8 @@
     color: #333; /* Text color */
     margin-top: 10px;
 }
+
+.comment {
+    font-size: 10px;
+    color: gray;
+}
