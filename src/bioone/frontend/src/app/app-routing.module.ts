@@ -4,8 +4,10 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { ProductPageComponent } from './product-mode/product-page/product-page.component';
 import { StepperComponent } from './design-mode/stepper/stepper.component';
+import { SummaryComponent } from './design-mode/summary/summary.component';
 
 const routes: Routes = [
+  {path: 'summary-temp', component: SummaryComponent},
   {path: 'design', component: StepperComponent},
   {path: 'product', component: ProductPageComponent},
   {path: '', component: LandingComponent, pathMatch: 'full'}

@@ -53,6 +53,15 @@ def get_gene_table_by_symbol(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def load_summary_resources(request):
+    delivery_type_name = request.GET["delivery_type_name"]
+
+    delivery_formats = list(DeliveryLibrary.objects.filter(delivery_type_name=delivery_type_name).distinct().values("delivery_format_name"))
+
+    return Response(delivery_formats)
+
+
 def get_promoters(function_type_symbol, delivery_type_symbol):
     # check the special case for promoter options
     function_type_count = PromoterSpecialCase.objects.filter(function_type_symbol=function_type_symbol).count()

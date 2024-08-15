@@ -1,0 +1,27 @@
+<div class="product-page">
+    <h1>p53 (TP53) Human Gene Knockout Kit (CRISPR)</h1>
+    <div class="content">
+        <div class="diagram">
+            <img src="../../../assets/placeholder-card.jpg" alt="Diagram">
+        </div>
+        <div class="description">
+            <div class="overview">
+                <p><strong>SKU Number:</strong>CPD100011</p>
+                <p><strong>Function:</strong>{{functionType}}</p>
+                <p><strong>Promoter for Target Gene:</strong>{{promoterName}}</p>
+                <p><strong>Target Sequence:</strong>{{targetSequence}}</p>
+                <p><strong>Selection Gene:</strong>{{selectionMarkerName}}</p>
+            </div>
+            <h2 class="mt-3">Choose a Delivery Format:</h2>
+            @for (option of deliveryFormats; track option.delivery_format_name) {
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="deliveryFormat">
+                <label class="form-check-label">
+                    {{option.delivery_format_name}}
+                </label>
+            </div>
+
+            }
+        </div>
+    </div>
+</div>

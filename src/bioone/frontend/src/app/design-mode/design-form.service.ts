@@ -27,4 +27,8 @@ export class DesignFormService {
     return this.http.get<any[]>(`http://localhost:8000/products/get-gene-table-by-symbol/`, {params: {symbol: symbol}});
   }
 
+  loadSummaryResources(deliveryTypeName: string) {
+    return this.http.get(`http://localhost:8000/products/load-summary-resources/`, {params: {delivery_type_name: deliveryTypeName}});
+  }
+
 }

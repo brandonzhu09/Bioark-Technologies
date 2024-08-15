@@ -7,6 +7,7 @@ import {MatStepper, MatStepperModule} from '@angular/material/stepper';
 import { DesignFormService } from '../design-form.service';
 import { CommonModule } from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
+import { SummaryComponent } from '../summary/summary.component';
 
 
 @Component({
@@ -23,6 +24,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatButtonModule,
     CommonModule,
     MatTabsModule,
+    SummaryComponent
   ]
 })
 export class StepperComponent {
@@ -44,6 +46,9 @@ export class StepperComponent {
   geneColumns: string[] = ['target_sequence', 'symbol', 'gene_name', 'locus_id'];
   geneTable: any[] = [];
   initialGeneSymbol: string = "";
+
+  selectedTargetSequence: string | null | undefined = "";
+  deliveryFormats: any;
   
   firstFormGroup = new FormGroup({
     productCategoryId: new FormControl('', [
@@ -115,7 +120,7 @@ export class StepperComponent {
     targetSequence: new FormControl('', [
       Validators.required,
       Validators.minLength(6)
-    ])
+    ]),
   })
 
   // Forms
@@ -153,7 +158,7 @@ export class StepperComponent {
     let category_id = this.firstFormGroup.value.productCategoryId;
     if (category_id != '' && category_id != null) {
       this.designFormService.getFunctionTypesByCategory(category_id).subscribe(
-        (response) => {this.functionTypeCards = response; console.log(response)}
+        (response) => {this.functionTypeCards = response;}
       )
     }
   }
@@ -162,7 +167,7 @@ export class StepperComponent {
     let function_type_id = this.secondFormGroup.value.functionTypeId;
     if (function_type_id != '' && function_type_id != null) {
       this.designFormService.getDeliveryTypesByFunctionType(function_type_id).subscribe(
-        (response) => {this.deliveryTypeCards = response; console.log(response)}
+        (response) => {this.deliveryTypeCards = response;}
       )
     }
   }
@@ -203,7 +208,7 @@ export class StepperComponent {
             this.geneTable = [];
           }
           else {
-            this.geneTable = response; console.log(this.geneTable)
+            this.geneTable = response;
           }
         }
       )
@@ -214,8 +219,20 @@ export class StepperComponent {
     return str == '' || str == null;
   }
 
-  onSubmit() {
-    console.log([this.firstFormGroup.value, this.secondFormGroup.value, this.fourthFormGroup.value]); 
+  loadSummaryResources() {
+    if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
+      this.selectedTargetSequence = this.searchGeneGroup.value.targetSequence;
+    }
+    else {
+      this.selectedTargetSequence = this.fifthFormGroup.value.targetSequence;
+    }
+    let delivery_type_name = this.thirdFormGroup.value.deliveryTypeName;
+    if (delivery_type_name != null) {
+      this.designFormService.loadSummaryResources(delivery_type_name).subscribe(
+        (response) => {this.deliveryFormats = response; console.log(response)}
+      )
+    }
+    
   }
 
   ngOnInit() {

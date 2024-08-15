@@ -17,6 +17,7 @@ import { ProductModeModule } from './product-mode/product-mode.module';
 import { StepperComponent } from './design-mode/stepper/stepper.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
+import { SummaryComponent } from './design-mode/summary/summary.component';
 
 @NgModule({
   declarations: [
