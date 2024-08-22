@@ -125,7 +125,7 @@ export class StepperComponent {
     ]),
   })
   sixthFormGroup = new FormGroup({
-    productId: new FormControl(-1, [
+    productId: new FormControl<number>(-1, [
       Validators.required,
       Validators.min(1)
     ]),
@@ -223,10 +223,6 @@ export class StepperComponent {
       )
     }
     this.getDeliveryFormatTable();
-  }
-
-  isEmpty(str: string | null | undefined) {
-    return str == '' || str == null;
   }
 
   getDeliveryFormatTable() {

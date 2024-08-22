@@ -89,10 +89,13 @@ def get_delivery_format_table(request):
 
 
 @api_view(['GET'])
-def load_summary_resources(request):
-    delivery_type_name = request.GET["delivery_type_name"]
-    delivery_formats = list(DeliveryLibrary.objects.filter(delivery_type_name=delivery_type_name).distinct().values("delivery_format_name"))
-    return Response(delivery_formats)
+def get_product_summary(request):
+    product_id = request.GET["product_id"]
+
+    queryset = Product.objects.get(product_id=product_id)
+    serializer = ProductSerializer(queryset)
+
+    return Response(serializer.data)
 
 
 def get_promoters(function_type_symbol, delivery_type_symbol):

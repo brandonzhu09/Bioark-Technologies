@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DesignFormService } from '../design-form.service';
 
 @Component({
   selector: 'design-summary',
@@ -8,15 +9,16 @@ import { Component, Input } from '@angular/core';
 })
 export class SummaryComponent {
 
-  @Input() productCategory: any = "";
-  @Input() functionType: any = "";
-  @Input() deliveryType: any = "";
-  @Input() promoterName: any = "";
-  @Input() proteinTagName: any = "";
-  @Input() fluoresceneMarkerName: any = "";
-  @Input() selectionMarkerName: any = "";
-  @Input() bacterialMarkerName: any = "";
-  @Input() targetSequence: any = "";
-  @Input() deliveryFormats: any = "";
+  constructor(private designFormService: DesignFormService) { }
+
+  @Input() productId: number = 1;
+
+  product: any;
+
+  ngOnInit() {
+    this.designFormService.getProductSummary(this.productId).subscribe(
+      (response) => {this.product = response;}
+    )
+  }
 
 }

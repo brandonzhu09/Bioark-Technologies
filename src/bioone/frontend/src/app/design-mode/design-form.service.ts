@@ -50,8 +50,8 @@ export class DesignFormService {
     }});
   }
 
-  loadSummaryResources(deliveryTypeName: string) {
-    return this.http.get(`http://localhost:8000/products/load-summary-resources/`, {params: {delivery_type_name: deliveryTypeName}});
+  getProductSummary(productId: number) {
+    return this.http.get(`http://localhost:8000/products/get-product-summary/`, {params: {product_id: productId}});
   }
 
 }

@@ -267,16 +267,9 @@
             <button mat-button (click)="stepper.reset()">Reset</button>
         </div>
     </mat-step>
-    <!-- <mat-step>
+    <mat-step>
         <ng-template matStepLabel>Summary</ng-template>
-        <design-summary [productCategory]="firstFormGroup.value.productCategoryName"
-            [functionType]="secondFormGroup.value.functionTypeName"
-            [deliveryType]="thirdFormGroup.value.deliveryTypeName" [promoterName]="fourthFormGroup.value.promoterName"
-            [proteinTagName]="fourthFormGroup.value.proteinTagName"
-            [fluoresceneMarkerName]="fourthFormGroup.value.fluoresceneMarkerName"
-            [selectionMarkerName]="fourthFormGroup.value.selectionMarkerName"
-            [bacterialMarkerName]="fourthFormGroup.value.bacterialMarkerName" [targetSequence]="selectedTargetSequence"
-            [deliveryFormats]="deliveryFormats">
+        <design-summary [productCategory]="sixthFormGroup.value.productId">
         </design-summary>
-    </mat-step> -->
+    </mat-step>
 </mat-stepper>
