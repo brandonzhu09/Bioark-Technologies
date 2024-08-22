@@ -5,8 +5,8 @@
 }
 
 .button-card {
-    width: 150px; /* Fixed width */
-    height: 150px; /* Fixed height, making it square */
+    width: 250px; /* Fixed width */
+    height: 250px; /* Fixed height, making it square */
     background-color: #ffffff; /* White background, adjust as needed */
     border-radius: 5px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */

@@ -26,6 +26,7 @@
                     (click)="handleFunctionTypeClick(card)">
                     <i class="bi bi-boxes h1"></i>
                     <div class="text">{{card.function_type_name}}</div>
+                    <div class="comment">{{card.description}}</div>
                 </button>
                 }
             </div>
@@ -195,7 +196,7 @@
     </mat-step>
     }
     <mat-step [stepControl]="sixthFormGroup" label="Select delivery format">
-        <form [formGroup]="sixthFormGroup" (ngSubmit)="resetFormsAfter(6)">
+        <form [formGroup]="sixthFormGroup" (ngSubmit)="resetFormsAfter(5)">
             <table>
                 <thead>
                     <tr>

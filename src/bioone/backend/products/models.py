@@ -125,7 +125,7 @@ class FunctionType(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
 
     class Meta:
-        db_table = 'function_type'
+        db_table = 'function_types'
 
 # class DeliveryType(models.Model):
 #     delivery_type_id = models.AutoField(primary_key=True)
@@ -143,13 +143,19 @@ class DeliveryLibrary(models.Model):
     class Meta:
         db_table = 'delivery_library'
 
+class DeliveryFormat(models.Model):
+    delivery_format_symbol = models.CharField()
+    delivery_format_name = models.CharField()
+    description = models.CharField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'delivery_formats'
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_sku = models.CharField()
     product_name = models.CharField()
     description = models.CharField(blank=True, null=True)
-    product_format_description = models.CharField(blank=True, null=True)
     function_type_code = models.CharField()
     delivery_type_code = models.CharField()
     serial_id = models.CharField()
