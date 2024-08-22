@@ -21,3 +21,14 @@ class GeneLibrarySerializer(serializers.ModelSerializer):
     class Meta:
         model = GeneLibrary
         fields = ['target_sequence', 'symbol', 'gene_name', 'locus_id']
+
+class DeliveryFormatTableSerializer(serializers.BaseSerializer):
+    def to_representation(self, instance):
+        return {
+            'product_id': instance.product_id,
+            'delivery_format_name': DeliveryLibrary.objects.filter(delivery_format_symbol=instance.delivery_format_code).first().delivery_format_name,
+            'product_format_description': instance.product_format_description,
+            'product_name': instance.product_name,
+            'quantity': instance.amount + " " + instance.unit_size,
+            'price': instance.base_price,
+        }

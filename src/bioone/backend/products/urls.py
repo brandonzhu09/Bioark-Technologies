@@ -7,5 +7,6 @@ urlpatterns = [
     path('get-delivery-types-by-function-type/', views.get_delivery_types_by_function_type),
     path('get-code-p-by-function-delivery/', views.get_code_p_by_function_delivery),
     path('get-gene-table-by-symbol/', views.get_gene_table_by_symbol),
+    path('get-delivery-format-table/', views.get_delivery_format_table),
     path('load-summary-resources/', views.load_summary_resources),
 ]

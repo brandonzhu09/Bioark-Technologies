@@ -148,6 +148,8 @@ class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_sku = models.CharField()
     product_name = models.CharField()
+    description = models.CharField(blank=True, null=True)
+    product_format_description = models.CharField(blank=True, null=True)
     function_type_code = models.CharField()
     delivery_type_code = models.CharField()
     serial_id = models.CharField()

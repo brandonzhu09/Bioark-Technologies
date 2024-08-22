@@ -133,12 +133,12 @@
                     <div class="text">Search Target Gene</div>
                 </button>
                 <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'scramble'}"
-                    (click)="handleTargetSequenceClick('scramble', '000000')">
+                    (click)="handleTargetSequenceClick('scramble', 'XXXXXX')">
                     <i class="bi bi-virus h1"></i>
                     <div class="text">Scramble</div>
                 </button>
                 <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'none'}"
-                    (click)="handleTargetSequenceClick('none', 'XXXXXX')">
+                    (click)="handleTargetSequenceClick('none', '000000')">
                     <i class="bi bi-ban h1"></i>
                     <div class="text">None</div>
                 </button>
@@ -194,6 +194,51 @@
         </form>
     </mat-step>
     }
+    <mat-step [stepControl]="sixthFormGroup" label="Select delivery format">
+        <form [formGroup]="sixthFormGroup" (ngSubmit)="resetFormsAfter(6)">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Delivery Format</th>
+                        <th>Format Description</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of deliveryFormatTable">
+                        <td>
+                            <div class="form-check"><input class="form-check-input" name="productId"
+                                    formControlName="productId" [value]="row['product_id']" type="radio">
+                            </div>
+                        </td>
+                        @for (column of deliveryFormatColumns; track column) {
+                        @if (column == 'price') {
+                        <td><span class="price">${{ row[column] }}</span></td>
+                        }
+                        @else {
+                        <td>{{ row[column] }}</td>
+                        }
+                        }
+                        <!-- <td *ngFor="let column of deliveryFormatColumns">{{ row[column] }}</td> -->
+                        <!-- <td class="price-column">
+                            <div class="price-container">
+                                <span class="price">$212.00</span>
+                                <input type="number" placeholder="Quantity">
+                                <button>Add to Cart</button>
+                            </div>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
     <mat-step>
         <ng-template matStepLabel>Confirm</ng-template>
         <h1>Review Design Form</h1>
@@ -218,11 +263,11 @@
         <p>Ready to proceed? Click submit to confirm your selection.</p>
         <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext (click)="loadSummaryResources()">Submit</button>
+            <button mat-button matStepperNext>Submit</button>
             <button mat-button (click)="stepper.reset()">Reset</button>
         </div>
     </mat-step>
-    <mat-step>
+    <!-- <mat-step>
         <ng-template matStepLabel>Summary</ng-template>
         <design-summary [productCategory]="firstFormGroup.value.productCategoryName"
             [functionType]="secondFormGroup.value.functionTypeName"
@@ -233,5 +278,5 @@
             [bacterialMarkerName]="fourthFormGroup.value.bacterialMarkerName" [targetSequence]="selectedTargetSequence"
             [deliveryFormats]="deliveryFormats">
         </design-summary>
-    </mat-step>
+    </mat-step> -->
 </mat-stepper>

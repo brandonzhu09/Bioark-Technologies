@@ -48,7 +48,9 @@ export class StepperComponent {
   initialGeneSymbol: string = "";
 
   selectedTargetSequence: string | null | undefined = "";
-  deliveryFormats: any;
+  
+  deliveryFormatColumns: string[] = ['delivery_format_name', 'product_format_description', 'product_name', 'quantity', 'price'];
+  deliveryFormatTable: any[] = [];
   
   firstFormGroup = new FormGroup({
     productCategoryId: new FormControl('', [
@@ -120,6 +122,12 @@ export class StepperComponent {
     targetSequence: new FormControl('', [
       Validators.required,
       Validators.minLength(6)
+    ]),
+  })
+  sixthFormGroup = new FormGroup({
+    productId: new FormControl(-1, [
+      Validators.required,
+      Validators.min(1)
     ]),
   })
 
@@ -195,11 +203,12 @@ export class StepperComponent {
     else {
       this.showSearchGeneGroup = false;
     }
+    this.getDeliveryFormatTable();
   }
 
   submitSearchGeneForm() {
-    let gene_symbol = this.searchGeneGroup.value.geneSymbol;
-    if (gene_symbol != '' && gene_symbol != null && gene_symbol != this.initialGeneSymbol) {
+    let gene_symbol = this.searchGeneGroup.value.geneSymbol!;
+    if (gene_symbol != this.initialGeneSymbol) {
       this.searchGeneGroup.controls.targetSequence.reset();
       this.initialGeneSymbol = gene_symbol;
       this.designFormService.getGeneTableBySymbol(gene_symbol).subscribe(
@@ -213,27 +222,62 @@ export class StepperComponent {
         }
       )
     }
+    this.getDeliveryFormatTable();
   }
 
   isEmpty(str: string | null | undefined) {
     return str == '' || str == null;
   }
 
-  loadSummaryResources() {
+  getDeliveryFormatTable() {
     if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
-      this.selectedTargetSequence = this.searchGeneGroup.value.targetSequence;
+      this.selectedTargetSequence = this.searchGeneGroup.value.targetSequence!;
     }
     else {
-      this.selectedTargetSequence = this.fifthFormGroup.value.targetSequence;
+      this.selectedTargetSequence = this.fifthFormGroup.value.targetSequence!;
     }
-    let delivery_type_name = this.thirdFormGroup.value.deliveryTypeName;
-    if (delivery_type_name != null) {
-      this.designFormService.loadSummaryResources(delivery_type_name).subscribe(
-        (response) => {this.deliveryFormats = response; console.log(response)}
-      )
-    }
+    let delivery_type_name = this.thirdFormGroup.value.deliveryTypeName!;
+    let function_type_name = this.secondFormGroup.value.functionTypeName!;
+    let promoter_name = this.fourthFormGroup.value.promoterName!;
+    let protein_tag_name = this.fourthFormGroup.value.proteinTagName!;
+    let fluorescene_marker_name = this.fourthFormGroup.value.fluoresceneMarkerName!;
+    let selection_marker_name = this.fourthFormGroup.value.selectionMarkerName!;
+    let bacterial_marker_name = this.fourthFormGroup.value.bacterialMarkerName!;
+    this.designFormService.getDeliveryFormatTable(
+      delivery_type_name,
+      function_type_name,
+      promoter_name,
+      protein_tag_name,
+      fluorescene_marker_name,
+      selection_marker_name,
+      bacterial_marker_name,
+      this.selectedTargetSequence
+    ).subscribe(
+      (response) => {
+        if (response.length == 0) {
+          this.deliveryFormatTable = [];
+        }
+        else {
+          this.deliveryFormatTable = response;
+        } 
+      }
+    )
     
   }
+
+  // loadSummaryResources() {
+  //   if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
+  //     this.selectedTargetSequence = this.searchGeneGroup.value.targetSequence;
+  //   }
+  //   else {
+  //     this.selectedTargetSequence = this.fifthFormGroup.value.targetSequence;
+  //   }
+  //   let delivery_type_name = this.thirdFormGroup.value.deliveryTypeName;
+  //   if (delivery_type_name != null) {
+  //     this.designFormService.loadSummaryResources(delivery_type_name).subscribe(
+  //       (response) => {this.deliveryFormats = response; console.log(response)}
+  //     )
+  //   }
 
   ngOnInit() {
     this.designFormService.getProductCategories().subscribe(

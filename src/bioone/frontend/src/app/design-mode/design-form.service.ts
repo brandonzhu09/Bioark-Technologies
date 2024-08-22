@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,28 @@ export class DesignFormService {
 
   getGeneTableBySymbol(symbol: string) {
     return this.http.get<any[]>(`http://localhost:8000/products/get-gene-table-by-symbol/`, {params: {symbol: symbol}});
+  }
+
+  getDeliveryFormatTable(
+    deliveryTypeName: string,
+    functionTypeName: string,
+    promoterName: string,
+    proteinTagName: string,
+    fluoresceneMarkerName: string,
+    selectionMarkerName: string,
+    bacterialMarkerName: string,
+    targetSequence: string) {
+    return this.http.get<any[]>(`http://localhost:8000/products/get-delivery-format-table/`, 
+      {params: {
+        delivery_type_name: deliveryTypeName,
+        function_type_name: functionTypeName,
+        promoter_name: promoterName,
+        protein_tag_name: proteinTagName,
+        fluorescene_marker_name: fluoresceneMarkerName,
+        selection_marker_name: selectionMarkerName,
+        bacterial_marker_name: bacterialMarkerName,
+        target_sequence: targetSequence,
+    }});
   }
 
   loadSummaryResources(deliveryTypeName: string) {
