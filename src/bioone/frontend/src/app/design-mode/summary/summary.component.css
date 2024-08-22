@@ -40,3 +40,66 @@ h2 {
     display: inline-block;
     width: 200px;
 }
+
+/* Button groups */
+.button-design-group {
+    display: flex;
+    gap: 20px; /* Space between buttons */
+    justify-content: center; /* Center the buttons */
+    padding: 20px; /* Optional padding around the buttons */
+}
+
+.button-service-group {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center the buttons */
+    padding: 20px; /* Padding around the buttons */
+    border: 1px solid #000; /* Border around the entire button group */
+}
+
+.button-nav-group {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center the buttons */
+    padding: 20px; /* Optional padding around the buttons */
+}
+
+/* Basic button styles */
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Default style for light gray buttons */
+.button.light {
+    background-color: #f1f3f5;
+    color: #333;
+}
+
+/* Style for the blue button */
+.button.blue {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.button.orange {
+    background-color: #f7941e; /* Orange background */
+    color: #fff; /* White text color */
+}
+
+/* Hover effects */
+.button.light:hover {
+    background-color: #e2e6ea;
+}
+
+.button.blue:hover {
+    background-color: #0069d9;
+}
+
+.button.orange:hover {
+    background-color: #e68700; /* Darker orange on hover */
+}
