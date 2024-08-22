@@ -8,12 +8,15 @@
 
 h1 {
     font-size: 24px;
-    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 5px;
 }
 
 .content {
     display: flex;
-    gap: 20px;
+    gap: 40px;
 }
 
 .diagram img {

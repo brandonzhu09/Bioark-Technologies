@@ -1,25 +1,24 @@
 <div class="product-page">
-    <h1>p53 (TP53) Human Gene Knockout Kit (CRISPR)</h1>
+    @if (productId != -1) {
+    <h1>{{product.product_name}}</h1>
     <div class="content">
         <div class="diagram">
             <img src="../../../assets/lego-design-diagram.png" alt="Diagram">
         </div>
         <div class="description">
-            <div class="overview">
-                <h2>Products</h2>
-                <p><strong>SKU Number:</strong>CPD100011</p>
-                <p>Product Category: {{firstFormGroup.value.productCategoryName}}</p>
-                <p>Function Type: {{secondFormGroup.value.functionTypeName}}</p>
-                <p>Delivery Type: {{thirdFormGroup.value.deliveryTypeName}}</p>
-                <h2>Structure</h2>
-                <p>Promoter: {{fourthFormGroup.value.promoterName}}</p>
-                <p>Protein Tag: {{fourthFormGroup.value.proteinTagName}}</p>
-                <p>Fluorescene Marker: {{fourthFormGroup.value.fluoresceneMarkerName}}</p>
-                <p>Selection Marker: {{fourthFormGroup.value.selectionMarkerName}}</p>
-                <p>Antibiotics: {{fourthFormGroup.value.bacterialMarkerName}}</p>
-                <h2>Target Gene</h2>
-                <p>Target Sequence: {{fifthFormGroup.value.geneOption}}</p>
-            </div>
+            <!-- <h2>Products</h2> -->
+            <p><strong>SKU Number:</strong>{{product.product_sku}}</p>
+            <p><strong>Function Type: </strong>{{product.function_type_name}}</p>
+            <p class="mb-3"><strong>Delivery Type: </strong>{{product.delivery_type_name}}</p>
+            <!-- <h2>Structure</h2> -->
+            <p><strong>Promoter: </strong>{{product.promoter_name}}</p>
+            <p><strong>Protein Tag: </strong>{{product.protein_tag_name}}</p>
+            <p><strong>Fluorescene Marker: </strong>{{product.fluorescene_marker_name}}</p>
+            <p><strong>Selection Marker: </strong>{{product.selection_marker_name}}</p>
+            <p class="mb-3"><strong>Antibiotics: </strong>{{product.bacterial_marker_name}}</p>
+            <!-- <h2>Target Gene</h2> -->
+            <p class="mb-3"><strong>Target Sequence: </strong>{{product.target_sequence}}</p>
         </div>
     </div>
+    }
 </div>

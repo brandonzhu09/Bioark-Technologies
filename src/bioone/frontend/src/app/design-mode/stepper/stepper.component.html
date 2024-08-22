@@ -240,36 +240,9 @@
         </form>
     </mat-step>
     <mat-step>
-        <ng-template matStepLabel>Confirm</ng-template>
-        <h1>Review Design Form</h1>
-        <h2>Products</h2>
-        <p>Product Category: {{firstFormGroup.value.productCategoryName}}</p>
-        <p>Function Type: {{secondFormGroup.value.functionTypeName}}</p>
-        <p>Delivery Type: {{thirdFormGroup.value.deliveryTypeName}}</p>
-        <h2>Structure</h2>
-        <p>Promoter: {{fourthFormGroup.value.promoterName}}</p>
-        <p>Protein Tag: {{fourthFormGroup.value.proteinTagName}}</p>
-        <p>Fluorescene Marker: {{fourthFormGroup.value.fluoresceneMarkerName}}</p>
-        <p>Selection Marker: {{fourthFormGroup.value.selectionMarkerName}}</p>
-        <p>Antibiotics: {{fourthFormGroup.value.bacterialMarkerName}}</p>
-        <h2>Target Gene</h2>
-        <p>Gene Option: {{fifthFormGroup.value.geneOption}}</p>
-        @if (fifthFormGroup.value.geneOption == 'geneSearch') {
-        <p>Target Gene: {{searchGeneGroup.value.targetSequence}}</p>
-        }
-        @else {
-        <p>Target Gene: {{fifthFormGroup.value.targetSequence}}</p>
-        }
-        <p>Ready to proceed? Click submit to confirm your selection.</p>
-        <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Submit</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-        </div>
-    </mat-step>
-    <mat-step>
         <ng-template matStepLabel>Summary</ng-template>
-        <design-summary [productCategory]="sixthFormGroup.value.productId">
+        <design-summary [productId]="sixthFormGroup.value.productId!">
         </design-summary>
+        <button mat-button (click)="stepper.reset()">Reset</button>
     </mat-step>
 </mat-stepper>

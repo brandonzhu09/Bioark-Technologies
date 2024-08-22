@@ -11,14 +11,24 @@ export class SummaryComponent {
 
   constructor(private designFormService: DesignFormService) { }
 
-  @Input() productId: number = 1;
+  @Input() productId: number = 23;
 
   product: any;
 
+  ngOnChanges() {
+    this.getProductSummary()
+  }
+
   ngOnInit() {
-    this.designFormService.getProductSummary(this.productId).subscribe(
-      (response) => {this.product = response;}
-    )
+    this.getProductSummary()
+  }
+
+  getProductSummary() {
+    if (this.productId != -1) {
+      this.designFormService.getProductSummary(this.productId).subscribe(
+        (response) => {this.product = response; console.log(this.product)}
+      )
+    }
   }
 
 }
