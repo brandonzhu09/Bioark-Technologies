@@ -83,7 +83,23 @@ def get_delivery_format_table(request):
                                       bacterial_marker_code=bacterial_marker_code,
                                       gene=GeneLibrary.objects.get(target_sequence=target_sequence),
                                       ).distinct()
-    serializer = DeliveryFormatTableSerializer(products, many=True)
+    
+    structure_type_code = 'Others'
+    ready_status = 'Not'
+    # check whether structure type is M or B
+    if delivery_type_name == 'Lenti-AIO':
+        structure_type_code = 'M'
+    if delivery_type_name == 'AAV-AIO':
+        structure_type_code = 'B'
+    # check whether product is on-shelf or custom made
+    if len(products) > 0:
+        ready_status = 'Yes'
+
+    design_products = DesignLibrary.objects.filter(delivery_format_code__in=delivery_format_codes,
+                                                   structure_type_code=structure_type_code,
+                                                   ready_status=ready_status)
+    
+    serializer = DeliveryFormatTableSerializer(design_products, many=True)    
 
     return Response(serializer.data)
 

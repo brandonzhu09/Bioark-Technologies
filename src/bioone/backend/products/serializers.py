@@ -25,10 +25,9 @@ class GeneLibrarySerializer(serializers.ModelSerializer):
 class DeliveryFormatTableSerializer(serializers.BaseSerializer):
     def to_representation(self, instance):
         return {
-            'product_id': instance.product_id,
             'delivery_format_name': DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).delivery_format_name,
             'product_format_description': DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).description,
-            'product_name': instance.product_name,
+            'product_name': "Test",
             'quantity': instance.amount + " " + instance.unit_size,
             'price': instance.base_price,
         }

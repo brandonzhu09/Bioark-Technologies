@@ -143,6 +143,7 @@ class DeliveryLibrary(models.Model):
     class Meta:
         db_table = 'delivery_library'
 
+
 class DeliveryFormat(models.Model):
     delivery_format_symbol = models.CharField()
     delivery_format_name = models.CharField()
@@ -150,6 +151,22 @@ class DeliveryFormat(models.Model):
 
     class Meta:
         db_table = 'delivery_formats'
+
+
+class DesignLibrary(models.Model):
+    structure_type_code = models.CharField()
+    delivery_format_code = models.CharField()
+    ready_status = models.CharField()
+    amount = models.CharField()
+    unit_size = models.CharField()
+    discount_code = models.CharField(null=True)
+    base_price = models.DecimalField(max_digits=8, decimal_places=2)
+    adjusted_price = models.DecimalField(null=True, max_digits=8, decimal_places=2)
+    currency = models.CharField()
+
+    class Meta:
+        db_table = 'design_library'
+
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
