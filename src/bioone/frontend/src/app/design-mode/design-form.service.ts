@@ -29,7 +29,7 @@ export class DesignFormService {
   }
 
   getDeliveryFormatTable(
-    deliveryTypeName: string,
+    structureTypeName: string,
     functionTypeName: string,
     promoterName: string,
     proteinTagName: string,
@@ -39,7 +39,7 @@ export class DesignFormService {
     targetSequence: string) {
     return this.http.get<any[]>(`http://localhost:8000/products/get-delivery-format-table/`, 
       {params: {
-        delivery_type_name: deliveryTypeName,
+        delivery_type_name: structureTypeName,
         function_type_name: functionTypeName,
         promoter_name: promoterName,
         protein_tag_name: proteinTagName,

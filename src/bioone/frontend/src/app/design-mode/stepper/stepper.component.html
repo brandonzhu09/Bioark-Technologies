@@ -195,54 +195,17 @@
         </form>
     </mat-step>
     }
-    <mat-step [stepControl]="sixthFormGroup" label="Select delivery format">
-        <form [formGroup]="sixthFormGroup" (ngSubmit)="resetFormsAfter(5)">
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Delivery Format</th>
-                        <th>Format Description</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let row of deliveryFormatTable">
-                        <td>
-                            <div class="form-check"><input class="form-check-input" name="productId"
-                                    formControlName="productId" [value]="row['product_id']" type="radio">
-                            </div>
-                        </td>
-                        @for (column of deliveryFormatColumns; track column) {
-                        @if (column == 'price') {
-                        <td><span class="price">${{ row[column] }}</span></td>
-                        }
-                        @else {
-                        <td>{{ row[column] }}</td>
-                        }
-                        }
-                        <!-- <td *ngFor="let column of deliveryFormatColumns">{{ row[column] }}</td> -->
-                        <!-- <td class="price-column">
-                            <div class="price-container">
-                                <span class="price">$212.00</span>
-                                <input type="number" placeholder="Quantity">
-                                <button>Add to Cart</button>
-                            </div>
-                        </td> -->
-                    </tr>
-                </tbody>
-            </table>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-            </div>
-        </form>
-    </mat-step>
     <mat-step>
         <ng-template matStepLabel>Summary</ng-template>
-        <design-summary [productId]="sixthFormGroup.value.productId!">
+        <design-summary product_name="Product Name" product_sku="CPD100000"
+            [function_type_name]="secondFormGroup.value.functionTypeName!"
+            [structure_type_name]="thirdFormGroup.value.deliveryTypeName!"
+            [promoter_name]="fourthFormGroup.value.promoterName!"
+            [protein_tag_name]="fourthFormGroup.value.proteinTagName!"
+            [fluorescene_marker_name]="fourthFormGroup.value.fluoresceneMarkerName!"
+            [selection_marker_name]="fourthFormGroup.value.selectionMarkerName!"
+            [bacterial_marker_name]="fourthFormGroup.value.bacterialMarkerName!"
+            [target_sequence]="getTargetSequence()!">
         </design-summary>
         <button mat-button (click)="stepper.reset()">Reset</button>
     </mat-step>

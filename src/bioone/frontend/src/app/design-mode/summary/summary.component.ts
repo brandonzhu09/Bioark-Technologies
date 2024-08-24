@@ -11,22 +11,49 @@ export class SummaryComponent {
 
   constructor(private designFormService: DesignFormService) { }
 
-  @Input() productId: number = 23;
+  @Input() product_name: string = "Product Name";
+  @Input() product_sku: string = "CPD100000";
+  @Input() function_type_name: string = "CRISPRa";
+  @Input() structure_type_name: string = "Standard";
+  @Input() promoter_name: string = "PCMV";
+  @Input() protein_tag_name: string = "None";
+  @Input() fluorescene_marker_name: string = "None";
+  @Input() selection_marker_name: string = "Puro";
+  @Input() bacterial_marker_name: string = "CAM";
+  @Input() target_sequence: string = "XXXXXX";
 
   product: any;
+  deliveryFormatColumns: string[] = ['delivery_format_name', 'product_format_description', 'product_name', 'quantity', 'price'];
+  deliveryFormatTable: any[] = [];
 
   ngOnChanges() {
-    this.getProductSummary()
+    this.getDeliveryFormatTable()
   }
 
   ngOnInit() {
-    this.getProductSummary()
+    this.getDeliveryFormatTable()
   }
 
-  getProductSummary() {
-    if (this.productId != -1) {
-      this.designFormService.getProductSummary(this.productId).subscribe(
-        (response) => {this.product = response; console.log(this.product)}
+  getDeliveryFormatTable() {
+    if (this.target_sequence != null) {
+      this.designFormService.getDeliveryFormatTable(
+        this.structure_type_name,
+        this.function_type_name,
+        this.promoter_name,
+        this.protein_tag_name,
+        this.fluorescene_marker_name,
+        this.selection_marker_name,
+        this.bacterial_marker_name,
+        this.target_sequence
+      ).subscribe(
+        (response) => {
+          if (response.length == 0) {
+            this.deliveryFormatTable = [];
+          }
+          else {
+            this.deliveryFormatTable = response;
+          } 
+        }
       )
     }
   }

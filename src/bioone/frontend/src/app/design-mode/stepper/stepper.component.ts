@@ -124,12 +124,6 @@ export class StepperComponent {
       Validators.minLength(6)
     ]),
   })
-  sixthFormGroup = new FormGroup({
-    productId: new FormControl<number>(-1, [
-      Validators.required,
-      Validators.min(1)
-    ]),
-  })
 
   // Forms
   handleProductCategoryClick = (card: any) => {
@@ -202,8 +196,8 @@ export class StepperComponent {
     }
     else {
       this.showSearchGeneGroup = false;
+      this.selectedTargetSequence = this.fifthFormGroup.value.targetSequence;
     }
-    this.getDeliveryFormatTable();
   }
 
   submitSearchGeneForm() {
@@ -222,52 +216,16 @@ export class StepperComponent {
         }
       )
     }
-    this.getDeliveryFormatTable();
   }
 
-  getDeliveryFormatTable() {
+  getTargetSequence() {
     if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
-      this.selectedTargetSequence = this.searchGeneGroup.value.targetSequence!;
+      return this.searchGeneGroup.value.targetSequence;
     }
-    else {
-      this.selectedTargetSequence = this.fifthFormGroup.value.targetSequence!;
-    }
-    let delivery_type_name = this.thirdFormGroup.value.deliveryTypeName!;
-    let function_type_name = this.secondFormGroup.value.functionTypeName!;
-    let promoter_name = this.fourthFormGroup.value.promoterName!;
-    let protein_tag_name = this.fourthFormGroup.value.proteinTagName!;
-    let fluorescene_marker_name = this.fourthFormGroup.value.fluoresceneMarkerName!;
-    let selection_marker_name = this.fourthFormGroup.value.selectionMarkerName!;
-    let bacterial_marker_name = this.fourthFormGroup.value.bacterialMarkerName!;
-    this.designFormService.getDeliveryFormatTable(
-      delivery_type_name,
-      function_type_name,
-      promoter_name,
-      protein_tag_name,
-      fluorescene_marker_name,
-      selection_marker_name,
-      bacterial_marker_name,
-      this.selectedTargetSequence
-    ).subscribe(
-      (response) => {
-        if (response.length == 0) {
-          this.deliveryFormatTable = [];
-        }
-        else {
-          this.deliveryFormatTable = response;
-        } 
-      }
-    )
-    
+    return this.fifthFormGroup.value.targetSequence;
   }
 
   // loadSummaryResources() {
-  //   if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
-  //     this.selectedTargetSequence = this.searchGeneGroup.value.targetSequence;
-  //   }
-  //   else {
-  //     this.selectedTargetSequence = this.fifthFormGroup.value.targetSequence;
-  //   }
   //   let delivery_type_name = this.thirdFormGroup.value.deliveryTypeName;
   //   if (delivery_type_name != null) {
   //     this.designFormService.loadSummaryResources(delivery_type_name).subscribe(

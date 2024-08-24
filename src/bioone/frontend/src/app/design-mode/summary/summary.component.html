@@ -1,6 +1,5 @@
 <div class="product-page">
-    @if (productId != -1) {
-    <h1>{{product.product_name}}</h1>
+    <h1>{{product_name}}</h1>
     <div class="content">
         <div class="diagram">
             <img src="../../../assets/lego-design-diagram.png" alt="Diagram">
@@ -11,27 +10,59 @@
         </div>
         <div class="description">
             <!-- <h2>Products</h2> -->
-            <p><strong>SKU Number:</strong>{{product.product_sku}}</p>
-            <p><strong>Function Type: </strong>{{product.function_type_name}}</p>
-            <p class="mb-3"><strong>Delivery Type: </strong>{{product.delivery_type_name}}</p>
+            <p><strong>SKU Number:</strong>{{product_sku}}</p>
+            <p><strong>Function Type: </strong>{{function_type_name}}</p>
+            <p class="mb-3"><strong>Structure Type: </strong>{{structure_type_name}}</p>
             <!-- <h2>Structure</h2> -->
-            <p><strong>Promoter: </strong>{{product.promoter_name}}</p>
-            <p><strong>Protein Tag: </strong>{{product.protein_tag_name}}</p>
-            <p><strong>Fluorescene Marker: </strong>{{product.fluorescene_marker_name}}</p>
-            <p><strong>Selection Marker: </strong>{{product.selection_marker_name}}</p>
-            <p class="mb-3"><strong>Antibiotics: </strong>{{product.bacterial_marker_name}}</p>
+            <p><strong>Promoter: </strong>{{promoter_name}}</p>
+            <p><strong>Protein Tag: </strong>{{protein_tag_name}}</p>
+            <p><strong>Fluorescene Marker: </strong>{{fluorescene_marker_name}}</p>
+            <p><strong>Selection Marker: </strong>{{selection_marker_name}}</p>
+            <p class="mb-3"><strong>Antibiotics: </strong>{{bacterial_marker_name}}</p>
             <!-- <h2>Target Gene</h2> -->
-            <p class="mb-3"><strong>Target Sequence: </strong>{{product.target_sequence}}</p>
+            <p class="mb-3"><strong>Target Sequence: </strong>{{target_sequence}}</p>
             <div class="button-service-group">
                 <button class="button orange">Download Design and Protocol</button>
                 <button class="button orange">Customer Service</button>
             </div>
         </div>
     </div>
+    <div class="mt-3">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Delivery Format</th>
+                    <th>Format Description</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (row of deliveryFormatTable; track row) {
+                <tr>
+                    <td>
+                        <div class="form-check"><input class="form-check-input" name="productId"
+                                formControlName="productId" [value]="row['product_id']" type="radio">
+                        </div>
+                    </td>
+                    @for (column of deliveryFormatColumns; track column) {
+                    @if (column == 'price') {
+                    <td><span class="price">${{ row[column] }}</span></td>
+                    }
+                    @else {
+                    <td>{{ row[column] }}</td>
+                    }
+                    }
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <div class="button-nav-group mt-5">
         <button class="button light">Back</button>
         <button class="button light">Start new design</button>
         <button class="button blue">Add to Cart</button>
     </div>
-    }
 </div>
