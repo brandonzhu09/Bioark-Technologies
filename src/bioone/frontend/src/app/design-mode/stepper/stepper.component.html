@@ -1,14 +1,23 @@
 <mat-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup" (ngSubmit)="submitFirstForm(); resetFormsAfter(1)">
+        <form
+            [formGroup]="firstFormGroup"
+            (ngSubmit)="submitFirstForm(); resetFormsAfter(1)"
+        >
             <ng-template matStepLabel>Select function category</ng-template>
             <div class="container">
                 @for (card of productCategoryCards; track card.category_id) {
-                <button class="button-card"
-                    [ngClass]="{'selected': firstFormGroup.value.productCategoryId === card.category_id}"
-                    (click)="handleProductCategoryClick(card);">
+                <button
+                    class="button-card"
+                    [ngClass]="{
+                        selected:
+                            firstFormGroup.value.productCategoryId ===
+                            card.category_id
+                    }"
+                    (click)="handleProductCategoryClick(card)"
+                >
                     <i class="bi bi-boxes h1"></i>
-                    <div class="text">{{card.category_name}}</div>
+                    <div class="text">{{ card.category_name }}</div>
                 </button>
                 }
             </div>
@@ -18,15 +27,24 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" label="Select function type">
-        <form [formGroup]="secondFormGroup" (ngSubmit)="submitSecondForm(); resetFormsAfter(2)">
+        <form
+            [formGroup]="secondFormGroup"
+            (ngSubmit)="submitSecondForm(); resetFormsAfter(2)"
+        >
             <div class="container">
                 @for (card of functionTypeCards; track card.function_type_id) {
-                <button class="button-card"
-                    [ngClass]="{'selected': secondFormGroup.value.functionTypeId === card.function_type_id}"
-                    (click)="handleFunctionTypeClick(card)">
+                <button
+                    class="button-card"
+                    [ngClass]="{
+                        selected:
+                            secondFormGroup.value.functionTypeId ===
+                            card.function_type_id
+                    }"
+                    (click)="handleFunctionTypeClick(card)"
+                >
                     <i class="bi bi-boxes h1"></i>
-                    <div class="text">{{card.function_type_name}}</div>
-                    <div class="comment">{{card.description}}</div>
+                    <div class="text">{{ card.function_type_name }}</div>
+                    <div class="comment">{{ card.description }}</div>
                 </button>
                 }
             </div>
@@ -37,14 +55,24 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup" label="Select delivery type">
-        <form [formGroup]="thirdFormGroup" (ngSubmit)="submitThirdForm(); resetFormsAfter(3)">
+        <form
+            [formGroup]="thirdFormGroup"
+            (ngSubmit)="submitThirdForm(); resetFormsAfter(3)"
+        >
             <div class="container">
-                @for (card of deliveryTypeCards; track card.delivery_type_symbol) {
-                <button class="button-card"
-                    [ngClass]="{'selected': thirdFormGroup.value.deliveryTypeSymbol === card.delivery_type_symbol}"
-                    (click)="handleDeliveryTypeClick(card)">
+                @for (card of deliveryTypeCards; track
+                card.delivery_type_symbol) {
+                <button
+                    class="button-card"
+                    [ngClass]="{
+                        selected:
+                            thirdFormGroup.value.deliveryTypeSymbol ===
+                            card.delivery_type_symbol
+                    }"
+                    (click)="handleDeliveryTypeClick(card)"
+                >
                     <i class="bi bi-boxes h1"></i>
-                    <div class="text">{{card.delivery_type_name}}</div>
+                    <div class="text">{{ card.delivery_type_name }}</div>
                 </button>
                 }
             </div>
@@ -55,64 +83,107 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup" label="Select structure">
-        <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4);">
+        <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
             <mat-tab-group>
                 <mat-tab label="Promoter">
                     <div class="container">
                         @for (card of promoterCards; track card.promoter_code) {
-                        <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.promoterName === card.promoter_name}"
-                            (click)="handlePromoterClick(card)">
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value.promoterName ===
+                                    card.promoter_name
+                            }"
+                            (click)="handlePromoterClick(card)"
+                        >
                             <i class="bi bi-box-seam h1"></i>
-                            <div class="text">{{card.promoter_name}}</div>
+                            <div class="text">{{ card.promoter_name }}</div>
                         </button>
                         }
                     </div>
                 </mat-tab>
                 <mat-tab label="Protein Tag">
                     <div class="container">
-                        @for (card of proteinTagCards; track card.protein_tag_code) {
-                        <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.proteinTagName === card.protein_tag_name}"
-                            (click)="handleProteinTagClick(card)">
+                        @for (card of proteinTagCards; track
+                        card.protein_tag_code) {
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value.proteinTagName ===
+                                    card.protein_tag_name
+                            }"
+                            (click)="handleProteinTagClick(card)"
+                        >
                             <i class="bi bi-box-seam h1"></i>
-                            <div class="text">{{card.protein_tag_name}}</div>
+                            <div class="text">{{ card.protein_tag_name }}</div>
                         </button>
                         }
                     </div>
                 </mat-tab>
                 <mat-tab label="Fluorescene Marker">
                     <div class="container">
-                        @for (card of fluoresceneMarkerCards; track card.fluorescene_marker_code) {
-                        <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.fluoresceneMarkerName === card.fluorescene_marker_name}"
-                            (click)="handleFluoresceneMarkerClick(card)">
+                        @for (card of fluoresceneMarkerCards; track
+                        card.fluorescene_marker_code) {
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value
+                                        .fluoresceneMarkerName ===
+                                    card.fluorescene_marker_name
+                            }"
+                            (click)="handleFluoresceneMarkerClick(card)"
+                        >
                             <i class="bi bi-box-seam h1"></i>
-                            <div class="text">{{card.fluorescene_marker_name}}</div>
+                            <div class="text">
+                                {{ card.fluorescene_marker_name }}
+                            </div>
                         </button>
                         }
                     </div>
                 </mat-tab>
                 <mat-tab label="Selection Marker">
                     <div class="container">
-                        @for (card of selectionMarkerCards; track card.selection_marker_code) {
-                        <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.selectionMarkerName === card.selection_marker_name}"
-                            (click)="handleSelectionMarkerClick(card)">
+                        @for (card of selectionMarkerCards; track
+                        card.selection_marker_code) {
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value
+                                        .selectionMarkerName ===
+                                    card.selection_marker_name
+                            }"
+                            (click)="handleSelectionMarkerClick(card)"
+                        >
                             <i class="bi bi-box-seam h1"></i>
-                            <div class="text">{{card.selection_marker_name}}</div>
+                            <div class="text">
+                                {{ card.selection_marker_name }}
+                            </div>
                         </button>
                         }
                     </div>
                 </mat-tab>
                 <mat-tab label="Antibiotics">
                     <div class="container">
-                        @for (card of bacterialMarkerCards; track card.bacterial_marker_code) {
-                        <button class="button-card"
-                            [ngClass]="{'selected': fourthFormGroup.value.bacterialMarkerName === card.bacterial_marker_name}"
-                            (click)="handleBacterialMarkerClick(card)">
+                        @for (card of bacterialMarkerCards; track
+                        card.bacterial_marker_code) {
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value
+                                        .bacterialMarkerName ===
+                                    card.bacterial_marker_name
+                            }"
+                            (click)="handleBacterialMarkerClick(card)"
+                        >
                             <i class="bi bi-box-seam h1"></i>
-                            <div class="text">{{card.bacterial_marker_name}}</div>
+                            <div class="text">
+                                {{ card.bacterial_marker_name }}
+                            </div>
                         </button>
                         }
                     </div>
@@ -126,20 +197,39 @@
     </mat-step>
 
     <mat-step [stepControl]="fifthFormGroup" label="Select gene type">
-        <form [formGroup]="fifthFormGroup" (ngSubmit)="submitFifthForm(); resetFormsAfter(5)">
+        <form
+            [formGroup]="fifthFormGroup"
+            (ngSubmit)="submitFifthForm(); resetFormsAfter(5)"
+        >
             <div class="container">
-                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'geneSearch'}"
-                    (click)="handleTargetSequenceClick('geneSearch', 'IGNORE')">
+                <button
+                    class="button-card"
+                    [ngClass]="{
+                        selected:
+                            fifthFormGroup.value.geneOption === 'geneSearch'
+                    }"
+                    (click)="handleTargetSequenceClick('geneSearch', 'IGNORE')"
+                >
                     <i class="bi bi-virus h1"></i>
                     <div class="text">Search Target Gene</div>
                 </button>
-                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'scramble'}"
-                    (click)="handleTargetSequenceClick('scramble', 'XXXXXX')">
+                <button
+                    class="button-card"
+                    [ngClass]="{
+                        selected: fifthFormGroup.value.geneOption === 'scramble'
+                    }"
+                    (click)="handleTargetSequenceClick('scramble', 'XXXXXX')"
+                >
                     <i class="bi bi-virus h1"></i>
                     <div class="text">Scramble</div>
                 </button>
-                <button class="button-card" [ngClass]="{'selected': fifthFormGroup.value.geneOption === 'none'}"
-                    (click)="handleTargetSequenceClick('none', '000000')">
+                <button
+                    class="button-card"
+                    [ngClass]="{
+                        selected: fifthFormGroup.value.geneOption === 'none'
+                    }"
+                    (click)="handleTargetSequenceClick('none', '000000')"
+                >
                     <i class="bi bi-ban h1"></i>
                     <div class="text">None</div>
                 </button>
@@ -155,8 +245,16 @@
         <form [formGroup]="searchGeneGroup" (ngSubmit)="submitSearchGeneForm()">
             <label class="form-label fs-5 mb-3">Enter Gene Symbol</label>
             <div class="input-group">
-                <input type="text" formControlName="geneSymbol" class="form-control border-end-0" placeholder="Search">
-                <button class="btn btn-outline-secondary border bi bi-search" type="submit"></button>
+                <input
+                    type="text"
+                    formControlName="geneSymbol"
+                    class="form-control border-end-0"
+                    placeholder="Search"
+                />
+                <button
+                    class="btn btn-outline-secondary border bi bi-search"
+                    type="submit"
+                ></button>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -172,16 +270,23 @@
                     @if (geneTable.length > 0) {
                     <tr *ngFor="let row of geneTable">
                         <td>
-                            <div class="form-check"><input class="form-check-input" name="targetSequence"
-                                    formControlName="targetSequence" [value]="row['target_sequence']" type="radio">
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    name="targetSequence"
+                                    formControlName="targetSequence"
+                                    [value]="row['target_sequence']"
+                                    type="radio"
+                                />
                             </div>
                         </td>
-                        <td *ngFor="let column of geneColumns">{{ row[column] }}</td>
+                        <td *ngFor="let column of geneColumns">
+                            {{ row[column] }}
+                        </td>
                     </tr>
-                    }
-                    @else {
+                    } @else {
                     <tr>
-                        <td colspan="5" style="text-align: center;">
+                        <td colspan="5" style="text-align: center">
                             <em>No results found. Please try again.</em>
                         </td>
                     </tr>
@@ -194,19 +299,25 @@
             </div>
         </form>
     </mat-step>
-    }
+    } @if (toggleSummaryStep) {
     <mat-step>
         <ng-template matStepLabel>Summary</ng-template>
-        <design-summary product_name="Product Name" product_sku="CPD100000"
+        <design-summary
+            product_name="Product Name"
+            product_sku="CPD100000"
             [function_type_name]="secondFormGroup.value.functionTypeName!"
             [structure_type_name]="thirdFormGroup.value.deliveryTypeName!"
             [promoter_name]="fourthFormGroup.value.promoterName!"
             [protein_tag_name]="fourthFormGroup.value.proteinTagName!"
-            [fluorescene_marker_name]="fourthFormGroup.value.fluoresceneMarkerName!"
+            [fluorescene_marker_name]="
+                fourthFormGroup.value.fluoresceneMarkerName!
+            "
             [selection_marker_name]="fourthFormGroup.value.selectionMarkerName!"
             [bacterial_marker_name]="fourthFormGroup.value.bacterialMarkerName!"
-            [target_sequence]="getTargetSequence()!">
+            [target_sequence]="getTargetSequence()!"
+        >
         </design-summary>
         <button mat-button (click)="stepper.reset()">Reset</button>
     </mat-step>
+    }
 </mat-stepper>
