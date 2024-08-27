@@ -15,13 +15,13 @@ class PromoterSpecialCase(models.Model):
     promoter_name = models.CharField()
     promoter_code = models.CharField()
     function_type_symbol = models.CharField(null=True)
-    delivery_type_symbol = models.CharField(null=True)
+    structure_type_symbol = models.CharField(null=True)
 
     class Meta:
         db_table = 'promoters_special_case'
         constraints = [
             models.CheckConstraint(
-                check=Q(function_type_symbol__isnull=False) | Q(delivery_type_symbol__isnull=False),
+                check=Q(function_type_symbol__isnull=False) | Q(structure_type_symbol__isnull=False),
                 name='not_both_null'
             )
         ]
@@ -76,7 +76,7 @@ class BacterialMarkerSpecialCase(models.Model):
     bacterial_marker_id = models.AutoField(primary_key=True)
     bacterial_marker_name = models.CharField()
     bacterial_marker_code = models.CharField()
-    delivery_type_symbol = models.CharField()
+    structure_type_symbol = models.CharField()
 
     class Meta:
         db_table = 'bacterial_markers_special_case'
@@ -118,7 +118,7 @@ class ProductCategory(models.Model):
 
 class FunctionType(models.Model):
     function_type_id = models.AutoField(primary_key=True)
-    symbol = models.CharField(unique=True) # TODO: enum
+    function_type_symbol = models.CharField(unique=True) # TODO: enum
     function_type_name = models.CharField(unique=True)
     description = models.CharField(blank=True, null=True)
     load_status = models.CharField(blank=True, null=True, default="Loaded")
@@ -127,26 +127,28 @@ class FunctionType(models.Model):
     class Meta:
         db_table = 'function_types'
 
-# class DeliveryType(models.Model):
-#     delivery_type_id = models.AutoField(primary_key=True)
-#     code = models.CharField(unique=True) # TODO: enum
-#     code_name = models.CharField(unique=True)
-
 class DeliveryLibrary(models.Model):
     delivery_library_id = models.AutoField(primary_key=True)
-    delivery_type_symbol = models.CharField()
-    delivery_type_name = models.CharField()
+    structure_type_symbol = models.CharField()
     delivery_format_symbol = models.CharField()
-    delivery_format_name = models.CharField()
     function_type = models.ForeignKey(FunctionType, on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'delivery_library'
 
 
+class StructureType(models.Model):
+    structure_type_id = models.AutoField(primary_key=True)
+    structure_type_symbol = models.CharField(unique=True)
+    structure_type_name = models.CharField(unique=True)
+
+    class Meta:
+        db_table = 'structure_types'
+
+
 class DeliveryFormat(models.Model):
-    delivery_format_symbol = models.CharField()
-    delivery_format_name = models.CharField()
+    delivery_format_symbol = models.CharField(unique=True)
+    delivery_format_name = models.CharField(unique=True)
     description = models.CharField(blank=True, null=True)
 
     class Meta:
@@ -174,7 +176,7 @@ class Product(models.Model):
     product_name = models.CharField()
     description = models.CharField(blank=True, null=True)
     function_type_code = models.CharField()
-    delivery_type_code = models.CharField()
+    structure_type_code = models.CharField()
     serial_id = models.CharField()
     promoter_code = models.CharField()
     property_code = models.CharField()

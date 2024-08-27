@@ -40,7 +40,7 @@ export class StepperComponent {
 
     productCategoryCards: any;
     functionTypeCards: any;
-    deliveryTypeCards: any;
+    structureTypeCards: any;
     promoterCards: any;
     proteinTagCards: any;
     fluoresceneMarkerCards: any;
@@ -90,11 +90,11 @@ export class StepperComponent {
         ]),
     });
     thirdFormGroup = new FormGroup({
-        deliveryTypeSymbol: new FormControl('', [
+        structureTypeSymbol: new FormControl('', [
             Validators.required,
             Validators.minLength(1),
         ]),
-        deliveryTypeName: new FormControl('', [
+        structureTypeName: new FormControl('', [
             Validators.required,
             Validators.minLength(1),
         ]),
@@ -160,11 +160,11 @@ export class StepperComponent {
         );
     };
     handleDeliveryTypeClick = (card: any) => {
-        this.thirdFormGroup.controls.deliveryTypeSymbol.setValue(
-            card.delivery_type_symbol
+        this.thirdFormGroup.controls.structureTypeSymbol.setValue(
+            card.structure_type_symbol
         );
-        this.thirdFormGroup.controls.deliveryTypeName.setValue(
-            card.delivery_type_name
+        this.thirdFormGroup.controls.structureTypeName.setValue(
+            card.structure_type_name
         );
     };
     handlePromoterClick = (card: any) => {
@@ -232,19 +232,20 @@ export class StepperComponent {
         let function_type_id = this.secondFormGroup.value.functionTypeId;
         if (function_type_id != '' && function_type_id != null) {
             this.designFormService
-                .getDeliveryTypesByFunctionType(function_type_id)
+                .getStructureTypesByFunctionType(function_type_id)
                 .subscribe((response) => {
-                    this.deliveryTypeCards = response;
+                    this.structureTypeCards = response;
                 });
         }
     }
 
     submitThirdForm() {
         let function_type_id = this.secondFormGroup.value.functionTypeId;
-        let delivery_type_symbol = this.thirdFormGroup.value.deliveryTypeSymbol;
-        if (function_type_id != null && delivery_type_symbol != null) {
+        let structure_type_symbol =
+            this.thirdFormGroup.value.structureTypeSymbol;
+        if (function_type_id != null && structure_type_symbol != null) {
             this.designFormService
-                .getCodeP(function_type_id, delivery_type_symbol)
+                .getCodeP(function_type_id, structure_type_symbol)
                 .subscribe((response) => {
                     this.promoterCards = response.promoters;
                     this.proteinTagCards = response.protein_tags;
@@ -293,9 +294,9 @@ export class StepperComponent {
     }
 
     // loadSummaryResources() {
-    //   let delivery_type_name = this.thirdFormGroup.value.deliveryTypeName;
-    //   if (delivery_type_name != null) {
-    //     this.designFormService.loadSummaryResources(delivery_type_name).subscribe(
+    //   let structure_type_name = this.thirdFormGroup.value.structureTypeName;
+    //   if (structure_type_name != null) {
+    //     this.designFormService.loadSummaryResources(structure_type_name).subscribe(
     //       (response) => {this.deliveryFormats = response; console.log(response)}
     //     )
     //   }

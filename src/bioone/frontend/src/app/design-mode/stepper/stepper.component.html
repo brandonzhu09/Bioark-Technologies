@@ -60,19 +60,19 @@
             (ngSubmit)="submitThirdForm(); resetFormsAfter(3)"
         >
             <div class="container">
-                @for (card of deliveryTypeCards; track
-                card.delivery_type_symbol) {
+                @for (card of structureTypeCards; track
+                card.structure_type_symbol) {
                 <button
                     class="button-card"
                     [ngClass]="{
                         selected:
-                            thirdFormGroup.value.deliveryTypeSymbol ===
-                            card.delivery_type_symbol
+                            thirdFormGroup.value.structureTypeSymbol ===
+                            card.structure_type_symbol
                     }"
                     (click)="handleDeliveryTypeClick(card)"
                 >
                     <i class="bi bi-boxes h1"></i>
-                    <div class="text">{{ card.delivery_type_name }}</div>
+                    <div class="text">{{ card.structure_type_name }}</div>
                 </button>
                 }
             </div>
@@ -306,7 +306,7 @@
             product_name="Product Name"
             product_sku="CPD100000"
             [function_type_name]="secondFormGroup.value.functionTypeName!"
-            [structure_type_name]="thirdFormGroup.value.deliveryTypeName!"
+            [structure_type_name]="thirdFormGroup.value.structureTypeName!"
             [promoter_name]="fourthFormGroup.value.promoterName!"
             [protein_tag_name]="fourthFormGroup.value.proteinTagName!"
             [fluorescene_marker_name]="

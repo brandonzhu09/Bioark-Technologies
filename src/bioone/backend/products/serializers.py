@@ -10,7 +10,7 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 class FunctionCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = FunctionType
-        fields = ['function_type_id', 'symbol', 'function_type_name', 'description']
+        fields = ['function_type_id', 'function_type_symbol', 'function_type_name', 'description']
 
 class DeliveryLibrarySerializer(serializers.ModelSerializer):
     class Meta:
