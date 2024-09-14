@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-hytyud87s@4*51a3$=@%s^h7mtj81pl9t--@9)3^1@(d@8lvip
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bioone-tech-test-dev.us-east-1.elasticbeanstalk.com', 'bioone-tech-test-dev2.us-east-1.elasticbeanstalk.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['bioone-tech-test-dev.us-east-1.elasticbeanstalk.com', 'bioone-tech-test-dev2.us-east-1.elasticbeanstalk.com', '127.0.0.1', 'localhost', '172.31.1.114']
 
 
 # Application definition
@@ -128,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
