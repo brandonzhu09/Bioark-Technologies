@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-hytyud87s@4*51a3$=@%s^h7mtj81pl9t--@9)3^1@(d@8lvip
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['BIOONE-Tech-test-dev.us-east-1.elasticbeanstalk.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['BIOONE-Tech-test-dev2.us-east-1.elasticbeanstalk.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
