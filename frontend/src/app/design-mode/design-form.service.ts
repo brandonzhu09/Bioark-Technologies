@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
+const API_BASE_URL = "http://BIOONE-Tech-test-dev.us-east-1.elasticbeanstalk.com"
+
+
 @Injectable({
     providedIn: 'root',
 })
@@ -10,27 +13,27 @@ export class DesignFormService {
 
     getProductCategories() {
         return this.http.get(
-            `http://localhost:8000/products/load-product-categories/`
+            `${API_BASE_URL}/products/load-product-categories/`
         );
     }
 
     getFunctionTypesByCategory(categoryId: string) {
         return this.http.get(
-            `http://localhost:8000/products/get-function-types-by-category/`,
+            `${API_BASE_URL}/products/get-function-types-by-category/`,
             { params: { category_id: categoryId } }
         );
     }
 
     getStructureTypesByFunctionType(functionTypeId: string) {
         return this.http.get(
-            `http://localhost:8000/products/get-structure-types-by-function-type/`,
+            `${API_BASE_URL}/products/get-structure-types-by-function-type/`,
             { params: { function_type_id: functionTypeId } }
         );
     }
 
     getCodeP(functionTypeId: string, structureTypeSymbol: string) {
         return this.http.get<any>(
-            `http://localhost:8000/products/get-code-p-parameters/`,
+            `${API_BASE_URL}/products/get-code-p-parameters/`,
             {
                 params: {
                     function_type_id: functionTypeId,
@@ -42,7 +45,7 @@ export class DesignFormService {
 
     getGeneTableBySymbol(symbol: string) {
         return this.http.get<any[]>(
-            `http://localhost:8000/products/get-gene-table-by-symbol/`,
+            `${API_BASE_URL}/products/get-gene-table-by-symbol/`,
             { params: { symbol: symbol } }
         );
     }
@@ -58,7 +61,7 @@ export class DesignFormService {
         targetSequence: string
     ) {
         return this.http.get<any[]>(
-            `http://localhost:8000/products/get-delivery-format-table/`,
+            `${API_BASE_URL}/products/get-delivery-format-table/`,
             {
                 params: {
                     structure_type_name: structureTypeName,

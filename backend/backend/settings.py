@@ -81,16 +81,28 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bioone',
-        'USER': 'postgres',
-        'PORT': 5432,
-        'HOST': '127.0.0.1',
-        'PASSWORD': '9558'
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'bioone',
+            'USER': 'postgres',
+            'PORT': 5432,
+            'HOST': '127.0.0.1',
+            'PASSWORD': '9558'
+        }
+    }
 
 
 # Password validation
@@ -138,4 +150,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
    "http://localhost:4200",
    "http://127.0.0.1:4200",
+   "http://bioone-angular.s3-website-us-east-1.amazonaws.com",
+   "http://bioone-tech.s3-website-us-east-1.amazonaws.com",
 ]
