@@ -1,0 +1,79 @@
+.container {
+    width: 100%; /* Adjust as per your layout needs */
+    display: flex;
+    justify-content: center; /* Center the button card horizontally */
+}
+
+.button-card {
+    width: 250px; /* Fixed width */
+    height: 250px; /* Fixed height, making it square */
+    background-color: #ffffff; /* White background, adjust as needed */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    margin: 20px;
+    border: 2px solid transparent; /* Default border to ensure layout does not shift */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.button-card.selected {
+    border-color: green; /* Green border for selected card */
+}
+
+.logo img {
+    width: 50px; /* Adjust size of the logo image */
+    height: auto;
+}
+
+.text {
+    font-size: 14px; /* Adjust text size as needed */
+    color: #333; /* Text color */
+    margin-top: 10px;
+}
+
+.comment {
+    font-size: 10px;
+    color: gray;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+tbody td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    position: relative;
+}
+
+.price-column {
+    width: 30%;
+}
+
+.price-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+}
+
+.price {
+    color: red;
+    font-weight: bold;
+    display: block;
+}
