@@ -1,0 +1,331 @@
+[
+{
+  "model": "products.productcategory",
+  "pk": 1,
+  "fields": {
+    "category_name": "CRISPR-Cas9",
+    "description": null
+  }
+},
+{
+  "model": "products.productcategory",
+  "pk": 2,
+  "fields": {
+    "category_name": "RNAi",
+    "description": null
+  }
+},
+{
+  "model": "products.productcategory",
+  "pk": 3,
+  "fields": {
+    "category_name": "Mammalian Cloning",
+    "description": null
+  }
+},
+{
+  "model": "products.productcategory",
+  "pk": 4,
+  "fields": {
+    "category_name": "Prokaryotic Cloning",
+    "description": null
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 1,
+  "fields": {
+    "symbol": "CA",
+    "function_type_name": "CRISPRa",
+    "description": null,
+    "load_status": null,
+    "category": 1
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 2,
+  "fields": {
+    "symbol": "CI",
+    "function_type_name": "CRISPRi",
+    "description": null,
+    "load_status": null,
+    "category": 1
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 3,
+  "fields": {
+    "symbol": "CO",
+    "function_type_name": "CRISPR-KN",
+    "description": null,
+    "load_status": null,
+    "category": 1
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 4,
+  "fields": {
+    "symbol": "CD",
+    "function_type_name": "AAVS1 KI Donor",
+    "description": null,
+    "load_status": null,
+    "category": 1
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 5,
+  "fields": {
+    "symbol": "CR",
+    "function_type_name": "CRISPR RNA",
+    "description": null,
+    "load_status": null,
+    "category": 1
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 6,
+  "fields": {
+    "symbol": "SH",
+    "function_type_name": "RNAi",
+    "description": null,
+    "load_status": null,
+    "category": 2
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 7,
+  "fields": {
+    "symbol": "EM",
+    "function_type_name": "Cloning",
+    "description": null,
+    "load_status": null,
+    "category": 3
+  }
+},
+{
+  "model": "products.functiontype",
+  "pk": 8,
+  "fields": {
+    "symbol": "EP",
+    "function_type_name": "Prokaryotic Expression",
+    "description": null,
+    "load_status": null,
+    "category": 4
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 1,
+  "fields": {
+    "delivery_type_symbol": "S",
+    "delivery_type_name": "Standard",
+    "delivery_format_symbol": "d",
+    "delivery_format_name": "DNA",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 2,
+  "fields": {
+    "delivery_type_symbol": "S",
+    "delivery_type_name": "Standard",
+    "delivery_format_symbol": "k",
+    "delivery_format_name": "DNA Kit",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 3,
+  "fields": {
+    "delivery_type_symbol": "S",
+    "delivery_type_name": "Standard",
+    "delivery_format_symbol": "c",
+    "delivery_format_name": "Cell",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 4,
+  "fields": {
+    "delivery_type_symbol": "L",
+    "delivery_type_name": "Lenti",
+    "delivery_format_symbol": "d",
+    "delivery_format_name": "DNA",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 5,
+  "fields": {
+    "delivery_type_symbol": "L",
+    "delivery_type_name": "Lenti",
+    "delivery_format_symbol": "k",
+    "delivery_format_name": "DNA Kit",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 6,
+  "fields": {
+    "delivery_type_symbol": "L",
+    "delivery_type_name": "Lenti",
+    "delivery_format_symbol": "l",
+    "delivery_format_name": "Lenti",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 7,
+  "fields": {
+    "delivery_type_symbol": "L",
+    "delivery_type_name": "Lenti",
+    "delivery_format_symbol": "c",
+    "delivery_format_name": "Cell",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 8,
+  "fields": {
+    "delivery_type_symbol": "M",
+    "delivery_type_name": "Lenti-AIO",
+    "delivery_format_symbol": "d",
+    "delivery_format_name": "DNA",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 9,
+  "fields": {
+    "delivery_type_symbol": "M",
+    "delivery_type_name": "Lenti-AIO",
+    "delivery_format_symbol": "k",
+    "delivery_format_name": "DNA Kit",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 10,
+  "fields": {
+    "delivery_type_symbol": "M",
+    "delivery_type_name": "Lenti-AIO",
+    "delivery_format_symbol": "l",
+    "delivery_format_name": "Lenti",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 11,
+  "fields": {
+    "delivery_type_symbol": "M",
+    "delivery_type_name": "Lenti-AIO",
+    "delivery_format_symbol": "c",
+    "delivery_format_name": "Cell",
+    "function_type": 1
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 12,
+  "fields": {
+    "delivery_type_symbol": "S",
+    "delivery_type_name": "Standard",
+    "delivery_format_symbol": "d",
+    "delivery_format_name": "DNA",
+    "function_type": 8
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 13,
+  "fields": {
+    "delivery_type_symbol": "S",
+    "delivery_type_name": "Standard",
+    "delivery_format_symbol": "c",
+    "delivery_format_name": "Cell",
+    "function_type": 8
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 14,
+  "fields": {
+    "delivery_type_symbol": "L",
+    "delivery_type_name": "Lenti",
+    "delivery_format_symbol": "d",
+    "delivery_format_name": "DNA",
+    "function_type": 8
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 15,
+  "fields": {
+    "delivery_type_symbol": "L",
+    "delivery_type_name": "Lenti",
+    "delivery_format_symbol": "l",
+    "delivery_format_name": "Lenti",
+    "function_type": 8
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 16,
+  "fields": {
+    "delivery_type_symbol": "L",
+    "delivery_type_name": "Lenti",
+    "delivery_format_symbol": "c",
+    "delivery_format_name": "Cell",
+    "function_type": 8
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 17,
+  "fields": {
+    "delivery_type_symbol": "A",
+    "delivery_type_name": "AAV",
+    "delivery_format_symbol": "d",
+    "delivery_format_name": "DNA",
+    "function_type": 8
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 18,
+  "fields": {
+    "delivery_type_symbol": "A",
+    "delivery_type_name": "AAV",
+    "delivery_format_symbol": "a",
+    "delivery_format_name": "AAV",
+    "function_type": 8
+  }
+},
+{
+  "model": "products.deliverylibrary",
+  "pk": 19,
+  "fields": {
+    "delivery_type_symbol": "A",
+    "delivery_type_name": "AAV",
+    "delivery_format_symbol": "c",
+    "delivery_format_name": "Cell",
+    "function_type": 8
+  }
+}
+]
