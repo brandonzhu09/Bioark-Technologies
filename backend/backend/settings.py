@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'corsheaders',
     'products',
+    'orders',
 ]
 
 REST_FRAMEWORK = {
@@ -91,7 +92,7 @@ AUTH_USER_MODEL = 'users.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bioone_auth',
+        'NAME': 'bioone',
         'USER': 'postgres',
         'PORT': 5432,
         'HOST': '127.0.0.1',

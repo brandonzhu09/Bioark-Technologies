@@ -10,6 +10,9 @@ class Address(models.Model):
     country = models.CharField()
     zipcode = models.CharField()
 
+    class Meta:
+        db_table = 'addresses'
+
 
 class User(AbstractUser):
     title = models.CharField()
