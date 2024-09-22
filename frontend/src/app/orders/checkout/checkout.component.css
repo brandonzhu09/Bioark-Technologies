@@ -1,0 +1,58 @@
+/* Basic CSS for styling the order summary page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.order-summary-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.order-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.order-summary-table th,
+.order-summary-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-summary-table th {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.order-summary-table td {
+    color: #555;
+}
+
+.order-summary-table tfoot td {
+    font-weight: bold;
+}
+
+.total-label {
+    text-align: right;
+}
+
+.total-value {
+    color: #ff5722;
+    font-size: 1.2em;
+}

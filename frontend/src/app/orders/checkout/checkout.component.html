@@ -1,0 +1,28 @@
+<div class="order-summary-container">
+    <h2>Order Summary</h2>
+    <table class="order-summary-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orderItems">
+          <td>{{ item.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" class="total-label">Total</td>
+          <td class="total-value">{{ totalAmount}}</td>
+        </tr>
+      </tfoot>
+    </table>
+    
+    <!-- PayPal button container -->
+    <div id="paypal-button-container"></div>
+</div>
