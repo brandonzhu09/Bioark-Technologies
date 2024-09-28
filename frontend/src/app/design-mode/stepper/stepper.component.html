@@ -99,6 +99,33 @@
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup" errorMessage="test" label="Select structure">
         <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
+            <div class="summary-header">
+                <h4 class="mb-0 text-muted">Structure Type Table</h4> <!-- Header for the table -->
+            </div>
+            <table class="summary-table">
+                <tbody>
+                    <tr>
+                        <td><strong>Promoter</strong></td>
+                        <td>{{ fourthFormGroup.value.promoterName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protein Tag</strong></td>
+                        <td>{{ fourthFormGroup.value.proteinTagName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fluorescene Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.fluoresceneMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Selection Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.selectionMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Antibiotics</strong></td>
+                        <td>{{ fourthFormGroup.value.bacterialMarkerName }}</td>
+                    </tr>
+                </tbody>
+            </table>
             <mat-tab-group>
                 <mat-tab label="Promoter">
                     <div class="container">

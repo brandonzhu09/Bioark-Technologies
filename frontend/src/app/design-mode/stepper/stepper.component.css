@@ -117,3 +117,30 @@ tbody td {
     font-weight: bold;
     display: block;
 }
+
+/* Summary Table for Structure Type Form */
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table td {
+    border-bottom: 1px solid #ddd;
+    width: 150px;
+}
+
+.summary-table td:last-child {
+    width: 300px;
+    /* Wider width for the second column to fit content */
+}
+
+.summary-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.summary-header {
+    background-color: #e9ecef;
+    /* Gray background for the header */
+    padding: 10px;
+    /* Padding for the header */
+}
