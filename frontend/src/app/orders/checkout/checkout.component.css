@@ -1,58 +1,29 @@
-/* Basic CSS for styling the order summary page */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 20px;
+    background-color: #f7f7f7;
 }
 
-.order-summary-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.order-summary-table {
-    width: 100%;
-    border-collapse: collapse;
+h3 {
+    font-size: 1.5rem;
     margin-bottom: 20px;
 }
 
-.order-summary-table th,
-.order-summary-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.order-summary-table th {
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-.order-summary-table td {
-    color: #555;
-}
-
-.order-summary-table tfoot td {
+.product-name {
     font-weight: bold;
+    font-size: 1rem;
 }
 
-.total-label {
-    text-align: right;
+.product-price {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
 }
 
-.total-value {
-    color: #ff5722;
-    font-size: 1.2em;
+.btn-primary {
+    background-color: #0070ba;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-primary:hover {
+    background-color: #005ea6;
 }
