@@ -38,6 +38,8 @@ export class StepperComponent {
     @ViewChild('stepper') stepper!: MatStepper;
     isLinear = true;
 
+    errorMessages: string[] = [];
+
     productCategoryCards: any;
     functionTypeCards: any;
     structureTypeCards: any;
@@ -100,7 +102,7 @@ export class StepperComponent {
         ]),
     });
     fourthFormGroup = new FormGroup({
-        promoterName: new FormControl('', [
+        promoterName: new FormControl("PCMV", [
             Validators.required,
             Validators.minLength(1),
         ]),
@@ -141,6 +143,22 @@ export class StepperComponent {
             Validators.minLength(6),
         ]),
     });
+
+    // Errors
+    addErrorMessage(message: string) {
+        this.errorMessages.push(message);
+    
+        // Remove the message after 10 seconds
+        setTimeout(() => {
+          this.errorMessages.shift();
+        }, 10000);
+    }
+
+    checkFormCompletion(form: FormGroup) {
+        if (form.invalid) {
+          this.addErrorMessage('Please complete all required fields.');
+        }
+      }
 
     // Forms
     handleProductCategoryClick = (card: any) => {
@@ -208,6 +226,12 @@ export class StepperComponent {
         }
         if (index <= 3) {
             this.fourthFormGroup.reset();
+            this.fourthFormGroup.patchValue({
+                promoterName: 'PCMV', // Restore the default value
+                proteinTagName: 'None',
+                fluoresceneMarkerName: 'None',
+                selectionMarkerName: 'None',
+            });
         }
         if (index <= 2) {
             this.thirdFormGroup.reset();

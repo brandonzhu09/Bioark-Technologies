@@ -22,7 +22,12 @@
                 }
             </div>
             <div>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="checkFormCompletion(firstFormGroup)">Next</button>
+            </div>
+            <div class="error-container">
+                <div *ngFor="let message of errorMessages" class="error-message">
+                  {{ message }}
+                </div>
             </div>
         </form>
     </mat-step>
@@ -50,7 +55,12 @@
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="checkFormCompletion(secondFormGroup)">Next</button>
+            </div>
+            <div class="error-container">
+                <div *ngFor="let message of errorMessages" class="error-message">
+                  {{ message }}
+                </div>
             </div>
         </form>
     </mat-step>
@@ -78,11 +88,16 @@
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="checkFormCompletion(thirdFormGroup)">Next</button>
+            </div>
+            <div class="error-container">
+                <div *ngFor="let message of errorMessages" class="error-message">
+                  {{ message }}
+                </div>
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="fourthFormGroup" label="Select structure">
+    <mat-step [stepControl]="fourthFormGroup" errorMessage="test" label="Select structure">
         <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
             <mat-tab-group>
                 <mat-tab label="Promoter">
@@ -120,6 +135,17 @@
                             <div class="text">{{ card.protein_tag_name }}</div>
                         </button>
                         }
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value.proteinTagName === 'customize'    
+                                }"
+                            (click)="handleProteinTagClick({protein_tag_name: 'customize'})"
+                        >
+                            <i class="bi bi-gear h1"></i>
+                            <div class="text">Customize</div>
+                        </button>
                     </div>
                 </mat-tab>
                 <mat-tab label="Fluorescene Marker">
@@ -142,6 +168,17 @@
                             </div>
                         </button>
                         }
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value.fluoresceneMarkerName === 'customize'
+                            }"
+                            (click)="handleFluoresceneMarkerClick({fluorescene_marker_name: 'customize'})"
+                        >
+                            <i class="bi bi-gear h1"></i>
+                            <div class="text">Customize</div>
+                        </button>
                     </div>
                 </mat-tab>
                 <mat-tab label="Selection Marker">
@@ -164,6 +201,17 @@
                             </div>
                         </button>
                         }
+                        <button
+                            class="button-card"
+                            [ngClass]="{
+                                selected:
+                                    fourthFormGroup.value.selectionMarkerName === 'customize'
+                            }"
+                            (click)="handleSelectionMarkerClick({selection_marker_name: 'customize'})"
+                        >
+                            <i class="bi bi-gear h1"></i>
+                            <div class="text">Customize</div>
+                        </button>
                     </div>
                 </mat-tab>
                 <mat-tab label="Antibiotics">
@@ -191,7 +239,12 @@
             </mat-tab-group>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="checkFormCompletion(fourthFormGroup)">Next</button>
+            </div>
+            <div class="error-container">
+                <div *ngFor="let message of errorMessages" class="error-message">
+                  {{ message }}
+                </div>
             </div>
         </form>
     </mat-step>
@@ -236,7 +289,12 @@
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="checkFormCompletion(fifthFormGroup)">Next</button>
+            </div>
+            <div class="error-container">
+                <div *ngFor="let message of errorMessages" class="error-message">
+                  {{ message }}
+                </div>
             </div>
         </form>
     </mat-step>
@@ -295,7 +353,12 @@
             </table>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="checkFormCompletion(searchGeneGroup)">Next</button>
+            </div>
+            <div class="error-container">
+                <div *ngFor="let message of errorMessages" class="error-message">
+                  {{ message }}
+                </div>
             </div>
         </form>
     </mat-step>
