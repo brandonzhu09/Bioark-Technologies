@@ -3,10 +3,6 @@
     <div class="content">
         <div class="diagram">
             <img src="../../../assets/lego-design-diagram.png" alt="Diagram" />
-            <div class="button-design-group">
-                <button class="button blue">Save Design</button>
-                <button class="button blue">View Protocols</button>
-            </div>
         </div>
         <div class="description">
             <!-- <h2>Products</h2> -->
@@ -33,9 +29,10 @@
                 <strong>Target Sequence: </strong>{{ target_sequence }}
             </p>
             <div class="button-service-group">
-                <button class="button orange">
-                    Download Design and Protocol
-                </button>
+                <button class="button orange">Save Design</button>
+                @if (showProtocol()) {
+                    <button class="button orange">View Protocol</button>
+                }
                 <button class="button orange">Customer Service</button>
             </div>
         </div>

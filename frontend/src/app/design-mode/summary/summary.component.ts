@@ -61,4 +61,12 @@ export class SummaryComponent {
                 });
         }
     }
+
+    showProtocol() {
+        return (this.protein_tag_name !== 'Custom'
+            && this.fluorescene_marker_name !== 'Custom'
+            && this.selection_marker_name !== 'Custom'
+            && this.bacterial_marker_name !== 'Custom'
+        )
+    }
 }
