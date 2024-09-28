@@ -131,7 +131,6 @@ tbody td {
 
 .summary-table td:last-child {
     width: 300px;
-    /* Wider width for the second column to fit content */
 }
 
 .summary-table tr:nth-child(even) {
@@ -140,7 +139,5 @@ tbody td {
 
 .summary-header {
     background-color: #e9ecef;
-    /* Gray background for the header */
     padding: 10px;
-    /* Padding for the header */
 }

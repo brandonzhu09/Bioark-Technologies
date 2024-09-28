@@ -100,7 +100,7 @@
     <mat-step [stepControl]="fourthFormGroup" errorMessage="test" label="Select structure">
         <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
             <div class="summary-header">
-                <h4 class="mb-0 text-muted">Structure Type Table</h4> <!-- Header for the table -->
+                <h4 class="mb-0 text-muted">Structure Type Summary Table</h4> <!-- Header for the table -->
             </div>
             <table class="summary-table">
                 <tbody>
@@ -166,9 +166,9 @@
                             class="button-card"
                             [ngClass]="{
                                 selected:
-                                    fourthFormGroup.value.proteinTagName === 'customize'    
+                                    fourthFormGroup.value.proteinTagName === 'Custom'    
                                 }"
-                            (click)="handleProteinTagClick({protein_tag_name: 'customize'})"
+                            (click)="handleProteinTagClick({protein_tag_name: 'Custom'})"
                         >
                             <i class="bi bi-gear h1"></i>
                             <div class="text">Customize</div>
@@ -199,9 +199,9 @@
                             class="button-card"
                             [ngClass]="{
                                 selected:
-                                    fourthFormGroup.value.fluoresceneMarkerName === 'customize'
+                                    fourthFormGroup.value.fluoresceneMarkerName === 'Custom'
                             }"
-                            (click)="handleFluoresceneMarkerClick({fluorescene_marker_name: 'customize'})"
+                            (click)="handleFluoresceneMarkerClick({fluorescene_marker_name: 'Custom'})"
                         >
                             <i class="bi bi-gear h1"></i>
                             <div class="text">Customize</div>
@@ -232,9 +232,9 @@
                             class="button-card"
                             [ngClass]="{
                                 selected:
-                                    fourthFormGroup.value.selectionMarkerName === 'customize'
+                                    fourthFormGroup.value.selectionMarkerName === 'Custom'
                             }"
-                            (click)="handleSelectionMarkerClick({selection_marker_name: 'customize'})"
+                            (click)="handleSelectionMarkerClick({selection_marker_name: 'Custom'})"
                         >
                             <i class="bi bi-gear h1"></i>
                             <div class="text">Customize</div>
