@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-hytyud87s@4*51a3$=@%s^h7mtj81pl9t--@9)3^1@(d@8lvip
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://django-env.eba-mctt8fes.us-east-1.elasticbeanstalk.com/', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['bioone-tech-test-dev.us-east-1.elasticbeanstalk.com', 'bioone-tech-test-dev2.us-east-1.elasticbeanstalk.com', '127.0.0.1', 'localhost', '172.31.1.114']
 
 
 # Application definition
@@ -42,16 +42,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'users',
+    'users'
     'corsheaders',
     'products',
 ]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,10 +85,36 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+
 AUTH_USER_MODEL = 'users.User'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'bioone',
+            'USER': 'postgres',
+            'PORT': 5432,
+            'HOST': '127.0.0.1',
+            'PASSWORD': '9558'
+        }
+    }
 
 DATABASES = {
     'default': {
@@ -136,6 +164,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = 'static/'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -144,4 +175,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
    "http://localhost:4200",
    "http://127.0.0.1:4200",
+   "http://bioone-angular.s3-website-us-east-1.amazonaws.com",
+   "http://bioone-tech.s3-website-us-east-1.amazonaws.com",
 ]
