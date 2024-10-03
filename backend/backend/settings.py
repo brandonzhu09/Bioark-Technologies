@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'users'
+    'users',
     'corsheaders',
     'products',
     'orders',
@@ -116,17 +116,6 @@ else:
             'PASSWORD': '9558'
         }
     }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bioone',
-        'USER': 'postgres',
-        'PORT': 5432,
-        'HOST': '127.0.0.1',
-        'PASSWORD': '9558'
-    }
-}
 
 
 # Password validation
