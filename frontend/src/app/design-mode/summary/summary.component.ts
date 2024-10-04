@@ -12,8 +12,9 @@ export class SummaryComponent {
 
     @Input() product_name: string = 'Product Name';
     @Input() product_sku: string = 'CPD100000';
-    @Input() function_type_name: string = 'CRISPRa';
-    @Input() structure_type_name: string = 'Standard';
+    @Input() function_type_name: string = 'CRISPR-Cas9';
+    @Input() structure_type_name: string = 'CRISPRa';
+    @Input() delivery_type_name: string = 'Standard';
     @Input() promoter_name: string = 'PCMV';
     @Input() protein_tag_name: string = 'None';
     @Input() fluorescene_marker_name: string = 'None';

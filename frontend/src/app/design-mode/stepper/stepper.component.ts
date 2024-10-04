@@ -102,7 +102,7 @@ export class StepperComponent {
         ]),
     });
     fourthFormGroup = new FormGroup({
-        promoterName: new FormControl("PCMV", [
+        promoterName: new FormControl('', [
             Validators.required,
             Validators.minLength(1),
         ]),

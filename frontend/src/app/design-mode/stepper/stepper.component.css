@@ -138,6 +138,9 @@ tbody td {
 }
 
 .summary-header {
-    background-color: #e9ecef;
-    padding: 10px;
+    background-color: #b3b3b3;
+}
+
+.summary-header td {
+    font-weight: bold;
 }

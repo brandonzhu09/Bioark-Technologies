@@ -5,6 +5,60 @@
             (ngSubmit)="submitFirstForm(); resetFormsAfter(1)"
         >
             <ng-template matStepLabel>Select function category</ng-template>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Design Overview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="summary-header">
+                        <td colspan="2">Products</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Function Category</strong></td>
+                        <td>{{ firstFormGroup.value.productCategoryName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure Type</strong></td>
+                        <td>{{ secondFormGroup.value.functionTypeName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery Type</strong></td>
+                        <td>{{ thirdFormGroup.value.structureTypeName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Structure</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Promoter</strong></td>
+                        <td>{{ fourthFormGroup.value.promoterName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protein Tag</strong></td>
+                        <td>{{ fourthFormGroup.value.proteinTagName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fluorescene Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.fluoresceneMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Selection Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.selectionMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Antibiotics</strong></td>
+                        <td>{{ fourthFormGroup.value.bacterialMarkerName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Target Gene</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Target Sequence</strong></td>
+                        <td>{{ getTargetSequence()! }}</td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="container">
                 @for (card of productCategoryCards; track card.category_id) {
                 <button
@@ -31,11 +85,65 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Select function type">
+    <mat-step [stepControl]="secondFormGroup" label="Select structure type">
         <form
             [formGroup]="secondFormGroup"
             (ngSubmit)="submitSecondForm(); resetFormsAfter(2)"
         >
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Design Overview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="summary-header">
+                        <td colspan="2">Products</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Function Category</strong></td>
+                        <td>{{ firstFormGroup.value.productCategoryName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure Type</strong></td>
+                        <td>{{ secondFormGroup.value.functionTypeName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery Type</strong></td>
+                        <td>{{ thirdFormGroup.value.structureTypeName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Structure</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Promoter</strong></td>
+                        <td>{{ fourthFormGroup.value.promoterName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protein Tag</strong></td>
+                        <td>{{ fourthFormGroup.value.proteinTagName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fluorescene Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.fluoresceneMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Selection Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.selectionMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Antibiotics</strong></td>
+                        <td>{{ fourthFormGroup.value.bacterialMarkerName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Target Gene</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Target Sequence</strong></td>
+                        <td>{{ getTargetSequence()! }}</td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="container">
                 @for (card of functionTypeCards; track card.function_type_id) {
                 <button
@@ -69,6 +177,60 @@
             [formGroup]="thirdFormGroup"
             (ngSubmit)="submitThirdForm(); resetFormsAfter(3)"
         >
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Design Overview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="summary-header">
+                        <td colspan="2">Products</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Function Category</strong></td>
+                        <td>{{ firstFormGroup.value.productCategoryName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure Type</strong></td>
+                        <td>{{ secondFormGroup.value.functionTypeName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery Type</strong></td>
+                        <td>{{ thirdFormGroup.value.structureTypeName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Structure</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Promoter</strong></td>
+                        <td>{{ fourthFormGroup.value.promoterName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protein Tag</strong></td>
+                        <td>{{ fourthFormGroup.value.proteinTagName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fluorescene Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.fluoresceneMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Selection Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.selectionMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Antibiotics</strong></td>
+                        <td>{{ fourthFormGroup.value.bacterialMarkerName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Target Gene</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Target Sequence</strong></td>
+                        <td>{{ getTargetSequence()! }}</td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="container">
                 @for (card of structureTypeCards; track
                 card.structure_type_symbol) {
@@ -99,11 +261,31 @@
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup" errorMessage="test" label="Select structure">
         <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
-            <div class="summary-header">
-                <h4 class="mb-0 text-muted">Structure Type Summary Table</h4> <!-- Header for the table -->
-            </div>
             <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Design Overview</th>
+                    </tr>
+                </thead>
                 <tbody>
+                    <tr class="summary-header">
+                        <td colspan="2">Products</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Function Category</strong></td>
+                        <td>{{ firstFormGroup.value.productCategoryName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure Type</strong></td>
+                        <td>{{ secondFormGroup.value.functionTypeName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery Type</strong></td>
+                        <td>{{ thirdFormGroup.value.structureTypeName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Structure</td> <!-- Header for the table -->
+                    </tr>
                     <tr>
                         <td><strong>Promoter</strong></td>
                         <td>{{ fourthFormGroup.value.promoterName }}</td>
@@ -123,6 +305,13 @@
                     <tr>
                         <td><strong>Antibiotics</strong></td>
                         <td>{{ fourthFormGroup.value.bacterialMarkerName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Target Gene</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Target Sequence</strong></td>
+                        <td>{{ getTargetSequence()! }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -281,6 +470,60 @@
             [formGroup]="fifthFormGroup"
             (ngSubmit)="submitFifthForm(); resetFormsAfter(5)"
         >
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Design Overview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="summary-header">
+                        <td colspan="2">Products</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Function Category</strong></td>
+                        <td>{{ firstFormGroup.value.productCategoryName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure Type</strong></td>
+                        <td>{{ secondFormGroup.value.functionTypeName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery Type</strong></td>
+                        <td>{{ thirdFormGroup.value.structureTypeName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Structure</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Promoter</strong></td>
+                        <td>{{ fourthFormGroup.value.promoterName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protein Tag</strong></td>
+                        <td>{{ fourthFormGroup.value.proteinTagName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fluorescene Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.fluoresceneMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Selection Marker</strong></td>
+                        <td>{{ fourthFormGroup.value.selectionMarkerName }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Antibiotics</strong></td>
+                        <td>{{ fourthFormGroup.value.bacterialMarkerName }}</td>
+                    </tr>
+                    <tr class="summary-header">
+                        <td colspan="2">Target Gene</td> <!-- Header for the table -->
+                    </tr>
+                    <tr>
+                        <td><strong>Target Sequence</strong></td>
+                        <td>{{ getTargetSequence()! }}</td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="container">
                 <button
                     class="button-card"
@@ -395,8 +638,9 @@
         <design-summary
             product_name="Product Name"
             product_sku="CPD100000"
-            [function_type_name]="secondFormGroup.value.functionTypeName!"
-            [structure_type_name]="thirdFormGroup.value.structureTypeName!"
+            [function_type_name]="firstFormGroup.value.productCategoryName!"
+            [structure_type_name]="secondFormGroup.value.functionTypeName!"
+            [delivery_type_name]="thirdFormGroup.value.structureTypeName!"
             [promoter_name]="fourthFormGroup.value.promoterName!"
             [protein_tag_name]="fourthFormGroup.value.proteinTagName!"
             [fluorescene_marker_name]="
