@@ -44,7 +44,6 @@ export class DesignFormService {
 
     getGeneTableBySymbol(symbol: string) {
         return this.http.get<any[]>(
-
             `${API_BASE_URL}/products/get-gene-table-by-symbol/`,
             { params: { symbol: symbol } }
         );

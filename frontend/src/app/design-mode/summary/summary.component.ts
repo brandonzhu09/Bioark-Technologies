@@ -41,7 +41,8 @@ export class SummaryComponent {
     // }
 
     getDeliveryFormatTable() {
-        if (this.target_sequence != null) {
+        console.log(this.target_sequence)
+        if (this.target_sequence !== null || this.target_sequence !== "IGNORE" || this.target_sequence !== "null") {
             this.designFormService
                 .getDeliveryFormatTable(
                     this.structure_type_name,

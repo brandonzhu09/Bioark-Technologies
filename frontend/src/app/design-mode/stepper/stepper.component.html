@@ -557,6 +557,58 @@
                     <div class="text">None</div>
                 </button>
             </div>
+            @if (showSearchGeneGroup) {
+                <label class="form-label fs-5 mb-3">Enter Gene Symbol</label>
+                <div class="input-group">
+                    <input
+                        type="text"
+                        formControlName="geneSymbol"
+                        class="form-control border-end-0"
+                        placeholder="Search"
+                    />
+                    <button
+                        class="btn btn-outline-secondary border bi bi-search"
+                        type="submit"
+                    ></button>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Sequence Number</th>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Locus ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (geneTable.length > 0) {
+                        <tr *ngFor="let row of geneTable">
+                            <td>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        name="targetSequence"
+                                        formControlName="targetSequence"
+                                        [value]="row['target_sequence']"
+                                        type="radio"
+                                    />
+                                </div>
+                            </td>
+                            <td *ngFor="let column of geneColumns">
+                                {{ row[column] }}
+                            </td>
+                        </tr>
+                        } @else {
+                        <tr>
+                            <td colspan="5" style="text-align: center">
+                                <em>No results found. Please try again.</em>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext (click)="checkFormCompletion(fifthFormGroup)">Next</button>
@@ -568,78 +620,14 @@
             </div>
         </form>
     </mat-step>
-    @if (showSearchGeneGroup) {
-    <mat-step [stepControl]="searchGeneGroup" label="Search for target gene">
-        <form [formGroup]="searchGeneGroup" (ngSubmit)="submitSearchGeneForm()">
-            <label class="form-label fs-5 mb-3">Enter Gene Symbol</label>
-            <div class="input-group">
-                <input
-                    type="text"
-                    formControlName="geneSymbol"
-                    class="form-control border-end-0"
-                    placeholder="Search"
-                />
-                <button
-                    class="btn btn-outline-secondary border bi bi-search"
-                    type="submit"
-                ></button>
-            </div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Sequence Number</th>
-                        <th scope="col">Symbol</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Locus ID</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (geneTable.length > 0) {
-                    <tr *ngFor="let row of geneTable">
-                        <td>
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    name="targetSequence"
-                                    formControlName="targetSequence"
-                                    [value]="row['target_sequence']"
-                                    type="radio"
-                                />
-                            </div>
-                        </td>
-                        <td *ngFor="let column of geneColumns">
-                            {{ row[column] }}
-                        </td>
-                    </tr>
-                    } @else {
-                    <tr>
-                        <td colspan="5" style="text-align: center">
-                            <em>No results found. Please try again.</em>
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="checkFormCompletion(searchGeneGroup)">Next</button>
-            </div>
-            <div class="error-container">
-                <div *ngFor="let message of errorMessages" class="error-message">
-                  {{ message }}
-                </div>
-            </div>
-        </form>
-    </mat-step>
-    } @if (toggleSummaryStep) {
+    @if (toggleSummaryStep) {
     <mat-step>
         <ng-template matStepLabel>Summary</ng-template>
         <design-summary
             product_name="Product Name"
             product_sku="CPD100000"
-            [function_type_name]="firstFormGroup.value.productCategoryName!"
-            [structure_type_name]="secondFormGroup.value.functionTypeName!"
+            [function_type_name]="secondFormGroup.value.functionTypeName!"
+            [structure_type_name]="thirdFormGroup.value.structureTypeName!"
             [delivery_type_name]="thirdFormGroup.value.structureTypeName!"
             [promoter_name]="fourthFormGroup.value.promoterName!"
             [protein_tag_name]="fourthFormGroup.value.proteinTagName!"

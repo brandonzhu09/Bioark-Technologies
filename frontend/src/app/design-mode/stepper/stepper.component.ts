@@ -132,6 +132,9 @@ export class StepperComponent {
             Validators.required,
             Validators.minLength(6),
         ]),
+        geneSymbol: new FormControl('', [
+            Validators.minLength(1),
+        ]),
     });
     searchGeneGroup = new FormGroup({
         geneSymbol: new FormControl('', [
@@ -283,36 +286,34 @@ export class StepperComponent {
     submitFifthForm() {
         if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
             this.showSearchGeneGroup = true;
+            this.fifthFormGroup.controls.geneSymbol.setValidators(Validators.required);
+            if (this.fifthFormGroup.value.geneSymbol !== this.initialGeneSymbol) {
+                let gene_symbol = this.fifthFormGroup.value.geneSymbol!;
+                this.fifthFormGroup.controls.targetSequence.reset();
+                this.initialGeneSymbol = gene_symbol;
+                this.designFormService
+                    .getGeneTableBySymbol(gene_symbol)
+                    .subscribe((response) => {
+                        if (response.length == 0) {
+                            this.geneTable = [];
+                        } else {
+                            this.geneTable = response;
+                        }
+                    });
+                this.toggleSummaryStep = true;
+            }
         } else {
+            this.fifthFormGroup.controls.geneSymbol.clearValidators();
             this.showSearchGeneGroup = false;
             this.selectedTargetSequence =
                 this.fifthFormGroup.value.targetSequence;
             this.toggleSummaryStep = true;
-            console.log(this.toggleSummaryStep);
         }
-    }
-
-    submitSearchGeneForm() {
-        let gene_symbol = this.searchGeneGroup.value.geneSymbol!;
-        if (gene_symbol != this.initialGeneSymbol) {
-            this.searchGeneGroup.controls.targetSequence.reset();
-            this.initialGeneSymbol = gene_symbol;
-            this.designFormService
-                .getGeneTableBySymbol(gene_symbol)
-                .subscribe((response) => {
-                    if (response.length == 0) {
-                        this.geneTable = [];
-                    } else {
-                        this.geneTable = response;
-                    }
-                });
-        }
-        this.toggleSummaryStep = true;
     }
 
     getTargetSequence() {
-        if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
-            return this.searchGeneGroup.value.targetSequence;
+        if (this.fifthFormGroup.value.targetSequence == null || this.fifthFormGroup.value.targetSequence === "IGNORE") {
+            return "XXXXXX";
         }
         return this.fifthFormGroup.value.targetSequence;
     }
