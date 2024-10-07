@@ -7,6 +7,8 @@ import { StepperComponent } from './design-mode/stepper/stepper.component';
 import { SummaryComponent } from './design-mode/summary/summary.component';
 import { CheckoutComponent } from './orders/checkout/checkout.component';
 import { TestingComponent } from './testing/testing.component';
+import { ProductHomeComponent } from './product-mode/product-home/product-home.component';
+import { ServiceHomeComponent } from './service-mode/service-home/service-home.component';
 
 const routes: Routes = [
   {path: 'summary-temp', component: SummaryComponent},
@@ -14,6 +16,8 @@ const routes: Routes = [
   {path: 'product', component: ProductPageComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'testing', component: TestingComponent},
+  {path: 'products', component: ProductHomeComponent},
+  {path: 'services', component: ServiceHomeComponent},
   {path: '', component: LandingComponent, pathMatch: 'full'}
 ];
 

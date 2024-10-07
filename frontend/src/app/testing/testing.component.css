@@ -1,75 +1,46 @@
-/* General styling */
-body {
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Product section styling */
-.product-section {
-    text-align: center;
-    padding: 20px;
-}
-
-.section-title {
-    color: #2f7d53;
-    font-size: 36px;
-    margin-bottom: 40px;
-}
-
-/* Grid layout for products */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Product card styling */
 .product-card {
-    background-color: white;
-    border: 1px solid #e0e0e0;
+    width: 300px;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #F9F8FB;
 }
 
-.product-card img {
+.product-image img {
     width: 100%;
-    border-radius: 10px;
+    height: auto;
 }
 
-.product-card h2 {
-    font-size: 22px;
-    margin: 15px 0;
+.product-details {
+    padding: 20px;
 }
 
-.product-card p {
-    color: #2f7d53;
-    font-size: 18px;
+.product-details h3 {
+    font-size: 20px;
+    color: #281A39;
+    margin-bottom: 10px;
 }
 
-/* Hover effect on product card */
-.product-card:hover {
+.product-details p {
+    font-size: 16px;
+    color: #444;
+    margin: 5px 0;
+}
+
+.view-products {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #281A39;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-products:hover {
+    background-color: #543C6A;
     transform: scale(1.05);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .product-grid {
-        grid-template-columns: 1fr;
-    }
 }
