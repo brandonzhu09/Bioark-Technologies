@@ -19,6 +19,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient } from '@angular/common/http';
 import { SummaryComponent } from './design-mode/summary/summary.component';
 import { TestingComponent } from './testing/testing.component';
+import { ContactPageComponent } from './contact-page/contact-page.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TestingComponent } from './testing/testing.component';
     FunctionListComponent,
     ProductDropdownComponent,
     TestingComponent,
+    ContactPageComponent,
   ],
   imports: [
     ProductModeModule,

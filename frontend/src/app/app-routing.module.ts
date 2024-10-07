@@ -9,6 +9,7 @@ import { CheckoutComponent } from './orders/checkout/checkout.component';
 import { TestingComponent } from './testing/testing.component';
 import { ProductHomeComponent } from './product-mode/product-home/product-home.component';
 import { ServiceHomeComponent } from './service-mode/service-home/service-home.component';
+import { ContactPageComponent } from './contact-page/contact-page.component';
 
 const routes: Routes = [
   {path: 'summary-temp', component: SummaryComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'testing', component: TestingComponent},
   {path: 'products', component: ProductHomeComponent},
   {path: 'services', component: ServiceHomeComponent},
+  {path: 'contact', component: ContactPageComponent},
   {path: '', component: LandingComponent, pathMatch: 'full'}
 ];
 
