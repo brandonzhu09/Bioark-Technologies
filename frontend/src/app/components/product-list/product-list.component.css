@@ -2,6 +2,14 @@
     margin: 20px;
 }
 
+.heading {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 64px;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+}
+
 .product-list {
     display: flex;
     justify-content: start;

@@ -1,8 +1,8 @@
 <div>
-    <h2>{{ heading }}</h2>
+    <h2 class="heading">Products</h2>
     <div class="product-list">
         @for (product of productsData; track product.name) {
-            <card [name]="product.name"></card>
+            <card [name]="product.name" [description]="product.description" [link]="product.link"></card>
         }
     </div>
 </div>

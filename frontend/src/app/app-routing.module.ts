@@ -10,6 +10,11 @@ import { TestingComponent } from './testing/testing.component';
 import { ProductHomeComponent } from './product-mode/product-home/product-home.component';
 import { ServiceHomeComponent } from './service-mode/service-home/service-home.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
+import { OverexpressionPageComponent } from './product-mode/overexpression-page/overexpression-page.component';
+import { GeneKnockInPageComponent } from './product-mode/gene-knock-in-page/gene-knock-in-page.component';
+import { GeneKnockOutPageComponent } from './product-mode/gene-knock-out-page/gene-knock-out-page.component';
+import { GeneDeletionPageComponent } from './product-mode/gene-deletion-page/gene-deletion-page.component';
+import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rna-knock-down-page.component';
 
 const routes: Routes = [
   {path: 'summary-temp', component: SummaryComponent},
@@ -18,6 +23,11 @@ const routes: Routes = [
   {path: 'checkout', component: CheckoutComponent},
   {path: 'testing', component: TestingComponent},
   {path: 'products', component: ProductHomeComponent},
+  {path: 'products/overexpression', component: OverexpressionPageComponent},
+  {path: 'products/gene-knock-in', component: GeneKnockInPageComponent},
+  {path: 'products/gene-knock-out', component: GeneKnockOutPageComponent},
+  {path: 'products/gene-deletion', component: GeneDeletionPageComponent},
+  {path: 'products/rna-knock-down', component: RnaKnockDownPageComponent},
   {path: 'services', component: ServiceHomeComponent},
   {path: 'contact', component: ContactPageComponent},
   {path: '', component: LandingComponent, pathMatch: 'full'}

@@ -9,6 +9,7 @@
     font-weight: bold;
     color: #281A39;
     margin-bottom: 10px;
+    line-height: 1;
 }
 
 .heading-line {
@@ -23,7 +24,6 @@
     font-size: 16px;
     font-weight: bold;
     color: #281A39;
-    line-height: 1.6;
 }
 
 .services-section {
