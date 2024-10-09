@@ -20,6 +20,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { SummaryComponent } from './design-mode/summary/summary.component';
 import { TestingComponent } from './testing/testing.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { ContactPageComponent } from './contact-page/contact-page.component';
     ContactPageComponent,
   ],
   imports: [
+    LoginComponent,
+    SignupComponent,
     ProductModeModule,
     StepperComponent,
     BrowserModule,
