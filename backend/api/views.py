@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 def get_csrf(request):
@@ -14,9 +16,10 @@ def get_csrf(request):
 
 
 @require_POST
+@csrf_exempt
 def login_view(request):
     data = json.loads(request.body)
-    username = data.get('username')
+    username = data.get('email')
     password = data.get('password')
 
     if username is None or password is None:
