@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,6 +12,19 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: any): Observable<any> {
-    return this.http.post(this.loginUrl, credentials, { withCredentials: true });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCookie('csrftoken') || ''
+    });
+    
+    return this.http.post(this.loginUrl, credentials, { headers: headers, withCredentials: true });
+  }
+
+  getCookie(name: string): string | null {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) {
+      return match[2];
+    }
+    return null;
   }
 }

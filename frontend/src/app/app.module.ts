@@ -16,12 +16,14 @@ import { ProductDropdownComponent } from './components/product-dropdown/product-
 import { ProductModeModule } from './product-mode/product-mode.module';
 import { StepperComponent } from './design-mode/stepper/stepper.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { SummaryComponent } from './design-mode/summary/summary.component';
 import { TestingComponent } from './testing/testing.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,10 @@ import { SignupComponent } from './components/signup/signup.component';
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(),
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

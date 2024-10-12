@@ -16,7 +16,6 @@ def get_csrf(request):
 
 
 @require_POST
-@csrf_exempt
 def login_view(request):
     data = json.loads(request.body)
     username = data.get('email')
