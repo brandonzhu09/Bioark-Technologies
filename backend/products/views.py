@@ -3,14 +3,17 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from products.models import *
 from products.serializers import *
-from django.contrib.auth.decorators import login_required
+from rest_framework import status
 
 # Create your views here.
 @api_view(['GET'])
 def load_product_categories(request):
-    queryset = ProductCategory.objects.all()
-    serializer = ProductCategorySerializer(queryset, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        queryset = ProductCategory.objects.all()
+        serializer = ProductCategorySerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    return Response({'detail': 'Forbidden.'}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET'])

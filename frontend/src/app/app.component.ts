@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.getSession().subscribe((response) => {
+      if (response.isAuthenticated) {
+        this.authService.isAuthenticated = true;
+      }
+      else {
+        this.authService.isAuthenticated = false;
+      }
+    });
+  }
 }

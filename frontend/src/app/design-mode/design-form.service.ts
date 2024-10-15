@@ -13,7 +13,7 @@ export class DesignFormService {
 
     getProductCategories() {
         return this.http.get(
-            `${API_BASE_URL}/products/load-product-categories/`
+            `${API_BASE_URL}/products/load-product-categories/`, { withCredentials: true }
         );
     }
 
