@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
-const API_BASE_URL = "http://BIOONE-Tech-test-dev.us-east-1.elasticbeanstalk.com"
+// const API_BASE_URL = "http://BIOONE-Tech-test-dev.us-east-1.elasticbeanstalk.com"
+const API_BASE_URL = "http://localhost:8000"
 
 @Injectable({
     providedIn: 'root',

@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from products.models import *
 from products.serializers import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @api_view(['GET'])
