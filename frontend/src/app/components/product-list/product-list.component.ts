@@ -7,9 +7,6 @@ import { LandingPageService } from '../../services/landing.service';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
-  @Input() heading = "";
-
   private productService = inject(LandingPageService);
-
   productsData = this.productService.get_products();
 }

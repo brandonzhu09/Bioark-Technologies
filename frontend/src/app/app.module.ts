@@ -9,7 +9,6 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { CardComponent } from './components/card/card.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { FunctionListComponent } from './components/function-list/function-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ProductDropdownComponent } from './components/product-dropdown/product-dropdown.component';
@@ -24,6 +23,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { AuthService } from './services/auth.service';
+import { ServiceListComponent } from './components/service-list/service-list.component';
 
 @NgModule({
   declarations: [
@@ -34,10 +34,10 @@ import { AuthService } from './services/auth.service';
     CardComponent,
     ProductListComponent,
     FooterComponent,
-    FunctionListComponent,
     ProductDropdownComponent,
     TestingComponent,
     ContactPageComponent,
+    ServiceListComponent,
   ],
   imports: [
     LoginComponent,
@@ -50,7 +50,7 @@ import { AuthService } from './services/auth.service';
     RouterOutlet,
     RouterLink,
     RouterLinkActive
-    ],
+  ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),

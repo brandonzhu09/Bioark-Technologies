@@ -1,0 +1,13 @@
+<div>
+    <h2 class="heading">Services</h2>
+    <div class="service-list">
+        @for (service of servicesData; track service.name) {
+        <card
+            [name]="service.name"
+            [description]="service.description"
+            [link]="service.link"
+            [image]="service.image"
+        ></card>
+        }
+    </div>
+</div>
