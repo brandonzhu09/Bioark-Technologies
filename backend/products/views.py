@@ -8,12 +8,12 @@ from rest_framework import status
 # Create your views here.
 @api_view(['GET'])
 def load_product_categories(request):
-    if request.user.is_authenticated:
-        queryset = ProductCategory.objects.all()
-        serializer = ProductCategorySerializer(queryset, many=True)
-        return Response(serializer.data)
+    # if request.user.is_authenticated:
+    queryset = ProductCategory.objects.all()
+    serializer = ProductCategorySerializer(queryset, many=True)
+    return Response(serializer.data)
     
-    return Response({'detail': 'Forbidden.'}, status=status.HTTP_403_FORBIDDEN)
+    # return Response({'detail': 'Forbidden.'}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET'])

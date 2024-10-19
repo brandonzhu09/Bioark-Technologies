@@ -119,7 +119,7 @@ tbody td {
 }
 
 /* Summary Table for Structure Type Form */
-.summary-table {
+/* .summary-table {
     width: 100%;
     border-collapse: collapse;
 }
@@ -143,4 +143,33 @@ tbody td {
 
 .summary-header td {
     font-weight: bold;
+} */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+th,
+td {
+    padding: 6px 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.header {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.section-header {
+    background-color: #b3b3b3;
+    font-weight: bold;
+}
+
+td:first-child {
+    width: 200px;
+    font-weight: 500;
 }
