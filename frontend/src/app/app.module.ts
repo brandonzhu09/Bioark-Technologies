@@ -24,6 +24,13 @@ import { SignupComponent } from './components/signup/signup.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { ServiceListComponent } from './components/service-list/service-list.component';
+import { QuoteFormComponent } from './components/quote-form/quote-form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +45,7 @@ import { ServiceListComponent } from './components/service-list/service-list.com
     TestingComponent,
     ContactPageComponent,
     ServiceListComponent,
+    QuoteFormComponent,
   ],
   imports: [
     LoginComponent,
@@ -49,7 +57,13 @@ import { ServiceListComponent } from './components/service-list/service-list.com
     CommonModule,
     RouterOutlet,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatRadioModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(),

@@ -17,24 +17,26 @@ import { GeneDeletionPageComponent } from './product-mode/gene-deletion-page/gen
 import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rna-knock-down-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { QuoteFormComponent } from './components/quote-form/quote-form.component';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
-  {path: 'summary-temp', component: SummaryComponent},
-  {path: 'design', component: StepperComponent},
-  {path: 'product', component: ProductPageComponent},
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'testing', component: TestingComponent},
-  {path: 'products', component: ProductHomeComponent},
-  {path: 'products/overexpression', component: OverexpressionPageComponent},
-  {path: 'products/gene-knock-in', component: GeneKnockInPageComponent},
-  {path: 'products/gene-knock-out', component: GeneKnockOutPageComponent},
-  {path: 'products/gene-deletion', component: GeneDeletionPageComponent},
-  {path: 'products/rna-knock-down', component: RnaKnockDownPageComponent},
-  {path: 'services', component: ServiceHomeComponent},
-  {path: 'contact', component: ContactPageComponent},
-  {path: '', component: LandingComponent, pathMatch: 'full'}
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'summary-temp', component: SummaryComponent },
+  { path: 'design', component: StepperComponent },
+  { path: 'product', component: ProductPageComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'testing', component: TestingComponent },
+  { path: 'products', component: ProductHomeComponent },
+  { path: 'products/overexpression', component: OverexpressionPageComponent },
+  { path: 'products/gene-knock-in', component: GeneKnockInPageComponent },
+  { path: 'products/gene-knock-out', component: GeneKnockOutPageComponent },
+  { path: 'products/gene-deletion', component: GeneDeletionPageComponent },
+  { path: 'products/rna-knock-down', component: RnaKnockDownPageComponent },
+  { path: 'services', component: ServiceHomeComponent },
+  { path: 'contact', component: ContactPageComponent },
+  { path: 'quote', component: QuoteFormComponent },
+  { path: '', component: LandingComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

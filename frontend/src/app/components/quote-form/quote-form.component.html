@@ -1,0 +1,138 @@
+<div class="form-container mat-elevation-z2">
+    <h2>Service Request Form</h2>
+
+    <form [formGroup]="quoteForm" (submit)="onSubmit()">
+        <!-- Product or Service Type -->
+        <div class="section">
+            <h3><span class="required">*</span> 1. Product or Service Type</h3>
+
+            <mat-radio-group formControlName="type" (change)="handleTypes()">
+                <mat-radio-button value="productType"
+                    >Product Type</mat-radio-button
+                >
+                <mat-radio-button value="serviceType"
+                    >Service Type</mat-radio-button
+                >
+            </mat-radio-group>
+
+            @if (this.quoteForm.value.type === "productType") {
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Products</mat-label>
+                <mat-select formControlName="productType">
+                    <mat-option value="genomeTargeted"
+                        >Genome Targeted Knock-In</mat-option
+                    >
+                    <mat-option value="geneKnockIn"
+                        >Gene Knock-In Tagging</mat-option
+                    >
+                    <mat-option value="geneKnockOut">Gene Knock-out</mat-option>
+                    <mat-option value="geneDeletion">Gene Deletion</mat-option>
+                    <mat-option value="crisprRNA">CRISPR RNA</mat-option>
+                    <mat-option value="knockDown">Knock-down</mat-option>
+                </mat-select>
+            </mat-form-field>
+            } @if (this.quoteForm.value.type === "serviceType") {
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Services</mat-label>
+                <mat-select formControlName="serviceType">
+                    <mat-option value="customCloning"
+                        >Custom Cloning Services</mat-option
+                    >
+                    <mat-option value="lentivirus"
+                        >Lentivirus Package Services</mat-option
+                    >
+                    <mat-option value="stableCell"
+                        >Stable Cell line Services</mat-option
+                    >
+                </mat-select>
+            </mat-form-field>
+            }
+        </div>
+
+        <!-- Gene of Interest -->
+        <div class="section">
+            <h3>2. Gene of Interest or Custom Sequence</h3>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Gene Sequence</mat-label>
+                <textarea
+                    matInput
+                    formControlName="geneSequence"
+                    rows="3"
+                ></textarea>
+            </mat-form-field>
+        </div>
+
+        <!-- Gene Species -->
+        <div class="section">
+            <h3>3. Gene Species</h3>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Select Species</mat-label>
+                <mat-select formControlName="geneSpecies">
+                    <mat-option value="mouse">Mouse</mat-option>
+                    <mat-option value="human">Human</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <!-- Mammalian Cells -->
+        <div class="section">
+            <h3>4. Mammalian cells for expression</h3>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Cell Name</mat-label>
+                <input matInput formControlName="mammalianCells" />
+            </mat-form-field>
+        </div>
+
+        <!-- Amount -->
+        <div class="section">
+            <h3>5. Amount</h3>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Plasmid Amount</mat-label>
+                <mat-select formControlName="plasmidAmount">
+                    <mat-option value="5ug">5μg</mat-option>
+                    <mat-option value="10ug">10μg</mat-option>
+                    <mat-option value="20ug">20μg</mat-option>
+                    <mat-option value="na">Not applicable</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Cell Line Amount</mat-label>
+                <mat-select formControlName="cellLineAmount">
+                    <mat-option value="1x106">1X10⁶ cells</mat-option>
+                    <mat-option value="2x106">2X10⁶ cells</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <!-- Message -->
+        <div class="section">
+            <h3><span class="required">*</span> 6. Message</h3>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Your Message</mat-label>
+                <textarea
+                    matInput
+                    formControlName="message"
+                    rows="4"
+                ></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="submit-section">
+            @if (this.submitted) {
+            <p class="response-message">
+                Thank you for your message. Our team will respond within one
+                business day.
+            </p>
+            }
+            <button
+                [disabled]="!quoteForm.valid"
+                type="submit"
+                class="submit-button"
+            >
+                Submit
+            </button>
+        </div>
+    </form>
+</div>

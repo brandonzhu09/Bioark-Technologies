@@ -172,8 +172,3 @@ tbody td {
 .full-width {
     grid-column: 1 / -1;
 }
-
-.grid-3-cols:hover,
-.grid-5-cols:hover {
-    background-color: #f0f0f0;
-}
