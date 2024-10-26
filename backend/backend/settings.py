@@ -102,6 +102,8 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:4200', 'http://127.0.0.1:4200']
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE = True
 
+CART_SESSION_ID = 'cart'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

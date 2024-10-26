@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from .views import home_view
 
+from orders.views import CartAPI
 
 urlpatterns = [
     path('', home_view),
@@ -26,4 +27,5 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('users/', include('users.urls')),
     path('products/', include('products.urls')),
+    path('cart/', CartAPI.as_view(), name='cart'),
 ]
