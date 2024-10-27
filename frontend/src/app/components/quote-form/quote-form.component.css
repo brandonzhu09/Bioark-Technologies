@@ -45,3 +45,8 @@ h3 {
 .submit-button:hover {
     opacity: 0.9;
 }
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}

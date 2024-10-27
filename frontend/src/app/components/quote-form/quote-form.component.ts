@@ -20,6 +20,9 @@ export class QuoteFormComponent {
       mammalianCells: [''],
       plasmidAmount: [''],
       cellLineAmount: [''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
       message: ['', Validators.required]
     });
   }

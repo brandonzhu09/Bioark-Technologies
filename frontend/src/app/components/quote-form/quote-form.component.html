@@ -106,9 +106,48 @@
             </mat-form-field>
         </div>
 
+        <div class="section">
+            <h3><span class="required">*</span> 6. Contact Information</h3>
+            <div class="form-row">
+                <mat-form-field class="full-width">
+                    <mat-label>First Name</mat-label>
+                    <input
+                        type="text"
+                        formControlName="firstName"
+                        matInput
+                        placeholder="Fill in first name"
+                    />
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Last Name</mat-label>
+                    <input
+                        type="text"
+                        formControlName="lastName"
+                        matInput
+                        placeholder="Fill in last name"
+                    />
+                </mat-form-field>
+            </div>
+            <mat-form-field class="full-width">
+                <mat-label>Email</mat-label>
+                <input
+                    type="email"
+                    formControlName="email"
+                    matInput
+                    placeholder="Ex. pat@example.com"
+                />
+                @if (quoteForm.controls['email'].hasError('email') &&
+                quoteForm.controls['email'].hasError('required')) {
+                <mat-error>Please enter a valid email address</mat-error>
+                } @if (quoteForm.controls['email'].hasError('required')) {
+                <mat-error>Email is <strong>required</strong></mat-error>
+                }
+            </mat-form-field>
+        </div>
+
         <!-- Message -->
         <div class="section">
-            <h3><span class="required">*</span> 6. Message</h3>
+            <h3><span class="required">*</span> 7. Message</h3>
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Your Message</mat-label>
                 <textarea
