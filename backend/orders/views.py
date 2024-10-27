@@ -33,7 +33,7 @@ from paypalserversdk.models.card_verification import CardVerification
 from paypalserversdk.models.card_verification_method import CardVerificationMethod
 from paypalserversdk.api_helper import ApiHelper
 
-from .models import Cart
+from .models import Cart, CartItem
 
 paypal_client: PaypalserversdkClient = PaypalserversdkClient(
     client_credentials_auth_credentials=ClientCredentialsAuthCredentials(
@@ -98,7 +98,7 @@ class CartAPI(APIView):
 
         return Response(
             {"data": list(cart.__iter__()), 
-            "cart_total_price": cart.get_total_price()},
+            },
             status=status.HTTP_200_OK
             )
 
@@ -115,7 +115,7 @@ class CartAPI(APIView):
         else:
             product = request.data
             cart.add(
-                    product=product["product"],
+                    cart_item=product["cart_item"],
                     quantity=product["quantity"],
                     override_quantity=product["override_quantity"] if "override_quantity" in product else False
                 )

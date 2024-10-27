@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { DesignFormService } from '../design-form.service';
+import { CartService } from '../../services/cart.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'design-summary',
@@ -8,7 +10,10 @@ import { DesignFormService } from '../design-form.service';
     standalone: true,
 })
 export class SummaryComponent {
-    constructor(private designFormService: DesignFormService) {}
+    productId = new FormControl(0);
+
+    constructor(private designFormService: DesignFormService, private cartService: CartService) {
+    }
 
     @Input() product_name: string = 'Product Name';
     @Input() product_sku: string = 'CPD100000';
@@ -34,6 +39,19 @@ export class SummaryComponent {
 
     ngOnChanges() {
         this.getDeliveryFormatTable();
+    }
+
+    addToCart() {
+        if (this.productId.value != -1 && this.productId.value != null) {
+            let product_sku = this.deliveryFormatTable[this.productId.value]['product_sku'];
+            let product_name = this.deliveryFormatTable[this.productId.value]['product_name'];
+            let unit_size = this.deliveryFormatTable[this.productId.value]['quantity'];
+            let price = this.deliveryFormatTable[this.productId.value]['price'];
+            let adjusted_price = this.deliveryFormatTable[this.productId.value]['adjusted_price'];
+            this.cartService.addToCart(product_sku, product_name, unit_size, price, adjusted_price).subscribe((res) => {
+                console.log(res);
+            })
+        }
     }
 
     // ngOnInit() {

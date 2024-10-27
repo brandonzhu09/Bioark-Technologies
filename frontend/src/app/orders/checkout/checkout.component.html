@@ -4,8 +4,26 @@
         <div class="col-lg-5 col-md-6 col-sm-12 bg-light p-4 rounded">
             <h3>Order Summary</h3>
 
-            <!-- Product 1 -->
+            @for (item of cartItems; track item.product_sku) {
             <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="product-name">{{ item.product_sku }}</p>
+                    <p class="product-price">${{ item.price }}</p>
+                </div>
+                <div class="input-group">
+                    <label class="input-group-text" for="pure-set-qty"
+                        >Qty</label
+                    >
+                    <select class="form-select" id="pure-set-qty">
+                        <!-- Options from 1 to 50 -->
+                        <option selected>{{ item.quantity }}</option>
+                    </select>
+                </div>
+            </div>
+            }
+
+            <!-- Product 1 -->
+            <!-- <div class="mb-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="product-name">Pure set</p>
                     <p class="product-price">$65.00</p>
@@ -15,17 +33,15 @@
                         >Qty</label
                     >
                     <select class="form-select" id="pure-set-qty">
-                        <!-- Options from 1 to 50 -->
                         <option selected>1</option>
                         <option>2</option>
-                        <!-- Add more options as needed -->
                         <option>50</option>
                     </select>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Product 2 -->
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="product-name">Pure glow cream</p>
                     <p class="product-price">$64.00 ($32.00 each)</p>
@@ -36,12 +52,11 @@
                     >
                     <select class="form-select" id="pure-glow-qty">
                         <option selected>2</option>
-                        <!-- Options from 1 to 50 -->
                         <option>1</option>
                         <option>50</option>
                     </select>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Promo Code Input -->
             <div class="mb-3">
@@ -56,15 +71,15 @@
 
             <div class="d-flex justify-content-between">
                 <p>Subtotal</p>
-                <p>$129.00</p>
+                <p>$0.01</p>
             </div>
             <div class="d-flex justify-content-between">
                 <p>Shipping</p>
-                <p>$5.00</p>
+                <p>$0.00</p>
             </div>
             <div class="d-flex justify-content-between">
                 <p class="h5">Total Due</p>
-                <p class="h5">$134.00</p>
+                <p class="h5">$0.01</p>
             </div>
         </div>
 

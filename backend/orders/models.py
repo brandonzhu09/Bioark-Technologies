@@ -45,6 +45,29 @@ class OrderItem(models.Model):
     class Meta:
         db_table = 'order_item'
 
+# class Cart(models.Model):
+#     session_key = models.CharField(max_length=40, null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f"Cart {self.id}"
+
+#     def get_total_price(self):
+#         return sum(item.get_total_price() for item in self.items.all())
+
+class CartItem(models.Model):
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+    product_sku = models.CharField(max_length=30)
+    product_name = models.CharField(default="Product Name")
+    price = models.DecimalField(decimal_places=2, max_digits=10)
+    adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+    unit_size = models.CharField()
+    quantity = models.IntegerField(default=0)
+    discount_code = models.CharField(max_length=20)
+
+    def get_total_price(self):
+        return self.product.price * self.quantity
+
 class Cart(object):
     def __init__(self, request):
         """
@@ -54,27 +77,40 @@ class Cart(object):
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             # save an empty cart in session
-            cart = self.session[settings.CART_SESSION_ID] = {}
+            cart = self.session[settings.CART_SESSION_ID] = []
         self.cart = cart
 
     def save(self):
         self.session.modified = True
 
-    def add(self, product, quantity=1, override_quantity=False):
+    def add(self, cart_item=None, quantity=1, override_quantity=False):
         """
         Add product to the cart or update its quantity
         """
-        product_id = str(product.product_id)
-        if product_id not in self.cart:
-            self.cart[product_id] = {
-                "quantity": 0,
-                "price": str(product["price"])
-            }
+        cart_item, created = CartItem.objects.get_or_create(session_key=self.session.session_key, product_sku=cart_item['product_sku'], product_name=cart_item['product_name'],
+                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'])
+        if created:
+            self.cart.append(cart_item.id)
+        
         if override_quantity:
-            self.cart[product_id]["quantity"] = quantity
+            cart_item.quantity = quantity
         else:
-            self.cart[product_id]["quantity"] += quantity
+            cart_item.quantity += quantity
+        
+        cart_item.save()
         self.save()
+
+        # product_id = str(product.product_id)
+        # if product_id not in self.cart:
+        #     self.cart[product_id] = {
+        #         "quantity": 0,
+        #         "price": str(product["price"])
+        #     }
+        # if override_quantity:
+        #     self.cart[product_id]["quantity"] = quantity
+        # else:
+        #     self.cart[product_id]["quantity"] += quantity
+        # self.save()
 
     def remove(self, product):
         """
@@ -90,15 +126,20 @@ class Cart(object):
         """
         Loop through cart items and fetch the products from the database
         """
-        product_ids = self.cart.keys()
-        products = Product.objects.filter(product_id__in=product_ids)
-        cart = self.cart.copy()
-        for product in products:
-            cart[str(product.product_id)]["product"] = ProductSerializer(product).data
-        for item in cart.values():
-            item["price"] = Decimal(item["price"]) 
-            item["total_price"] = item["price"] * item["quantity"]
-            yield item
+        # product_ids = self.cart.keys()
+        # products = Product.objects.filter(product_id__in=product_ids)
+        # cart = self.cart.copy()
+        # for product in products:
+        #     cart[str(product.product_id)]["product"] = ProductSerializer(product).data
+        # for item in cart.values():
+        #     item["price"] = Decimal(item["price"]) 
+        #     item["total_price"] = item["price"] * item["quantity"]
+        #     yield item
+        from orders.serializers import CartItemSerializer
+        cart_items = CartItem.objects.filter(id__in=self.cart)
+        serializer = CartItemSerializer(cart_items, many=True)
+        
+        return serializer.data
 
     def __len__(self):
         """

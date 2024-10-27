@@ -106,25 +106,52 @@ def get_delivery_format_table(request):
                                                    structure_type_code=structure_type_code,
                                                    ready_status=ready_status)
     
-    serializer = DeliveryFormatTableSerializer(design_products, many=True)    
+    data = []
+    product_id = 0
 
-    return Response(serializer.data)
+    for instance in design_products:
+        delivery_format_name = DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).delivery_format_name
+        product = {
+            'product_id': product_id,
+            'product_sku': generate_product_sku(function_type_name, structure_type_name, promoter_name,
+                                                protein_tag_name, fluorescene_marker_name, selection_marker_name,
+                                                bacterial_marker_name, target_sequence, delivery_format_name),
+            'product_name': "Test",
+            'delivery_format_name': delivery_format_name,
+            'product_format_description': DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).description,
+            'quantity': instance.amount + " " + instance.unit_size,
+            'price': instance.base_price,
+            'adjusted_price': instance.adjusted_price,
+        }
+        data.append(product)
+        product_id += 1
+
+    # serializer = DeliveryFormatTableSerializer(design_products, many=True)    
+
+    return Response(data)
 
 
-@api_view(['GET'])
-def generate_product_sku(request):
-    function_type_name = request.GET["function_type_name"]
-    structure_type_name = request.GET["structure_type_name"]
-    promoter_name = request.GET["promoter_name"]
-    protein_tag_name = request.GET["protein_tag_name"]
-    fluorescene_marker_name = request.GET["fluorescene_marker_name"]
-    selection_marker_name = request.GET["selection_marker_name"]
-    bacterial_marker_name = request.GET["bacterial_marker_name"]
-    target_sequence = request.GET["target_sequence"]
-
+def generate_product_sku(function_type_name, structure_type_name, promoter_name, protein_tag_name, fluorescene_marker_name, selection_marker_name,
+                         bacterial_marker_name, target_sequence, delivery_format_name):
     function_type_code = FunctionType.objects.get(function_type_name=function_type_name).function_type_symbol
-    structure_type_code = DeliveryLibrary.objects.get()
+    structure_type_code = StructureType.objects.get(structure_type_name=structure_type_name).structure_type_symbol
+    # Promoter code - check special case
+    promoter_queryset = Promoter.objects.filter(promoter_name=promoter_name).values("promoter_code")
+    promoter_special_case_queryset = PromoterSpecialCase.objects.filter(promoter_name=promoter_name).values("promoter_code")
+    promoter_code = promoter_queryset.union(promoter_special_case_queryset)[0]['promoter_code']
+    # Bacterial Marker code - check special case
+    bacterial_marker_queryset = BacterialMarker.objects.filter(bacterial_marker_name=bacterial_marker_name).values("bacterial_marker_code")
+    bacterial_marker_special_case_queryset = BacterialMarkerSpecialCase.objects.filter(bacterial_marker_name=bacterial_marker_name).values("bacterial_marker_code")
+    bacterial_marker_code = bacterial_marker_queryset.union(bacterial_marker_special_case_queryset)[0]['bacterial_marker_code']
 
+    protein_tag_code = ProteinTag.objects.get(protein_tag_name=protein_tag_name).protein_tag_code
+    fluorescene_marker_code = FluoresceneMarker.objects.get(fluorescene_marker_name=fluorescene_marker_name).fluorescene_marker_code
+    selection_marker_code = SelectionMarker.objects.get(selection_marker_name=selection_marker_name).selection_marker_code
+    delivery_format_code = DeliveryFormat.objects.get(delivery_format_name=delivery_format_name).delivery_format_symbol
+
+    product_sku = function_type_code + structure_type_code + "-" + promoter_code + protein_tag_code + fluorescene_marker_code + selection_marker_code + bacterial_marker_code + "-" + target_sequence + delivery_format_code
+
+    return product_sku    
 
 def get_promoters(function_type_symbol, structure_type_symbol):
     # check the special case for promoter options
