@@ -145,7 +145,7 @@ class Cart(object):
         """
         Count all items in the cart
         """
-        return sum(item["quantity"] for item in self.cart.values())
+        return sum(CartItem.objects.get(id=item_id).quantity for item_id in self.cart)
 
     def get_total_price(self):
         return sum(Decimal(item["price"]) * item["quantity"] for item in self.cart.values())

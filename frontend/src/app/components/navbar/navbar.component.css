@@ -159,11 +159,10 @@ body {
   z-index: 1000;
 }
 
-.logo {
-  font-size: 28px;
-  font-weight: bold;
-  color: #2e7d32;
-  text-transform: uppercase;
+.logo img {
+  width: 60px;
+  /* Adjust the size as needed */
+  height: auto;
 }
 
 nav {
@@ -229,6 +228,20 @@ nav ul li a:hover {
 }
 
 .cart {
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.cart:hover {
+  color: #1b5e20;
+}
+
+.cart-count {
+  color: black;
+}
+
+.profile {
   font-size: 24px;
   cursor: pointer;
   transition: color 0.3s ease;

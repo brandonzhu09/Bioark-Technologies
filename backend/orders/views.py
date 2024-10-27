@@ -97,7 +97,8 @@ class CartAPI(APIView):
         cart = Cart(request)
 
         return Response(
-            {"data": list(cart.__iter__()), 
+            {"data": list(cart.__iter__()),
+             "count": cart.__len__()
             },
             status=status.HTTP_200_OK
             )

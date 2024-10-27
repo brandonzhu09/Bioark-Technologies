@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
+import { NavbarComponent } from '../components/navbar/navbar.component';
 
 const API_BASE_URL = 'http://localhost:8000';
 
@@ -9,10 +10,25 @@ const API_BASE_URL = 'http://localhost:8000';
   providedIn: 'root'
 })
 export class CartService {
+  private cartCount = new BehaviorSubject<number>(0);
+  cartCount$ = this.cartCount.asObservable();
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
+  setCartCount() {
+    return this.http.get<any>(`${API_BASE_URL}/orders/cart/`).subscribe(res => {
+      console.log(res);
+      this.cartCount.next(res.count);
+    })
+
+  }
+
   addToCart(product_sku: string, product_name: string, unit_size: string, price: string, adjusted_price: string) {
+    let currentCount = this.cartCount.value;
+    this.cartCount.next(currentCount + 1);
+
+    this.setCartCount()
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
@@ -28,8 +44,6 @@ export class CartService {
       },
       'quantity': 1,
     }
-
-    console.log(headers)
 
     return this.http.post(`${API_BASE_URL}/orders/cart/`, body, {
       headers: headers,
