@@ -1,24 +1,25 @@
 import { Component, Input } from '@angular/core';
 import { DesignFormService } from '../design-form.service';
 import { CartService } from '../../services/cart.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'design-summary',
     templateUrl: './summary.component.html',
     styleUrl: './summary.component.css',
     standalone: true,
+    imports: [ReactiveFormsModule]
 })
 export class SummaryComponent {
-    productId = new FormControl(0);
+    productId = new FormControl(-1);
 
     constructor(private designFormService: DesignFormService, private cartService: CartService) {
     }
 
     @Input() product_name: string = 'Product Name';
     @Input() product_sku: string = 'CPD100000';
-    @Input() function_type_name: string = 'CRISPR-Cas9';
-    @Input() structure_type_name: string = 'CRISPRa';
+    @Input() function_type_name: string = 'CRISPRa';
+    @Input() structure_type_name: string = 'Standard';
     @Input() delivery_type_name: string = 'Standard';
     @Input() promoter_name: string = 'PCMV';
     @Input() protein_tag_name: string = 'None';
@@ -54,9 +55,9 @@ export class SummaryComponent {
         }
     }
 
-    // ngOnInit() {
-    //   this.getDeliveryFormatTable()
-    // }
+    ngOnInit() {
+        this.getDeliveryFormatTable()
+    }
 
     getDeliveryFormatTable() {
         console.log(this.target_sequence)

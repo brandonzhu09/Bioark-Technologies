@@ -1,42 +1,56 @@
 <div class="signup-container">
     <i class="bi bi-x close-icon"></i>
     <h1>Sign Up</h1>
-    <p class="signup-text">Already a member? <a href="/login"><span class="signup-link">Log In</span></a></p>
-    
+    <p class="signup-text">
+        Already a member?
+        <a href="/login"><span class="signup-link">Log In</span></a>
+    </p>
+
     <form id="signupForm">
         <div class="form-row">
             <mat-form-field class="form-group">
                 <mat-label>First Name</mat-label>
-                <input type="text" matInput placeholder="Fill in first name">
+                <input type="text" matInput placeholder="Fill in first name" />
             </mat-form-field>
             <mat-form-field class="form-group">
                 <mat-label>Last Name</mat-label>
-                <input type="text" matInput placeholder="Fill in last name">
+                <input type="text" matInput placeholder="Fill in last name" />
             </mat-form-field>
         </div>
         <mat-form-field class="form-group">
             <mat-label>Email</mat-label>
-            <input type="email" [formControl]="emailFormControl" matInput placeholder="Ex. pat@example.com">
-            @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-                <mat-error>Please enter a valid email address</mat-error>
-            }
-            @if (emailFormControl.hasError('required')) {
-                <mat-error>Email is <strong>required</strong></mat-error>
+            <input
+                type="email"
+                [formControl]="emailFormControl"
+                matInput
+                placeholder="Ex. pat@example.com"
+            />
+            @if (emailFormControl.hasError('email') &&
+            !emailFormControl.hasError('required')) {
+            <mat-error>Please enter a valid email address</mat-error>
+            } @if (emailFormControl.hasError('required')) {
+            <mat-error>Email is <strong>required</strong></mat-error>
             }
         </mat-form-field>
         <mat-form-field class="form-group">
             <mat-label>Password</mat-label>
-            <input type="password" [formControl]="passwordFormControl" matInput placeholder="Enter password">
+            <input
+                type="password"
+                [formControl]="passwordFormControl"
+                matInput
+                placeholder="Enter password"
+            />
             @if (passwordFormControl.hasError('pattern')) {
-                <mat-error>Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters.</mat-error>
-            }
-            @if (passwordFormControl.hasError('required')) {
-                <mat-error>Password is <strong>required</strong></mat-error>
+            <mat-error
+                >Your password must be at least 8 characters long, contain at
+                least one number and have a mixture of uppercase and lowercase
+                letters.</mat-error
+            >
+            } @if (passwordFormControl.hasError('required')) {
+            <mat-error>Password is <strong>required</strong></mat-error>
             }
         </mat-form-field>
-      
-      <a href="#" class="forgot-password">Forgot password?</a>
-      
-      <button type="submit" class="signup-button">Sign Up</button>
+
+        <button type="submit" class="signup-button">Sign Up</button>
     </form>
 </div>

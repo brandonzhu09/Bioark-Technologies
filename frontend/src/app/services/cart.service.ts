@@ -12,22 +12,27 @@ const API_BASE_URL = 'http://localhost:8000';
 export class CartService {
   private cartCount = new BehaviorSubject<number>(0);
   cartCount$ = this.cartCount.asObservable();
+  private readonly CART_COUNT_KEY = 'cart_count';
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
-
-  setCartCount() {
-    return this.http.get<any>(`${API_BASE_URL}/orders/cart/`).subscribe(res => {
-      console.log(res);
-      this.cartCount.next(res.count);
-    })
+  constructor(private http: HttpClient, private authService: AuthService) {
 
   }
 
-  addToCart(product_sku: string, product_name: string, unit_size: string, price: string, adjusted_price: string) {
-    let currentCount = this.cartCount.value;
-    this.cartCount.next(currentCount + 1);
+  ngOnInit() {
+    this.loadCartCountFromServer();
+  }
 
-    this.setCartCount()
+  loadCartCountFromServer() {
+    return this.http.get<any>(`${API_BASE_URL}/orders/cart/`, { withCredentials: true }).pipe(
+      tap(res => {
+        this.cartCount.next(res.count);
+        console.log(this.cartCount)
+      })
+    );
+  }
+
+  addToCart(product_sku: string, product_name: string, unit_size: string, price: string, adjusted_price: string) {
+    this.incrementCartCount();
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -53,5 +58,28 @@ export class CartService {
 
   viewCart() {
     return this.http.get<any>(`${API_BASE_URL}/orders/cart/`, { withCredentials: true });
+  }
+
+  getCartCount(): number {
+    return this.cartCount.value;
+  }
+
+  setCartCount(count: number): void {
+    // Update the local cart count
+    this.cartCount.next(count);
+    // Persist the cart count to localStorage
+    localStorage.setItem(this.CART_COUNT_KEY, count.toString());
+  }
+
+  incrementCartCount(): void {
+    const currentCount = this.getCartCount();
+    this.setCartCount(currentCount + 1);
+  }
+
+  decrementCartCount(): void {
+    const currentCount = this.getCartCount();
+    if (currentCount > 0) {
+      this.setCartCount(currentCount - 1);
+    }
   }
 }

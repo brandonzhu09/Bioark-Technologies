@@ -15,6 +15,5 @@ export class NavbarComponent {
     this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;
     });
-    this.cartService.setCartCount();
   }
 }

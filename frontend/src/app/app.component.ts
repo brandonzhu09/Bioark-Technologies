@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'frontend';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private cartService: CartService) { }
 
   ngOnInit() {
     this.authService.getSession().subscribe((response) => {
@@ -20,5 +21,6 @@ export class AppComponent {
         this.authService.isAuthenticated = false;
       }
     });
+    this.cartService.loadCartCountFromServer().subscribe();
   }
 }
