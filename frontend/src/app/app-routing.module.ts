@@ -5,7 +5,7 @@ import { LandingComponent } from './components/landing/landing.component';
 import { ProductPageComponent } from './product-mode/product-page/product-page.component';
 import { StepperComponent } from './design-mode/stepper/stepper.component';
 import { SummaryComponent } from './design-mode/summary/summary.component';
-import { CheckoutComponent } from './orders/checkout/checkout.component';
+import { CartComponent } from './orders/cart/cart.component';
 import { TestingComponent } from './testing/testing.component';
 import { ProductHomeComponent } from './product-mode/product-home/product-home.component';
 import { ServiceHomeComponent } from './service-mode/service-home/service-home.component';
@@ -18,6 +18,7 @@ import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rn
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { QuoteFormComponent } from './components/quote-form/quote-form.component';
+import { CheckoutComponent } from './orders/checkout/checkout.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'summary-temp', component: SummaryComponent },
   { path: 'design', component: StepperComponent },
   { path: 'product', component: ProductPageComponent },
+  { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'testing', component: TestingComponent },
   { path: 'products', component: ProductHomeComponent },

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -13,14 +13,14 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   loginForm = new FormGroup({
     email: new FormControl('', [
-        Validators.required,
+      Validators.required,
     ]),
     password: new FormControl('', [
-        Validators.required
+      Validators.required
     ]),
   });
 
