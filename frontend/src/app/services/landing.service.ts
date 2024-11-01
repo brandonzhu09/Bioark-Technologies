@@ -19,6 +19,12 @@ export class LandingPageService {
     { name: 'Stable Cell Line Construction', description: 'We offer stable cell line construction tailored to various requirements across different cancer cell lines and adherent cell lines at a relatively affordable price. Our services include gene overexpression, knockout, knock-in, and deletion.', link: '/services/stable-cell-line', image: '../../assets/Service-3 Stable Cell Line Construction.jpeg' }
   ]
 
+  blogsData = [
+    { name: 'A New Chapter in the Revolutionary Commercial Era—Rise of Live commerce and Super IPs', date: 'October 1, 2024', image: '../../assets/Blog-Picture-1.jpg', description: 'Dong Yuhui resigned from Oriental Selection on July 25, 2024, and is set to complete the acquisition of the commercial entity Time with Yuhui in three months.' },
+    { name: 'Dionysus and Apollo----the battle from Olympic Arena to Business World', date: 'February 1, 2024', image: '../../assets/Blog-Picture-2.jpg', description: "A controversial incident occurred during the opening ceremony of the Paris Olympic Games. In one segment, several performers posed at a table in various positions, which many perceived as a reenactment of Leonardo da Vinci's \"The Last Supper.\" The scene featured drag queens, transgender models, and a naked singer portraying the Greek god Dionysus." }
+
+  ]
+
   constructor() { }
 
   get_products() {
@@ -27,6 +33,10 @@ export class LandingPageService {
 
   get_services() {
     return this.servicesData;
+  }
+
+  get_blogs() {
+    return this.blogsData;
   }
 
 }

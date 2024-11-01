@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ResearchBlogComponent } from './components/research-blog/research-blog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContactPageComponent,
     ServiceListComponent,
     QuoteFormComponent,
+    ResearchBlogComponent,
   ],
   imports: [
     LoginComponent,

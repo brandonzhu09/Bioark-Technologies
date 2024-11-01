@@ -1,0 +1,18 @@
+* {
+    margin: 20px;
+}
+
+.heading {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 64px;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+}
+
+.blog-list {
+    display: flex;
+    justify-content: start;
+    /* margin: 20px; */
+    margin-top: 20px;
+}

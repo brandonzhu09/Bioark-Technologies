@@ -62,3 +62,8 @@
 .quote-button:hover {
     opacity: 0.9;
 }
+
+.quote-button a {
+    text-decoration: none;
+    color: white;
+}

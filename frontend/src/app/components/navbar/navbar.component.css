@@ -160,7 +160,7 @@ body {
 }
 
 .logo img {
-  width: 60px;
+  width: 120px;
   /* Adjust the size as needed */
   height: auto;
 }
@@ -295,9 +295,10 @@ nav ul li a:hover {
     padding: 10px;
   }
 
-  .logo {
+  /* .logo {
     font-size: 22px;
-  }
+    width: 100px;
+  } */
 
   nav ul {
     gap: 10px;
