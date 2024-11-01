@@ -32,6 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ResearchBlogComponent } from './components/research-blog/research-blog.component';
+import { BlogPostComponent } from './components/blog-post/blog-post.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ResearchBlogComponent } from './components/research-blog/research-blog.
     ServiceListComponent,
     QuoteFormComponent,
     ResearchBlogComponent,
+    BlogPostComponent,
   ],
   imports: [
     LoginComponent,
