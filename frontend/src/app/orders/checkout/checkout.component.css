@@ -1,3 +1,106 @@
+/* Order Summary Table */
+
+.order-summary-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    margin: auto;
+    /* Full width */
+    box-sizing: border-box;
+}
+
+.order-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.order-summary-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+.order-summary-edit-button {
+    background-color: transparent;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.order-summary-edit-button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.order-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    table-layout: fixed;
+    /* Ensures columns are of equal width */
+}
+
+.order-summary-column-head {
+    font-weight: bold;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-summary-column-title {
+    font-weight: bold;
+    text-align: right;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-summary-item-name {
+    font-weight: bold;
+    padding: 10px;
+}
+
+.order-summary-item-qty,
+.order-summary-item-subtotal,
+.order-summary-savings-amount,
+.order-summary-total-amount {
+    text-align: right;
+    padding: 10px;
+}
+
+.order-summary-item-qty {
+    font-weight: normal;
+}
+
+.order-summary-item-subtotal,
+.order-summary-total-amount {
+    font-weight: bold;
+    color: #333;
+}
+
+.order-summary-savings-label {
+    color: #e63946;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.order-summary-savings-amount {
+    color: #e63946;
+    text-align: right;
+    padding: 10px;
+}
+
+.order-summary-total-label {
+    font-weight: bold;
+    padding: 10px;
+}
+
+/* Checkout Accordian */
+
 .checkout-container {
     max-width: 800px;
     margin: 20px auto;
@@ -15,9 +118,10 @@
     margin-bottom: 20px;
 }
 
-/* mat-form-field {
+mat-form-field {
     flex: 1;
-} */
+    margin: 0;
+}
 
 button {
     margin-top: 20px;
@@ -76,4 +180,78 @@ mat-panel-description {
 
 .divider {
     margin: 16px 0;
+}
+
+.payment-divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+    text-align: center;
+    color: #999;
+}
+
+.payment-divider::before,
+.payment-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+    margin: 0 10px;
+}
+
+.payment-divider-text {
+    background-color: #fff;
+    padding: 0 10px;
+}
+
+.order-review-container {
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.order-review-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.order-details-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.refund-policy-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.refund-policy-link:hover {
+    text-decoration: underline;
+}
+
+.order-summary {
+    text-align: right;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    gap: 100px;
+}
+
+.order-label {
+    font-weight: normal;
+}
+
+.order-value {
+    font-weight: normal;
+}
+
+.order-total .order-label,
+.order-total .order-value {
+    font-weight: bold;
 }

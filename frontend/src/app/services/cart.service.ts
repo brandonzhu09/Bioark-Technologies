@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { NavbarComponent } from '../components/navbar/navbar.component';
+import { environment } from '../../environment/environment';
 
-const API_BASE_URL = 'http://localhost:8000';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class CartService {
   }
 
   loadCartCountFromServer() {
-    return this.http.get<any>(`${API_BASE_URL}/orders/cart/`, { withCredentials: true }).pipe(
+    return this.http.get<any>(`${environment.apiBaseUrl}/orders/cart/`, { withCredentials: true }).pipe(
       tap(res => {
         this.cartCount.next(res.count);
         console.log(this.cartCount)
@@ -50,14 +50,14 @@ export class CartService {
       'quantity': 1,
     }
 
-    return this.http.post(`${API_BASE_URL}/orders/cart/`, body, {
+    return this.http.post(`${environment.apiBaseUrl}/orders/cart/`, body, {
       headers: headers,
       withCredentials: true
     });
   }
 
   viewCart() {
-    return this.http.get<any>(`${API_BASE_URL}/orders/cart/`, { withCredentials: true });
+    return this.http.get<any>(`${environment.apiBaseUrl}/orders/cart/`, { withCredentials: true });
   }
 
   getCartCount(): number {
