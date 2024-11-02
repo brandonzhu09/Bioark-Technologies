@@ -22,6 +22,7 @@ export class QuoteFormComponent {
       cellLineAmount: [''],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      institution: ['', Validators.required],
       email: ['', Validators.required, Validators.email],
       message: ['', Validators.required]
     });

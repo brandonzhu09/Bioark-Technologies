@@ -5,7 +5,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 80%;
+    width: 100%;
     margin: auto;
     /* Full width */
     box-sizing: border-box;
@@ -21,6 +21,9 @@
 .order-summary-title {
     margin: 0;
     font-size: 24px;
+    flex-grow: 1;
+    /* Allows it to take up the available space in the center */
+    text-align: center;
 }
 
 .order-summary-edit-button {
@@ -59,8 +62,11 @@
     border-bottom: 1px solid #ddd;
 }
 
+.order-summary-divider-row {
+    border-top: 1px solid #ddd;
+}
+
 .order-summary-item-name {
-    font-weight: bold;
     padding: 10px;
 }
 
@@ -92,6 +98,16 @@
     color: #e63946;
     text-align: right;
     padding: 10px;
+}
+
+.order-summary-discount-row {
+    color: #e63946;
+    font-size: 0.9em;
+}
+
+.order-summary-discount {
+    padding-left: 20px;
+    font-style: italic;
 }
 
 .order-summary-total-label {

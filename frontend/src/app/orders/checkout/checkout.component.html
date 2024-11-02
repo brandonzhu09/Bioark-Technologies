@@ -16,18 +16,28 @@
             <tr>
                 <td class="order-summary-item-name">{{ item.product_sku }}</td>
                 <td class="order-summary-item-qty">{{ item.quantity }}</td>
-                <td class="order-summary-item-subtotal">${{ item.price }}</td>
+                <td class="order-summary-item-subtotal">
+                    ${{ item.price * item.quantity }}
+                </td>
             </tr>
+            <tr class="order-summary-divider-row">
+                <td colspan="3"></td>
+            </tr>
+            <!-- <tr class="order-summary-discount-row">
+                <td class="order-summary-discount" colspan="3">
+                    Discount: $50.00 Off
+                </td>
+            </tr> -->
             }
-            <tr>
+            <!-- <tr>
                 <td class="order-summary-savings-label">Discount</td>
                 <td></td>
                 <td class="order-summary-savings-amount">-$50.00</td>
-            </tr>
+            </tr> -->
             <tr>
                 <td class="order-summary-total-label">Subtotal</td>
                 <td></td>
-                <td class="order-summary-total-amount">$69.00</td>
+                <td class="order-summary-total-amount">${{ subTotal }}</td>
             </tr>
         </tbody>
     </table>
@@ -152,7 +162,7 @@
             </div>
 
             <form [formGroup]="billingForm" (ngSubmit)="onBillingSubmit()">
-                <mat-form-field appearance="outline" class="full-width">
+                <!-- <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Name on Card</mat-label>
                     <input matInput formControlName="cardName" required />
                     <mat-error
@@ -235,7 +245,7 @@
                     [disabled]="!billingForm.valid"
                 >
                     Place Order
-                </button>
+                </button> -->
             </form>
         </mat-expansion-panel>
     </mat-accordion>
@@ -246,15 +256,23 @@
             <div class="order-summary">
                 <div class="order-item">
                     <span class="order-label">Subtotal</span>
-                    <span class="order-value">$69.00</span>
+                    <span class="order-value">${{ subTotal }}</span>
                 </div>
                 <div class="order-item">
                     <span class="order-label">Tax</span>
+                    @if (taxRate == 1) {
                     <span class="order-value">-</span>
+                    } @else {
+                    <span class="order-value">${{ taxAmount }}</span>
+                    }
                 </div>
                 <div class="order-item order-total">
                     <span class="order-label">Total</span>
+                    @if (taxRate == 1) {
                     <span class="order-value">-</span>
+                    } @else {
+                    <span class="order-value">${{ subTotal + taxAmount }}</span>
+                    }
                 </div>
             </div>
         </div>

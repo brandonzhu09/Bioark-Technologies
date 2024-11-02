@@ -1,6 +1,5 @@
-<div class="container my-5">
+<!-- <div class="container my-5">
     <div class="row justify-content-center">
-        <!-- Order Summary Section -->
         <div class="col-lg-5 col-md-6 col-sm-12 bg-light p-4 rounded">
             <h3>Order Summary</h3>
 
@@ -15,50 +14,11 @@
                         >Qty</label
                     >
                     <select class="form-select" id="pure-set-qty">
-                        <!-- Options from 1 to 50 -->
                         <option selected>{{ item.quantity }}</option>
                     </select>
                 </div>
             </div>
             }
-
-            <!-- Product 1 -->
-            <!-- <div class="mb-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="product-name">Pure set</p>
-                    <p class="product-price">$65.00</p>
-                </div>
-                <div class="input-group">
-                    <label class="input-group-text" for="pure-set-qty"
-                        >Qty</label
-                    >
-                    <select class="form-select" id="pure-set-qty">
-                        <option selected>1</option>
-                        <option>2</option>
-                        <option>50</option>
-                    </select>
-                </div>
-            </div> -->
-
-            <!-- Product 2 -->
-            <!-- <div class="mb-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="product-name">Pure glow cream</p>
-                    <p class="product-price">$64.00 ($32.00 each)</p>
-                </div>
-                <div class="input-group">
-                    <label class="input-group-text" for="pure-glow-qty"
-                        >Qty</label
-                    >
-                    <select class="form-select" id="pure-glow-qty">
-                        <option selected>2</option>
-                        <option>1</option>
-                        <option>50</option>
-                    </select>
-                </div>
-            </div> -->
-
-            <!-- Promo Code Input -->
             <div class="mb-3">
                 <label for="promo-code" class="form-label">Promo Code</label>
                 <input
@@ -83,7 +43,6 @@
             </div>
         </div>
 
-        <!-- Checkout Section -->
         <div class="col-lg-5 col-md-6 col-sm-12 bg-white p-4 rounded">
             <h3>Pay with PayPal</h3>
             <form action="your-server-endpoint" method="POST">
@@ -114,4 +73,48 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
+
+<body>
+    <div class="container">
+        <div class="cart-section">
+            <h1>My cart</h1>
+            @for (item of cartItems; track item.id) {
+            <div class="cart-item">
+                <div class="product-info">
+                    <div class="product-title">{{ item.product_sku }}</div>
+                    <div class="product-price">${{ item.price }}</div>
+                </div>
+
+                <quantity-input
+                    [quantity]="item.quantity"
+                    (quantityChange)="onQuantityChange(item.id, $event)"
+                ></quantity-input>
+
+                <div class="total-price">${{ item.price * item.quantity }}</div>
+
+                <button class="delete-button" (click)="removeItem(item.id)">
+                    🗑️
+                </button>
+            </div>
+            }
+
+            <div class="promo-code">🏷️ Enter a promo code</div>
+
+            <div class="note">📝 Add a note</div>
+        </div>
+
+        <div class="order-summary">
+            <h2>Order summary</h2>
+
+            <div class="total-row">
+                <span>Subtotal ({{ totalItems }} items)</span>
+                <span>${{ subTotal }}</span>
+            </div>
+
+            <primary-button url="/checkout"></primary-button>
+
+            <div class="secure-text">🔒 Secure Checkout</div>
+        </div>
+    </div>
+</body>

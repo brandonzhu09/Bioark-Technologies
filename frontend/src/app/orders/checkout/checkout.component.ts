@@ -51,6 +51,10 @@ export class CheckoutComponent {
   };
   states: any[] = US_STATES;
   cartItems: any[] = [];
+  subTotal: number = 0;
+  taxRate: number = 1;
+  taxAmount: number = 0;
+  totalPrice: number = 0;
 
   ngOnInit(): void {
     // this.initConfig();
@@ -79,6 +83,7 @@ export class CheckoutComponent {
   getCartItems() {
     this.cartService.viewCart().subscribe((res) => {
       this.cartItems = res.data;
+      this.subTotal = res.total_price;
     })
   }
 
@@ -126,7 +131,8 @@ export class CheckoutComponent {
 
   calculateSalesTax() {
     this.orderService.calculateSalesTax(this.shippingForm.controls['zipCode'].value).subscribe(res => {
-      console.log(res);
+      this.taxRate = Number(res[0]["total_rate"]);
+      this.taxAmount = this.subTotal * this.taxRate;
     })
   }
 

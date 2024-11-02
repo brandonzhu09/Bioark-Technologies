@@ -100,43 +100,30 @@ class Cart(object):
         cart_item.save()
         self.save()
 
-        # product_id = str(product.product_id)
-        # if product_id not in self.cart:
-        #     self.cart[product_id] = {
-        #         "quantity": 0,
-        #         "price": str(product["price"])
-        #     }
-        # if override_quantity:
-        #     self.cart[product_id]["quantity"] = quantity
-        # else:
-        #     self.cart[product_id]["quantity"] += quantity
-        # self.save()
-
-    def remove(self, product):
+    def remove(self, product_id):
         """
         Remove a product from the cart
         """
-        product_id = str(product.product_id)
-
         if product_id in self.cart:
-            del self.cart[product_id]
+            self.cart.remove(product_id)
+            self.save()
+    
+    def updateQuantity(self, product_id, quantity):
+        """
+        Remove a product from the cart
+        """
+        if product_id in self.cart:
+            cart_item = CartItem.objects.get(id=product_id)
+            cart_item.quantity = quantity
+            cart_item.save()
             self.save()
 
     def __iter__(self):
         """
         Loop through cart items and fetch the products from the database
         """
-        # product_ids = self.cart.keys()
-        # products = Product.objects.filter(product_id__in=product_ids)
-        # cart = self.cart.copy()
-        # for product in products:
-        #     cart[str(product.product_id)]["product"] = ProductSerializer(product).data
-        # for item in cart.values():
-        #     item["price"] = Decimal(item["price"]) 
-        #     item["total_price"] = item["price"] * item["quantity"]
-        #     yield item
         from orders.serializers import CartItemSerializer
-        cart_items = CartItem.objects.filter(id__in=self.cart)
+        cart_items = CartItem.objects.filter(id__in=self.cart).order_by('-id')
         serializer = CartItemSerializer(cart_items, many=True)
         
         return serializer.data
@@ -148,7 +135,7 @@ class Cart(object):
         return sum(CartItem.objects.get(id=item_id).quantity for item_id in self.cart)
 
     def get_total_price(self):
-        return sum(Decimal(item["price"]) * item["quantity"] for item in self.cart.values())
+        return sum(CartItem.objects.get(id=item_id).price * CartItem.objects.get(id=item_id).quantity for item_id in self.cart)
 
     def clear(self):
         # remove cart from session

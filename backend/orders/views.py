@@ -98,7 +98,8 @@ class CartAPI(APIView):
 
         return Response(
             {"data": list(cart.__iter__()),
-             "count": cart.__len__()
+             "count": cart.__len__(),
+             "total_price": cart.get_total_price()
             },
             status=status.HTTP_200_OK
             )
@@ -107,11 +108,16 @@ class CartAPI(APIView):
         cart = Cart(request)
 
         if "remove" in request.data:
-            product = request.data["product"]
-            cart.remove(product)
+            product_id = request.data["product_id"]
+            cart.remove(product_id)
 
         elif "clear" in request.data:
             cart.clear()
+        
+        elif "updateQuantity" in request.data:
+            product_id = request.data["product_id"]
+            quantity = request.data["quantity"]
+            cart.updateQuantity(product_id, quantity)
 
         else:
             product = request.data
@@ -121,6 +127,10 @@ class CartAPI(APIView):
                     override_quantity=product["override_quantity"] if "override_quantity" in product else False
                 )
 
-        return Response(
-            {"message": "cart updated"},
-            status=status.HTTP_202_ACCEPTED)
+        data = {
+            "message": "Cart updated successfully.",
+            "data": list(cart.__iter__()),
+            "count": cart.__len__(),
+            "total_price": cart.get_total_price()
+        }
+        return Response(data, status=status.HTTP_202_ACCEPTED)
