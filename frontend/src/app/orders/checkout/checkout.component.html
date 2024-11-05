@@ -1,279 +1,263 @@
-<div class="order-summary-container">
-    <div class="order-summary-header">
-        <h2 class="order-summary-title">Order Summary</h2>
-        <button class="order-summary-edit-button">EDIT</button>
-    </div>
-    <table class="order-summary-table">
-        <thead>
-            <tr>
-                <th class="order-summary-column-head">Item</th>
-                <th class="order-summary-column-title">Qty</th>
-                <th class="order-summary-column-title">Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (item of cartItems; track item.product_sku) {
-            <tr>
-                <td class="order-summary-item-name">{{ item.product_sku }}</td>
-                <td class="order-summary-item-qty">{{ item.quantity }}</td>
-                <td class="order-summary-item-subtotal">
-                    ${{ item.price * item.quantity }}
-                </td>
-            </tr>
-            <tr class="order-summary-divider-row">
-                <td colspan="3"></td>
-            </tr>
-            <!-- <tr class="order-summary-discount-row">
-                <td class="order-summary-discount" colspan="3">
-                    Discount: $50.00 Off
-                </td>
-            </tr> -->
-            }
-            <!-- <tr>
-                <td class="order-summary-savings-label">Discount</td>
-                <td></td>
-                <td class="order-summary-savings-amount">-$50.00</td>
-            </tr> -->
-            <tr>
-                <td class="order-summary-total-label">Subtotal</td>
-                <td></td>
-                <td class="order-summary-total-amount">${{ subTotal }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="checkout-container">
-    <mat-accordion>
-        <!-- Shipping Panel -->
-        <mat-expansion-panel
-            [expanded]="isShippingPanelOpen"
-            [disabled]="isShippingPanelDisabled"
-        >
-            <mat-expansion-panel-header>
-                <mat-panel-title> 1. Shipping Information </mat-panel-title>
-                <mat-panel-description class="preview-container">
-                    @if (showShippingPreview) {
-                    <div class="shipping-preview">
-                        <div>
-                            <strong>{{ shippingPreview.name }}</strong>
+<div class="main-container">
+    <div class="checkout-container">
+        <mat-accordion>
+            <!-- Shipping Panel -->
+            <mat-expansion-panel
+                [expanded]="isShippingPanelOpen"
+                [disabled]="isShippingPanelDisabled"
+            >
+                <mat-expansion-panel-header>
+                    <mat-panel-title> 1. Shipping Information </mat-panel-title>
+                    <mat-panel-description class="preview-container">
+                        @if (showShippingPreview) {
+                        <div class="shipping-preview">
+                            <div>
+                                <strong>{{ shippingPreview.name }}</strong>
+                            </div>
+                            <div>{{ shippingPreview.address }}</div>
+                            <div>{{ shippingPreview.cityStateZip }}</div>
                         </div>
-                        <div>{{ shippingPreview.address }}</div>
-                        <div>{{ shippingPreview.cityStateZip }}</div>
+                        <button
+                            mat-button
+                            color="primary"
+                            (click)="editShipping(); $event.stopPropagation()"
+                        >
+                            Edit
+                        </button>
+                        }
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <form
+                    [formGroup]="shippingForm"
+                    (ngSubmit)="onShippingSubmit()"
+                >
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>First Name</mat-label>
+                            <input
+                                matInput
+                                formControlName="firstName"
+                                required
+                            />
+                            @if
+                            (shippingForm.controls['firstName'].hasError('required'))
+                            {
+                            <mat-error> First name is required </mat-error>
+                            }
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Last Name</mat-label>
+                            <input
+                                matInput
+                                formControlName="lastName"
+                                required
+                            />
+                            @if (shippingForm.get('lastName')
+                            ?.hasError('required')) {
+                            <mat-error> Last name is required </mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required />
+                        @if (shippingForm.get('address')?.hasError('required'))
+                        {
+                        <mat-error> Address is required </mat-error>
+                        }
+                    </mat-form-field>
+
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>City</mat-label>
+                            <input matInput formControlName="city" required />
+                            @if (shippingForm.get('city')?.hasError('required'))
+                            {
+                            <mat-error> City is required </mat-error>
+                            }
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>State</mat-label>
+                            <mat-select formControlName="state" required>
+                                @for (state of states; track state.code) {
+                                <mat-option [value]="state.code">
+                                    {{ state.name }}
+                                </mat-option>
+                                }
+                            </mat-select>
+                            @if
+                            (shippingForm.get('state')?.hasError('required')) {
+                            <mat-error> State is required </mat-error>
+                            }
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>ZIP Code</mat-label>
+                            <input
+                                matInput
+                                formControlName="zipCode"
+                                required
+                            />
+                            @if (shippingForm .get('zipCode')
+                            ?.hasError('required')) {
+                            <mat-error> ZIP code is required </mat-error>
+                            } @if
+                            (shippingForm.get('zipCode')?.hasError('pattern')) {
+                            <mat-error>
+                                Please enter a valid ZIP code
+                            </mat-error>
+                            }
+                        </mat-form-field>
                     </div>
                     <button
-                        mat-button
+                        mat-raised-button
+                        class="primary-button"
                         color="primary"
-                        (click)="editShipping(); $event.stopPropagation()"
+                        type="submit"
+                        [disabled]="!shippingForm.valid"
                     >
-                        Edit
+                        Continue to Billing
                     </button>
-                    }
-                </mat-panel-description>
-            </mat-expansion-panel-header>
+                </form>
+            </mat-expansion-panel>
 
-            <form [formGroup]="shippingForm" (ngSubmit)="onShippingSubmit()">
-                <div class="form-row">
-                    <mat-form-field appearance="outline">
-                        <mat-label>First Name</mat-label>
-                        <input matInput formControlName="firstName" required />
-                        @if
-                        (shippingForm.controls['firstName'].hasError('required'))
-                        {
-                        <mat-error> First name is required </mat-error>
-                        }
-                    </mat-form-field>
+            <!-- Billing Panel -->
+            <mat-expansion-panel [disabled]="isBillingPanelDisabled">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> 2. Billing Information </mat-panel-title>
+                </mat-expansion-panel-header>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Last Name</mat-label>
-                        <input matInput formControlName="lastName" required />
-                        @if (shippingForm.get('lastName')
-                        ?.hasError('required')) {
-                        <mat-error> Last name is required </mat-error>
-                        }
-                    </mat-form-field>
+                <div id="paypal-button-container"></div>
+
+                <div class="payment-divider">
+                    <span class="payment-divider-text">or</span>
                 </div>
 
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Address</mat-label>
-                    <input matInput formControlName="address" required />
-                    @if (shippingForm.get('address')?.hasError('required')) {
-                    <mat-error> Address is required </mat-error>
-                    }
-                </mat-form-field>
-
-                <div class="form-row">
-                    <mat-form-field appearance="outline">
-                        <mat-label>City</mat-label>
-                        <input matInput formControlName="city" required />
-                        @if (shippingForm.get('city')?.hasError('required')) {
-                        <mat-error> City is required </mat-error>
-                        }
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>State</mat-label>
-                        <mat-select formControlName="state" required>
-                            @for (state of states; track state.code) {
-                            <mat-option [value]="state.code">
-                                {{ state.name }}
-                            </mat-option>
-                            }
-                        </mat-select>
-                        @if (shippingForm.get('state')?.hasError('required')) {
-                        <mat-error> State is required </mat-error>
-                        }
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>ZIP Code</mat-label>
-                        <input matInput formControlName="zipCode" required />
-                        @if (shippingForm .get('zipCode')
-                        ?.hasError('required')) {
-                        <mat-error> ZIP code is required </mat-error>
-                        } @if (shippingForm.get('zipCode')?.hasError('pattern'))
-                        {
-                        <mat-error> Please enter a valid ZIP code </mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-
-                <button
-                    mat-raised-button
-                    color="primary"
-                    type="submit"
-                    [disabled]="!shippingForm.valid"
-                >
-                    Continue to Billing
-                </button>
-            </form>
-        </mat-expansion-panel>
-
-        <!-- Billing Panel -->
-        <mat-expansion-panel [disabled]="isBillingPanelDisabled">
-            <mat-expansion-panel-header>
-                <mat-panel-title> 2. Billing Information </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div id="paypal-button-container"></div>
-
-            <div class="payment-divider">
-                <span class="payment-divider-text">or</span>
-            </div>
-
-            <form [formGroup]="billingForm" (ngSubmit)="onBillingSubmit()">
-                <!-- <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Name on Card</mat-label>
-                    <input matInput formControlName="cardName" required />
-                    <mat-error
-                        *ngIf="
-                            billingForm.get('cardName')?.hasError('required')
-                        "
-                    >
-                        Name on card is required
-                    </mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Card Number</mat-label>
-                    <input matInput formControlName="cardNumber" required />
-                    <mat-error
-                        *ngIf="
-                            billingForm.get('cardNumber')?.hasError('required')
-                        "
-                    >
-                        Card number is required
-                    </mat-error>
-                    <mat-error
-                        *ngIf="
-                            billingForm.get('cardNumber')?.hasError('pattern')
-                        "
-                    >
-                        Please enter a valid 16-digit card number
-                    </mat-error>
-                </mat-form-field>
-
-                <div class="form-row">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Expiry Date (MM/YY)</mat-label>
-                        <input
-                            matInput
-                            formControlName="expiryDate"
-                            required
-                            placeholder="MM/YY"
-                        />
+                <form [formGroup]="billingForm" (ngSubmit)="onBillingSubmit()">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Name on Card</mat-label>
+                        <input matInput formControlName="cardName" required />
                         <mat-error
                             *ngIf="
                                 billingForm
-                                    .get('expiryDate')
+                                    .get('cardName')
                                     ?.hasError('required')
                             "
                         >
-                            Expiry date is required
+                            Name on card is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Card Number</mat-label>
+                        <input matInput formControlName="cardNumber" required />
+                        <mat-error
+                            *ngIf="
+                                billingForm
+                                    .get('cardNumber')
+                                    ?.hasError('required')
+                            "
+                        >
+                            Card number is required
                         </mat-error>
                         <mat-error
                             *ngIf="
                                 billingForm
-                                    .get('expiryDate')
+                                    .get('cardNumber')
                                     ?.hasError('pattern')
                             "
                         >
-                            Please enter a valid expiry date (MM/YY)
+                            Please enter a valid 16-digit card number
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>CVV</mat-label>
-                        <input matInput formControlName="cvv" required />
-                        <mat-error
-                            *ngIf="billingForm.get('cvv')?.hasError('required')"
-                        >
-                            CVV is required
-                        </mat-error>
-                        <mat-error
-                            *ngIf="billingForm.get('cvv')?.hasError('pattern')"
-                        >
-                            Please enter a valid CVV
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Expiry Date (MM/YY)</mat-label>
+                            <input
+                                matInput
+                                formControlName="expiryDate"
+                                required
+                                placeholder="MM/YY"
+                            />
+                            <mat-error
+                                *ngIf="
+                                    billingForm
+                                        .get('expiryDate')
+                                        ?.hasError('required')
+                                "
+                            >
+                                Expiry date is required
+                            </mat-error>
+                            <mat-error
+                                *ngIf="
+                                    billingForm
+                                        .get('expiryDate')
+                                        ?.hasError('pattern')
+                                "
+                            >
+                                Please enter a valid expiry date (MM/YY)
+                            </mat-error>
+                        </mat-form-field>
 
-                <button
-                    mat-raised-button
-                    color="primary"
-                    type="submit"
-                    [disabled]="!billingForm.valid"
-                >
-                    Place Order
-                </button> -->
-            </form>
-        </mat-expansion-panel>
-    </mat-accordion>
+                        <mat-form-field appearance="outline">
+                            <mat-label>CVV</mat-label>
+                            <input matInput formControlName="cvv" required />
+                            <mat-error
+                                *ngIf="
+                                    billingForm.get('cvv')?.hasError('required')
+                                "
+                            >
+                                CVV is required
+                            </mat-error>
+                            <mat-error
+                                *ngIf="
+                                    billingForm.get('cvv')?.hasError('pattern')
+                                "
+                            >
+                                Please enter a valid CVV
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <button
+                        mat-raised-button
+                        class="primary-button"
+                        type="submit"
+                        [disabled]="!billingForm.valid"
+                    >
+                        Place Order
+                    </button>
+                </form>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
     <div class="order-review-container full-width">
         <h2 class="order-review-title">Order Review</h2>
-        <div class="order-details-wrapper">
-            <a href="#" class="refund-policy-link">Refund Policy</a>
-            <div class="order-summary">
-                <div class="order-item">
-                    <span class="order-label">Subtotal</span>
-                    <span class="order-value">${{ subTotal }}</span>
-                </div>
-                <div class="order-item">
-                    <span class="order-label">Tax</span>
-                    @if (taxRate == 1) {
-                    <span class="order-value">-</span>
-                    } @else {
-                    <span class="order-value">${{ taxAmount }}</span>
-                    }
-                </div>
-                <div class="order-item order-total">
-                    <span class="order-label">Total</span>
-                    @if (taxRate == 1) {
-                    <span class="order-value">-</span>
-                    } @else {
-                    <span class="order-value">${{ subTotal + taxAmount }}</span>
-                    }
-                </div>
+        <div class="order-summary">
+            <div class="order-item">
+                <span class="order-label">Subtotal</span>
+                <span class="order-value">${{ subTotal }}</span>
+            </div>
+            <div class="order-item">
+                <span class="order-label">Tax</span>
+                @if (taxRate == 1) {
+                <span class="order-value">-</span>
+                } @else {
+                <span class="order-value">${{ taxAmount }}</span>
+                }
+            </div>
+            <div class="order-item order-total">
+                <span class="order-label">Total</span>
+                @if (taxRate == 1) {
+                <span class="order-value">-</span>
+                } @else {
+                <span class="order-value">${{ subTotal + taxAmount }}</span>
+                }
             </div>
         </div>
     </div>

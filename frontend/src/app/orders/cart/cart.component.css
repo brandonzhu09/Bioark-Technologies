@@ -68,6 +68,7 @@ h2 {
 
 .product-info {
     display: flex;
+    width: 300px;
     flex-direction: column;
     gap: 8px;
 }
@@ -88,20 +89,6 @@ h2 {
     border: 1px solid #e5e7eb;
     border-radius: 6px;
     width: 110px;
-}
-
-.quantity-controls button {
-    padding: 8px 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #6b7280;
-    font-size: 16px;
-}
-
-.quantity-controls span {
-    padding: 0 16px;
-    color: #1f2937;
 }
 
 .delete-button {

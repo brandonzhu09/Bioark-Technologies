@@ -9,7 +9,7 @@ export class CardComponent {
   @Input() name: string = '';
   @Input() date: string = '';
   @Input() description: string = '';
-  @Input() link: string = '/products';
+  @Input() link: string = '/';
   @Input() image: string | undefined = '';
 
 }

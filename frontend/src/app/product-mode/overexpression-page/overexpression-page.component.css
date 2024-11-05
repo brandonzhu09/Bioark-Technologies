@@ -1,6 +1,7 @@
 .heading-section {
-    margin: 100px auto;
-    max-width: 45%;
+    margin: auto;
+    margin-top: 70px;
+    max-width: 75%;
     text-align: left;
 }
 
@@ -8,7 +9,6 @@
     font-size: 82px;
     font-weight: bold;
     color: #281A39;
-    margin-bottom: 10px;
     line-height: 1;
 }
 
@@ -17,13 +17,55 @@
     height: 3px;
     background-color: #281A39;
     border: none;
-    margin: 30px 0;
 }
 
 .heading-section p {
     font-size: 16px;
     font-weight: bold;
     color: #281A39;
+    line-height: 1.6;
+}
+
+.product-container {
+    width: 75%;
+    margin: 0 auto;
+    /* padding: 2rem; */
+}
+
+.product-section {
+    text-align: left;
+    max-width: 100%;
+    margin-bottom: 4em;
+}
+
+.product-section h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 1.8em;
+    margin-bottom: 0.8em;
+}
+
+.product-section p,
+ul,
+ol {
+    font-size: 16px;
+}
+
+.product-section ul,
+ol {
+    padding-left: 2em;
+}
+
+.applications {
+    background-color: #f1f8ff;
+    padding: 3rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.applications h2 {
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .services-section {
@@ -129,21 +171,4 @@
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 30px;
-}
-
-.quote-button {
-    display: block;
-    width: 100%;
-    padding: 15px 20px;
-    background-color: #281A39;
-    color: white;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    transition: opacity 0.3s ease;
-}
-
-.quote-button:hover {
-    opacity: 0.9;
 }

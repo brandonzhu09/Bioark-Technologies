@@ -10,6 +10,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { US_STATES } from '../../../../references';
 import { OrderService } from '../../services/order.service';
 import { CartService } from '../../services/cart.service';
+import { PrimaryButtonComponent } from '../../components/primary-button/primary-button.component';
 
 declare var paypal_sdk: any;
 
@@ -30,7 +31,7 @@ interface OrderSummary {
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule, PrimaryButtonComponent],
 })
 export class CheckoutComponent {
   shippingForm: FormGroup;

@@ -18,10 +18,6 @@ export class CartService {
 
   }
 
-  ngOnInit() {
-    this.loadCartCountFromServer();
-  }
-
   loadCartCountFromServer() {
     return this.http.get<any>(`${environment.apiBaseUrl}/orders/cart/`, { withCredentials: true }).pipe(
       tap(res => {
@@ -49,7 +45,7 @@ export class CartService {
       'quantity': 1,
     }
 
-    return this.http.post(`${environment.apiBaseUrl}/orders/cart/`, body, {
+    return this.http.post<any>(`${environment.apiBaseUrl}/orders/cart/`, body, {
       headers: headers,
       withCredentials: true
     });
@@ -69,7 +65,9 @@ export class CartService {
     return this.http.post<any>(`${environment.apiBaseUrl}/orders/cart/`, body, {
       headers: headers,
       withCredentials: true
-    });
+    }).pipe(tap(res => {
+      this.cartCount.next(res.count);
+    }));
 
   }
 
@@ -88,7 +86,9 @@ export class CartService {
     return this.http.post<any>(`${environment.apiBaseUrl}/orders/cart/`, body, {
       headers: headers,
       withCredentials: true
-    });
+    }).pipe(tap(res => {
+      this.cartCount.next(res.count);
+    }));
   }
 
   viewCart() {
