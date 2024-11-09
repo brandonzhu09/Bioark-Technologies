@@ -33,6 +33,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ResearchBlogComponent } from './components/research-blog/research-blog.component';
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { BlogPostComponent } from './components/blog-post/blog-post.component';
     MatSelectModule,
     MatButtonModule,
     MatRadioModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleMapsModule
   ],
   providers: [
     provideClientHydration(),
