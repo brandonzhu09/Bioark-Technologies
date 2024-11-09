@@ -141,7 +141,7 @@ export class CheckoutComponent {
     paypal_sdk.Buttons(
       {
         // Call your server to set up the transaction
-        createOrder: function () {
+        createOrder: () => {
           return fetch(
             "http://localhost:8000/orders/create/",
             {
@@ -150,26 +150,30 @@ export class CheckoutComponent {
                 "Content-Type": "application/json",
                 "Accept": "application/json" // Optional, but can help indicate that you expect a JSON response
               },
-              body: JSON.stringify({
-                cart: [
-                  {
-                    id: "YOUR_PRODUCT_ID",
-                    quantity: "YOUR_PRODUCT_QUANTITY",
-                  },
-                ],
-              }),
+              body: JSON.stringify({ total_price: this.subTotal + this.taxAmount })
             }
           )
             .then((res: any) => { return res.json(); })
             .then((order: any) => { console.log(order); console.log(order.id); return order.id; })
         },
         // Call your server to finalize the transaction
-        onApprove: function (data: any, actions: any) {
+        onApprove: (data: any, actions: any) => {
+          console.log(this.shippingForm.controls["address"].value)
           return fetch("http://localhost:8000/orders/capture/" + data.orderID, {
-            method: 'post'
+            method: 'post',
+            body: JSON.stringify({
+              address: {
+                address_line_1: this.shippingForm.controls["address"].value,
+                city: this.shippingForm.controls["city"].value,
+                state: this.shippingForm.controls["state"].value,
+                zipcode: this.shippingForm.controls["zipCode"].value
+              },
+              cart: this.cartItems
+            })
           }).then(function (res) {
             return res.json();
           }).then(function (orderData) {
+            console.log(orderData);
             // Three cases to handle:
             //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
             //   (2) Other non-recoverable errors -> Show a failure message

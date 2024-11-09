@@ -4,9 +4,9 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Address(models.Model):
     address_line_1 = models.CharField()
-    address_line_2 = models.CharField()
+    address_line_2 = models.CharField(null=True)
     city = models.CharField()
-    province = models.CharField()
+    state = models.CharField()
     country = models.CharField()
     zipcode = models.CharField()
 

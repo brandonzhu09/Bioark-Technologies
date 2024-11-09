@@ -11,9 +11,13 @@ from decimal import Decimal
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     payment_token = models.CharField()
+    total_price = models.DecimalField(max_digits=8, decimal_places=2)
+    quantity = models.IntegerField()
+    discount_code = models.CharField(null=True)
     order_placed_date = models.DateTimeField(default=datetime.now)
-    order_process_date = models.DateTimeField()
+    order_process_date = models.DateTimeField(null=True)
     delivery_date = models.DateField()
+    billing_date = models.DateField()
     shipping_address = models.ForeignKey(Address, on_delete=models.PROTECT)
     transaction_status = models.CharField(null=True)
     fulfilled = models.BooleanField(default=False)
@@ -28,10 +32,6 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order_item_id = models.AutoField(primary_key=True)
-    unit_price = models.DecimalField(max_digits=8, decimal_places=2)
-    quantity = models.IntegerField()
-    total_price = models.DecimalField(max_digits=8, decimal_places=2)
-    discount_code = models.CharField(null=True)
     shipping_date = models.DateField()
     delivery_date = models.DateField()
     billing_date = models.DateField()
@@ -39,8 +39,15 @@ class OrderItem(models.Model):
     fulfilled = models.BooleanField(default=False)
     refunded = models.BooleanField(default=False)
     paid = models.BooleanField(null=True)
+    product_sku = models.CharField(max_length=30)
+    product_name = models.CharField(default="Product Name")
+    unit_price = models.DecimalField(decimal_places=2, max_digits=10)
+    total_price = models.DecimalField(decimal_places=2, max_digits=10)
+    adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+    unit_size = models.CharField()
+    quantity = models.IntegerField(default=0)
+    discount_code = models.CharField(max_length=20)
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'order_item'

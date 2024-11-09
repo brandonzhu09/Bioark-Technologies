@@ -1,4 +1,6 @@
+from datetime import datetime
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -31,9 +33,11 @@ from paypalserversdk.models.card_request import CardRequest
 from paypalserversdk.models.card_attributes import CardAttributes
 from paypalserversdk.models.card_verification import CardVerification
 from paypalserversdk.models.card_verification_method import CardVerificationMethod
+from paypalserversdk.models.item import Item
 from paypalserversdk.api_helper import ApiHelper
 
-from .models import Cart, CartItem
+from .models import *
+from users.models import Address
 
 paypal_client: PaypalserversdkClient = PaypalserversdkClient(
     client_credentials_auth_credentials=ClientCredentialsAuthCredentials(
@@ -61,6 +65,8 @@ payments_controller: PaymentsController = paypal_client.payments
 def create_order(request):
     # use the cart information passed from the front-end to calculate the order amount details
     # cart = request.GET["cart"]
+    data = json.loads(request.body)
+    total_price = data.get("total_price")
     order = orders_controller.orders_create(
         {
             "body": OrderRequest(
@@ -69,7 +75,7 @@ def create_order(request):
                     PurchaseUnitRequest(
                         amount=AmountWithBreakdown(
                             currency_code="USD",
-                            value="0.01",
+                            value=total_price,
                         ),
 
                     )
@@ -83,9 +89,45 @@ def create_order(request):
 
 @api_view(['POST'])
 def capture_order(request, order_id):
+    data = json.loads(request.body)
+    address = data.get("address")
+    cart = data.get("cart")
+
     order = orders_controller.orders_capture(
         {"id": order_id, "prefer": "return=representation"}
     )
+    data = json.loads(ApiHelper.json_serialize(order.body))
+    payment_token = data["id"]
+    # TODO: calculate delivery date
+    delivery_date = datetime.now()
+    address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
+                                                         city=address["city"],
+                                                         state=address["state"],
+                                                         zipcode=address["zipcode"])
+
+    order = Order.objects.create(payment_token=payment_token,
+                                 delivery_date=delivery_date,
+                                 shipping_address=address_obj,
+                                 user=request.user)
+    
+    for item in cart:
+        # TODO: calculate shipping date, delivery date, billing date
+        shipping_date = datetime.now()
+        delivery_date = datetime.now()
+        billing_date = datetime.now()
+
+        OrderItem.objects.create(product_sku=item['product_sku'],
+                                product_name=item['product_name'],
+                                unit_price=item['price'],
+                                total_price=item['price'] * item['quantity'],
+                                unit_size=item['unit_size'],
+                                quantity=item['quantity'],
+                                discount_code=item['discount_code'],
+                                order=order,
+                                shipping_date=shipping_date,
+                                delivery_date=delivery_date,
+                                billing_date=billing_date)
+
     return Response(json.loads(ApiHelper.json_serialize(order.body)))
 
 
