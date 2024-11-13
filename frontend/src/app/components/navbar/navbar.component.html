@@ -30,6 +30,21 @@
                 >{{ cartCount }}</span
             ></a
         >
-        <div class="profile bi bi-person-circle"></div>
+        <div class="dropdown">
+            <!-- Div that triggers the dropdown -->
+            <div
+                class="profile bi bi-person-circle dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            ></div>
+
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+        </div>
     </div>
 </div>

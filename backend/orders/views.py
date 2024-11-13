@@ -89,26 +89,37 @@ def create_order(request):
 
 @api_view(['POST'])
 def capture_order(request, order_id):
-    data = json.loads(request.body)
-    address = data.get("address")
-    cart = data.get("cart")
+    body = request.data
+    address = body.get("address")
+    cart = body.get("cart")
+    quantity = body.get("quantity")
+    discount_code = body.get("discount_code")
+    print(cart)
 
     order = orders_controller.orders_capture(
         {"id": order_id, "prefer": "return=representation"}
     )
     data = json.loads(ApiHelper.json_serialize(order.body))
+    print(data)
     payment_token = data["id"]
-    # TODO: calculate delivery date
+    total_price = data["purchase_units"][0]["amount"]["value"]
+    # TODO: calculate delivery date and billing date
     delivery_date = datetime.now()
+    billing_date = datetime.now()
+
     address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
                                                          city=address["city"],
                                                          state=address["state"],
                                                          zipcode=address["zipcode"])
 
-    order = Order.objects.create(payment_token=payment_token,
-                                 delivery_date=delivery_date,
-                                 shipping_address=address_obj,
-                                 user=request.user)
+    order_obj = Order.objects.create(payment_token=payment_token,
+                                     total_price=total_price,
+                                     quantity=quantity,
+                                     discount_code=discount_code,
+                                     delivery_date=delivery_date,
+                                     billing_date=billing_date,
+                                     shipping_address=address_obj,
+                                     user=request.user)
     
     for item in cart:
         # TODO: calculate shipping date, delivery date, billing date
@@ -119,11 +130,11 @@ def capture_order(request, order_id):
         OrderItem.objects.create(product_sku=item['product_sku'],
                                 product_name=item['product_name'],
                                 unit_price=item['price'],
-                                total_price=item['price'] * item['quantity'],
+                                total_price=float(item['price']) * item['quantity'],
                                 unit_size=item['unit_size'],
                                 quantity=item['quantity'],
                                 discount_code=item['discount_code'],
-                                order=order,
+                                order=order_obj,
                                 shipping_date=shipping_date,
                                 delivery_date=delivery_date,
                                 billing_date=billing_date)

@@ -19,10 +19,12 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { QuoteFormComponent } from './components/quote-form/quote-form.component';
 import { CheckoutComponent } from './orders/checkout/checkout.component';
+import { UserPageComponent } from './user-mode/user-page/user-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'profile', component: UserPageComponent },
   { path: 'summary-temp', component: SummaryComponent },
   { path: 'design', component: StepperComponent },
   { path: 'product', component: ProductPageComponent },

@@ -8,9 +8,9 @@ const API_BASE_URL = 'http://localhost:8000';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  isAuthenticated: boolean = false; 
+  isAuthenticated: boolean = false;
 
   getSession() {
     return this.http.get<any>(`${API_BASE_URL}/api/session/`, { withCredentials: true });
@@ -23,9 +23,9 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-CSRFToken': this.getCookie('csrftoken') || ''
+      'X-CSRFToken': this.getCookie('csrftoken') || 'hi'
     });
-    
+
     return this.http.post(`${API_BASE_URL}/api/login/`, credentials, { headers: headers, withCredentials: true });
   }
 
@@ -36,4 +36,15 @@ export class AuthService {
     }
     return null;
   }
+
+  // getCookie(name: string): string | null {
+  //   const cookies = document.cookie.split(';');
+  //   for (let cookie of cookies) {
+  //     cookie = cookie.trim();
+  //     if (cookie.startsWith(name + '=')) {
+  //       return cookie.substring(name.length + 1);
+  //     }
+  //   }
+  //   return null;
+  // }
 }

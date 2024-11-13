@@ -30,10 +30,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ResearchBlogComponent } from './components/research-blog/research-blog.component';
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { UserPageComponent } from './user-mode/user-page/user-page.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     QuoteFormComponent,
     ResearchBlogComponent,
     BlogPostComponent,
+    UserPageComponent,
   ],
   imports: [
     LoginComponent,
@@ -68,6 +72,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     MatSelectModule,
     MatButtonModule,
     MatRadioModule,
+    MatTabsModule,
+    MatIconModule,
     ReactiveFormsModule,
     GoogleMapsModule
   ],

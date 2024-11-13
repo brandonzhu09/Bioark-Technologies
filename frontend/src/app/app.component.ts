@@ -14,6 +14,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.authService.getSession().subscribe((response) => {
+      console.log(response.isAuthenticated);
       if (response.isAuthenticated) {
         this.authService.isAuthenticated = true;
       }

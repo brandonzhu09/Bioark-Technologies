@@ -1,0 +1,35 @@
+<div class="hero">
+    <div class="container">
+        <h1 class="welcome">Welcome back, Sarah!</h1>
+        <p class="description">
+            Your profile dashboard is where you can manage your account
+            settings, view your activity history, and customize your
+            preferences. Everything you need is just a click away.
+        </p>
+    </div>
+</div>
+
+<mat-tab-group class="customer-tabs">
+    <mat-tab label="My Account" routerLink="/">
+        <ng-template matTabContent>
+            <router-outlet></router-outlet>
+        </ng-template>
+        <div>hi</div>
+        <!-- Content for My Account -->
+    </mat-tab>
+    <mat-tab label="My Wallet" routerLink="/checkout">
+        <!-- Content for My Wallet -->
+    </mat-tab>
+    <mat-tab label="My Orders">
+        <!-- Content for My Orders -->
+    </mat-tab>
+    <mat-tab label="My Addresses">
+        <!-- Content for My Addresses -->
+    </mat-tab>
+    <mat-tab label="Profile">
+        <!-- Content for Profile -->
+    </mat-tab>
+    <mat-tab label="Settings">
+        <!-- Content for Settings -->
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,49 @@
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.welcome {
+    font-size: 2.5rem;
+    /* margin-bottom: 1rem; */
+    font-weight: 700;
+}
+
+.description {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white;
+}
+
+.container p {
+    color: white;
+}
+
+.customer-tabs {
+    background-color: #f8f9fa;
+    /* Background color for tabs */
+    color: #2d0a45;
+}
+
+.mat-tab-label {
+    font-weight: 500;
+}
+
+.mat-tab-label-active {
+    color: #2d0a45;
+}
+
+/* .mat-tab-body {
+    padding: 20px;
+} */
