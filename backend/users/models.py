@@ -12,6 +12,9 @@ class Address(models.Model):
 
     class Meta:
         db_table = 'addresses'
+    
+    def __str__(self):
+        return f"{self.address_line_1}, {self.city}, {self.state} {self.zipcode}"
 
 
 class User(AbstractUser):
