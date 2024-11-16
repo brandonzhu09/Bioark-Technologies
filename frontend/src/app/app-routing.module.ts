@@ -20,11 +20,15 @@ import { SignupComponent } from './components/signup/signup.component';
 import { QuoteFormComponent } from './components/quote-form/quote-form.component';
 import { CheckoutComponent } from './orders/checkout/checkout.component';
 import { UserPageComponent } from './user-mode/user-page/user-page.component';
+import { OrderPageComponent } from './user-mode/order-page/order-page.component';
+import { UserSettingsComponent } from './user-mode/user-settings/user-settings.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'profile', component: UserPageComponent },
+  { path: 'profile/orders', component: OrderPageComponent },
+  { path: 'profile/settings', component: UserSettingsComponent },
   { path: 'summary-temp', component: SummaryComponent },
   { path: 'design', component: StepperComponent },
   { path: 'product', component: ProductPageComponent },

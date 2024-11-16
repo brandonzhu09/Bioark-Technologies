@@ -10,7 +10,7 @@
                 <li class="nav-item">
                     <a
                         href="/profile"
-                        class="nav-link active"
+                        class="nav-link text-white"
                         aria-current="page"
                     >
                         My Account
@@ -139,83 +139,60 @@
 
         <!-- Main Content -->
         <div class="flex-grow-1 d-flex flex-column p-3">
-            <h1 class="m-0">My Account</h1>
+            <h1 class="m-0">Settings</h1>
             <hr />
-            <!-- Contact Section -->
             <div class="section mb-2">
-                <h3>Contact</h3>
-                <div class="form-row">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>First Name</mat-label>
-                        <input
-                            type="text"
-                            formControlName="firstName"
-                            matInput
-                            value="John"
-                        />
-                    </mat-form-field>
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>Last Name</mat-label>
-                        <input
-                            type="text"
-                            formControlName="lastName"
-                            matInput
-                            value="Doe"
-                        />
-                    </mat-form-field>
-                </div>
+                <h3>Email</h3>
                 <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Institution Name</mat-label>
+                    <mat-label>Current Email</mat-label>
                     <input
                         type="text"
-                        formControlName="institution"
                         matInput
-                        placeholder="Name of Institution (e.g. Origene)"
+                        value="example@example.com"
+                        [disabled]="true"
                     />
                 </mat-form-field>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>New Email</mat-label>
+                    <input
+                        type="text"
+                        formControlName="email"
+                        matInput
+                        required
+                    />
+                </mat-form-field>
+                <button class="primary-button" type="submit">
+                    Update Email
+                </button>
             </div>
 
-            <!-- Address Section -->
             <div class="section mb-4">
-                <h3>Address</h3>
+                <h3>Password</h3>
                 <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Address</mat-label>
+                    <mat-label>Current Password</mat-label>
                     <input
                         type="text"
-                        formControlName="address"
+                        formControlName="currentPassword"
                         matInput
-                        value="13 Taft, Rockville"
+                        required
                     />
                 </mat-form-field>
-                <div class="form-row">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>City</mat-label>
-                        <input
-                            matInput
-                            formControlName="city"
-                            value="Rockville"
-                            required
-                        />
-                    </mat-form-field>
-
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>State</mat-label>
-                        <mat-select formControlName="state" required>
-                            @for (state of states; track state.code) {
-                            <mat-option [value]="state.code">
-                                {{ state.name }}
-                            </mat-option>
-                            }
-                        </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>ZIP Code</mat-label>
-                        <input matInput formControlName="zipcode" required />
-                    </mat-form-field>
-                </div>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>New Password</mat-label>
+                    <input matInput formControlName="newPassword" required />
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Confirm Password</mat-label>
+                    <input
+                        matInput
+                        formControlName="confirmPassword"
+                        required
+                    />
+                </mat-form-field>
             </div>
-            <button class="primary-button" type="submit">Update</button>
+            <button class="primary-button" type="submit">
+                Update Password
+            </button>
         </div>
     </div>
 </div>

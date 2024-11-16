@@ -1,0 +1,11 @@
+a[href="#servicesCollapse"]:has(+ .collapse.show) i,
+a[href="#productsCollapse"]:has(+ .collapse.show) i {
+    content: "▲";
+    /* Up arrow */
+}
+
+a[href="#servicesCollapse"] i,
+a[href="#productsCollapse"] i {
+    content: "▼";
+    /* Down arrow */
+}

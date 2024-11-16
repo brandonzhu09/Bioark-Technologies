@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { US_STATES } from '../../../../references';
 
 @Component({
   selector: 'app-user-page',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './user-page.component.css'
 })
 export class UserPageComponent {
-
+  states: any[] = US_STATES;
 }

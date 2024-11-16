@@ -37,6 +37,8 @@ import { ResearchBlogComponent } from './components/research-blog/research-blog.
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { UserPageComponent } from './user-mode/user-page/user-page.component';
+import { OrderPageComponent } from './user-mode/order-page/order-page.component';
+import { UserSettingsComponent } from './user-mode/user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { UserPageComponent } from './user-mode/user-page/user-page.component';
     ResearchBlogComponent,
     BlogPostComponent,
     UserPageComponent,
+    OrderPageComponent,
+    UserSettingsComponent,
   ],
   imports: [
     LoginComponent,

@@ -23,10 +23,19 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-CSRFToken': this.getCookie('csrftoken') || 'hi'
+      'X-CSRFToken': this.getCookie('csrftoken') || ''
     });
 
     return this.http.post(`${API_BASE_URL}/api/login/`, credentials, { headers: headers, withCredentials: true });
+  }
+
+  logout(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${API_BASE_URL}/api/logout/`, { headers: headers, withCredentials: true });
   }
 
   getCookie(name: string): string | null {
@@ -36,15 +45,4 @@ export class AuthService {
     }
     return null;
   }
-
-  // getCookie(name: string): string | null {
-  //   const cookies = document.cookie.split(';');
-  //   for (let cookie of cookies) {
-  //     cookie = cookie.trim();
-  //     if (cookie.startsWith(name + '=')) {
-  //       return cookie.substring(name.length + 1);
-  //     }
-  //   }
-  //   return null;
-  // }
 }
