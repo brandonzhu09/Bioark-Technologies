@@ -30,9 +30,10 @@ def login_view(request):
         return JsonResponse({'detail': 'Invalid credentials.'}, status=400)
 
     login(request, user)
-    return JsonResponse({'detail': 'Successfully logged in.'})
+    return JsonResponse({'detail': 'Successfully logged in.', 'success': True})
 
 
+@require_POST
 def logout_view(request):
     if not request.user.is_authenticated:
         return JsonResponse({'detail': 'You\'re not logged in.'}, status=400)

@@ -13,16 +13,16 @@ class Order(models.Model):
     payment_token = models.CharField()
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
     quantity = models.IntegerField()
-    discount_code = models.CharField(null=True)
+    discount_code = models.CharField(null=True, blank=True)
     order_placed_date = models.DateTimeField(default=datetime.now)
-    order_process_date = models.DateTimeField(null=True)
+    order_process_date = models.DateTimeField(blank=True, null=True)
     delivery_date = models.DateField()
     billing_date = models.DateField()
     shipping_address = models.ForeignKey(Address, on_delete=models.PROTECT)
-    transaction_status = models.CharField(null=True)
+    transaction_status = models.CharField(null=True, blank=True)
     fulfilled = models.BooleanField(default=False)
     refunded = models.BooleanField(default=False)
-    paid = models.BooleanField(null=True)
+    paid = models.BooleanField(default=True)
     notes = models.CharField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
@@ -35,35 +35,28 @@ class OrderItem(models.Model):
     shipping_date = models.DateField()
     delivery_date = models.DateField()
     billing_date = models.DateField()
-    transaction_status = models.CharField(null=True)
+    transaction_status = models.CharField(blank=True)
+    ready_status = models.CharField()
     fulfilled = models.BooleanField(default=False)
     refunded = models.BooleanField(default=False)
-    paid = models.BooleanField(null=True)
+    paid = models.BooleanField(default=True)
     product_sku = models.CharField(max_length=30)
     product_name = models.CharField(default="Product Name")
     unit_price = models.DecimalField(decimal_places=2, max_digits=10)
     total_price = models.DecimalField(decimal_places=2, max_digits=10)
-    adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+    adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
     unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
-    discount_code = models.CharField(max_length=20)
+    discount_code = models.CharField(blank=True, max_length=20)
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'order_item'
 
-# class Cart(models.Model):
-#     session_key = models.CharField(max_length=40, null=True, blank=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f"Cart {self.id}"
-
-#     def get_total_price(self):
-#         return sum(item.get_total_price() for item in self.items.all())
 
 class CartItem(models.Model):
     session_key = models.CharField(max_length=40, null=True, blank=True)
+    ready_status = models.CharField()
     product_sku = models.CharField(max_length=30)
     product_name = models.CharField(default="Product Name")
     price = models.DecimalField(decimal_places=2, max_digits=10)
@@ -95,7 +88,7 @@ class Cart(object):
         Add product to the cart or update its quantity
         """
         cart_item, created = CartItem.objects.get_or_create(session_key=self.session.session_key, product_sku=cart_item['product_sku'], product_name=cart_item['product_name'],
-                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'])
+                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'], ready_status=cart_item['ready_status'])
         if created:
             self.cart.append(cart_item.id)
         
@@ -148,3 +141,15 @@ class Cart(object):
         # remove cart from session
         del self.session[settings.CART_SESSION_ID]
         self.save()
+
+class WorkSchedule(models.Model):
+    delivery_format_code = models.CharField()
+    ready_status = models.CharField()
+    work_period_earliest = models.IntegerField() # estimate time of arrival in days
+    work_period_latest = models.IntegerField(null=True)
+    shipping_temp = models.CharField()
+    storage_temp = models.CharField()
+    stability_period = models.CharField()
+
+    class Meta:
+        db_table = 'work_schedule'

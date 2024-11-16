@@ -39,12 +39,23 @@
             ></div>
 
             <!-- Dropdown menu -->
+            @if (authService.isAuthenticated) {
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                <li>
+                    <a class="dropdown-item" href="/profile/settings"
+                        >Settings</a
+                    >
+                </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
             </ul>
+            } @else {
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/login">Login</a></li>
+                <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+            </ul>
+            }
         </div>
     </div>
 </div>

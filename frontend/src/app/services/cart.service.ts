@@ -26,7 +26,7 @@ export class CartService {
     );
   }
 
-  addToCart(product_sku: string, product_name: string, unit_size: string, price: string, adjusted_price: string) {
+  addToCart(product_sku: string, product_name: string, unit_size: string, price: string, adjusted_price: string, ready_status: string) {
     this.incrementCartCount();
 
     const headers = new HttpHeaders({
@@ -40,7 +40,8 @@ export class CartService {
         'product_name': product_name + ", " + unit_size,
         'unit_size': unit_size,
         'price': price,
-        'adjusted_price': adjusted_price
+        'adjusted_price': adjusted_price,
+        'ready_status': ready_status
       },
       'quantity': 1,
     }

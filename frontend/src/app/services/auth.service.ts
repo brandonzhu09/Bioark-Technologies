@@ -30,12 +30,13 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
+    console.log(this.getCookie('csrftoken'));
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'X-CSRFToken': this.getCookie('csrftoken') || ''
     });
 
-    return this.http.post(`${API_BASE_URL}/api/logout/`, { headers: headers, withCredentials: true });
+    return this.http.post(`${API_BASE_URL}/api/logout/`, null, { headers, withCredentials: true });
   }
 
   getCookie(name: string): string | null {

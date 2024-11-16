@@ -9,4 +9,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order_item_id', 'order', 'product_sku', 'product_name', 'total_price', 'unit_size', 'quantity', 'fulfilled', 'discount_code', 'shipping_date', 'delivery_date', 'billing_date')
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'fulfilled', 'discount_code', 'shipping_date', 'delivery_date', 'billing_date')
+
+    def order_id(self, obj):
+        return obj.order_id

@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-order-page',
@@ -6,15 +10,28 @@ import { Component } from '@angular/core';
   styleUrl: './order-page.component.css'
 })
 export class OrderPageComponent {
+  displayedColumns: string[] = ['id'];
+  ordersData: MatTableDataSource<any>;
 
-  isServicesOpen = false;
-  isProductsOpen = false;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  toggleCollapse(section: 'services' | 'products') {
-    if (section === 'services') {
-      this.isServicesOpen = !this.isServicesOpen;
-    } else if (section === 'products') {
-      this.isProductsOpen = !this.isProductsOpen;
+  constructor() {
+    const orders = [{ 'id': 1 }, { 'id': 2 }];
+    this.ordersData = new MatTableDataSource(orders);
+  }
+
+  ngAfterViewInit() {
+    this.ordersData.paginator = this.paginator;
+    this.ordersData.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.ordersData.filter = filterValue.trim().toLowerCase();
+
+    if (this.ordersData.paginator) {
+      this.ordersData.paginator.firstPage();
     }
   }
 

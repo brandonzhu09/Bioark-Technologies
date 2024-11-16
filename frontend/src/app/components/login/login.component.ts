@@ -3,6 +3,8 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -28,9 +30,11 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe(
       (response) => {
         if (response.success) {
-          console.log("yay")
+          this.router.navigate(['/']);
+          this.authService.isAuthenticated = true;
         } else {
-          console.log("nay")
+          this.authService.isAuthenticated = false;
+          console.log("Invalid credentials.")
         }
       }
     );

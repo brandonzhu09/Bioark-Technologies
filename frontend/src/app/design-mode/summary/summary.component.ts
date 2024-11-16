@@ -49,7 +49,8 @@ export class SummaryComponent {
             let unit_size = this.deliveryFormatTable[this.productId.value]['quantity'];
             let price = this.deliveryFormatTable[this.productId.value]['price'];
             let adjusted_price = this.deliveryFormatTable[this.productId.value]['adjusted_price'];
-            this.cartService.addToCart(product_sku, product_name, unit_size, price, adjusted_price).subscribe((res) => {
+            let ready_status = this.deliveryFormatTable[this.productId.value]['ready_status'];
+            this.cartService.addToCart(product_sku, product_name, unit_size, price, adjusted_price, ready_status).subscribe((res) => {
                 console.log(res);
             })
         }

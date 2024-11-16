@@ -32,6 +32,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ResearchBlogComponent } from './components/research-blog/research-blog.component';
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
@@ -78,6 +81,10 @@ import { UserSettingsComponent } from './user-mode/user-settings/user-settings.c
     MatRadioModule,
     MatTabsModule,
     MatIconModule,
+    MatPaginator,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
     ReactiveFormsModule,
     GoogleMapsModule
   ],

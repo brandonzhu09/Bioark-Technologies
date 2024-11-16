@@ -38,6 +38,7 @@ from paypalserversdk.api_helper import ApiHelper
 
 from .models import *
 from users.models import Address
+from .serializers import OrderItemSerializer
 
 paypal_client: PaypalserversdkClient = PaypalserversdkClient(
     client_credentials_auth_credentials=ClientCredentialsAuthCredentials(
@@ -94,13 +95,11 @@ def capture_order(request, order_id):
     cart = body.get("cart")
     quantity = body.get("quantity")
     discount_code = body.get("discount_code")
-    print(cart)
 
     order = orders_controller.orders_capture(
         {"id": order_id, "prefer": "return=representation"}
     )
     data = json.loads(ApiHelper.json_serialize(order.body))
-    print(data)
     payment_token = data["id"]
     total_price = data["purchase_units"][0]["amount"]["value"]
     # TODO: calculate delivery date and billing date
@@ -129,6 +128,7 @@ def capture_order(request, order_id):
 
         OrderItem.objects.create(product_sku=item['product_sku'],
                                 product_name=item['product_name'],
+                                ready_status=item['ready_status'],
                                 unit_price=item['price'],
                                 total_price=float(item['price']) * item['quantity'],
                                 unit_size=item['unit_size'],

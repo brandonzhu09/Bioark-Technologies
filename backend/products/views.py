@@ -122,6 +122,7 @@ def get_delivery_format_table(request):
             'quantity': instance.amount + " " + instance.unit_size,
             'price': instance.base_price,
             'adjusted_price': instance.adjusted_price,
+            'ready_status': ready_status
         }
         data.append(product)
         product_id += 1
