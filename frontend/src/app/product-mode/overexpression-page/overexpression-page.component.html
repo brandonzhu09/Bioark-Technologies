@@ -7,6 +7,18 @@
     </p>
 </div>
 
+<div class="floating-box" #floatingBox>
+    @for (card of floatingCards; track card; let index = $index) {
+    <div class="product-card" [style.top.px]="getTopOffset(index)">
+        <h3>{{ card.title }}</h3>
+        <p><strong>Name:</strong> hi</p>
+        <p><strong>Type:</strong> Plasmid/DNA</p>
+        <p class="price">Price: $212</p>
+        <button class="primary-button">Go to Product</button>
+    </div>
+    }
+</div>
+
 <div class="product-container">
     <div class="product-section">
         <h1>Technical Background</h1>
@@ -134,9 +146,7 @@
                 <strong>Validation of Transgene Expression and Function</strong>
             </li>
         </ul>
-    </div>
-    <div class="applications">
-        <h2>Applications of CRISPR Knock-In at Safe Harbor Sites</h2>
+        <h1>Applications of CRISPR Knock-In at Safe Harbor Sites</h1>
         <p>
             Our techniques are expected to be used in different research area
             including gene therapy, reporter or controlled gene applications,

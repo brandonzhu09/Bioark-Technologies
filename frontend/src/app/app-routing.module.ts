@@ -22,6 +22,7 @@ import { CheckoutComponent } from './orders/checkout/checkout.component';
 import { UserPageComponent } from './user-mode/user-page/user-page.component';
 import { OrderPageComponent } from './user-mode/order-page/order-page.component';
 import { UserSettingsComponent } from './user-mode/user-settings/user-settings.component';
+import { ServiceFormComponent } from './user-mode/service-form/service-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'profile', component: UserPageComponent },
   { path: 'profile/orders', component: OrderPageComponent },
   { path: 'profile/settings', component: UserSettingsComponent },
+  { path: 'profile/services/:service', component: ServiceFormComponent },
   { path: 'summary-temp', component: SummaryComponent },
   { path: 'design', component: StepperComponent },
   { path: 'product', component: ProductPageComponent },
@@ -42,6 +44,7 @@ const routes: Routes = [
   { path: 'products/gene-deletion', component: GeneDeletionPageComponent },
   { path: 'products/rna-knock-down', component: RnaKnockDownPageComponent },
   { path: 'services', component: ServiceHomeComponent },
+  { path: 'services/:serviceType', component: QuoteFormComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'quote', component: QuoteFormComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' }

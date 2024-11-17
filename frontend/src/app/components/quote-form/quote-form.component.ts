@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'quote-form',
@@ -7,14 +8,28 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './quote-form.component.css'
 })
 export class QuoteFormComponent {
-  quoteForm: FormGroup;
+  @Input() type: string = '';
+  @Input() currentType: string = '';
+  serviceType: string = '';
+  quoteForm!: FormGroup;
   submitted: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+      this.serviceType = params.get('serviceType')!;
+    });
+
+    if (this.serviceType != '' && this.serviceType != null) {
+      this.type = 'serviceType';
+      this.currentType = this.serviceType;
+    }
+
     this.quoteForm = this.fb.group({
-      type: ['', Validators.required],
-      productType: [''],
-      serviceType: [''],
+      type: [this.type, Validators.required],
+      productType: [this.currentType],
+      serviceType: [this.currentType],
       geneSequence: [''],
       geneSpecies: [''],
       mammalianCells: [''],
@@ -23,12 +38,10 @@ export class QuoteFormComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       institution: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       message: ['', Validators.required]
     });
-  }
 
-  ngOnInit() {
     this.submitted = false;
   }
 

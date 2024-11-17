@@ -25,23 +25,25 @@
                     <mat-option value="geneKnockIn"
                         >Gene Knock-In Tagging</mat-option
                     >
-                    <mat-option value="geneKnockOut">Gene Knock-out</mat-option>
-                    <mat-option value="geneDeletion">Gene Deletion</mat-option>
-                    <mat-option value="crisprRNA">CRISPR RNA</mat-option>
-                    <mat-option value="knockDown">Knock-down</mat-option>
+                    <mat-option value="gene-knock-out"
+                        >Gene Knock-out</mat-option
+                    >
+                    <mat-option value="gene-deletion">Gene Deletion</mat-option>
+                    <mat-option value="crispr-rna">CRISPR RNA</mat-option>
+                    <mat-option value="knock-down">Knock-down</mat-option>
                 </mat-select>
             </mat-form-field>
             } @if (this.quoteForm.value.type === "serviceType") {
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Services</mat-label>
                 <mat-select formControlName="serviceType">
-                    <mat-option value="customCloning"
+                    <mat-option value="custom-cloning"
                         >Custom Cloning Services</mat-option
                     >
-                    <mat-option value="lentivirus"
+                    <mat-option value="lentivirus-package"
                         >Lentivirus Package Services</mat-option
                     >
-                    <mat-option value="stableCell"
+                    <mat-option value="stable-cell-line"
                         >Stable Cell line Services</mat-option
                     >
                 </mat-select>
@@ -177,7 +179,7 @@
             <button
                 [disabled]="!quoteForm.valid"
                 type="submit"
-                class="submit-button"
+                class="primary-button"
             >
                 Submit
             </button>

@@ -32,20 +32,6 @@ h3 {
     text-align: center;
 }
 
-.submit-button {
-    width: 100%;
-    padding: 15px;
-    background-color: #281A39;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.submit-button:hover {
-    opacity: 0.9;
-}
-
 .form-row {
     display: flex;
     gap: 15px;
