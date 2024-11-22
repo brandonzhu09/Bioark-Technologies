@@ -37,7 +37,7 @@ interface OrderSummary {
 })
 export class CheckoutComponent {
   shippingForm: FormGroup;
-  billingForm: FormGroup;
+  billingAddressForm: FormGroup;
   isShippingPanelOpen = true;
   isShippingPanelDisabled = false;
   isBillingPanelDisabled = true;
@@ -60,6 +60,7 @@ export class CheckoutComponent {
   totalPrice: number = 0;
   quantity: number = 0;
   discountCode: string = '';
+  cardField: any;
 
   ngOnInit(): void {
     // this.initConfig();
@@ -77,12 +78,27 @@ export class CheckoutComponent {
       zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
     });
 
-    this.billingForm = this.fb.group({
-      cardName: ['', Validators.required],
-      cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
-      expiryDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/([0-9]{2})$')]],
-      cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]]
+    this.billingAddressForm = this.fb.group({
+      address: ['', Validators.required],
+      countryCode: ['US', Validators.required],
+      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
     });
+
+    this.cardField = paypal_sdk.CardFields({
+      createOrder: this.createOrderCallback,
+      onApprove: this.onApproveCallback,
+      style: {
+        input: {
+          "font-size": "16px",
+          "font-family": "courier, monospace",
+          "font-weight": "lighter",
+          color: "#ccc",
+        },
+        ".invalid": { color: "purple" },
+      },
+    });
+
+    this.initCardFields();
   }
 
   getCartItems() {
@@ -122,14 +138,6 @@ export class CheckoutComponent {
     this.showShippingPreview = false;
   }
 
-  onBillingSubmit() {
-    if (this.billingForm.valid) {
-      // Handle billing submission
-      console.log('Billing information submitted');
-      // Add your payment processing logic here
-    }
-  }
-
   formatPrice(price: number | null): string {
     if (price === null) return '-';
     return price.toFixed(2);
@@ -139,6 +147,7 @@ export class CheckoutComponent {
     this.orderService.calculateSalesTax(this.shippingForm.controls['zipCode'].value).subscribe(res => {
       this.taxRate = Number(res[0]["total_rate"]);
       this.taxAmount = this.subTotal * this.taxRate;
+      this.taxAmount = parseFloat(this.taxAmount.toFixed(2));
     })
   }
 
@@ -146,141 +155,115 @@ export class CheckoutComponent {
     paypal_sdk.Buttons(
       {
         // Call your server to set up the transaction
-        createOrder: () => {
-          return fetch(
-            "http://localhost:8000/orders/create/",
-            {
-              method: "post",
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json" // Optional, but can help indicate that you expect a JSON response
-              },
-              body: JSON.stringify({ total_price: this.subTotal + this.taxAmount })
-            }
-          )
-            .then((res: any) => { return res.json(); })
-            .then((order: any) => { console.log(order); console.log(order.id); return order.id; })
-        },
+        createOrder: this.createOrderCallback,
         // Call your server to finalize the transaction
-        onApprove: (data: any, actions: any) => {
-          console.log(this.cartItems);
-
-          // const url = `http://localhost:8000/orders/capture/` + data.orderID;
-          // const headers = new HttpHeaders({
-          //   'Content-Type': 'application/json',
-          //   'X-CSRFToken': this.authService.getCookie('csrftoken') || '',
-          //   'Accept': 'application/json'
-          // });
-
-          // const body = {
-          //   address: {
-          //     address_line_1: this.shippingForm.controls["address"].value,
-          //     city: this.shippingForm.controls["city"].value,
-          //     state: this.shippingForm.controls["state"].value,
-          //     zipcode: this.shippingForm.controls["zipCode"].value
-          //   },
-          //   cart: this.cartItems,
-          //   quantity: this.quantity,
-          //   discount_code: this.discountCode
-          // };
-
-          // return this.http.post<any>(url, body, { headers, withCredentials: true }).pipe(res => {
-          //   return res;
-          // }).subscribe(orderData => {
-          //   console.log(orderData);
-          //   // Three cases to handle:
-          //   //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-          //   //   (2) Other non-recoverable errors -> Show a failure message
-          //   //   (3) Successful transaction -> Show confirmation or thank you
-
-          //   // This example reads a v2/checkout/orders capture response, propagated from the server
-          //   // You could use a different API or structure for your 'orderData'
-          //   var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
-
-          //   if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
-          //     return actions.restart(); // Recoverable state, per:
-          //     // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
-          //   }
-
-          //   if (errorDetail) {
-          //     var msg = 'Sorry, your transaction could not be processed.';
-          //     if (errorDetail.description) msg += '\n\n' + errorDetail.description;
-          //     if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
-          //     return alert(msg); // Show a failure message (try to avoid alerts in production environments)
-          //   }
-
-          //   // Successful capture! For demo purposes:
-          //   console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-          //   var transaction = orderData.purchase_units[0].payments.captures[0];
-          //   alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
-
-          //   // Replace the above to show a success message within this page, e.g.
-          //   // const element = document.getElementById('paypal-button-container');
-          //   // element.innerHTML = '';
-          //   // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-          //   // Or go to another URL:  actions.redirect('thank_you.html');
-
-          // })
-
-          return fetch("http://localhost:8000/orders/capture/" + data.orderID, {
-            method: 'post',
-            headers: {
-              "Content-Type": "application/json",
-              'X-CSRFToken': this.authService.getCookie('csrftoken') || '',
-              "Accept": "application/json" // Optional, but can help indicate that you expect a JSON response
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-              address: {
-                address_line_1: this.shippingForm.controls["address"].value,
-                city: this.shippingForm.controls["city"].value,
-                state: this.shippingForm.controls["state"].value,
-                zipcode: this.shippingForm.controls["zipCode"].value
-              },
-              cart: this.cartItems,
-              quantity: this.quantity,
-              discount_code: this.discountCode
-            })
-          }).then(function (res) {
-            return res.json();
-          }).then(function (orderData) {
-            console.log(orderData);
-            // Three cases to handle:
-            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-            //   (2) Other non-recoverable errors -> Show a failure message
-            //   (3) Successful transaction -> Show confirmation or thank you
-
-            // This example reads a v2/checkout/orders capture response, propagated from the server
-            // You could use a different API or structure for your 'orderData'
-            var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
-
-            if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
-              return actions.restart(); // Recoverable state, per:
-              // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
-            }
-
-            if (errorDetail) {
-              var msg = 'Sorry, your transaction could not be processed.';
-              if (errorDetail.description) msg += '\n\n' + errorDetail.description;
-              if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
-              return alert(msg); // Show a failure message (try to avoid alerts in production environments)
-            }
-
-            // Successful capture! For demo purposes:
-            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-            var transaction = orderData.purchase_units[0].payments.captures[0];
-            alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
-
-            // Replace the above to show a success message within this page, e.g.
-            // const element = document.getElementById('paypal-button-container');
-            // element.innerHTML = '';
-            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-            // Or go to another URL:  actions.redirect('thank_you.html');
-          });
-        }
+        onApprove: this.onApproveCallback
       }
     ).render('#paypal-button-container');
   }
 
+  createOrderCallback = () => {
+    return fetch(
+      "http://localhost:8000/orders/create/",
+      {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json" // Optional, but can help indicate that you expect a JSON response
+        },
+        body: JSON.stringify({ total_price: this.subTotal + this.taxAmount })
+      }
+    )
+      .then((res: any) => { return res.json(); })
+      .then((order: any) => { console.log(order); console.log(order.id); return order.id; })
+  }
+
+  onApproveCallback = (data: any, actions: any) => {
+    return fetch("http://localhost:8000/orders/capture/" + data.orderID, {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json",
+        'X-CSRFToken': this.authService.getCookie('csrftoken') || '',
+        "Accept": "application/json" // Optional, but can help indicate that you expect a JSON response
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        address: {
+          address_line_1: this.shippingForm.controls["address"].value,
+          city: this.shippingForm.controls["city"].value,
+          state: this.shippingForm.controls["state"].value,
+          zipcode: this.shippingForm.controls["zipCode"].value
+        },
+        cart: this.cartItems,
+        quantity: this.quantity,
+        discount_code: this.discountCode
+      })
+    }).then(function (res) {
+      return res.json();
+    }).then(function (orderData) {
+      console.log(orderData);
+      // Three cases to handle:
+      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+      //   (2) Other non-recoverable errors -> Show a failure message
+      //   (3) Successful transaction -> Show confirmation or thank you
+
+      // This example reads a v2/checkout/orders capture response, propagated from the server
+      // You could use a different API or structure for your 'orderData'
+      var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+
+      if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
+        return actions.restart(); // Recoverable state, per:
+        // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+      }
+
+      if (errorDetail) {
+        var msg = 'Sorry, your transaction could not be processed.';
+        if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+        if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+        return alert(msg); // Show a failure message (try to avoid alerts in production environments)
+      }
+
+      // Successful capture! For demo purposes:
+      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+      var transaction = orderData.purchase_units[0].payments.captures[0];
+      alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+      // Replace the above to show a success message within this page, e.g.
+      // const element = document.getElementById('paypal-button-container');
+      // element.innerHTML = '';
+      // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+      // Or go to another URL:  actions.redirect('thank_you.html');
+    });
+  }
+
+  initCardFields = () => {
+    // console.log("HI")
+    // const nameField = this.cardField.NameField({
+    //   style: { input: { color: "blue" }, ".invalid": { color: "purple" } },
+    // });
+    // nameField.render("#card-name-field-container");
+
+    // const numberField = this.cardField.NumberField({
+    //   style: { input: { color: "blue" } },
+    // });
+    // numberField.render("#card-number-field-container");
+
+    // const cvvField = this.cardField.CVVField({
+    //   style: { input: { color: "blue" } },
+    // });
+    // cvvField.render("#card-cvv-field-container");
+
+    // const expiryField = this.cardField.ExpiryField({
+    //   style: { input: { color: "blue" } },
+    // });
+    // expiryField.render("#card-expiry-field-container");
+  }
+
+  submitCardField = () => {
+    this.cardField.submit()
+      .then(() => {
+        // submit successful
+      });
+  }
 
 }

@@ -1,6 +1,6 @@
 .heading-section {
     margin: 100px auto;
-    max-width: 45%;
+    max-width: 65%;
     text-align: left;
 }
 
@@ -24,6 +24,35 @@
     font-weight: bold;
     color: #281A39;
     line-height: 1.6;
+}
+
+.services-section {
+    max-width: 65%;
+    margin: 70px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.service-card {
+    width: 30%;
+    margin: 0px 20px 20px;
+}
+
+.service-card i {
+    width: 80px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+.service-card p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #281A39;
+    line-height: 1.6;
+    margin-top: 15px;
 }
 
 .quote-section {

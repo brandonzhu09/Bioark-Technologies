@@ -126,7 +126,10 @@
             </mat-expansion-panel>
 
             <!-- Billing Panel -->
-            <mat-expansion-panel [disabled]="isBillingPanelDisabled">
+            <mat-expansion-panel
+                [disabled]="isBillingPanelDisabled"
+                [expanded]="!isBillingPanelDisabled"
+            >
                 <mat-expansion-panel-header>
                     <mat-panel-title> 2. Billing Information </mat-panel-title>
                 </mat-expansion-panel-header>
@@ -136,103 +139,53 @@
                 <div class="payment-divider">
                     <span class="payment-divider-text">or</span>
                 </div>
+                <div id="card-form" class="card_container">
+                    <div id="card-name-field-container"></div>
+                    <div id="card-number-field-container"></div>
+                    <div id="card-expiry-field-container"></div>
+                    <div id="card-cvv-field-container"></div>
 
-                <form [formGroup]="billingForm" (ngSubmit)="onBillingSubmit()">
+                    <!-- <form
+                    [formGroup]="billingAddressForm"
+                    (ngSubmit)="submitCardField()"
+                >
                     <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Name on Card</mat-label>
-                        <input matInput formControlName="cardName" required />
-                        <mat-error
-                            *ngIf="
-                                billingForm
-                                    .get('cardName')
-                                    ?.hasError('required')
-                            "
-                        >
-                            Name on card is required
-                        </mat-error>
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required />
+                        @if (billingAddressForm.get('address')?.hasError('required'))
+                        {
+                        <mat-error> Address is required </mat-error>
+                        }
                     </mat-form-field>
-
                     <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Card Number</mat-label>
-                        <input matInput formControlName="cardNumber" required />
-                        <mat-error
-                            *ngIf="
-                                billingForm
-                                    .get('cardNumber')
-                                    ?.hasError('required')
-                            "
-                        >
-                            Card number is required
-                        </mat-error>
-                        <mat-error
-                            *ngIf="
-                                billingForm
-                                    .get('cardNumber')
-                                    ?.hasError('pattern')
-                            "
-                        >
-                            Please enter a valid 16-digit card number
-                        </mat-error>
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required />
+                        @if (billingAddressForm.get('address')?.hasError('required'))
+                        {
+                        <mat-error> Address is required </mat-error>
+                        }
                     </mat-form-field>
-
-                    <div class="form-row">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Expiry Date (MM/YY)</mat-label>
-                            <input
-                                matInput
-                                formControlName="expiryDate"
-                                required
-                                placeholder="MM/YY"
-                            />
-                            <mat-error
-                                *ngIf="
-                                    billingForm
-                                        .get('expiryDate')
-                                        ?.hasError('required')
-                                "
-                            >
-                                Expiry date is required
-                            </mat-error>
-                            <mat-error
-                                *ngIf="
-                                    billingForm
-                                        .get('expiryDate')
-                                        ?.hasError('pattern')
-                                "
-                            >
-                                Please enter a valid expiry date (MM/YY)
-                            </mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="outline">
-                            <mat-label>CVV</mat-label>
-                            <input matInput formControlName="cvv" required />
-                            <mat-error
-                                *ngIf="
-                                    billingForm.get('cvv')?.hasError('required')
-                                "
-                            >
-                                CVV is required
-                            </mat-error>
-                            <mat-error
-                                *ngIf="
-                                    billingForm.get('cvv')?.hasError('pattern')
-                                "
-                            >
-                                Please enter a valid CVV
-                            </mat-error>
-                        </mat-form-field>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required />
+                        @if (billingAddressForm.get('address')?.hasError('required'))
+                        {
+                        <mat-error> Address is required </mat-error>
+                        }
+                    </mat-form-field>
                     </div>
+                </form> -->
+                    <br /><br />
 
                     <button
                         mat-raised-button
                         class="primary-button"
                         type="submit"
-                        [disabled]="!billingForm.valid"
+                        (click)="submitCardField()"
                     >
                         Place Order
                     </button>
-                </form>
+                </div>
             </mat-expansion-panel>
         </mat-accordion>
     </div>

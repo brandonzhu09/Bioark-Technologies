@@ -89,23 +89,6 @@ ol {
     align-self: center;
 }
 
-.service-button {
-    display: inline-block;
-    padding: 10px 20px;
-    border: 2px solid #281A39;
-    background-color: transparent;
-    color: #281A39;
-    font-weight: 600;
-    font-size: 16px;
-    border-radius: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.service-button:hover {
-    background-color: #281A39;
-    color: #F9F8FB;
-}
-
 .service-card p {
     font-size: 16px;
     font-weight: bold;
