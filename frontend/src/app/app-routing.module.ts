@@ -23,6 +23,7 @@ import { UserPageComponent } from './user-mode/user-page/user-page.component';
 import { OrderPageComponent } from './user-mode/order-page/order-page.component';
 import { UserSettingsComponent } from './user-mode/user-settings/user-settings.component';
 import { ServiceFormComponent } from './user-mode/service-form/service-form.component';
+import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'products/gene-knock-out', component: GeneKnockOutPageComponent },
   { path: 'products/gene-deletion', component: GeneDeletionPageComponent },
   { path: 'products/rna-knock-down', component: RnaKnockDownPageComponent },
+  { path: 'products/:product-sku', component: ProductSummaryComponent },
   { path: 'services', component: ServiceHomeComponent },
   { path: 'services/:serviceType', component: QuoteFormComponent },
   { path: 'contact', component: ContactPageComponent },

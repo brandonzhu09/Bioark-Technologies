@@ -32,6 +32,10 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order_item_id = models.AutoField(primary_key=True)
+    order_class = models.CharField()
+    work_period_date = models.DateField()
+    order_placed_date = models.DateTimeField(default=datetime.now)
+    order_process_date = models.DateTimeField(blank=True, null=True)
     shipping_date = models.DateField()
     delivery_date = models.DateField()
     billing_date = models.DateField()
@@ -48,10 +52,38 @@ class OrderItem(models.Model):
     unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
     discount_code = models.CharField(blank=True, max_length=20)
+    # attribute names
+    function_type_name = models.CharField()
+    structure_type_name = models.CharField()
+    promoter_name = models.CharField()
+    protein_tag_name = models.CharField()
+    fluorescene_marker_name = models.CharField()
+    selection_marker_name = models.CharField()
+    bacterial_marker_name = models.CharField()
+    target_sequence = models.CharField()
+    delivery_format_name = models.CharField()
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'order_item'
+
+
+class CloningCRISPRItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Cloning CRISPR Order Item'
+
+
+class CloningOverexpressionItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Cloning Overexpression Order Item'
+
+
+class CloningRNAiItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Cloning RNAi Order Item'
 
 
 class CartItem(models.Model):
@@ -64,6 +96,16 @@ class CartItem(models.Model):
     unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
     discount_code = models.CharField(max_length=20)
+    # attribute names
+    function_type_name = models.CharField()
+    structure_type_name = models.CharField()
+    promoter_name = models.CharField()
+    protein_tag_name = models.CharField()
+    fluorescene_marker_name = models.CharField()
+    selection_marker_name = models.CharField()
+    bacterial_marker_name = models.CharField()
+    target_sequence = models.CharField()
+    delivery_format_name = models.CharField()
 
     def get_total_price(self):
         return self.product.price * self.quantity
@@ -88,7 +130,12 @@ class Cart(object):
         Add product to the cart or update its quantity
         """
         cart_item, created = CartItem.objects.get_or_create(session_key=self.session.session_key, product_sku=cart_item['product_sku'], product_name=cart_item['product_name'],
-                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'], ready_status=cart_item['ready_status'])
+                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'], ready_status=cart_item['ready_status'],
+                                                            function_type_name=cart_item['function_type_name'], structure_type_name=cart_item['structure_type_name'],
+                                                            promoter_name=cart_item['promoter_name'], protein_tag_name=cart_item['protein_tag_name'],
+                                                            fluorescene_marker_name=cart_item['fluorescene_marker_name'], selection_marker_name=cart_item['selection_marker_name'],
+                                                            bacterial_marker_name=cart_item['bacterial_marker_name'], target_sequence=cart_item['target_sequence'],
+                                                            delivery_format_name=cart_item['delivery_format_name'])
         if created:
             self.cart.append(cart_item.id)
         

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 import os
+from dotenv import load_dotenv
 import logging
 import json
 
@@ -39,6 +40,8 @@ from paypalserversdk.api_helper import ApiHelper
 from .models import *
 from users.models import Address
 from .serializers import OrderItemSerializer
+
+load_dotenv()
 
 paypal_client: PaypalserversdkClient = PaypalserversdkClient(
     client_credentials_auth_credentials=ClientCredentialsAuthCredentials(
@@ -127,6 +130,7 @@ def capture_order(request, order_id):
         billing_date = datetime.now()
 
         OrderItem.objects.create(product_sku=item['product_sku'],
+                                 order_class=get_order_class(item['product_sku']),
                                 product_name=item['product_name'],
                                 ready_status=item['ready_status'],
                                 unit_price=item['price'],
@@ -135,9 +139,19 @@ def capture_order(request, order_id):
                                 quantity=item['quantity'],
                                 discount_code=item['discount_code'],
                                 order=order_obj,
+                                work_period_date=get_work_period_date(item['product_sku'], item['ready_status']),
                                 shipping_date=shipping_date,
                                 delivery_date=delivery_date,
-                                billing_date=billing_date)
+                                billing_date=billing_date,
+                                function_type_name=item['function_type_name'],
+                                structure_type_name=item['structure_type_name'],
+                                promoter_name=item['promoter_name'],
+                                protein_tag_name=item['protein_tag_name'],
+                                fluorescene_marker_name=item['fluorescene_marker_name'],
+                                selection_marker_name=item['selection_marker_name'],
+                                bacterial_marker_name=item['bacterial_marker_name'],
+                                target_sequence=item['target_sequence'],
+                                delivery_format_name=item['delivery_format_name'])
 
     return Response(json.loads(ApiHelper.json_serialize(order.body)))
 
@@ -187,3 +201,27 @@ class CartAPI(APIView):
             "total_price": cart.get_total_price()
         }
         return Response(data, status=status.HTTP_202_ACCEPTED)
+
+
+# Helper methods
+def get_order_class(product_sku):
+    obj_class = product_sku[:2]
+    if obj_class == 'CA' or obj_class == 'CI' or obj_class == 'CO' or obj_class == 'CN' or obj_class == 'CD' or obj_class == 'CR':
+        return 'Cloning-CRISPR'
+    elif obj_class == 'EM' or obj_class == 'IM':
+        return 'Cloning-Overexpression'
+    elif obj_class == 'SH':
+        return 'Cloning-RNAi'
+    else:
+        return 'Virus/Stable Cell Line'
+
+def get_work_period_date(product_sku, ready_status):
+    delivery_format_code = product_sku[len(product_sku)-1]
+    ready_status = ready_status
+    work_period_days = WorkSchedule.objects.get(delivery_format_code=delivery_format_code, ready_status=ready_status).work_period_earliest
+    
+    current_date = date.today()
+    delta = timedelta(days=work_period_days)
+    work_period_date = current_date + delta
+    
+    return work_period_date

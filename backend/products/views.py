@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from orders.serializers import OrderItemSerializer
 from products.models import *
 from products.serializers import *
 from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
+from orders.models import OrderItem
 
 # Create your views here.
 @api_view(['GET'])
@@ -131,6 +134,15 @@ def get_delivery_format_table(request):
 
     return Response(data)
 
+@api_view(['GET'])
+def get_product_properties(request):
+    product_sku = request.GET["product_sku"]
+    
+    order_item = OrderItem.objects.filter(product_sku=product_sku).first()
+    serializer = OrderItemSerializer(order_item)
+
+    return Response(serializer.data)
+
 
 def generate_product_sku(function_type_name, structure_type_name, promoter_name, protein_tag_name, fluorescene_marker_name, selection_marker_name,
                          bacterial_marker_name, target_sequence, delivery_format_name):
@@ -152,7 +164,63 @@ def generate_product_sku(function_type_name, structure_type_name, promoter_name,
 
     product_sku = function_type_code + structure_type_code + "-" + promoter_code + protein_tag_code + fluorescene_marker_code + selection_marker_code + bacterial_marker_code + "-" + target_sequence + delivery_format_code
 
-    return product_sku    
+    return product_sku
+
+def decode_product_sku(product_sku):
+    try:
+        # Split the SKU into parts
+        part1, part2, target_sequence_with_delivery = product_sku.split("-")
+        function_type_code = part1[:2]
+        structure_type_code = part1[2:]
+        
+        promoter_code = part2[0]
+        protein_tag_code = part2[1]
+        fluorescene_marker_code = part2[2]
+        selection_marker_code = part2[3]
+        bacterial_marker_code = part2[4]
+        
+        target_sequence = target_sequence_with_delivery[:6]
+        delivery_format_code = target_sequence_with_delivery[-1]
+        
+        # Retrieve data from the database
+        function_type_name = FunctionType.objects.get(function_type_symbol=function_type_code).function_type_name
+        structure_type_name = StructureType.objects.get(structure_type_symbol=structure_type_code).structure_type_name
+
+        promoter_queryset = Promoter.objects.filter(promoter_code=promoter_code)
+        promoter_special_case_queryset = PromoterSpecialCase.objects.filter(promoter_code=promoter_code)
+        promoter_name = (
+            promoter_queryset.union(promoter_special_case_queryset).first().promoter_name
+        )
+        
+        bacterial_marker_queryset = BacterialMarker.objects.filter(bacterial_marker_code=bacterial_marker_code)
+        bacterial_marker_special_case_queryset = BacterialMarkerSpecialCase.objects.filter(bacterial_marker_code=bacterial_marker_code)
+        bacterial_marker_name = (
+            bacterial_marker_queryset.union(bacterial_marker_special_case_queryset).first().bacterial_marker_name
+        )
+
+        protein_tag_name = ProteinTag.objects.get(protein_tag_code=protein_tag_code).protein_tag_name
+        fluorescene_marker_name = FluoresceneMarker.objects.get(fluorescene_marker_code=fluorescene_marker_code).fluorescene_marker_name
+        selection_marker_name = SelectionMarker.objects.get(selection_marker_code=selection_marker_code).selection_marker_name
+        delivery_format_name = DeliveryFormat.objects.get(delivery_format_symbol=delivery_format_code).delivery_format_name
+
+        # Return the decoded components as a dictionary
+        return {
+            "function_type_name": function_type_name,
+            "structure_type_name": structure_type_name,
+            "promoter_name": promoter_name,
+            "protein_tag_name": protein_tag_name,
+            "fluorescene_marker_name": fluorescene_marker_name,
+            "selection_marker_name": selection_marker_name,
+            "bacterial_marker_name": bacterial_marker_name,
+            "target_sequence": target_sequence,
+            "delivery_format_name": delivery_format_name,
+        }
+    
+    except ObjectDoesNotExist as e:
+        raise ValueError(f"Decoding failed: {str(e)}")
+    except Exception as e:
+        raise ValueError(f"Unexpected error during decoding: {str(e)}")
+
 
 def get_promoters(function_type_symbol, structure_type_symbol):
     # check the special case for promoter options

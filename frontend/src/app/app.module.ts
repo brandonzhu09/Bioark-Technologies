@@ -43,6 +43,7 @@ import { UserPageComponent } from './user-mode/user-page/user-page.component';
 import { OrderPageComponent } from './user-mode/order-page/order-page.component';
 import { UserSettingsComponent } from './user-mode/user-settings/user-settings.component';
 import { ServiceFormComponent } from './user-mode/service-form/service-form.component';
+import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ServiceFormComponent } from './user-mode/service-form/service-form.comp
     OrderPageComponent,
     UserSettingsComponent,
     ServiceFormComponent,
+    ProductSummaryComponent,
   ],
   imports: [
     LoginComponent,

@@ -1,0 +1,37 @@
+<div class="product-page">
+    <h1>{{ product_name }}</h1>
+    <div class="content">
+        <div class="diagram">
+            <img src="../../../assets/lego-design-diagram.png" alt="Diagram" />
+        </div>
+        <div class="description">
+            <!-- <h2>Products</h2> -->
+            <p><strong>SKU Number:</strong>{{ product_sku }}</p>
+            <p><strong>Function Type: </strong>{{ function_type_name }}</p>
+            <p class="mb-3"></p>
+            <p><strong>Structure Type: </strong>{{ structure_type_name }}</p>
+            <!-- <h2>Structure</h2> -->
+            <p><strong>Promoter: </strong>{{ promoter_name }}</p>
+            <p><strong>Protein Tag: </strong>{{ protein_tag_name }}</p>
+            <p>
+                <strong>Fluorescene Marker: </strong
+                >{{ fluorescene_marker_name }}
+            </p>
+            <p>
+                <strong>Selection Marker: </strong>{{ selection_marker_name }}
+            </p>
+            <p class="mb-3">
+                <strong>Antibiotics: </strong>{{ bacterial_marker_name }}
+            </p>
+            <!-- <h2>Target Gene</h2> -->
+            <p class="mb-3">
+                <strong>Target Sequence: </strong>{{ target_sequence }}
+            </p>
+            <div class="button-service-group">
+                <button class="button orange">Save Design</button>
+                <button class="button orange">View Protocol</button>
+                <button class="button orange">Customer Service</button>
+            </div>
+        </div>
+    </div>
+</div>

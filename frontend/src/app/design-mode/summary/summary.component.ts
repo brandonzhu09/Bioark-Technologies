@@ -20,7 +20,6 @@ export class SummaryComponent {
     @Input() product_sku: string = 'CPD100000';
     @Input() function_type_name: string = 'CRISPRa';
     @Input() structure_type_name: string = 'Standard';
-    @Input() delivery_type_name: string = 'Standard';
     @Input() promoter_name: string = 'PCMV';
     @Input() protein_tag_name: string = 'None';
     @Input() fluorescene_marker_name: string = 'None';
@@ -50,7 +49,13 @@ export class SummaryComponent {
             let price = this.deliveryFormatTable[this.productId.value]['price'];
             let adjusted_price = this.deliveryFormatTable[this.productId.value]['adjusted_price'];
             let ready_status = this.deliveryFormatTable[this.productId.value]['ready_status'];
-            this.cartService.addToCart(product_sku, product_name, unit_size, price, adjusted_price, ready_status).subscribe((res) => {
+            let delivery_format_name = this.deliveryFormatTable[this.productId.value]['delivery_format_name']
+            this.cartService.addToCart(product_sku, product_name,
+                unit_size, price, adjusted_price, ready_status,
+                this.function_type_name, this.structure_type_name, this.promoter_name,
+                this.protein_tag_name, this.fluorescene_marker_name, this.selection_marker_name,
+                this.bacterial_marker_name, this.target_sequence, delivery_format_name
+            ).subscribe((res) => {
                 console.log(res);
             })
         }
