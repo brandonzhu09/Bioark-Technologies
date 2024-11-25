@@ -10,7 +10,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'fulfilled', 'order_placed_date', 'work_period_date', 'shipping_date', 'delivery_date', 'billing_date')
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
 
     def order_id(self, obj):
         return obj.order_id
@@ -18,7 +18,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(CloningCRISPRItem)
 class CloningCRISPROrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'fulfilled', 'order_placed_date', 'work_period_date', 'shipping_date', 'delivery_date', 'billing_date')
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
     # search_fields = ('name',)  # Add search functionality
 
     def get_queryset(self, request):
@@ -28,7 +28,7 @@ class CloningCRISPROrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(CloningOverexpressionItem)
 class CloningOverexpressionOrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'fulfilled', 'order_placed_date', 'work_period_date', 'shipping_date', 'delivery_date', 'billing_date')
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
     # search_fields = ('name',)  # Add search functionality
 
     def get_queryset(self, request):
@@ -38,7 +38,7 @@ class CloningOverexpressionOrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(CloningRNAiItem)
 class CloningRNAiOrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'fulfilled', 'order_placed_date', 'work_period_date', 'shipping_date', 'delivery_date', 'billing_date')
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
     # search_fields = ('name',)  # Add search functionality
 
     def get_queryset(self, request):

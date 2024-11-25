@@ -105,9 +105,6 @@ def capture_order(request, order_id):
     data = json.loads(ApiHelper.json_serialize(order.body))
     payment_token = data["id"]
     total_price = data["purchase_units"][0]["amount"]["value"]
-    # TODO: calculate delivery date and billing date
-    delivery_date = datetime.now()
-    billing_date = datetime.now()
 
     address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
                                                          city=address["city"],
@@ -118,17 +115,10 @@ def capture_order(request, order_id):
                                      total_price=total_price,
                                      quantity=quantity,
                                      discount_code=discount_code,
-                                     delivery_date=delivery_date,
-                                     billing_date=billing_date,
                                      shipping_address=address_obj,
                                      user=request.user)
     
     for item in cart:
-        # TODO: calculate shipping date, delivery date, billing date
-        shipping_date = datetime.now()
-        delivery_date = datetime.now()
-        billing_date = datetime.now()
-
         OrderItem.objects.create(product_sku=item['product_sku'],
                                  order_class=get_order_class(item['product_sku']),
                                 product_name=item['product_name'],
@@ -139,10 +129,8 @@ def capture_order(request, order_id):
                                 quantity=item['quantity'],
                                 discount_code=item['discount_code'],
                                 order=order_obj,
-                                work_period_date=get_work_period_date(item['product_sku'], item['ready_status']),
-                                shipping_date=shipping_date,
-                                delivery_date=delivery_date,
-                                billing_date=billing_date,
+                                work_period=get_work_period(item['product_sku'], item['ready_status']),
+                                est_delivery_date=get_est_delivery_date(item['product_sku'], item['ready_status']),
                                 function_type_name=item['function_type_name'],
                                 structure_type_name=item['structure_type_name'],
                                 promoter_name=item['promoter_name'],
@@ -215,7 +203,16 @@ def get_order_class(product_sku):
     else:
         return 'Virus/Stable Cell Line'
 
-def get_work_period_date(product_sku, ready_status):
+
+def get_work_period(product_sku, ready_status):
+    delivery_format_code = product_sku[len(product_sku)-1]
+    ready_status = ready_status
+    work_period_days = WorkSchedule.objects.get(delivery_format_code=delivery_format_code, ready_status=ready_status).work_period_earliest
+    
+    return f"{work_period_days} days"
+
+
+def get_est_delivery_date(product_sku, ready_status):
     delivery_format_code = product_sku[len(product_sku)-1]
     ready_status = ready_status
     work_period_days = WorkSchedule.objects.get(delivery_format_code=delivery_format_code, ready_status=ready_status).work_period_earliest

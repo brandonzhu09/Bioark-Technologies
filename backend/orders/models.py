@@ -16,8 +16,8 @@ class Order(models.Model):
     discount_code = models.CharField(null=True, blank=True)
     order_placed_date = models.DateTimeField(default=datetime.now)
     order_process_date = models.DateTimeField(blank=True, null=True)
-    delivery_date = models.DateField()
-    billing_date = models.DateField()
+    delivery_date = models.DateField(null=True, blank=True)
+    billing_date = models.DateField(null=True, blank=True)
     shipping_address = models.ForeignKey(Address, on_delete=models.PROTECT)
     transaction_status = models.CharField(null=True, blank=True)
     fulfilled = models.BooleanField(default=False)
@@ -31,14 +31,22 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    STATUS_CHOICES = [
+        ('in_progress', 'In Progress'),
+        ('ready_for_delivery', 'Ready For Delivery'),
+        ('arrived', 'Arrived'),
+    ]
+
     order_item_id = models.AutoField(primary_key=True)
     order_class = models.CharField()
-    work_period_date = models.DateField()
+    work_period = models.CharField()
+    est_delivery_date = models.DateField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
     order_placed_date = models.DateTimeField(default=datetime.now)
     order_process_date = models.DateTimeField(blank=True, null=True)
-    shipping_date = models.DateField()
-    delivery_date = models.DateField()
-    billing_date = models.DateField()
+    shipping_date = models.DateField(null=True, blank=True)
+    delivery_date = models.DateField(null=True, blank=True)
+    billing_date = models.DateField(null=True, blank=True)
     transaction_status = models.CharField(blank=True)
     ready_status = models.CharField()
     fulfilled = models.BooleanField(default=False)

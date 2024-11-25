@@ -11,21 +11,35 @@ import { UserService } from '../../services/user.service';
   styleUrl: './order-page.component.css'
 })
 export class OrderPageComponent {
-  displayedColumns: string[] = ['order_class', 'order_id', 'order_placed_date', 'est_work_period', 'product_sku', 'product_name', 'unit_size', 'quantity', 'total_price', 'transaction_status'];
-  orders: any;
-  ordersData: MatTableDataSource<any>;
+  displayedColumns: string[] = ['order_id', 'order_placed_date', 'work_period', 'est_delivery_date', 'product_sku', 'product_name', 'quantity', 'total_price', 'status'];
+  crisprOrdersData: any;
+  overexpressionOrdersData: any;
+  rnaiOrdersData: any;
+  crisprOrders: MatTableDataSource<any>;
+  overexpressionOrders: MatTableDataSource<any>;
+  rnaiOrders: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private userService: UserService) {
-    this.ordersData = new MatTableDataSource(this.orders);
+    this.crisprOrders = new MatTableDataSource(this.crisprOrdersData);
+    this.overexpressionOrders = new MatTableDataSource(this.overexpressionOrdersData);
+    this.rnaiOrders = new MatTableDataSource(this.rnaiOrdersData);
   }
 
   viewOrders() {
-    this.userService.viewOrders().subscribe(res => {
-      this.orders = res;
-      this.ordersData = new MatTableDataSource(this.orders);
+    this.userService.viewCloningCRISPROrders().subscribe(res => {
+      this.crisprOrdersData = res;
+      this.crisprOrders = new MatTableDataSource(this.crisprOrdersData);
+    })
+    this.userService.viewCloningOverexpressionOrders().subscribe(res => {
+      this.overexpressionOrdersData = res;
+      this.overexpressionOrders = new MatTableDataSource(this.overexpressionOrdersData);
+    })
+    this.userService.viewCloningRNAiOrders().subscribe(res => {
+      this.rnaiOrdersData = res;
+      this.rnaiOrders = new MatTableDataSource(this.rnaiOrdersData);
     })
   }
 
@@ -34,16 +48,67 @@ export class OrderPageComponent {
   }
 
   ngAfterViewInit() {
-    this.ordersData.paginator = this.paginator;
-    this.ordersData.sort = this.sort;
+    this.crisprOrders.paginator = this.paginator;
+    this.crisprOrders.sort = this.sort;
+
+    this.overexpressionOrders.paginator = this.paginator;
+    this.overexpressionOrders.sort = this.sort;
+
+    this.rnaiOrders.paginator = this.paginator;
+    this.rnaiOrders.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  applyCrisprFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.ordersData.filter = filterValue.trim().toLowerCase();
+    this.crisprOrders.filter = filterValue.trim().toLowerCase();
 
-    if (this.ordersData.paginator) {
-      this.ordersData.paginator.firstPage();
+    if (this.crisprOrders.paginator) {
+      this.crisprOrders.paginator.firstPage();
+    }
+  }
+
+  applyOverexpressionFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.overexpressionOrders.filter = filterValue.trim().toLowerCase();
+
+    if (this.overexpressionOrders.paginator) {
+      this.overexpressionOrders.paginator.firstPage();
+    }
+  }
+
+  applyRnaiFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.rnaiOrders.filter = filterValue.trim().toLowerCase();
+
+    if (this.rnaiOrders.paginator) {
+      this.rnaiOrders.paginator.firstPage();
+    }
+  }
+
+
+  getBadgeClass(status: string): string {
+    switch (status) {
+      case 'in_progress':
+        return 'bg-primary'; // Blue
+      case 'ready_for_delivery':
+        return 'bg-warning'; // Green
+      case 'arrived':
+        return 'bg-success'; // Green
+      default:
+        return 'bg-secondary'; // Grey for unknown status
+    }
+  }
+
+  getStatus(status: string) {
+    switch (status) {
+      case 'in_progress':
+        return 'In Progress';
+      case 'ready_for_delivery':
+        return 'Ready for Delivery';
+      case 'arrived':
+        return 'Arrived';
+      default:
+        return 'Unknown Status';
     }
   }
 
