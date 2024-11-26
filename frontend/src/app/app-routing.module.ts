@@ -24,6 +24,9 @@ import { OrderPageComponent } from './user-mode/order-page/order-page.component'
 import { UserSettingsComponent } from './user-mode/user-settings/user-settings.component';
 import { ServiceFormComponent } from './user-mode/service-form/service-form.component';
 import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
+import { CustomCloningPageComponent } from './service-mode/custom-cloning-page/custom-cloning-page.component';
+import { LentivirusPackagePageComponent } from './service-mode/lentivirus-package-page/lentivirus-package-page.component';
+import { StableCellPageComponent } from './service-mode/stable-cell-page/stable-cell-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -46,9 +49,12 @@ const routes: Routes = [
   { path: 'products/rna-knock-down', component: RnaKnockDownPageComponent },
   { path: 'products/:product-sku', component: ProductSummaryComponent },
   { path: 'services', component: ServiceHomeComponent },
-  { path: 'services/:serviceType', component: QuoteFormComponent },
+  { path: 'services/custom-cloning', component: CustomCloningPageComponent },
+  { path: 'services/lentivirus-package', component: LentivirusPackagePageComponent },
+  { path: 'services/stable-cell-line', component: StableCellPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'quote', component: QuoteFormComponent },
+  { path: 'quote/:serviceType', component: QuoteFormComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' }
 ];
 
