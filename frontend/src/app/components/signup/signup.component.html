@@ -6,7 +6,11 @@
         <a href="/login"><span class="signup-link">Log In</span></a>
     </p>
 
-    <form id="signupForm">
+    <form
+        id="signupForm"
+        [formGroup]="signupForm"
+        (ngSubmit)="onSubmit(signupForm.value)"
+    >
         <div class="form-row">
             <mat-form-field class="form-group">
                 <mat-label>First Name</mat-label>
@@ -21,14 +25,14 @@
             <mat-label>Email</mat-label>
             <input
                 type="email"
-                [formControl]="emailFormControl"
+                formControlName="email"
                 matInput
                 placeholder="Ex. pat@example.com"
             />
-            @if (emailFormControl.hasError('email') &&
-            !emailFormControl.hasError('required')) {
+            @if (signupForm.controls.email.hasError('email') &&
+            !signupForm.controls.email.hasError('required')) {
             <mat-error>Please enter a valid email address</mat-error>
-            } @if (emailFormControl.hasError('required')) {
+            } @if (signupForm.controls.email.hasError('required')) {
             <mat-error>Email is <strong>required</strong></mat-error>
             }
         </mat-form-field>
@@ -36,17 +40,17 @@
             <mat-label>Password</mat-label>
             <input
                 type="password"
-                [formControl]="passwordFormControl"
+                formControlName="password"
                 matInput
                 placeholder="Enter password"
             />
-            @if (passwordFormControl.hasError('pattern')) {
+            @if (signupForm.controls.password.hasError('pattern')) {
             <mat-error
                 >Your password must be at least 8 characters long, contain at
                 least one number and have a mixture of uppercase and lowercase
                 letters.</mat-error
             >
-            } @if (passwordFormControl.hasError('required')) {
+            } @if (signupForm.controls.password.hasError('required')) {
             <mat-error>Password is <strong>required</strong></mat-error>
             }
         </mat-form-field>

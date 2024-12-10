@@ -7,12 +7,32 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
+from users.models import User
 
 
 def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set'})
     response['X-CSRFToken'] = get_token(request)
     return response
+
+@require_POST
+def signup_view(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    password = data.get('password')
+
+    # Basic validation
+    if not password or not email:
+        return JsonResponse({'error': 'All fields are required'}, status=400)
+
+    # Create user
+    try:
+        user = User.objects.create_user(username=email, email=email, password=password)
+        user.save()
+        login(request, user)
+        return JsonResponse({'detail': 'Successfully signed up.', 'success': True})
+    except:
+        return JsonResponse({'error': 'Email already exists'}, status=400)
 
 
 @require_POST

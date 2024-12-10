@@ -30,7 +30,9 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe(
       (response) => {
         if (response.success) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
           this.authService.isAuthenticated = true;
         } else {
           this.authService.isAuthenticated = false;

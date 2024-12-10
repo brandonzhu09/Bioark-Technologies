@@ -18,6 +18,7 @@ class Address(models.Model):
 
 
 class User(AbstractUser):
+    email = models.EmailField(max_length=255, unique=True)
     title = models.CharField()
     mobile = models.CharField()
     telephone = models.CharField()
@@ -26,6 +27,9 @@ class User(AbstractUser):
     address = models.ForeignKey(Address, related_name='address', on_delete=models.PROTECT, null=True)
     billing_address = models.ForeignKey(Address, related_name='billing_address', on_delete=models.PROTECT, null=True)
     shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.PROTECT, null=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
 
     class Meta:
         db_table = 'users'

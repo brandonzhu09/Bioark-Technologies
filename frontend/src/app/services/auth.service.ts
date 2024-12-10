@@ -20,6 +20,15 @@ export class AuthService {
     return this.http.get<any>(`${API_BASE_URL}/api/csrf/`, { withCredentials: true });
   }
 
+  signup(credentials: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${API_BASE_URL}/api/signup/`, credentials, { headers: headers, withCredentials: true });
+  }
+
   login(credentials: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
