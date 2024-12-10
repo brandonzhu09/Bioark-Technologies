@@ -24,8 +24,12 @@ export class NavbarComponent {
   logout() {
     this.authService.logout().subscribe(res => {
       console.log(res)
-      window.location.href = "/";
-      window.location.reload();
+
+      this.router.navigate(['/']).then(() => {
+        window.location.reload();
+      });
+
+      this.authService.isAuthenticated = false;
     });
   }
 }

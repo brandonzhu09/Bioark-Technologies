@@ -138,6 +138,10 @@ nav ul li a:hover {
   color: #1b5e20;
 }
 
+.dropdown-item {
+  cursor: pointer;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 992px) {
   .navbar {
