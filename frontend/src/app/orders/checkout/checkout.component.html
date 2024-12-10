@@ -1,6 +1,49 @@
 <div class="main-container">
     <div class="checkout-container">
         <mat-accordion>
+            @if (!authService.isAuthenticated) {
+            <!-- Signup Panel -->
+            <mat-expansion-panel
+                [expanded]="isSignupPanelOpen"
+                [disabled]="isSignupPanelDisabled"
+            >
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        First time? Enter email to create new account and
+                        proceed to checkout.
+                    </mat-panel-title>
+                    @if (showSignupPreview) {
+                    <mat-panel-description class="preview-container">
+                        <button
+                            mat-button
+                            class="secondary-button"
+                            (click)="editSignup(); $event.stopPropagation()"
+                        >
+                            Edit
+                        </button>
+                    </mat-panel-description>
+                    }
+                </mat-expansion-panel-header>
+
+                <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email" required />
+                        </mat-form-field>
+                    </div>
+                    <button
+                        mat-raised-button
+                        class="primary-button"
+                        color="primary"
+                        type="submit"
+                        [disabled]="!signupForm.valid"
+                    >
+                        Continue to Shipping
+                    </button>
+                </form>
+            </mat-expansion-panel>
+            }
             <!-- Shipping Panel -->
             <mat-expansion-panel
                 [expanded]="isShippingPanelOpen"
@@ -19,7 +62,7 @@
                         </div>
                         <button
                             mat-button
-                            color="primary"
+                            class="secondary-button"
                             (click)="editShipping(); $event.stopPropagation()"
                         >
                             Edit

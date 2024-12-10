@@ -29,3 +29,19 @@ body {
 .primary-button:hover {
     opacity: 0.9;
 }
+
+.secondary-button {
+    display: inline-block;
+    padding: 4px 32px;
+    background-color: transparent;
+    border: 2px solid #281A39;
+    color: #281A39;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+    background-color: #281A39;
+    color: white;
+}

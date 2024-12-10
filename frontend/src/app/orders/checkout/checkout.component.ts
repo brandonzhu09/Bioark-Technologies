@@ -36,11 +36,15 @@ interface OrderSummary {
   imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule, PrimaryButtonComponent],
 })
 export class CheckoutComponent {
+  signupForm: FormGroup;
   shippingForm: FormGroup;
   billingAddressForm: FormGroup;
+  isSignupPanelOpen = false;
+  isSignupPanelDisabled = true;
   isShippingPanelOpen = true;
   isShippingPanelDisabled = false;
   isBillingPanelDisabled = true;
+  showSignupPreview = false;
   showShippingPreview = false;
   shippingPreview: ShippingPreview = {
     name: '',
@@ -68,7 +72,19 @@ export class CheckoutComponent {
     this.getCartItems();
   }
 
-  constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService, private authService: AuthService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService, public authService: AuthService, private http: HttpClient) {
+    // open sign up form if user is not logged in
+    if (!authService.isAuthenticated) {
+      this.isSignupPanelOpen = true;
+      this.isSignupPanelDisabled = false;
+      this.isShippingPanelOpen = false;
+      this.isShippingPanelDisabled = true;
+    }
+
+    this.signupForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    })
+
     this.shippingForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -109,12 +125,25 @@ export class CheckoutComponent {
     })
   }
 
+  onSignupSubmit() {
+    if (this.signupForm.valid) {
+      this.isSignupPanelOpen = false;
+      this.isSignupPanelDisabled = true;
+      this.isShippingPanelOpen = true;
+      this.isShippingPanelDisabled = false;
+      this.showSignupPreview = true;
+    } else {
+      this.signupForm.markAllAsTouched();
+    }
+  }
+
   onShippingSubmit() {
     if (this.shippingForm.valid) {
       this.updateShippingPreview();
       this.isShippingPanelOpen = false;
       this.isShippingPanelDisabled = true;
       this.isBillingPanelDisabled = false;
+      this.showSignupPreview = true;
       this.showShippingPreview = true;
       this.calculateSalesTax();
     } else {
@@ -131,11 +160,20 @@ export class CheckoutComponent {
     };
   }
 
+  editSignup() {
+    this.isSignupPanelOpen = true;
+    this.isSignupPanelDisabled = false;
+    this.isShippingPanelDisabled = true;
+    this.showSignupPreview = false;
+    this.showShippingPreview = false;
+  }
+
   editShipping() {
     this.isShippingPanelOpen = true;
     this.isShippingPanelDisabled = false;
     this.isBillingPanelDisabled = true;
     this.showShippingPreview = false;
+    this.showSignupPreview = false;
   }
 
   formatPrice(price: number | null): string {
