@@ -14,14 +14,10 @@ export class AppComponent {
 
   ngOnInit() {
     this.authService.getSession().subscribe((response) => {
-      console.log(response.isAuthenticated);
       if (response.isAuthenticated) {
-        this.authService.isAuthenticated = true;
+        this.authService.isAuthenticated = response.isAuthenticated;
       }
-      else {
-        this.authService.isAuthenticated = false;
-      }
-    });
+    })
     this.cartService.loadCartCountFromServer().subscribe();
   }
 }

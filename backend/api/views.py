@@ -6,6 +6,11 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
+from django.conf import settings
+
+from rest_framework.decorators import api_view
+
 
 from users.models import User
 
@@ -75,3 +80,16 @@ def whoami_view(request):
         return JsonResponse({'isAuthenticated': False})
 
     return JsonResponse({'username': request.user.username})
+
+# @require_POST
+@api_view(['POST'])
+def verify_email(request):
+    # send_mail(
+    #     'Verify your email',
+    #     f'Click here to verify your email and activate your account: ',
+    #     settings.EMAIL_HOST_USER,
+    #     ['brandoncomputerplant@gmail.com'],
+    # )
+
+    return JsonResponse({'status': 'Email sent.'})
+    

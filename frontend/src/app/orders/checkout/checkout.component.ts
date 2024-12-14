@@ -74,12 +74,19 @@ export class CheckoutComponent {
 
   constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService, public authService: AuthService, private http: HttpClient) {
     // open sign up form if user is not logged in
-    if (!authService.isAuthenticated) {
-      this.isSignupPanelOpen = true;
-      this.isSignupPanelDisabled = false;
-      this.isShippingPanelOpen = false;
-      this.isShippingPanelDisabled = true;
-    }
+    this.authService.getSession().subscribe((response) => {
+      if (response.isAuthenticated) {
+        this.isShippingPanelOpen = true;
+        this.isShippingPanelDisabled = false;
+      }
+      else {
+        this.isSignupPanelOpen = true;
+        this.isSignupPanelDisabled = false;
+        this.isShippingPanelOpen = false;
+        this.isShippingPanelDisabled = true;
+      }
+
+    })
 
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
