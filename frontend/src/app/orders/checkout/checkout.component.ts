@@ -224,7 +224,7 @@ export class CheckoutComponent {
   }
 
   onApproveCallback = (data: any, actions: any) => {
-    return fetch("http://localhost:8000/orders/capture/" + data.orderID, {
+    return fetch("http://localhost:8000/api/orders/capture/" + data.orderID, {
       method: 'post',
       headers: {
         "Content-Type": "application/json",

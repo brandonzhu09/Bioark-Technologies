@@ -19,7 +19,7 @@ export class CartService {
   }
 
   loadCartCountFromServer() {
-    return this.http.get<any>(`${environment.apiBaseUrl}/orders/cart/`, { withCredentials: true }).pipe(
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/orders/cart/`, { withCredentials: true }).pipe(
       tap(res => {
         this.cartCount.next(res.count);
       })
@@ -60,7 +60,7 @@ export class CartService {
       'quantity': 1,
     }
 
-    return this.http.post<any>(`${environment.apiBaseUrl}/orders/cart/`, body, {
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/cart/`, body, {
       headers: headers,
       withCredentials: true
     });
@@ -77,7 +77,7 @@ export class CartService {
       'product_id': product_id
     }
 
-    return this.http.post<any>(`${environment.apiBaseUrl}/orders/cart/`, body, {
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/cart/`, body, {
       headers: headers,
       withCredentials: true
     }).pipe(tap(res => {
@@ -98,7 +98,7 @@ export class CartService {
       'quantity': quantity
     }
 
-    return this.http.post<any>(`${environment.apiBaseUrl}/orders/cart/`, body, {
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/cart/`, body, {
       headers: headers,
       withCredentials: true
     }).pipe(tap(res => {
@@ -107,7 +107,7 @@ export class CartService {
   }
 
   viewCart() {
-    return this.http.get<any>(`${environment.apiBaseUrl}/orders/cart/`, { withCredentials: true });
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/orders/cart/`, { withCredentials: true });
   }
 
   getCartCount(): number {

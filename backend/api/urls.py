@@ -1,8 +1,13 @@
 from django.urls import path, include
+from django.contrib import admin
 
 from . import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('products/', include('products.urls')),
+    path('users/', include('users.urls')),
+    path('orders/', include('orders.urls')),
     path('csrf/', views.get_csrf, name='api-csrf'),
     path('signup/', views.signup_view, name='api-signup'),
     path('login/', views.login_view, name='api-login'),
