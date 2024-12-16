@@ -25,19 +25,21 @@ export class SignupComponent {
   constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit(credentials: any) {
-    console.log(credentials)
-    this.authService.signup(credentials).subscribe(
-      (response) => {
-        if (response.success) {
-          this.router.navigate(['/']).then(() => {
-            window.location.reload();
-          });
-          this.authService.isAuthenticated = true;
-        } else {
-          this.authService.isAuthenticated = false;
-          console.log("Invalid credentials.")
+    if (this.signupForm.valid) {
+      console.log(credentials)
+      this.authService.signup(credentials).subscribe(
+        (response) => {
+          if (response.success) {
+            this.router.navigate(['/']).then(() => {
+              window.location.reload();
+            });
+            this.authService.isAuthenticated = true;
+          } else {
+            this.authService.isAuthenticated = false;
+            console.log("Invalid credentials.")
+          }
         }
-      }
-    );
+      );
+    }
   }
 }

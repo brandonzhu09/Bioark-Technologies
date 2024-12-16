@@ -27,6 +27,7 @@ class User(AbstractUser):
     address = models.ForeignKey(Address, related_name='address', on_delete=models.PROTECT, null=True)
     billing_address = models.ForeignKey(Address, related_name='billing_address', on_delete=models.PROTECT, null=True)
     shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.PROTECT, null=True)
+    has_set_password = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

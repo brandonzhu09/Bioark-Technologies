@@ -9,5 +9,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='api-logout'),
     path('session/', views.session_view, name='api-session'),
     path('whoami/', views.whoami_view, name='api-whoami'),
-    path('verify-email/', views.verify_email),
+    path('verify-email/<str:token>/', views.verify_email, name='verify_email'),
 ]

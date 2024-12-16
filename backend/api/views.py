@@ -1,7 +1,8 @@
 import json
 
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
@@ -13,6 +14,7 @@ from rest_framework.decorators import api_view
 
 
 from users.models import User
+from api.models import EmailVerificationToken
 
 
 def get_csrf(request):
@@ -32,9 +34,10 @@ def signup_view(request):
 
     # Create user
     try:
-        user = User.objects.create_user(username=email, email=email, password=password)
+        user = User.objects.create_user(username=email, email=email, password=password, has_set_password=True)
+        user.is_active = False
         user.save()
-        login(request, user)
+        send_verification_email(user)
         return JsonResponse({'detail': 'Successfully signed up.', 'success': True})
     except:
         return JsonResponse({'error': 'Email already exists'}, status=400)
@@ -43,13 +46,13 @@ def signup_view(request):
 @require_POST
 def login_view(request):
     data = json.loads(request.body)
-    username = data.get('email')
+    email = data.get('email')
     password = data.get('password')
 
-    if username is None or password is None:
-        return JsonResponse({'detail': 'Please provide username and password.'}, status=400)
+    if email is None or password is None:
+        return JsonResponse({'detail': 'Please provide email and password.'}, status=400)
 
-    user = authenticate(username=username, password=password)
+    user = authenticate(email=email, password=password)
 
     if user is None:
         return JsonResponse({'detail': 'Invalid credentials.'}, status=400)
@@ -92,4 +95,34 @@ def verify_email(request):
     # )
 
     return JsonResponse({'status': 'Email sent.'})
+
+
+def send_verification_email(user):
+    token, created = EmailVerificationToken.objects.get_or_create(user=user)
+    verification_url = f"http://localhost:8000/api/verify-email/{token.token}/"
+    send_mail(
+        subject="Verify your email address",
+        message=f"Click the link below to verify your email address:\n{verification_url}",
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[user.email],
+    )
+
+def verify_email(request, token):
+    verification_token = get_object_or_404(EmailVerificationToken, token=token)
+    user = verification_token.user
+
+    if verification_token.is_valid():
+        verification_token.delete()
+
+        if user.has_set_password:
+            # Activate account directly if password is already set
+            user.is_active = True
+            user.save()
+            return HttpResponse("Email verified successfully! You can now log in.")
+        else:
+            pass
+            # Redirect to password creation page if not set
+            # return redirect('set_password', user_id=user.id)
+    else:
+        return HttpResponse("Verification link expired or invalid.")
     

@@ -45,6 +45,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Subtle shadow */
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -60,6 +61,17 @@
 .button-card.selected {
     border-color: green;
     /* Green border for selected card */
+}
+
+.button-card .info-icon {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1rem;
+    color: gray;
+}
+
+.button-card .info-icon:hover {
+    color: black;
 }
 
 .logo img {
