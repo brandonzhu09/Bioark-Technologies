@@ -1,0 +1,221 @@
+<div class="d-flex flex-column" style="min-height: 100vh">
+    <!-- Main Content Wrapper -->
+    <div class="d-flex flex-grow-1">
+        <!-- Sidebar -->
+        <div
+            class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+            style="width: 280px"
+        >
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a
+                        href="/profile"
+                        class="nav-link active"
+                        aria-current="page"
+                    >
+                        My Account
+                    </a>
+                </li>
+                <li>
+                    <a href="/profile/orders" class="nav-link text-white"
+                        >Orders</a
+                    >
+                </li>
+                <li>
+                    <a href="#" class="nav-link text-white">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <!-- Services dropdown -->
+                    <a
+                        class="nav-link text-white d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse"
+                        href="#servicesCollapse"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="servicesCollapse"
+                    >
+                        Services
+                        <i class="bi bi-chevron-down text-white"></i>
+                    </a>
+                    <div class="collapse" id="servicesCollapse">
+                        <ul class="list-unstyled ps-3">
+                            <li>
+                                <a
+                                    href="/profile/services/custom-cloning"
+                                    class="nav-link text-white"
+                                >
+                                    Custom Cloning Services
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/profile/services/lentivirus-package"
+                                    class="nav-link text-white"
+                                >
+                                    Lentivirus Package
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/profile/services/stable-cell-line"
+                                    class="nav-link text-white"
+                                >
+                                    Stable Cell Line Construction
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <!-- Products dropdown -->
+                    <a
+                        class="nav-link text-white d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse"
+                        href="#productsCollapse"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="productsCollapse"
+                    >
+                        Products
+                        <i class="bi bi-chevron-down text-white"></i>
+                    </a>
+                    <div class="collapse" id="productsCollapse">
+                        <ul class="list-unstyled ps-3">
+                            <li>
+                                <a
+                                    href="/products/overexpression"
+                                    class="nav-link text-white"
+                                >
+                                    Overexpression Targeted Knock-In
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/products/gene-knock-in"
+                                    class="nav-link text-white"
+                                >
+                                    Gene Knock-In Tagging
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/products/gene-knock-out"
+                                    class="nav-link text-white"
+                                >
+                                    Gene Knock-out
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/products/gene-deletion"
+                                    class="nav-link text-white"
+                                >
+                                    Gene Deletion
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/products/rna-knock-down"
+                                    class="nav-link text-white"
+                                >
+                                    CRISPR RNA Knock-Down
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <hr />
+                <li>
+                    <a
+                        href="/profile/settings"
+                        class="nav-link text-white d-flex align-items-center"
+                    >
+                        <i class="bi bi-gear me-2 text-white"></i>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1 d-flex flex-column p-3">
+            <h1 class="m-0">My Account</h1>
+            <hr />
+            <!-- Contact Section -->
+            <div class="section mb-2">
+                <h3>Contact</h3>
+                <div class="form-row">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input
+                            type="text"
+                            formControlName="firstName"
+                            matInput
+                            value="John"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input
+                            type="text"
+                            formControlName="lastName"
+                            matInput
+                            value="Doe"
+                        />
+                    </mat-form-field>
+                </div>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Institution Name</mat-label>
+                    <input
+                        type="text"
+                        formControlName="institution"
+                        matInput
+                        placeholder="Name of Institution (e.g. Origene)"
+                    />
+                </mat-form-field>
+            </div>
+
+            <!-- Address Section -->
+            <div class="section mb-4">
+                <h3>Address</h3>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input
+                        type="text"
+                        formControlName="address"
+                        matInput
+                        value="13 Taft, Rockville"
+                    />
+                </mat-form-field>
+                <div class="form-row">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>City</mat-label>
+                        <input
+                            matInput
+                            formControlName="city"
+                            value="Rockville"
+                            required
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName="state" required>
+                            @for (state of states; track state.code) {
+                            <mat-option [value]="state.code">
+                                {{ state.name }}
+                            </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>ZIP Code</mat-label>
+                        <input matInput formControlName="zipcode" required />
+                    </mat-form-field>
+                </div>
+            </div>
+            <button class="primary-button" type="submit">Update</button>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 pg_password = os.environ.get('DB_PASSWORD')
 
@@ -29,7 +32,7 @@ SECRET_KEY = 'django-insecure-hytyud87s@4*51a3$=@%s^h7mtj81pl9t--@9)3^1@(d@8lvip
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bioone-tech-test-dev.us-east-1.elasticbeanstalk.com', 'bioone-tech-test-dev2.us-east-1.elasticbeanstalk.com', '127.0.0.1', 'localhost', '172.31.1.114']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '127.0.0.1:4200', 'localhost:4200', 'bioone-tech-test-dev.us-east-1.elasticbeanstalk.com', 'bioone-tech-test-dev2.us-east-1.elasticbeanstalk.com', '172.31.35.231']
 
 
 # Application definition
@@ -41,16 +44,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'verify_email.apps.VerifyEmailConfig',
     'rest_framework',
-    'users'
+    'users',
+    'api',
     'corsheaders',
     'products',
+    'orders',
 ]
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     )
 }
 
@@ -88,6 +94,30 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 AUTH_USER_MODEL = 'users.User'
 
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True  # Development only; don't use this in production
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True  # Development only
+# CSRF_COOKIE_HTTPONLY = True
+# SESSION_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:4200', 'http://127.0.0.1:4200']
+
+# PROD ONLY
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+
+CART_SESSION_ID = 'cart'
+
+# Email Service
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_ID')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PW')
+
+DEFAULT_FROM_EMAIL = 'noreply<no_reply@bioark.com>'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -115,17 +145,6 @@ else:
             'PASSWORD': '9558'
         }
     }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bioone_auth',
-        'USER': 'postgres',
-        'PORT': 5432,
-        'HOST': '127.0.0.1',
-        'PASSWORD': '9558'
-    }
-}
 
 
 # Password validation
@@ -178,3 +197,5 @@ CORS_ALLOWED_ORIGINS = [
    "http://bioone-angular.s3-website-us-east-1.amazonaws.com",
    "http://bioone-tech.s3-website-us-east-1.amazonaws.com",
 ]
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken', 'Access-Control-Allow-Origin']
+CORS_ALLOW_CREDENTIALS = True

@@ -1,36 +1,64 @@
 <div class="navbar">
-    <div class="left-group">
-        <div class="logo">Logo</div>
-        <nav>
-            <ul>
-                <li class="products" (click)="toggleProducts()"><a href="#">PRODUCTS</a></li>
-                <li><a href="#">SERVICES</a></li>
-                <li><a href="/design">DESIGN</a></li>
-                <li><a href="#">SUPPORT</a></li>
-                <li><a href="#">ABOUT US</a></li>
-                <li><a routerLink="/product" routerLinkActive="active">TESTING</a></li>
-            </ul>
-        </nav>
+    <div class="logo">
+        <a href="#"><img src="../../../assets/Logo.png" class="src" /></a>
     </div>
-    <product-dropdown *ngIf="showProducts"></product-dropdown>
+    <nav>
+        <ul>
+            <li class="nav-item">
+                <a href="/products">Products</a>
+                <product-dropdown class="dropdown-content"></product-dropdown>
+            </li>
+            <li class="nav-item">
+                <a href="/services">Services</a
+                ><service-dropdown class="dropdown-content"></service-dropdown>
+            </li>
+            <li><a href="/design">Design</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
     <div class="right-group">
-        <div class="contact">
-            <span class="phone">1-800-111-1111</span>
-            <div class="btn-group" role="group">
-                <button id="btnAccountDropdown" type="button" class="btn btn-secondary dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Account
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="btnAccountDropdown">
-                    <li><a class="dropdown-item" href="#">Dropdown</a></li>
-                    <li><a class="dropdown-item" href="#">Dropdown</a></li>
-                </ul>
-            </div>
+        <div class="search">
+            <input type="text" placeholder="Search" />
+            <button
+                class="btn btn-outline-secondary border bi bi-search"
+                type="button"
+            ></button>
         </div>
-        <div class="input-group">
-            <input type="text" class="form-control border-end-0" placeholder="Search">
-            <button class="btn btn-outline-secondary border bi bi-search" type="button"></button>
+        <a class="position-relative" href="/cart"
+            ><div class="cart bi-cart2"></div>
+            <span
+                class="badge rounded-pill bg-primary position-absolute"
+                id="cart-count"
+                style="top: 0; right: 0; transform: translate(50%, -50%)"
+                >{{ cartCount }}</span
+            ></a
+        >
+        <div class="dropdown">
+            <!-- Div that triggers the dropdown -->
+            <div
+                class="profile bi bi-person-circle dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            ></div>
+
+            <!-- Dropdown menu -->
+            @if (authService.isAuthenticated) {
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                <li>
+                    <a class="dropdown-item" href="/profile/settings"
+                        >Settings</a
+                    >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+            </ul>
+            } @else {
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/login">Login</a></li>
+                <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+            </ul>
+            }
         </div>
-        <div class="cart bi-cart2"></div>
     </div>
 </div>

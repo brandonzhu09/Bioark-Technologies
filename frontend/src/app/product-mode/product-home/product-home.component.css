@@ -1,0 +1,163 @@
+.heading-section {
+    margin: auto;
+    margin-top: 70px;
+    max-width: 75%;
+    text-align: left;
+    margin-bottom: 100px;
+}
+
+.heading-section h2 {
+    font-size: 82px;
+    font-weight: bold;
+    color: #281A39;
+    line-height: 1;
+}
+
+.heading-line {
+    width: 50px;
+    height: 3px;
+    background-color: #281A39;
+    border: none;
+}
+
+.heading-section p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #281A39;
+    line-height: 1.6;
+}
+
+.product-container {
+    width: 75%;
+    margin: 0 auto;
+    /* padding: 2rem; */
+}
+
+.product-section {
+    text-align: left;
+    max-width: 100%;
+    margin-bottom: 4em;
+}
+
+.product-section h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 1.8em;
+    margin-bottom: 0.8em;
+}
+
+.product-section p,
+ul,
+ol {
+    font-size: 16px;
+}
+
+.product-section ul,
+ol {
+    padding-left: 2em;
+}
+
+.services-section {
+    max-width: 75%;
+    margin: 70px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.service-card {
+    width: 30%;
+    margin: 0px 20px 20px;
+}
+
+.service-card i {
+    width: 80px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+.service-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #281A39;
+    background-color: transparent;
+    color: #281A39;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.service-button:hover {
+    background-color: #281A39;
+    color: #F9F8FB;
+}
+
+.service-card p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #281A39;
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.custom-design-section {
+    background-color: #275C50;
+    color: white;
+    width: 100%;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.custom-design-section h1 {
+    font-size: 56px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.custom-design-section p {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    max-width: 800px;
+    margin: 40px auto 30px;
+    line-height: 1.6;
+}
+
+.custom-design-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.custom-design-button:hover {
+    background-color: white;
+    color: #281A39;
+}
+
+.quote-section {
+    max-width: 75%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px 20px;
+    color: #281A39;
+}
+
+.quote-section h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.quote-section p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}

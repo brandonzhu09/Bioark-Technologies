@@ -1,0 +1,16 @@
+.no-data-row {
+    background-color: #f5f5f5;
+    text-align: center;
+    height: 50px;
+}
+
+.no-data-row .mat-cell {
+    text-align: center;
+    /* Ensure text is centered horizontally */
+    vertical-align: middle;
+    /* Center text vertically */
+    font-style: italic;
+    /* Optional: to differentiate the message */
+    color: #757575;
+    /* Optional: Gray text color */
+}

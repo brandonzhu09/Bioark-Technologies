@@ -1,0 +1,29 @@
+<div class="login-container">
+    <i class="bi bi-x close-icon"></i>
+    <h1>Log In</h1>
+    <p class="signup-text">New to this site? <a href="/signup"><span class="signup-link">Sign Up</span></a></p>
+    
+    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value);">
+        <mat-form-field class="form-group">
+            <mat-label>Email</mat-label>
+            <input type="email" formControlName="email" matInput placeholder="Ex. pat@example.com">
+            @if (loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')) {
+                <mat-error>Please enter a valid email address</mat-error>
+            }
+            @if (loginForm.controls.email.hasError('required')) {
+                <mat-error>Email is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="form-group">
+            <mat-label>Password</mat-label>
+            <input type="password" formControlName="password" matInput placeholder="Enter password">
+            @if (loginForm.controls.password.hasError('required')) {
+                <mat-error>Password is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+      
+      <a href="#" class="forgot-password">Forgot password?</a>
+      
+      <button type="submit" class="login-button">Log In</button>
+    </form>
+</div>

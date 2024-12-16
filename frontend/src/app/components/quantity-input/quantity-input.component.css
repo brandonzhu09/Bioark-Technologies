@@ -1,0 +1,46 @@
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.quantity-controls button {
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.quantity-controls button:hover {
+    background-color: #f3f4f6;
+}
+
+.quantity-controls button:active {
+    background-color: #e5e7eb;
+}
+
+.quantity-input {
+    width: 50px;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    color: #1f2937;
+    padding: 8px 0;
+    -moz-appearance: textfield;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-input:focus {
+    outline: none;
+}

@@ -1,0 +1,152 @@
+/* body {
+    background-color: #f7f7f7;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.product-name {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.product-price {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+}
+
+.btn-primary {
+    background-color: #0070ba;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-primary:hover {
+    background-color: #005ea6;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f9fafb;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
+.cart-section,
+.order-summary {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+h1,
+h2 {
+    font-size: 24px;
+    margin-bottom: 24px;
+    color: #1f2937;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 2fr auto auto auto;
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 24px;
+}
+
+.product-info {
+    display: flex;
+    width: 300px;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product-title {
+    font-weight: 600;
+    font-family: "Montserrat", sans-serif;
+    color: #281A39
+}
+
+.product-price {
+    color: #6b7280;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    width: 110px;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 8px;
+}
+
+.delete-button:hover {
+    color: #ef4444;
+}
+
+.promo-code,
+.note {
+    margin-top: 24px;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    color: #4b5563;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 0;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 18px;
+}
+
+.secure-text {
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+        grid-template-columns: 1fr auto auto auto;
+        gap: 12px;
+    }
+}

@@ -1,14 +1,20 @@
 import { Component, Input } from '@angular/core';
 import { DesignFormService } from '../design-form.service';
+import { CartService } from '../../services/cart.service';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'design-summary',
     templateUrl: './summary.component.html',
     styleUrl: './summary.component.css',
     standalone: true,
+    imports: [ReactiveFormsModule]
 })
 export class SummaryComponent {
-    constructor(private designFormService: DesignFormService) {}
+    productId = new FormControl(-1);
+
+    constructor(private designFormService: DesignFormService, private cartService: CartService) {
+    }
 
     @Input() product_name: string = 'Product Name';
     @Input() product_sku: string = 'CPD100000';
@@ -35,12 +41,33 @@ export class SummaryComponent {
         this.getDeliveryFormatTable();
     }
 
-    // ngOnInit() {
-    //   this.getDeliveryFormatTable()
-    // }
+    addToCart() {
+        if (this.productId.value != -1 && this.productId.value != null) {
+            let product_sku = this.deliveryFormatTable[this.productId.value]['product_sku'];
+            let product_name = this.deliveryFormatTable[this.productId.value]['product_name'];
+            let unit_size = this.deliveryFormatTable[this.productId.value]['quantity'];
+            let price = this.deliveryFormatTable[this.productId.value]['price'];
+            let adjusted_price = this.deliveryFormatTable[this.productId.value]['adjusted_price'];
+            let ready_status = this.deliveryFormatTable[this.productId.value]['ready_status'];
+            let delivery_format_name = this.deliveryFormatTable[this.productId.value]['delivery_format_name']
+            this.cartService.addToCart(product_sku, product_name,
+                unit_size, price, adjusted_price, ready_status,
+                this.function_type_name, this.structure_type_name, this.promoter_name,
+                this.protein_tag_name, this.fluorescene_marker_name, this.selection_marker_name,
+                this.bacterial_marker_name, this.target_sequence, delivery_format_name
+            ).subscribe((res) => {
+                console.log(res);
+            })
+        }
+    }
+
+    ngOnInit() {
+        this.getDeliveryFormatTable()
+    }
 
     getDeliveryFormatTable() {
-        if (this.target_sequence != null) {
+        console.log(this.target_sequence)
+        if (this.target_sequence !== null || this.target_sequence !== "IGNORE" || this.target_sequence !== "null") {
             this.designFormService
                 .getDeliveryFormatTable(
                     this.structure_type_name,
@@ -60,5 +87,13 @@ export class SummaryComponent {
                     }
                 });
         }
+    }
+
+    showProtocol() {
+        return (this.protein_tag_name !== 'Custom'
+            && this.fluorescene_marker_name !== 'Custom'
+            && this.selection_marker_name !== 'Custom'
+            && this.bacterial_marker_name !== 'Custom'
+        )
     }
 }

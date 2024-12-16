@@ -1,0 +1,43 @@
+<body>
+    <div class="container">
+        <div class="cart-section">
+            <h1>My cart</h1>
+            @for (item of cartItems; track item.id) {
+            <div class="cart-item">
+                <div class="product-info">
+                    <div class="product-title">{{ item.product_sku }}</div>
+                    <div class="product-price">${{ item.price }}</div>
+                </div>
+
+                <quantity-input
+                    [quantity]="item.quantity"
+                    (quantityChange)="onQuantityChange(item.id, $event)"
+                ></quantity-input>
+
+                <div class="total-price">${{ item.price * item.quantity }}</div>
+
+                <button class="delete-button" (click)="removeItem(item.id)">
+                    🗑️
+                </button>
+            </div>
+            }
+
+            <div class="promo-code">🏷️ Enter a promo code</div>
+
+            <div class="note">📝 Add a note</div>
+        </div>
+
+        <div class="order-summary">
+            <h2>Order summary</h2>
+
+            <div class="total-row">
+                <span>Subtotal ({{ totalItems }} items)</span>
+                <span>${{ subTotal }}</span>
+            </div>
+
+            <primary-button url="/checkout"></primary-button>
+
+            <div class="secure-text">🔒 Secure Checkout</div>
+        </div>
+    </div>
+</body>

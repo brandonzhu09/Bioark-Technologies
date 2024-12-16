@@ -38,6 +38,8 @@ export class StepperComponent {
     @ViewChild('stepper') stepper!: MatStepper;
     isLinear = true;
 
+    errorMessages: string[] = [];
+
     productCategoryCards: any;
     functionTypeCards: any;
     structureTypeCards: any;
@@ -130,6 +132,9 @@ export class StepperComponent {
             Validators.required,
             Validators.minLength(6),
         ]),
+        geneSymbol: new FormControl('', [
+            Validators.minLength(1),
+        ]),
     });
     searchGeneGroup = new FormGroup({
         geneSymbol: new FormControl('', [
@@ -141,6 +146,22 @@ export class StepperComponent {
             Validators.minLength(6),
         ]),
     });
+
+    // Errors
+    addErrorMessage(message: string) {
+        this.errorMessages.push(message);
+    
+        // Remove the message after 10 seconds
+        setTimeout(() => {
+          this.errorMessages.shift();
+        }, 10000);
+    }
+
+    checkFormCompletion(form: FormGroup) {
+        if (form.invalid) {
+          this.addErrorMessage('Please complete all required fields.');
+        }
+      }
 
     // Forms
     handleProductCategoryClick = (card: any) => {
@@ -208,6 +229,12 @@ export class StepperComponent {
         }
         if (index <= 3) {
             this.fourthFormGroup.reset();
+            this.fourthFormGroup.patchValue({
+                promoterName: 'PCMV', // Restore the default value
+                proteinTagName: 'None',
+                fluoresceneMarkerName: 'None',
+                selectionMarkerName: 'None',
+            });
         }
         if (index <= 2) {
             this.thirdFormGroup.reset();
@@ -259,36 +286,34 @@ export class StepperComponent {
     submitFifthForm() {
         if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
             this.showSearchGeneGroup = true;
+            this.fifthFormGroup.controls.geneSymbol.setValidators(Validators.required);
+            if (this.fifthFormGroup.value.geneSymbol !== this.initialGeneSymbol) {
+                let gene_symbol = this.fifthFormGroup.value.geneSymbol!;
+                this.fifthFormGroup.controls.targetSequence.reset();
+                this.initialGeneSymbol = gene_symbol;
+                this.designFormService
+                    .getGeneTableBySymbol(gene_symbol)
+                    .subscribe((response) => {
+                        if (response.length == 0) {
+                            this.geneTable = [];
+                        } else {
+                            this.geneTable = response;
+                        }
+                    });
+                this.toggleSummaryStep = true;
+            }
         } else {
+            this.fifthFormGroup.controls.geneSymbol.clearValidators();
             this.showSearchGeneGroup = false;
             this.selectedTargetSequence =
                 this.fifthFormGroup.value.targetSequence;
             this.toggleSummaryStep = true;
-            console.log(this.toggleSummaryStep);
         }
-    }
-
-    submitSearchGeneForm() {
-        let gene_symbol = this.searchGeneGroup.value.geneSymbol!;
-        if (gene_symbol != this.initialGeneSymbol) {
-            this.searchGeneGroup.controls.targetSequence.reset();
-            this.initialGeneSymbol = gene_symbol;
-            this.designFormService
-                .getGeneTableBySymbol(gene_symbol)
-                .subscribe((response) => {
-                    if (response.length == 0) {
-                        this.geneTable = [];
-                    } else {
-                        this.geneTable = response;
-                    }
-                });
-        }
-        this.toggleSummaryStep = true;
     }
 
     getTargetSequence() {
-        if (this.fifthFormGroup.value.geneOption == 'geneSearch') {
-            return this.searchGeneGroup.value.targetSequence;
+        if (this.fifthFormGroup.value.targetSequence == null || this.fifthFormGroup.value.targetSequence === "IGNORE") {
+            return "XXXXXX";
         }
         return this.fifthFormGroup.value.targetSequence;
     }
