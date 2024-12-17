@@ -17,6 +17,7 @@ paypal-server-sdk==0.5.2
 psycopg2-binary==2.9.9
 PyJWT==2.9.0
 python-dateutil==2.8.2
+python-dotenv==1.0.1
 requests==2.32.3
 six==1.16.0
 sqlparse==0.5.1
