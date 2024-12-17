@@ -141,7 +141,7 @@ else:
             'USER': 'postgres',
             'PORT': 5432,
             'HOST': '127.0.0.1',
-            'PASSWORD': '9558'
+            'PASSWORD': pg_password
         }
     }
 
