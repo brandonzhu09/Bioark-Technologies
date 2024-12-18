@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-
-// const API_BASE_URL = "http://BIOONE-Tech-test-dev.us-east-1.elasticbeanstalk.com"
-const API_BASE_URL = "http://localhost:8000"
+import { environment } from '../../environment/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -13,27 +11,27 @@ export class DesignFormService {
 
     getProductCategories() {
         return this.http.get(
-            `${API_BASE_URL}/api/products/load-product-categories/`, { withCredentials: true }
+            `${environment.apiBaseUrl}/api/products/load-product-categories/`, { withCredentials: true }
         );
     }
 
     getFunctionTypesByCategory(categoryId: string) {
         return this.http.get(
-            `${API_BASE_URL}/api/products/get-function-types-by-category/`,
+            `${environment.apiBaseUrl}/api/products/get-function-types-by-category/`,
             { params: { category_id: categoryId } }
         );
     }
 
     getStructureTypesByFunctionType(functionTypeId: string) {
         return this.http.get(
-            `${API_BASE_URL}/api/products/get-structure-types-by-function-type/`,
+            `${environment.apiBaseUrl}/api/products/get-structure-types-by-function-type/`,
             { params: { function_type_id: functionTypeId } }
         );
     }
 
     getCodeP(functionTypeId: string, structureTypeSymbol: string) {
         return this.http.get<any>(
-            `${API_BASE_URL}/api/products/get-code-p-parameters/`,
+            `${environment.apiBaseUrl}/api/products/get-code-p-parameters/`,
             {
                 params: {
                     function_type_id: functionTypeId,
@@ -45,7 +43,7 @@ export class DesignFormService {
 
     getGeneTableBySymbol(symbol: string) {
         return this.http.get<any[]>(
-            `${API_BASE_URL}/api/products/get-gene-table-by-symbol/`,
+            `${environment.apiBaseUrl}/api/products/get-gene-table-by-symbol/`,
             { params: { symbol: symbol } }
         );
     }
@@ -61,7 +59,7 @@ export class DesignFormService {
         targetSequence: string
     ) {
         return this.http.get<any[]>(
-            `${API_BASE_URL}/api/products/get-delivery-format-table/`,
+            `${environment.apiBaseUrl}/api/products/get-delivery-format-table/`,
             {
                 params: {
                     structure_type_name: structureTypeName,

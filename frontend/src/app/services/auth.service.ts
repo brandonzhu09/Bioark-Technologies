@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment/environment';
 
-const API_BASE_URL = 'http://localhost:8000';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +13,11 @@ export class AuthService {
   isAuthenticated: boolean = false;
 
   getSession() {
-    return this.http.get<any>(`${API_BASE_URL}/api/session/`, { withCredentials: true });
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/session/`, { withCredentials: true });
   }
 
   getCSRF() {
-    return this.http.get<any>(`${API_BASE_URL}/api/csrf/`, { withCredentials: true });
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/csrf/`, { withCredentials: true });
   }
 
   signup(credentials: any): Observable<any> {
@@ -26,7 +26,7 @@ export class AuthService {
       'X-CSRFToken': this.getCookie('csrftoken') || ''
     });
 
-    return this.http.post(`${API_BASE_URL}/api/signup/`, credentials, { headers: headers, withCredentials: true });
+    return this.http.post(`${environment.apiBaseUrl}/api/signup/`, credentials, { headers: headers, withCredentials: true });
   }
 
   login(credentials: any): Observable<any> {
@@ -35,7 +35,7 @@ export class AuthService {
       'X-CSRFToken': this.getCookie('csrftoken') || ''
     });
 
-    return this.http.post(`${API_BASE_URL}/api/login/`, credentials, { headers: headers, withCredentials: true });
+    return this.http.post(`${environment.apiBaseUrl}/api/login/`, credentials, { headers: headers, withCredentials: true });
   }
 
   logout(): Observable<any> {
@@ -45,7 +45,7 @@ export class AuthService {
       'X-CSRFToken': this.getCookie('csrftoken') || ''
     });
 
-    return this.http.post(`${API_BASE_URL}/api/logout/`, null, { headers, withCredentials: true });
+    return this.http.post(`${environment.apiBaseUrl}/api/logout/`, null, { headers, withCredentials: true });
   }
 
   getCookie(name: string): string | null {
