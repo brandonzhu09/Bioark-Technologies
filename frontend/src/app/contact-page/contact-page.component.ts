@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-contact-page',
@@ -46,9 +47,12 @@ export class ContactPageComponent {
 
   errorMessage: string = '';
 
+  constructor(private userService: UserService) { }
+
   onSubmit() {
     if (this.contactForm.valid) {
       console.log(this.contactForm.value)
+      this.userService.submitContactForm(this.contactForm.value).subscribe()
     } else {
       this.errorMessage = 'Please complete all required fields.'
     }

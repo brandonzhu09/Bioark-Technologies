@@ -84,18 +84,6 @@ def whoami_view(request):
 
     return JsonResponse({'username': request.user.username})
 
-# @require_POST
-@api_view(['POST'])
-def verify_email(request):
-    # send_mail(
-    #     'Verify your email',
-    #     f'Click here to verify your email and activate your account: ',
-    #     settings.EMAIL_HOST_USER,
-    #     ['brandoncomputerplant@gmail.com'],
-    # )
-
-    return JsonResponse({'status': 'Email sent.'})
-
 
 def send_verification_email(user):
     token, created = EmailVerificationToken.objects.get_or_create(user=user)
@@ -125,4 +113,22 @@ def verify_email(request, token):
             # return redirect('set_password', user_id=user.id)
     else:
         return HttpResponse("Verification link expired or invalid.")
+
+@require_POST
+def send_contact_form(request):
+    data = json.loads(request.body)
+    subject = data.get('subject')
+    first_name = data.get('firstName')
+    last_name = data.get('lastName')
+    email = data.get('email')
+    phone = data.get('phone')
+    message = data.get('message')
     
+    send_mail(
+        subject=f"New message from Bioark Tech: {subject}",
+        message=f"Customer: {last_name}, {first_name}\nEmail: {email}\nPhone: {phone}\n{message}",
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[settings.EMAIL_HOST_USER],
+    )
+
+    return HttpResponse("Contact form sent.")
