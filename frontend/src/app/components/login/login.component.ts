@@ -26,6 +26,8 @@ export class LoginComponent {
     ]),
   });
 
+  errorMessage: string = '';
+
   onSubmit(credentials: any) {
     this.authService.login(credentials).subscribe(
       (response) => {
@@ -36,8 +38,13 @@ export class LoginComponent {
           this.authService.isAuthenticated = true;
         } else {
           this.authService.isAuthenticated = false;
-          console.log("Invalid credentials.")
+          this.errorMessage = "Incorrect email or password. Try again."
         }
+      },
+      (error) => {
+        console.log(error)
+        this.authService.isAuthenticated = false;
+        this.errorMessage = "Incorrect email or password. Try again."
       }
     );
   }

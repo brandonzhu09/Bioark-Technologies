@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact-page',
@@ -19,4 +20,37 @@ export class ContactPageComponent {
 
   marker = { position: { lat: 39.095670, lng: -77.131310 } }
 
+  contactForm = new FormGroup({
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+    ]),
+    lastName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+    phone: new FormControl(''),
+    subject: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+    ]),
+    message: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+    ]),
+  });
+
+  errorMessage: string = '';
+
+  onSubmit() {
+    if (this.contactForm.valid) {
+      console.log(this.contactForm.value)
+    } else {
+      this.errorMessage = 'Please complete all required fields.'
+    }
+  }
 }

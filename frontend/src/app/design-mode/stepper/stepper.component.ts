@@ -33,7 +33,7 @@ import { SummaryComponent } from '../summary/summary.component';
     ],
 })
 export class StepperComponent {
-    constructor(private designFormService: DesignFormService) {}
+    constructor(private designFormService: DesignFormService) { }
 
     @ViewChild('stepper') stepper!: MatStepper;
     isLinear = true;
@@ -150,18 +150,18 @@ export class StepperComponent {
     // Errors
     addErrorMessage(message: string) {
         this.errorMessages.push(message);
-    
+
         // Remove the message after 10 seconds
         setTimeout(() => {
-          this.errorMessages.shift();
+            this.errorMessages.shift();
         }, 10000);
     }
 
     checkFormCompletion(form: FormGroup) {
         if (form.invalid) {
-          this.addErrorMessage('Please complete all required fields.');
+            this.addErrorMessage('Please complete all required fields.');
         }
-      }
+    }
 
     // Forms
     handleProductCategoryClick = (card: any) => {
@@ -304,6 +304,7 @@ export class StepperComponent {
             }
         } else {
             this.fifthFormGroup.controls.geneSymbol.clearValidators();
+            this.fifthFormGroup.controls.geneSymbol.updateValueAndValidity();
             this.showSearchGeneGroup = false;
             this.selectedTargetSequence =
                 this.fifthFormGroup.value.targetSequence;
