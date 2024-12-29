@@ -7,4 +7,6 @@ urlpatterns = [
     path('view-cloning-crispr-orders/', views.view_cloning_crispr_orders),
     path('view-cloning-overexpression-orders/', views.view_cloning_overexpression_orders),
     path('view-cloning-rnai-orders/', views.view_cloning_rnai_orders),
+    path('view-user-info/', views.view_user_info),
+    path('update-user-info/', views.update_user_info),
 ]

@@ -36,4 +36,17 @@ export class UserService {
     return this.http.post(`${environment.apiBaseUrl}/api/contact-us/`, message, { headers: headers, withCredentials: true });
   }
 
+  viewUserInfo() {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-user-info/`, { withCredentials: true });
+  }
+
+  updateUserInfo(infoForm: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${environment.apiBaseUrl}/api/users/update-user-info/`, infoForm, { headers: headers, withCredentials: true });
+  }
+
 }
