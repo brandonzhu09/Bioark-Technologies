@@ -62,4 +62,12 @@ export class AuthService {
     });
     return this.http.post(`${environment.apiBaseUrl}/api/verify-email/${token}/`, null, { headers, withCredentials: true });
   }
+
+  resendVerification(emailForm: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCookie('csrftoken') || ''
+    });
+    return this.http.post(`${environment.apiBaseUrl}/api/resend-verification/`, emailForm, { headers, withCredentials: true });
+  }
 }

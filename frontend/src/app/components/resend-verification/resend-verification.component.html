@@ -1,0 +1,15 @@
+<div class="section m-4">
+    <h3 class="fs-4">Resend Verification Link</h3>
+    <form [formGroup]="emailForm" (submit)="submitEmail()">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" required />
+        </mat-form-field>
+        <button class="primary-button" type="submit">Submit</button>
+        @if (successMsg !== '') {
+        <div class="success-message">{{ successMsg }}</div>
+        } @if (errorMsg !== '') {
+        <div class="error-message">{{ errorMsg }}</div>
+        }
+    </form>
+</div>

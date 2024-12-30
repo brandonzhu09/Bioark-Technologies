@@ -7,6 +7,8 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -30,28 +32,37 @@ def signup_view(request):
 
     # Basic validation
     if not email:
-        return JsonResponse({'error': 'All fields are required'}, status=400)
+        return JsonResponse({'detail': 'All fields are required'}, status=400)
+    
+    # Validate email format
+    try:
+        validate_email(email)
+    except ValidationError:
+        return JsonResponse({'detail': 'Invalid email address.'}, status=400)
+    
     # Create user
     try:
         # Check if a user with the given email already exists
         user = User.objects.filter(email=email).first()
         
         if user:
-            # If the user exists but doesn't have a password, set the password
-            if not password:
-                return JsonResponse({'detail': 'The email you provided already exists in our system. Please verify your account has been activated.'}, status=400)
-            
+            # If the user exists and password is not provided, account has not been activated yet
+            if not user.has_usable_password() and not password:
+                return JsonResponse({'detail': 'The email you provided already exists in our system. Please verify your account has been activated.'}, status=400) 
+            # If the user exists and password is provided, activate account
             elif not user.has_usable_password() and password:
                 user.set_password(password)
+                user.is_active = True
                 user.save()
                 return JsonResponse({'detail': 'Password successfully set.', 'success': True})
             else:
-                return JsonResponse({'detail': 'User already exists and has a password.', 'success': False}, status=400)
+                return JsonResponse({'detail': 'An account already exists with this email. Try logging in.', 'success': False}, status=400)
 
         # create user account without password and send verification link
         elif not password:
             user = User(email=email)
             user.set_unusable_password()
+            user.is_active = False
             user.save()
             send_verification_email(user)
             return JsonResponse({'detail': 'Verification email sent to activate account.'})
@@ -62,7 +73,7 @@ def signup_view(request):
             user.save()
             return JsonResponse({'detail': 'Successfully signed up.', 'success': True})
     except:
-        return JsonResponse({'detail': 'The email you provided already exists in our system. Please verify your account has been activated.'}, status=400)
+        return JsonResponse({'detail': 'An error has occurred when processing your email. Try again.'}, status=400)
 
 
 @require_POST
@@ -153,3 +164,21 @@ def send_contact_form(request):
     )
 
     return HttpResponse("Contact form sent.")
+
+@require_POST
+def resend_verification(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+
+    # Check if the email exists
+    user = User.objects.filter(email=email).first()
+    if not user:
+        return JsonResponse({'detail': 'Email address not found.'}, status=404)
+
+    # Check if the user is already verified
+    if user.is_active and user.has_usable_password():
+        return JsonResponse({'detail': 'Account already verified. Please log in.'}, status=400)
+
+    send_verification_email(user)
+
+    return JsonResponse({'detail': 'A new verification link has been sent to your email.'})

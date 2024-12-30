@@ -139,11 +139,10 @@ export class CheckoutComponent {
   onSignupSubmit() {
     if (this.signupForm.valid) {
       this.authService.signup(this.signupForm.value).subscribe(res => {
+        this.signupErrorMsg = '';
         alert('Email verification link sent. Please check your email and verify your account. You may now exit this page.');
       }, err => {
-        console.log(err)
         this.signupErrorMsg = err.error.detail;
-        console.log(this.signupErrorMsg)
       })
       // this.isSignupPanelOpen = false;
       // this.isSignupPanelDisabled = true;

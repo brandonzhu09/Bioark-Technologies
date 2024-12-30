@@ -12,11 +12,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class EmailVerificationComponent {
   token: string = '';
   email: string = '';
-  setPassword: boolean = false;
+  setPassword: boolean = true;
   isVerified: boolean = false;
+  StrongPasswordRegx: RegExp = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
+  errorMsg: string = '';
 
   passwordForm = new FormGroup({
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.pattern(this.StrongPasswordRegx)]),
     confirmPassword: new FormControl('', Validators.required)
   })
 
@@ -45,11 +47,30 @@ export class EmailVerificationComponent {
   }
 
   submitPassword() {
-    if (this.passwordForm.valid && this.passwordForm.value.password === this.passwordForm.value.confirmPassword && this.email !== '') {
-      this.authService.signup({ 'email': this.email, 'password': this.passwordForm.value.password }).subscribe();
-      this.router.navigate(['/checkout']).then(() => {
-        window.location.reload()
-      })
+    if (this.passwordForm.controls.password.hasError('pattern')) {
+      this.errorMsg = 'Your password must be at least 8 characters long, one number, and have uppercase and lowercase letters.'
+    }
+    else if (this.passwordForm.value.password !== this.passwordForm.value.confirmPassword) {
+      this.errorMsg = 'Passwords do not match. Try again.'
+    }
+    else if (this.passwordForm.controls.password.hasError('required') || this.passwordForm.controls.confirmPassword.hasError('required')) {
+      this.errorMsg = 'All fields are required.'
+    }
+    else if (this.passwordForm.valid && this.passwordForm.value.password === this.passwordForm.value.confirmPassword && this.email !== '') {
+      this.authService.signup({ 'email': this.email, 'password': this.passwordForm.value.password }).subscribe(
+        (res) => {
+          this.router.navigate(['/login?redirectUrl=checkout']).then(() => {
+            window.location.reload();
+            alert('Your account has been successfully activated.')
+          })
+        },
+        (err) => {
+          this.errorMsg = 'An error has occurred. Please contact us so we can help resolve the issue.'
+        }
+      );
+    }
+    else {
+      this.errorMsg = 'An error has occurred. Please contact us so we can help resolve the issue.'
     }
   }
 

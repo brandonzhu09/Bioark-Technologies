@@ -15,5 +15,6 @@ urlpatterns = [
     path('session/', views.session_view, name='api-session'),
     path('whoami/', views.whoami_view, name='api-whoami'),
     path('verify-email/<str:token>/', views.verify_email, name='verify_email'),
+    path('resend-verification/', views.resend_verification, name='resend_verification'),
     path('contact-us/', views.send_contact_form, name='contact-us'),
 ]

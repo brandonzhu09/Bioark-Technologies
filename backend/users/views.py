@@ -66,12 +66,15 @@ def update_user_info(request):
         
         user.first_name = data.get('firstName')
         user.last_name = data.get('lastName')
-        user.institution = data.get('institution')
+        user.company = data.get('institution')
+        if user.shipping_address == None:
+            user.shipping_address = Address.objects.create()
         user.shipping_address.address_line_1 = data.get('address')
         user.shipping_address.city = data.get('city')
         user.shipping_address.state = data.get('state')
         user.shipping_address.zipcode = data.get('zipcode')
 
+        user.shipping_address.save()
         user.save()
 
         return Response({"success": True})

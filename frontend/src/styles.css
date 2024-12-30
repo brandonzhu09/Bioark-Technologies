@@ -46,6 +46,16 @@ body {
     color: white;
 }
 
+.success-message {
+    margin-top: 10px;
+    color: green;
+    background-color: #ddffdd;
+    padding: 10px;
+    border-left: 6px solid #4CAF50;
+    margin-bottom: 5px;
+    animation: fadeout 10s forwards;
+}
+
 .error-message {
     margin-top: 10px;
     color: red;
