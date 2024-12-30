@@ -27,6 +27,7 @@ import { ProductSummaryComponent } from './components/product-summary/product-su
 import { CustomCloningPageComponent } from './service-mode/custom-cloning-page/custom-cloning-page.component';
 import { LentivirusPackagePageComponent } from './service-mode/lentivirus-package-page/lentivirus-package-page.component';
 import { StableCellPageComponent } from './service-mode/stable-cell-page/stable-cell-page.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -53,6 +54,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactPageComponent },
   { path: 'quote', component: QuoteFormComponent },
   { path: 'quote/:serviceType', component: QuoteFormComponent },
+  { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' }
 ];
 

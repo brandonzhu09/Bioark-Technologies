@@ -3,7 +3,7 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -14,8 +14,16 @@ import { Router } from '@angular/router';
   imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
 })
 export class LoginComponent {
+  redirectUrl: string = ''
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    // Extract the redirectUrl query parameter, if any
+    this.route.queryParams.subscribe(params => {
+      this.redirectUrl = params['redirectUrl'] || '';
+    });
+  }
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -32,10 +40,7 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe(
       (response) => {
         if (response.success) {
-          this.router.navigate(['/']).then(() => {
-            window.location.reload();
-          });
-          this.authService.isAuthenticated = true;
+          this.onLoginSuccess()
         } else {
           this.authService.isAuthenticated = false;
           this.errorMessage = "Incorrect email or password. Try again."
@@ -47,5 +52,12 @@ export class LoginComponent {
         this.errorMessage = "Incorrect email or password. Try again."
       }
     );
+  }
+
+  onLoginSuccess() {
+    this.router.navigate(['/' + this.redirectUrl]).then(() => {
+      window.location.reload();
+    });
+    this.authService.isAuthenticated = true;
   }
 }

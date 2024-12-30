@@ -29,18 +29,40 @@ def signup_view(request):
     password = data.get('password')
 
     # Basic validation
-    if not password or not email:
+    if not email:
         return JsonResponse({'error': 'All fields are required'}, status=400)
-
     # Create user
     try:
-        user = User.objects.create_user(username=email, email=email, password=password, has_set_password=True)
-        user.is_active = False
-        user.save()
-        send_verification_email(user)
-        return JsonResponse({'detail': 'Successfully signed up.', 'success': True})
+        # Check if a user with the given email already exists
+        user = User.objects.filter(email=email).first()
+        
+        if user:
+            # If the user exists but doesn't have a password, set the password
+            if not password:
+                return JsonResponse({'detail': 'The email you provided already exists in our system. Please verify your account has been activated.'}, status=400)
+            
+            elif not user.has_usable_password() and password:
+                user.set_password(password)
+                user.save()
+                return JsonResponse({'detail': 'Password successfully set.', 'success': True})
+            else:
+                return JsonResponse({'detail': 'User already exists and has a password.', 'success': False}, status=400)
+
+        # create user account without password and send verification link
+        elif not password:
+            user = User(email=email)
+            user.set_unusable_password()
+            user.save()
+            send_verification_email(user)
+            return JsonResponse({'detail': 'Verification email sent to activate account.'})
+
+        else:
+            # Create a new user
+            user = User.objects.create_user(email=email, password=password)
+            user.save()
+            return JsonResponse({'detail': 'Successfully signed up.', 'success': True})
     except:
-        return JsonResponse({'error': 'Email already exists'}, status=400)
+        return JsonResponse({'detail': 'The email you provided already exists in our system. Please verify your account has been activated.'}, status=400)
 
 
 @require_POST
@@ -87,7 +109,7 @@ def whoami_view(request):
 
 def send_verification_email(user):
     token, created = EmailVerificationToken.objects.get_or_create(user=user)
-    verification_url = f"http://localhost:8000/api/verify-email/{token.token}/"
+    verification_url = f"http://localhost:4200/verify-email/{token.token}/"
     send_mail(
         subject="Verify your email address",
         message=f"Click the link below to verify your email address:\n{verification_url}",
@@ -95,6 +117,7 @@ def send_verification_email(user):
         recipient_list=[user.email],
     )
 
+@require_POST
 def verify_email(request, token):
     verification_token = get_object_or_404(EmailVerificationToken, token=token)
     user = verification_token.user
@@ -102,17 +125,15 @@ def verify_email(request, token):
     if verification_token.is_valid():
         verification_token.delete()
 
-        if user.has_set_password:
+        if user.has_usable_password():
             # Activate account directly if password is already set
             user.is_active = True
             user.save()
-            return HttpResponse("Email verified successfully! You can now log in.")
+            return JsonResponse({"status": "activated", "message": "Email verified successfully! You can now log in."})
         else:
-            pass
-            # Redirect to password creation page if not set
-            # return redirect('set_password', user_id=user.id)
+            return JsonResponse({"status": "not_activated", "message": "Email verified successfully, redirecting to set password page.", "email": user.email})
     else:
-        return HttpResponse("Verification link expired or invalid.")
+        return JsonResponse({"status": "not_verified", "message": "Verification link expired or invalid."})
 
 @require_POST
 def send_contact_form(request):

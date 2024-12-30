@@ -2,6 +2,10 @@
     <div class="checkout-container">
         <mat-accordion>
             @if (!authService.isAuthenticated) {
+            <div>
+                Log in here if you already have an account:
+                <a href="/login?redirectUrl=checkout">Login</a>
+            </div>
             <!-- Signup Panel -->
             <mat-expansion-panel
                 [expanded]="isSignupPanelOpen"
@@ -41,9 +45,12 @@
                     >
                         Continue to Shipping
                     </button>
+                    @if (signupErrorMsg !== '') {
+                    <div class="error-message">{{ signupErrorMsg }}</div>
+                    }
                 </form>
             </mat-expansion-panel>
-            }
+            } @else {
             <!-- Shipping Panel -->
             <mat-expansion-panel
                 [expanded]="isShippingPanelOpen"
@@ -230,6 +237,7 @@
                     </button>
                 </div>
             </mat-expansion-panel>
+            }
         </mat-accordion>
     </div>
     <div class="order-review-container full-width">

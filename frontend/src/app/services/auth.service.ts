@@ -39,7 +39,6 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    console.log(this.getCookie('csrftoken'));
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'X-CSRFToken': this.getCookie('csrftoken') || ''
@@ -54,5 +53,13 @@ export class AuthService {
       return match[2];
     }
     return null;
+  }
+
+  verifyEmail(token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCookie('csrftoken') || ''
+    });
+    return this.http.post(`${environment.apiBaseUrl}/api/verify-email/${token}/`, null, { headers, withCredentials: true });
   }
 }

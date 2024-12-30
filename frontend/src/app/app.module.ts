@@ -46,7 +46,6 @@ import { ServiceFormComponent } from './user-mode/service-form/service-form.comp
 import { ProductSummaryComponent } from './components/product-summary/product-summary.component';
 import { ServiceDropdownComponent } from './components/service-dropdown/service-dropdown.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
-import { SetPasswordComponent } from './components/set-password/set-password.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +70,6 @@ import { SetPasswordComponent } from './components/set-password/set-password.com
     ProductSummaryComponent,
     ServiceDropdownComponent,
     EmailVerificationComponent,
-    SetPasswordComponent,
   ],
   imports: [
     LoginComponent,

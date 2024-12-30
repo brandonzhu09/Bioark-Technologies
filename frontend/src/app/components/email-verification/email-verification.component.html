@@ -1,1 +1,30 @@
-<p>email-verification works!</p>
+@if (isVerified) {
+<div>Email verified successfully! You may now close this page.</div>
+} @else if (setPassword) {
+<div class="section m-4">
+    <h3>Set New Password</h3>
+    <form [formGroup]="passwordForm" (submit)="submitPassword()">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>New Password</mat-label>
+            <input
+                type="password"
+                matInput
+                formControlName="password"
+                required
+            />
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input
+                type="password"
+                matInput
+                formControlName="confirmPassword"
+                required
+            />
+        </mat-form-field>
+        <button class="primary-button" type="submit">Set Password</button>
+    </form>
+</div>
+} @else {
+<div>Email verification link invalid or expired. Try again.</div>
+}
