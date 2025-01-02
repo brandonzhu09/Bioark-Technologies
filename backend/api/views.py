@@ -29,6 +29,8 @@ def signup_view(request):
     data = json.loads(request.body)
     email = data.get('email')
     password = data.get('password')
+    first_name = data.get('firstName', '')
+    last_name = data.get('lastName', '')
 
     # Basic validation
     if not email:
@@ -69,7 +71,7 @@ def signup_view(request):
 
         else:
             # Create a new user
-            user = User.objects.create_user(email=email, password=password)
+            user = User.objects.create_user(email=email, password=password, first_name=first_name, last_name=last_name)
             user.save()
             return JsonResponse({'detail': 'Successfully signed up.', 'success': True})
     except:

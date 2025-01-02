@@ -49,13 +49,6 @@ label {
     font-weight: 500;
 }
 
-.error-message {
-    color: #FF0000;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none;
-}
-
 .forgot-password {
     display: block;
     margin-top: 10px;

@@ -72,10 +72,10 @@ import { ResendVerificationComponent } from './components/resend-verification/re
     ServiceDropdownComponent,
     EmailVerificationComponent,
     ResendVerificationComponent,
+    SignupComponent
   ],
   imports: [
     LoginComponent,
-    SignupComponent,
     ProductModeModule,
     StepperComponent,
     BrowserModule,

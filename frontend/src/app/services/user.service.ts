@@ -49,4 +49,26 @@ export class UserService {
     return this.http.post(`${environment.apiBaseUrl}/api/users/update-user-info/`, infoForm, { headers: headers, withCredentials: true });
   }
 
+  getUserEmail(): Observable<any> {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/get-user-email/`, { withCredentials: true });
+  }
+
+  resetUserEmail(emailForm: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${environment.apiBaseUrl}/api/users/reset-user-email/`, emailForm, { headers: headers, withCredentials: true });
+  }
+
+  resetUserPassword(passwordForm: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${environment.apiBaseUrl}/api/users/reset-user-password/`, passwordForm, { headers: headers, withCredentials: true });
+  }
+
 }

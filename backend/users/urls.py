@@ -9,4 +9,7 @@ urlpatterns = [
     path('view-cloning-rnai-orders/', views.view_cloning_rnai_orders),
     path('view-user-info/', views.view_user_info),
     path('update-user-info/', views.update_user_info),
+    path('get-user-email/', views.get_user_email),
+    path('reset-user-email/', views.reset_user_email),
+    path('reset-user-password/', views.reset_user_password),
 ]

@@ -14,11 +14,21 @@
         <div class="form-row">
             <mat-form-field class="form-group">
                 <mat-label>First Name</mat-label>
-                <input type="text" matInput placeholder="Fill in first name" />
+                <input
+                    type="text"
+                    formControlName="firstName"
+                    matInput
+                    placeholder="Fill in first name"
+                />
             </mat-form-field>
             <mat-form-field class="form-group">
                 <mat-label>Last Name</mat-label>
-                <input type="text" matInput placeholder="Fill in last name" />
+                <input
+                    type="text"
+                    formControlName="lastName"
+                    matInput
+                    placeholder="Fill in last name"
+                />
             </mat-form-field>
         </div>
         <mat-form-field class="form-group">
@@ -54,6 +64,10 @@
             }
         </mat-form-field>
 
-        <button type="submit" class="mt-2 signup-button">Sign Up</button>
+        <button type="submit" class="mt-2 primary-button">Sign Up</button>
+
+        @if (errorMsg !== '') {
+        <div class="error-message">{{ errorMsg }}</div>
+        }
     </form>
 </div>

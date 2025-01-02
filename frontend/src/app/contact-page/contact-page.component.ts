@@ -45,15 +45,18 @@ export class ContactPageComponent {
     ]),
   });
 
+  successMessage: string = '';
   errorMessage: string = '';
 
   constructor(private userService: UserService) { }
 
   onSubmit() {
     if (this.contactForm.valid) {
-      console.log(this.contactForm.value)
       this.userService.submitContactForm(this.contactForm.value).subscribe()
+      this.successMessage = 'Form submitted! We will get back to you as soon as possible!'
+      this.errorMessage = ''
     } else {
+      this.successMessage = ''
       this.errorMessage = 'Please complete all required fields.'
     }
   }

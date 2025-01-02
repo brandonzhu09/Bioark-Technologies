@@ -12,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class EmailVerificationComponent {
   token: string = '';
   email: string = '';
-  setPassword: boolean = true;
+  setPassword: boolean = false;
   isVerified: boolean = false;
   StrongPasswordRegx: RegExp = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
   errorMsg: string = '';
@@ -59,7 +59,7 @@ export class EmailVerificationComponent {
     else if (this.passwordForm.valid && this.passwordForm.value.password === this.passwordForm.value.confirmPassword && this.email !== '') {
       this.authService.signup({ 'email': this.email, 'password': this.passwordForm.value.password }).subscribe(
         (res) => {
-          this.router.navigate(['/login?redirectUrl=checkout']).then(() => {
+          this.router.navigate(['/login'], { queryParams: { redirectUrl: 'checkout' } }).then(() => {
             window.location.reload();
             alert('Your account has been successfully activated.')
           })

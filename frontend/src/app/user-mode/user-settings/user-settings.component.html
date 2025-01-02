@@ -142,56 +142,79 @@
             <hr />
             <div class="section mb-2">
                 <h3>Email</h3>
-                <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Current Email</mat-label>
-                    <input
-                        type="text"
-                        matInput
-                        value="example@example.com"
-                        [disabled]="true"
-                    />
-                </mat-form-field>
-                <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>New Email</mat-label>
-                    <input
-                        type="text"
-                        formControlName="email"
-                        matInput
-                        required
-                    />
-                </mat-form-field>
-                <button class="primary-button" type="submit">
-                    Update Email
-                </button>
+                <form [formGroup]="resetEmailForm" (submit)="submitEmail()">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Current Email</mat-label>
+                        <input
+                            type="text"
+                            matInput
+                            [value]="email"
+                            [disabled]="true"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>New Email</mat-label>
+                        <input
+                            type="text"
+                            formControlName="email"
+                            matInput
+                            required
+                        />
+                    </mat-form-field>
+                    <button class="primary-button" type="submit">
+                        Update Email
+                    </button>
+                </form>
+                @if (emailSuccessMsg !== '') {
+                <div class="success-message">{{ emailSuccessMsg }}</div>
+                } @if (emailErrorMsg !== '') {
+                <div class="error-message">{{ emailErrorMsg }}</div>
+                }
             </div>
 
             <div class="section mb-4">
                 <h3>Password</h3>
-                <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Current Password</mat-label>
-                    <input
-                        type="text"
-                        formControlName="currentPassword"
-                        matInput
-                        required
-                    />
-                </mat-form-field>
-                <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>New Password</mat-label>
-                    <input matInput formControlName="newPassword" required />
-                </mat-form-field>
-                <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Confirm Password</mat-label>
-                    <input
-                        matInput
-                        formControlName="confirmPassword"
-                        required
-                    />
-                </mat-form-field>
+                <form
+                    [formGroup]="resetPasswordForm"
+                    (submit)="submitPassword()"
+                >
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Current Password</mat-label>
+                        <input
+                            type="password"
+                            formControlName="currentPassword"
+                            matInput
+                            required
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>New Password</mat-label>
+                        <input
+                            type="password"
+                            matInput
+                            formControlName="newPassword"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Confirm Password</mat-label>
+                        <input
+                            type="password"
+                            matInput
+                            formControlName="confirmPassword"
+                            required
+                        />
+                    </mat-form-field>
+                    <button class="primary-button" type="submit">
+                        Update Password
+                    </button>
+                </form>
             </div>
-            <button class="primary-button" type="submit">
-                Update Password
-            </button>
+
+            @if (passwordSuccessMsg !== '') {
+            <div class="success-message">{{ passwordSuccessMsg }}</div>
+            } @if (passwordErrorMsg !== '') {
+            <div class="error-message">{{ passwordErrorMsg }}</div>
+            }
         </div>
     </div>
 </div>

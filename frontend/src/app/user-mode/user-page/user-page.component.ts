@@ -11,33 +11,31 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class UserPageComponent {
   states: any[] = US_STATES;
 
-  infoForm!: FormGroup;
+  infoForm: FormGroup = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    institution: new FormControl(''),
+    address: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    zipcode: new FormControl(''),
+  });;
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    // Initialize the FormGroup with empty/default values
-    this.infoForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      institution: new FormControl(''),
-      address: new FormControl(''),
-      city: new FormControl(''),
-      state: new FormControl(''),
-      zipcode: new FormControl(''),
-    });
-
     // Populate the FormGroup with data from the Observable
     this.userService.viewUserInfo().subscribe((res) => {
+      console.log(res)
       this.infoForm.patchValue({
-        firstName: res['first_name'],
-        lastName: res['last_name'],
-        institution: res['company'],
-        address: res['shipping_address']['address_line_1'],
-        city: res['shipping_address']['city'],
-        state: res['shipping_address']['state'],
-        zipcode: res['shipping_address']['zipcode'],
-      })
+        firstName: res?.['first_name'],
+        lastName: res?.['last_name'],
+        institution: res?.['company'],
+        address: res?.['shipping_address']?.['address_line_1'],
+        city: res?.['shipping_address']?.['city'],
+        state: res?.['shipping_address']?.['state'],
+        zipcode: res?.['shipping_address']?.['zipcode'],
+      });
     });
   }
 
