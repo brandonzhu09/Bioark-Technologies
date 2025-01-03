@@ -4,3 +4,5 @@ echo "export const environment = {
   salesTaxUrl: '$TAX_URL',
   ninjasApiKey: '$NINJAS_API_KEY'
 };" > src/environment/environment.prod.ts
+
+touch src/environment/environment.ts
