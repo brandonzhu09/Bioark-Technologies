@@ -13,6 +13,7 @@ import { CartService } from '../../services/cart.service';
 import { PrimaryButtonComponent } from '../../components/primary-button/primary-button.component';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { environment } from '../../../environment/environment';
 
 declare var paypal_sdk: any;
@@ -67,13 +68,16 @@ export class CheckoutComponent {
   discountCode: string = '';
   cardField: any;
 
+  signupErrorMsg: string = '';
+
   ngOnInit(): void {
     // this.initConfig();
     this.renderPayPalButton();
     this.getCartItems();
   }
 
-  constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService, public authService: AuthService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService,
+    public authService: AuthService, private http: HttpClient, private router: Router) {
     // open sign up form if user is not logged in
     this.authService.getSession().subscribe((response) => {
       if (response.isAuthenticated) {
@@ -135,11 +139,17 @@ export class CheckoutComponent {
 
   onSignupSubmit() {
     if (this.signupForm.valid) {
-      this.isSignupPanelOpen = false;
-      this.isSignupPanelDisabled = true;
-      this.isShippingPanelOpen = true;
-      this.isShippingPanelDisabled = false;
-      this.showSignupPreview = true;
+      this.authService.signup(this.signupForm.value).subscribe(res => {
+        this.signupErrorMsg = '';
+        alert('Email verification link sent. Please check your email and verify your account. You may now exit this page.');
+      }, err => {
+        this.signupErrorMsg = err.error.detail;
+      })
+      // this.isSignupPanelOpen = false;
+      // this.isSignupPanelDisabled = true;
+      // this.isShippingPanelOpen = true;
+      // this.isShippingPanelDisabled = false;
+      // this.showSignupPreview = true;
     } else {
       this.signupForm.markAllAsTouched();
     }

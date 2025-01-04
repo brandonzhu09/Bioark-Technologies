@@ -27,6 +27,8 @@ import { ProductSummaryComponent } from './components/product-summary/product-su
 import { CustomCloningPageComponent } from './service-mode/custom-cloning-page/custom-cloning-page.component';
 import { LentivirusPackagePageComponent } from './service-mode/lentivirus-package-page/lentivirus-package-page.component';
 import { StableCellPageComponent } from './service-mode/stable-cell-page/stable-cell-page.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -41,20 +43,20 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'testing', component: TestingComponent },
-  { path: 'products', component: ProductHomeComponent },
   { path: 'products/overexpression', component: OverexpressionPageComponent },
   { path: 'products/gene-knock-in', component: GeneKnockInPageComponent },
   { path: 'products/gene-knock-out', component: GeneKnockOutPageComponent },
   { path: 'products/gene-deletion', component: GeneDeletionPageComponent },
   { path: 'products/rna-knock-down', component: RnaKnockDownPageComponent },
   { path: 'products/:product-sku', component: ProductSummaryComponent },
-  { path: 'services', component: ServiceHomeComponent },
   { path: 'services/custom-cloning', component: CustomCloningPageComponent },
   { path: 'services/lentivirus-package', component: LentivirusPackagePageComponent },
   { path: 'services/stable-cell-line', component: StableCellPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'quote', component: QuoteFormComponent },
   { path: 'quote/:serviceType', component: QuoteFormComponent },
+  { path: 'verify-email/:token', component: EmailVerificationComponent },
+  { path: 'resend-verification', component: ResendVerificationComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' }
 ];
 

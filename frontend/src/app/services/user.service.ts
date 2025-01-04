@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environment/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   viewOrders() {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-orders/`, { withCredentials: true });
@@ -24,4 +26,49 @@ export class UserService {
   viewCloningRNAiOrders() {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-cloning-rnai-orders/`, { withCredentials: true });
   }
+
+  submitContactForm(message: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${environment.apiBaseUrl}/api/contact-us/`, message, { headers: headers, withCredentials: true });
+  }
+
+  viewUserInfo() {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-user-info/`, { withCredentials: true });
+  }
+
+  updateUserInfo(infoForm: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${environment.apiBaseUrl}/api/users/update-user-info/`, infoForm, { headers: headers, withCredentials: true });
+  }
+
+  getUserEmail(): Observable<any> {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/get-user-email/`, { withCredentials: true });
+  }
+
+  resetUserEmail(emailForm: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${environment.apiBaseUrl}/api/users/reset-user-email/`, emailForm, { headers: headers, withCredentials: true });
+  }
+
+  resetUserPassword(passwordForm: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post(`${environment.apiBaseUrl}/api/users/reset-user-password/`, passwordForm, { headers: headers, withCredentials: true });
+  }
+
 }

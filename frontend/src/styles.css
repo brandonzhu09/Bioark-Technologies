@@ -45,3 +45,23 @@ body {
     background-color: #281A39;
     color: white;
 }
+
+.success-message {
+    margin-top: 10px;
+    color: green;
+    background-color: #ddffdd;
+    padding: 10px;
+    border-left: 6px solid #4CAF50;
+    margin-bottom: 5px;
+    animation: fadeout 10s forwards;
+}
+
+.error-message {
+    margin-top: 10px;
+    color: red;
+    background-color: #ffdddd;
+    padding: 10px;
+    border-left: 6px solid #f44336;
+    margin-bottom: 5px;
+    animation: fadeout 10s forwards;
+}
