@@ -14,6 +14,7 @@ import { PrimaryButtonComponent } from '../../components/primary-button/primary-
 import { AuthService } from '../../services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../../environment/environment';
 
 declare var paypal_sdk: any;
 
@@ -219,7 +220,7 @@ export class CheckoutComponent {
 
   createOrderCallback = () => {
     return fetch(
-      "http://localhost:8000/orders/create/",
+      `${environment.apiBaseUrl}/api/orders/create/`,
       {
         method: "post",
         headers: {
@@ -234,7 +235,7 @@ export class CheckoutComponent {
   }
 
   onApproveCallback = (data: any, actions: any) => {
-    return fetch("http://localhost:8000/api/orders/capture/" + data.orderID, {
+    return fetch(`${environment.apiBaseUrl}/api/orders/capture/` + data.orderID, {
       method: 'post',
       headers: {
         "Content-Type": "application/json",
