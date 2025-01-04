@@ -47,6 +47,7 @@ import { ProductSummaryComponent } from './components/product-summary/product-su
 import { ServiceDropdownComponent } from './components/service-dropdown/service-dropdown.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { SetPasswordComponent } from './components/set-password/set-password.component';
+import { CartComponent } from './orders/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { SetPasswordComponent } from './components/set-password/set-password.com
   imports: [
     LoginComponent,
     SignupComponent,
+    CartComponent,
     ProductModeModule,
     StepperComponent,
     BrowserModule,
