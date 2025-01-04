@@ -193,8 +193,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
    "http://localhost:4200",
    "http://127.0.0.1:4200",
-   "http://bioone-angular.s3-website-us-east-1.amazonaws.com",
-   "http://bioone-tech.s3-website-us-east-1.amazonaws.com",
+   "https://bioarktech.com",
 ]
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken', 'Access-Control-Allow-Origin']
 CORS_ALLOW_CREDENTIALS = True
