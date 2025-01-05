@@ -11,12 +11,13 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   isAuthenticated: boolean = false;
+  csrftoken: string = '';
 
   getSession() {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/session/`, { withCredentials: true });
   }
 
-  getCSRF() {
+  getCSRF(): Observable<any> {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/csrf/`, { withCredentials: true });
   }
 
@@ -47,12 +48,13 @@ export class AuthService {
     return this.http.post(`${environment.apiBaseUrl}/api/logout/`, null, { headers, withCredentials: true });
   }
 
-  getCookie(name: string): string | null {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) {
-      return match[2];
-    }
-    return null;
+  getCookie(name: string) {
+    // const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    // if (match) {
+    //   return match[2];
+    // }
+    // return null;
+    return this.csrftoken;
   }
 
   verifyEmail(token: string): Observable<any> {

@@ -19,5 +19,8 @@ export class AppComponent {
       }
     })
     this.cartService.loadCartCountFromServer().subscribe();
+    this.authService.getCSRF().subscribe((response) => {
+      this.authService.csrftoken = response.csrftoken;
+    })
   }
 }

@@ -20,8 +20,7 @@ from api.models import EmailVerificationToken
 
 
 def get_csrf(request):
-    response = JsonResponse({'detail': 'CSRF cookie set'})
-    response['X-CSRFToken'] = get_token(request)
+    response = JsonResponse({'detail': 'CSRF cookie set', 'csrftoken': get_token(request)})
     return response
 
 @require_POST
@@ -165,7 +164,7 @@ def send_contact_form(request):
         recipient_list=[settings.EMAIL_HOST_USER],
     )
 
-    return HttpResponse("Contact form sent.")
+    return JsonResponse({"detail": "Contact form sent."})
 
 @require_POST
 def resend_verification(request):
