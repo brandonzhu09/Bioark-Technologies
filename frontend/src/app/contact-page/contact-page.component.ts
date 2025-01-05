@@ -52,9 +52,19 @@ export class ContactPageComponent {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      this.userService.submitContactForm(this.contactForm.value).subscribe()
-      this.successMessage = 'Form submitted! We will get back to you as soon as possible!'
-      this.errorMessage = ''
+      this.userService.submitContactForm(this.contactForm.value).subscribe(
+        (res) => {
+          this.successMessage = 'Form submitted! We will get back to you as soon as possible!'
+          this.errorMessage = ''
+        },
+        (err) => {
+          this.successMessage = ''
+          this.errorMessage = 'An error has occurred. Please try again.'
+        }
+      )
+    } else if (this.contactForm.controls.email.hasError('email')) {
+      this.successMessage = ''
+      this.errorMessage = 'Invalid email address.'
     } else {
       this.successMessage = ''
       this.errorMessage = 'Please complete all required fields.'
