@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, JsonResponse
@@ -18,6 +19,7 @@ from rest_framework.decorators import api_view
 from users.models import User
 from api.models import EmailVerificationToken
 
+FRONTEND_DOMAIN = os.environ.get('FRONTEND_DOMAIN')
 
 def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set', 'csrftoken': get_token(request)})
@@ -121,7 +123,7 @@ def whoami_view(request):
 
 def send_verification_email(user):
     token, created = EmailVerificationToken.objects.get_or_create(user=user)
-    verification_url = f"http://localhost:4200/verify-email/{token.token}/"
+    verification_url = f"{FRONTEND_DOMAIN}/verify-email/{token.token}/"
     send_mail(
         subject="Verify your email address",
         message=f"Click the link below to verify your email address:\n{verification_url}",

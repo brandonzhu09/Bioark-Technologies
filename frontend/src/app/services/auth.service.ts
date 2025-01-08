@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environment/environment';
 
 @Injectable({
@@ -19,6 +19,15 @@ export class AuthService {
 
   getCSRF(): Observable<any> {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/csrf/`, { withCredentials: true });
+  }
+
+  async initializeAuth() {
+    const sessionResponse = await lastValueFrom(this.getSession());
+    this.isAuthenticated = sessionResponse.isAuthenticated;
+
+    const csrfResponse = await lastValueFrom(this.getCSRF());
+    this.csrftoken = csrfResponse.csrftoken;
+    console.log(this.isAuthenticated, this.csrftoken)
   }
 
   signup(credentials: any): Observable<any> {

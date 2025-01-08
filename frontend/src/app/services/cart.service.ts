@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map, Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { environment } from '../../environment/environment';
@@ -14,9 +14,7 @@ export class CartService {
   cartCount$ = this.cartCount.asObservable();
   private readonly CART_COUNT_KEY = 'cart_count';
 
-  constructor(private http: HttpClient, private authService: AuthService) {
-
-  }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   loadCartCountFromServer() {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/orders/cart/`, { withCredentials: true }).pipe(
@@ -24,6 +22,10 @@ export class CartService {
         this.cartCount.next(res.count);
       })
     );
+  }
+
+  async initializeCart() {
+    const cartResponse = await lastValueFrom(this.loadCartCountFromServer());
   }
 
   addToCart(product_sku: string, product_name: string, unit_size: string,

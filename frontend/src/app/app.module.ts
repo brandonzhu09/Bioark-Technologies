@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +47,14 @@ import { ProductSummaryComponent } from './components/product-summary/product-su
 import { ServiceDropdownComponent } from './components/service-dropdown/service-dropdown.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
+import { CartService } from './services/cart.service';
+
+export function initializeApp(authService: AuthService, cartService: CartService) {
+  return async () => {
+    await authService.initializeAuth();
+    await cartService.initializeCart();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -105,7 +113,13 @@ import { ResendVerificationComponent } from './components/resend-verification/re
     AuthService,
     {
       provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-    }
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AuthService, CartService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

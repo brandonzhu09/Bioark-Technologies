@@ -13,14 +13,14 @@ export class AppComponent {
   constructor(private authService: AuthService, private cartService: CartService) { }
 
   ngOnInit() {
-    this.authService.getSession().subscribe((response) => {
-      if (response.isAuthenticated) {
-        this.authService.isAuthenticated = response.isAuthenticated;
-      }
-    })
-    this.cartService.loadCartCountFromServer().subscribe();
-    this.authService.getCSRF().subscribe((response) => {
-      this.authService.csrftoken = response.csrftoken;
-    })
+    // this.authService.getSession().subscribe((response) => {
+    //   if (response.isAuthenticated) {
+    //     this.authService.isAuthenticated = response.isAuthenticated;
+    //   }
+    // })
+    // this.cartService.loadCartCountFromServer().subscribe();
+    // this.authService.getCSRF().subscribe((response) => {
+    //   this.authService.csrftoken = response.csrftoken;
+    // })
   }
 }
