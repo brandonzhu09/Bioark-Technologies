@@ -75,8 +75,8 @@ def signup_view(request):
             user = User.objects.create_user(email=email, password=password, first_name=first_name, last_name=last_name)
             user.save()
             return JsonResponse({'detail': 'Successfully signed up.', 'success': True})
-    except:
-        return JsonResponse({'detail': 'An error has occurred when processing your email. Try again.'}, status=400)
+    except Exception as e:
+        return JsonResponse({'detail': 'An error has occurred when processing your email. Try again.', 'error': e}, status=400)
 
 
 @require_POST
