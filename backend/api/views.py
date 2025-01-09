@@ -169,6 +169,53 @@ def send_contact_form(request):
     return JsonResponse({"detail": "Contact form sent."})
 
 @require_POST
+def send_quote_form(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    first_name = data.get('firstName')
+    last_name = data.get('lastName')
+    gene_sequence = data.get('geneSequence')
+    gene_species = data.get('geneSpecies')
+    institution = data.get('institution')
+    mammalian_cells = data.get('mammalianCells')
+    plasmid_amount = data.get('plasmidAmount')
+    product_type = data.get('productType')
+    service_type = data.get('serviceType')
+    cell_line_amount = data.get('cellLineAmount')
+    message = data.get('message')
+    
+    email_message = ("New Quote Request from Bioark Tech\n"
+                     "Customer Information:\n"
+                     "-----------------------\n"
+                     f"Name: {first_name} {last_name}\n"
+                     f"Email: {email}\n")
+
+    def add_field(label, value):
+        return f"{label}: {value}\n" if value else ""
+
+    email_message += add_field("Gene Sequence", gene_sequence)
+    email_message += add_field("Gene Species", gene_species)
+    email_message += add_field("Institution", institution)
+    email_message += add_field("Mammalian Cells", mammalian_cells)
+    email_message += add_field("Plasmid Amount", plasmid_amount)
+    email_message += add_field("Product Type", product_type)
+    email_message += add_field("Service Type", service_type)
+    email_message += add_field("Cell Line Amount", cell_line_amount)
+
+    if message:
+        email_message += f"\nCustomer Message:\n-----------------------\n{message}\n"
+
+    # Send the email
+    send_mail(
+        subject="New Quote from Bioark Tech",
+        message=email_message,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[settings.EMAIL_HOST_USER],
+    )
+
+    return JsonResponse({"detail": "Contact form sent."})
+
+@require_POST
 def resend_verification(request):
     data = json.loads(request.body)
     email = data.get('email')

@@ -19,32 +19,32 @@
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Products</mat-label>
                 <mat-select formControlName="productType">
-                    <mat-option value="genomeTargeted"
+                    <mat-option value="Genome Targeted Knock-In"
                         >Genome Targeted Knock-In</mat-option
                     >
-                    <mat-option value="geneKnockIn"
+                    <mat-option value="Gene Knock-In Tagging"
                         >Gene Knock-In Tagging</mat-option
                     >
-                    <mat-option value="gene-knock-out"
+                    <mat-option value="Gene Knock-out"
                         >Gene Knock-out</mat-option
                     >
-                    <mat-option value="gene-deletion">Gene Deletion</mat-option>
-                    <mat-option value="crispr-rna">CRISPR RNA</mat-option>
-                    <mat-option value="knock-down">Knock-down</mat-option>
+                    <mat-option value="Gene Deletion">Gene Deletion</mat-option>
+                    <mat-option value="CRISPR RNA">CRISPR RNA</mat-option>
+                    <mat-option value="Knock-down">Knock-down</mat-option>
                 </mat-select>
             </mat-form-field>
             } @if (this.quoteForm.value.type === "serviceType") {
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Services</mat-label>
                 <mat-select formControlName="serviceType">
-                    <mat-option value="custom-cloning"
+                    <mat-option value="Custom Cloning Services"
                         >Custom Cloning Services</mat-option
                     >
-                    <mat-option value="lentivirus-package"
+                    <mat-option value="Lentivirus Package Services"
                         >Lentivirus Package Services</mat-option
                     >
-                    <mat-option value="stable-cell-line"
-                        >Stable Cell line Services</mat-option
+                    <mat-option value="Stable Cell Line Services"
+                        >Stable Cell Line Services</mat-option
                     >
                 </mat-select>
             </mat-form-field>
@@ -70,8 +70,8 @@
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Select Species</mat-label>
                 <mat-select formControlName="geneSpecies">
-                    <mat-option value="mouse">Mouse</mat-option>
-                    <mat-option value="human">Human</mat-option>
+                    <mat-option value="Mouse">Mouse</mat-option>
+                    <mat-option value="Human">Human</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -95,15 +95,15 @@
                     <mat-option value="5ug">5μg</mat-option>
                     <mat-option value="10ug">10μg</mat-option>
                     <mat-option value="20ug">20μg</mat-option>
-                    <mat-option value="na">Not applicable</mat-option>
+                    <mat-option value="n/a">Not applicable</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Cell Line Amount</mat-label>
                 <mat-select formControlName="cellLineAmount">
-                    <mat-option value="1x106">1X10⁶ cells</mat-option>
-                    <mat-option value="2x106">2X10⁶ cells</mat-option>
+                    <mat-option value="1x10^6">1X10⁶ cells</mat-option>
+                    <mat-option value="2x10^6">2X10⁶ cells</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -172,17 +172,14 @@
         <div class="submit-section">
             @if (this.submitted) {
             <p class="response-message">
-                Thank you for your message. Our team will respond within one
-                business day.
+                Thank you for your message. Our team will respond within one to
+                three business days.
             </p>
             }
-            <button
-                [disabled]="!quoteForm.valid"
-                type="submit"
-                class="primary-button"
-            >
-                Submit
-            </button>
+            <button type="submit" class="primary-button">Submit</button>
+            @if (errorMsg !== '') {
+            <div class="error-message">{{ errorMsg }}</div>
+            }
         </div>
     </form>
 </div>

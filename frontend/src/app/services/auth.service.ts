@@ -27,7 +27,6 @@ export class AuthService {
 
     const csrfResponse = await lastValueFrom(this.getCSRF());
     this.csrftoken = csrfResponse.csrftoken;
-    console.log(this.isAuthenticated, this.csrftoken)
   }
 
   signup(credentials: any): Observable<any> {

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'quote-form',
@@ -12,9 +13,11 @@ export class QuoteFormComponent {
   @Input() currentType: string = '';
   serviceType: string = '';
   quoteForm!: FormGroup;
-  submitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) { }
+  submitted: boolean = false;
+  errorMsg: string = ''
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -57,7 +60,21 @@ export class QuoteFormComponent {
   }
 
   onSubmit() {
-    this.submitted = true;
+    if (this.quoteForm.valid) {
+      this.userService.submitQuoteForm(this.quoteForm.value).subscribe(
+        (res) => {
+          this.submitted = true;
+          this.errorMsg = ''
+        },
+        (err) => {
+          this.errorMsg = 'An error has occurred. Please try again.'
+        }
+      )
+    } else if (this.quoteForm.controls['email'].hasError('email')) {
+      this.errorMsg = 'Invalid email address.'
+    } else {
+      this.errorMsg = 'Please complete all required fields.'
+    }
   }
 
 }

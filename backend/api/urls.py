@@ -17,4 +17,5 @@ urlpatterns = [
     path('verify-email/<str:token>/', views.verify_email, name='verify_email'),
     path('resend-verification/', views.resend_verification, name='resend_verification'),
     path('contact-us/', views.send_contact_form, name='contact-us'),
+    path('quote/', views.send_quote_form, name='quote'),
 ]
