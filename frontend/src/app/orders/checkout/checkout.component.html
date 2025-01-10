@@ -186,16 +186,16 @@
 
                 <div id="paypal-button-container"></div>
 
-                <div class="payment-divider">
+                <!-- <div class="payment-divider">
                     <span class="payment-divider-text">or</span>
-                </div>
-                <div id="card-form" class="card_container">
+                </div> -->
+                <!-- <div id="card-form" class="card_container">
                     <div id="card-name-field-container"></div>
                     <div id="card-number-field-container"></div>
                     <div id="card-expiry-field-container"></div>
                     <div id="card-cvv-field-container"></div>
 
-                    <!-- <form
+                    <form
                     [formGroup]="billingAddressForm"
                     (ngSubmit)="submitCardField()"
                 >
@@ -224,7 +224,7 @@
                         }
                     </mat-form-field>
                     </div>
-                </form> -->
+                </form>
                     <br /><br />
 
                     <button
@@ -235,7 +235,7 @@
                     >
                         Place Order
                     </button>
-                </div>
+                </div> -->
             </mat-expansion-panel>
             }
         </mat-accordion>
@@ -243,8 +243,18 @@
     <div class="order-review-container full-width">
         <h2 class="order-review-title">Order Review</h2>
         <div class="order-summary">
+            @for (item of cartItems; track item.id) {
             <div class="order-item">
-                <span class="order-label">Subtotal</span>
+                <span class="order-label"
+                    >{{ item.product_sku }} ({{ item.quantity }})</span
+                >
+                <span class="order-value"
+                    >${{ item.price * item.quantity }}</span
+                >
+            </div>
+            }
+            <div class="order-item">
+                <span class="order-label">Subtotal ({{ quantity }})</span>
                 <span class="order-value">${{ subTotal }}</span>
             </div>
             <div class="order-item">

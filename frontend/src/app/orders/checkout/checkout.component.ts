@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -37,7 +37,7 @@ interface OrderSummary {
   standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule, PrimaryButtonComponent],
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements AfterViewInit {
   signupForm: FormGroup;
   shippingForm: FormGroup;
   billingAddressForm: FormGroup;
@@ -72,7 +72,7 @@ export class CheckoutComponent {
 
   ngOnInit(): void {
     // this.initConfig();
-    this.renderPayPalButton();
+    // this.renderPayPalButton();
     this.getCartItems();
   }
 
@@ -112,19 +112,19 @@ export class CheckoutComponent {
       zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
     });
 
-    this.cardField = paypal_sdk.CardFields({
-      createOrder: this.createOrderCallback,
-      onApprove: this.onApproveCallback,
-      style: {
-        input: {
-          "font-size": "16px",
-          "font-family": "courier, monospace",
-          "font-weight": "lighter",
-          color: "#ccc",
-        },
-        ".invalid": { color: "purple" },
-      },
-    });
+    // this.cardField = paypal_sdk.CardFields({
+    //   createOrder: this.createOrderCallback,
+    //   onApprove: this.onApproveCallback,
+    //   style: {
+    //     input: {
+    //       "font-size": "16px",
+    //       "font-family": "courier, monospace",
+    //       "font-weight": "lighter",
+    //       color: "#ccc",
+    //     },
+    //     ".invalid": { color: "purple" },
+    //   },
+    // });
 
     this.initCardFields();
   }
@@ -207,7 +207,7 @@ export class CheckoutComponent {
     })
   }
 
-  renderPayPalButton() {
+  ngAfterViewInit(): void {
     paypal_sdk.Buttons(
       {
         // Call your server to set up the transaction
