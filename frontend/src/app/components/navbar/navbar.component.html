@@ -1,47 +1,39 @@
 <div class="navbar">
-    <div class="logo">
-        <a href="#"><img src="../../../assets/Logo.png" class="src" /></a>
+    <div class="left-group">
+        <div class="logo">
+            <a href="#">
+                <img src="../../../assets/Logo.png" class="src" alt="Logo" />
+            </a>
+        </div>
+        <div class="contact-info">
+            <span
+                >Call Now: <a href="tel:1-734-604-2386">1-734-604-2386</a></span
+            >
+            <span
+                >Email:
+                <a href="mailto:lipengwu@yahoo.com"
+                    >lipengwu&#64;yahoo.com</a
+                ></span
+            >
+        </div>
     </div>
-    <nav>
-        <ul>
-            <li class="nav-item">
-                <a>Products</a>
-                <product-dropdown class="dropdown-content"></product-dropdown>
-            </li>
-            <li class="nav-item">
-                <a>Services</a
-                ><service-dropdown class="dropdown-content"></service-dropdown>
-            </li>
-            <li><a href="/design">Design</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul>
-    </nav>
     <div class="right-group">
-        <!-- <div class="search">
-            <input type="text" placeholder="Search" />
-            <button
-                class="btn btn-outline-secondary border bi bi-search"
-                type="button"
-            ></button>
-        </div> -->
-        <a class="position-relative" href="/cart"
-            ><div class="cart bi-cart2"></div>
+        <a class="position-relative" href="/cart">
+            <div class="cart bi-cart2"></div>
             <span
                 class="badge rounded-pill bg-primary position-absolute"
                 id="cart-count"
                 style="top: 0; right: 0; transform: translate(50%, -50%)"
-                >{{ cartCount }}</span
-            ></a
-        >
+            >
+                {{ cartCount }}
+            </span>
+        </a>
         <div class="dropdown">
-            <!-- Div that triggers the dropdown -->
             <div
                 class="profile bi bi-person-circle dropdown-toggle"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
             ></div>
-
-            <!-- Dropdown menu -->
             @if (authService.isAuthenticated) {
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/profile">Profile</a></li>
@@ -61,4 +53,19 @@
             }
         </div>
     </div>
+    <div class="nav-line"></div>
+    <nav>
+        <ul class="nav-items">
+            <li class="nav-item">
+                <a href="#">Products</a>
+                <product-dropdown class="dropdown-content"></product-dropdown>
+            </li>
+            <li class="nav-item">
+                <a href="#">Services</a>
+                <service-dropdown class="dropdown-content"></service-dropdown>
+            </li>
+            <li><a href="/design">Design</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
 </div>

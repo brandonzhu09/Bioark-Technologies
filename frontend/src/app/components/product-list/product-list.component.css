@@ -12,7 +12,7 @@
 
 .product-list {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     /* margin: 20px; */
     margin-top: 20px;
 }

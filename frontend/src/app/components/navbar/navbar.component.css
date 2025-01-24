@@ -1,6 +1,71 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  padding: 20px 40px;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.logo img {
+  width: 200px;
+  height: auto;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+  color: #333;
+  gap: 40px;
+}
+
+.contact-info span {
+  color: gray;
+}
+
+.contact-info span a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .nav-item {
   position: relative;
   display: inline-block;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  align-items: left;
+  gap: 40px;
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #281A39;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  margin-right: 30px;
+}
+
+nav ul li a:hover {
+  color: #1b5e20;
 }
 
 .dropdown-content {
@@ -17,35 +82,25 @@
   display: block;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #F6F6F6;
-}
-
-.navbar {
+.right-group {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 40px;
-  background-color: white;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  gap: 20px;
+  margin-left: 100px;
 }
 
-.logo img {
-  width: 120px;
-  /* Adjust the size as needed */
-  height: auto;
+.nav-line {
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+  margin: 10px 0;
 }
 
 nav {
-  flex: 1;
+  /* flex: 1; */
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  margin-top: 10px;
 }
 
 nav ul {
@@ -54,54 +109,6 @@ nav ul {
   gap: 40px;
   padding: 0;
   margin: 0;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #281A39;
-  font-size: 18px;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-nav ul li a:hover {
-  color: #1b5e20;
-}
-
-.right-group {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-.search {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  overflow: hidden;
-}
-
-.search input {
-  padding: 8px 12px;
-  border: none;
-  outline: none;
-  width: 200px;
-  font-size: 16px;
-}
-
-.search button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #2e7d32;
-  color: white;
-  border-radius: 0 25px 25px 0;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.search button:hover {
-  background-color: #1b5e20;
 }
 
 .cart {
@@ -114,53 +121,28 @@ nav ul li a:hover {
   color: #1b5e20;
 }
 
-.cart-count {
-  color: black;
-}
-
 .profile {
   font-size: 24px;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
-.dropdown-menu {
-  left: 80%;
-  transform: translateX(-80%);
-}
-
-/* Remove the default caret icon */
-.profile.dropdown-toggle::after {
-  display: none;
-}
-
-.cart:hover {
-  color: #1b5e20;
-}
-
-.dropdown-item {
-  cursor: pointer;
-}
-
 /* Responsive Design */
-@media screen and (max-width: 992px) {
-  .navbar {
-    padding: 10px 20px;
-  }
-
-  nav ul {
-    gap: 20px;
-  }
-
-  .search input {
-    width: 150px;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .left-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .right-group {
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 10px;
   }
 
   nav ul {
@@ -168,44 +150,5 @@ nav ul li a:hover {
     gap: 10px;
     width: 100%;
     text-align: left;
-  }
-
-  .right-group {
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-
-  .search {
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .navbar {
-    padding: 10px;
-  }
-
-  /* .logo {
-    font-size: 22px;
-    width: 100px;
-  } */
-
-  nav ul {
-    gap: 10px;
-    font-size: 16px;
-  }
-
-  .search input {
-    width: 100px;
-  }
-
-  .search {
-    width: 80%;
-  }
-
-  .right-group {
-    flex-direction: column;
-    gap: 10px;
   }
 }
