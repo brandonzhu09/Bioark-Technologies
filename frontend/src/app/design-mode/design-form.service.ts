@@ -58,7 +58,7 @@ export class DesignFormService {
         bacterialMarkerName: string,
         targetSequence: string
     ) {
-        return this.http.get<any[]>(
+        return this.http.get<any>(
             `${environment.apiBaseUrl}/api/products/get-delivery-format-table/`,
             {
                 params: {

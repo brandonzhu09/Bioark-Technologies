@@ -109,7 +109,7 @@ def get_delivery_format_table(request):
                                                    structure_type_code=structure_type_code,
                                                    ready_status=ready_status)
     
-    data = []
+    data = {}
     product_id = 0
 
     for instance in design_products:
@@ -127,7 +127,11 @@ def get_delivery_format_table(request):
             'adjusted_price': instance.adjusted_price,
             'ready_status': ready_status
         }
-        data.append(product)
+        if delivery_format_name not in data:
+            data[delivery_format_name] = [product]
+        else:
+            data[delivery_format_name].append(product)
+
         product_id += 1
 
     # serializer = DeliveryFormatTableSerializer(design_products, many=True)    

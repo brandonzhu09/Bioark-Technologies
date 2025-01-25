@@ -50,7 +50,47 @@
                 </tr>
             </thead>
             <tbody>
-                @for (row of deliveryFormatTable; track row) {
+                <tr *ngFor="let entry of deliveryFormatTable | keyvalue">
+                    <td>
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                [formControl]="productId"
+                                [value]="entry.key"
+                                type="radio"
+                            />
+                        </div>
+                    </td>
+                    <td>{{ entry.value[0].delivery_format_name }}</td>
+                    <td>{{ entry.value[0].product_format_description }}</td>
+                    <td>{{ entry.value[0].product_name }}</td>
+                    <td>
+                        <select [formControl]="quantityId">
+                            <option
+                                *ngFor="
+                                    let quantity of entry.value;
+                                    let i = index
+                                "
+                                [selected]="i === 0"
+                                [value]="i"
+                                [disabled]="productId.value != entry.key"
+                            >
+                                {{ quantity.quantity }}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        @if (productId.value == entry.key && quantityId.value !=
+                        -1) {
+                        <span class="price"
+                            >${{ getPrice(productId.value, quantityId.value) }}
+                        </span>
+                        } @else {
+                        <span class="price">${{ entry.value[0].price }}</span>
+                        }
+                    </td>
+                </tr>
+                <!-- @for (row of deliveryFormatTable; track row) {
                 <tr>
                     <td>
                         <div class="form-check">
@@ -71,7 +111,7 @@
                     <td>{{ row[column] }}</td>
                     } }
                 </tr>
-                }
+                } -->
             </tbody>
         </table>
     </div>

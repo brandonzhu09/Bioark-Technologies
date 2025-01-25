@@ -1,4 +1,4 @@
-<div>
+<div class="blog-container">
     <h2 class="heading">Research Blog</h2>
     <div class="blog-list">
         @for (blog of blogsData; track blog.name) {
@@ -7,6 +7,7 @@
             [date]="blog.date"
             [image]="blog.image"
             [description]="blog.description"
+            style="margin-right: 20px"
         ></card>
         }
     </div>

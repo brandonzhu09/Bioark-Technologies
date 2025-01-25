@@ -1,11 +1,12 @@
-* {
-    margin: 20px;
+.service-list-container {
+    width: 70%;
+    margin: auto;
 }
 
 .heading {
     margin-top: 50px;
-    text-align: center;
-    font-size: 64px;
+    text-align: left;
+    font-size: 32px;
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
 }
