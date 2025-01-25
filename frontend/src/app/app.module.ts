@@ -48,6 +48,7 @@ import { ServiceDropdownComponent } from './components/service-dropdown/service-
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
 import { CartService } from './services/cart.service';
+import { SmallCardComponent } from './components/small-card/small-card.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -82,6 +83,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     ResendVerificationComponent,
     SignupComponent,
     LoginComponent,
+    SmallCardComponent,
   ],
   imports: [
     ProductModeModule,

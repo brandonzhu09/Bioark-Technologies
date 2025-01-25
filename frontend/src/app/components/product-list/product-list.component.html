@@ -1,13 +1,13 @@
-<div>
+<div class="product-list-container">
     <h2 class="heading">Products</h2>
     <div class="product-list">
         @for (product of productsData; track product.name) {
-        <card
+        <small-card
             [name]="product.name"
             [description]="product.description"
             [link]="product.link"
             [image]="product.image"
-        ></card>
+        ></small-card>
         }
     </div>
 </div>

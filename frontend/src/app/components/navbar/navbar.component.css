@@ -77,6 +77,11 @@ nav ul li a:hover {
   z-index: 10;
 }
 
+/* Remove the default caret icon */
+.profile.dropdown-toggle::after {
+  display: none;
+}
+
 .nav-item:hover .dropdown-content,
 .nav-item .dropdown-content:hover .dropdown-content {
   display: block;

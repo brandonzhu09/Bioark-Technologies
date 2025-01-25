@@ -404,8 +404,15 @@
                     <span class="value">{{ getTargetSequence()! }}</span>
                 </div>
             </div>
-            <mat-tab-group>
-                <mat-tab label="Promoter">
+            <mat-tab-group class="custom-tab-group">
+                <mat-tab>
+                    <ng-template mat-tab-label class="tab-label">
+                        <i
+                            class="bi bi-1-circle fs-5"
+                            style="margin-right: 1rem"
+                        ></i>
+                        Promoter
+                    </ng-template>
                     <div class="container">
                         @for (card of promoterCards; track card.promoter_code) {
                         <button
@@ -424,6 +431,13 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Protein Tag">
+                    <ng-template mat-tab-label class="tab-label">
+                        <i
+                            class="bi bi-2-circle fs-5"
+                            style="margin-right: 1rem"
+                        ></i>
+                        Protein Tag
+                    </ng-template>
                     <div class="container">
                         @for (card of proteinTagCards; track
                         card.protein_tag_code) {
@@ -459,6 +473,13 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Fluorescene Marker">
+                    <ng-template mat-tab-label class="tab-label">
+                        <i
+                            class="bi bi-3-circle fs-5"
+                            style="margin-right: 1rem"
+                        ></i>
+                        Fluorescene Marker
+                    </ng-template>
                     <div class="container">
                         @for (card of fluoresceneMarkerCards; track
                         card.fluorescene_marker_code) {
@@ -497,6 +518,13 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Selection Marker">
+                    <ng-template mat-tab-label class="tab-label">
+                        <i
+                            class="bi bi-4-circle fs-5"
+                            style="margin-right: 1rem"
+                        ></i>
+                        Selection Marker
+                    </ng-template>
                     <div class="container">
                         @for (card of selectionMarkerCards; track
                         card.selection_marker_code) {
@@ -535,6 +563,13 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Antibiotics">
+                    <ng-template mat-tab-label class="tab-label">
+                        <i
+                            class="bi bi-5-circle fs-5"
+                            style="margin-right: 1rem"
+                        ></i>
+                        Antibiotics
+                    </ng-template>
                     <div class="container">
                         @for (card of bacterialMarkerCards; track
                         card.bacterial_marker_code) {
