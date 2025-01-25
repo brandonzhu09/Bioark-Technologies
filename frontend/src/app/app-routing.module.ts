@@ -29,6 +29,7 @@ import { LentivirusPackagePageComponent } from './service-mode/lentivirus-packag
 import { StableCellPageComponent } from './service-mode/stable-cell-page/stable-cell-page.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
+import { MessagePageComponent } from './user-mode/message-page/message-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'profile/orders', component: OrderPageComponent },
   { path: 'profile/settings', component: UserSettingsComponent },
   { path: 'profile/services/:service', component: ServiceFormComponent },
+  { path: 'profile/messages', component: MessagePageComponent },
   { path: 'summary-temp', component: SummaryComponent },
   { path: 'design', component: StepperComponent },
   { path: 'product', component: ProductPageComponent },

@@ -29,3 +29,13 @@
   height: 400px;
   object-fit: fit;
 }
+
+.carousel-indicators .active {
+  background-color: #281A39;
+  /* Change this to your desired active color */
+}
+
+.carousel-indicators li {
+  background-color: gray;
+  /* Change this to your desired color */
+}

@@ -1,6 +1,7 @@
 <div class="d-flex flex-column" style="min-height: 100vh">
     <!-- Main Content Wrapper -->
     <div class="d-flex flex-grow-1">
+        <!-- Sidebar -->
         <div
             class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
             style="width: 280px"
@@ -21,7 +22,11 @@
                     >
                 </li>
                 <li>
-                    <a href="/profile/messages" class="nav-link text-white">Messages</a>
+                    <a
+                        href="/profile/messages"
+                        class="nav-link active text-white d-flex align-items-center"
+                        >Messages</a
+                    >
                 </li>
                 <li class="nav-item">
                     <!-- Services dropdown -->
@@ -127,7 +132,7 @@
                 <li>
                     <a
                         href="/profile/settings"
-                        class="nav-link active text-white d-flex align-items-center"
+                        class="nav-link text-white d-flex align-items-center"
                     >
                         <i class="bi bi-gear me-2 text-white"></i>
                         Settings
@@ -138,83 +143,7 @@
 
         <!-- Main Content -->
         <div class="flex-grow-1 d-flex flex-column p-3">
-            <h1 class="m-0">Settings</h1>
-            <hr />
-            <div class="section mb-2">
-                <h3>Email</h3>
-                <form [formGroup]="resetEmailForm" (submit)="submitEmail()">
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>Current Email</mat-label>
-                        <input
-                            type="text"
-                            matInput
-                            [value]="email"
-                            [disabled]="true"
-                        />
-                    </mat-form-field>
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>New Email</mat-label>
-                        <input
-                            type="text"
-                            formControlName="email"
-                            matInput
-                            required
-                        />
-                    </mat-form-field>
-                    <button class="primary-button" type="submit">
-                        Update Email
-                    </button>
-                </form>
-                @if (emailSuccessMsg !== '') {
-                <div class="success-message">{{ emailSuccessMsg }}</div>
-                } @if (emailErrorMsg !== '') {
-                <div class="error-message">{{ emailErrorMsg }}</div>
-                }
-            </div>
-
-            <div class="section mb-4">
-                <h3>Password</h3>
-                <form
-                    [formGroup]="resetPasswordForm"
-                    (submit)="submitPassword()"
-                >
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>Current Password</mat-label>
-                        <input
-                            type="password"
-                            formControlName="currentPassword"
-                            matInput
-                            required
-                        />
-                    </mat-form-field>
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>New Password</mat-label>
-                        <input
-                            type="password"
-                            matInput
-                            formControlName="newPassword"
-                        />
-                    </mat-form-field>
-                    <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>Confirm Password</mat-label>
-                        <input
-                            type="password"
-                            matInput
-                            formControlName="confirmPassword"
-                            required
-                        />
-                    </mat-form-field>
-                    <button class="primary-button" type="submit">
-                        Update Password
-                    </button>
-                </form>
-            </div>
-
-            @if (passwordSuccessMsg !== '') {
-            <div class="success-message">{{ passwordSuccessMsg }}</div>
-            } @if (passwordErrorMsg !== '') {
-            <div class="error-message">{{ passwordErrorMsg }}</div>
-            }
+            <contact-page></contact-page>
         </div>
     </div>
 </div>

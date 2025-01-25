@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'app-contact-page',
+  selector: 'contact-page',
   templateUrl: './contact-page.component.html',
   styleUrl: './contact-page.component.css'
 })
