@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     Validators,
     FormsModule,
@@ -14,11 +14,13 @@ import { DesignFormService } from '../design-form.service';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SummaryComponent } from '../summary/summary.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'stepper',
     templateUrl: './stepper.component.html',
-    styleUrl: './stepper.component.css',
+    styleUrls: ['./stepper.component.css'],
+    encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [
         MatStepperModule,
@@ -30,6 +32,7 @@ import { SummaryComponent } from '../summary/summary.component';
         CommonModule,
         MatTabsModule,
         SummaryComponent,
+        MatIconModule
     ],
 })
 export class StepperComponent {

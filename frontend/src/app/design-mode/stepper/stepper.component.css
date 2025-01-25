@@ -175,3 +175,26 @@ tbody td {
 .full-width {
     grid-column: 1 / -1;
 }
+
+/* Customize the stepper header */
+.custom-stepper .mat-step-header .mat-step-text-label {
+    color: black;
+}
+
+.custom-stepper .mat-step-header .mat-step-icon-state-edit {
+    background-color: green;
+}
+
+/* .custom-stepper .mat-step-header .mat-step-icon {
+    background-color: grey;
+} */
+
+.custom-stepper .mat-step-header .mat-step-icon-selected {
+    background-color: white;
+    border: 3px solid #007CBB;
+    color: white !important;
+}
+
+.selected-icon {
+    color: #007CBB;
+}

@@ -1,4 +1,15 @@
-<mat-stepper [linear]="isLinear" #stepper>
+<mat-stepper [linear]="isLinear" #stepper class="custom-stepper">
+    <ng-template matStepperIcon="edit">
+        <i class="bi bi-check-lg text-white"></i>
+    </ng-template>
+    <ng-template matStepperIcon="number" let-index="index" let-active="active">
+        <ng-container *ngIf="active; else defaultIcon">
+            <i class="bi bi-dot selected-icon fs-1"></i>
+        </ng-container>
+        <ng-template #defaultIcon>
+            <span>{{ index + 1 }}</span>
+        </ng-template>
+    </ng-template>
     <mat-step [stepControl]="firstFormGroup">
         <form
             [formGroup]="firstFormGroup"
