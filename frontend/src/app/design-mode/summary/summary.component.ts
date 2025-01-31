@@ -3,6 +3,7 @@ import { DesignFormService } from '../design-form.service';
 import { CartService } from '../../services/cart.service';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PopupComponent } from '../../components/popup/popup.component';
 
 interface DeliveryFormat {
     product_sku: string;
@@ -20,12 +21,9 @@ interface DeliveryFormat {
     templateUrl: './summary.component.html',
     styleUrl: './summary.component.css',
     standalone: true,
-    imports: [ReactiveFormsModule, CommonModule]
+    imports: [ReactiveFormsModule, CommonModule, PopupComponent]
 })
 export class SummaryComponent {
-    productId = new FormControl("");
-    quantityId = new FormControl(0);
-
     constructor(private designFormService: DesignFormService, private cartService: CartService) {
     }
 
@@ -49,35 +47,49 @@ export class SummaryComponent {
         'price',
     ];
     deliveryFormatTable: { [key: string]: DeliveryFormat[] } = {};
+    deliveryFormatForm = new FormGroup({});
+    showPopup = false;
+    cartItems: any = [];
 
     ngOnChanges() {
         this.getDeliveryFormatTable();
     }
 
     addToCart() {
-        if (this.productId.value != null && this.quantityId.value != null) {
-            let product_sku = this.deliveryFormatTable[this.productId.value][this.quantityId.value].product_sku;
-            let product_name = this.deliveryFormatTable[this.productId.value][this.quantityId.value].product_name;
-            let unit_size = this.deliveryFormatTable[this.productId.value][this.quantityId.value].quantity;
-            let price = this.deliveryFormatTable[this.productId.value][this.quantityId.value].price;
-            let adjusted_price = this.deliveryFormatTable[this.productId.value][this.quantityId.value].adjusted_price;
-            let ready_status = this.deliveryFormatTable[this.productId.value][this.quantityId.value].ready_status;
-            let delivery_format_name = this.deliveryFormatTable[this.productId.value][this.quantityId.value].delivery_format_name;
-            this.cartService.addToCart(product_sku, product_name,
-                unit_size, price, adjusted_price, ready_status,
-                this.function_type_name, this.structure_type_name, this.promoter_name,
-                this.protein_tag_name, this.fluorescene_marker_name, this.selection_marker_name,
-                this.bacterial_marker_name, this.target_sequence, delivery_format_name
-            ).subscribe((res) => {
-            })
+        let items: any = [];
+        for (let key in this.deliveryFormatForm.controls) {
+            let quantityId = this.deliveryFormatForm.get(key)?.value;
+            if (quantityId === true) {
+                quantityId = '0'; // Set quantityId to '0' if it is true
+            }
+            if (quantityId !== false && quantityId !== 0 || (typeof quantityId === 'string' && !isNaN(Number(quantityId)))) {
+                let product_sku = this.deliveryFormatTable[key][quantityId].product_sku;
+                let product_name = this.deliveryFormatTable[key][quantityId].product_name;
+                let unit_size = this.deliveryFormatTable[key][quantityId].quantity;
+                let price = this.deliveryFormatTable[key][quantityId].price;
+                let adjusted_price = this.deliveryFormatTable[key][quantityId].adjusted_price;
+                let ready_status = this.deliveryFormatTable[key][quantityId].ready_status;
+                let delivery_format_name = this.deliveryFormatTable[key][quantityId].delivery_format_name;
+
+                this.cartService.addToCart(
+                    product_sku, product_name, unit_size, price, adjusted_price, ready_status,
+                    this.function_type_name, this.structure_type_name, this.promoter_name,
+                    this.protein_tag_name, this.fluorescene_marker_name, this.selection_marker_name,
+                    this.bacterial_marker_name, this.target_sequence, delivery_format_name
+                ).subscribe((res) => { });
+
+                items.push(this.deliveryFormatTable[key][quantityId]);
+            }
         }
+        this.cartItems = items;
+        this.showPopup = false;
+        setTimeout(() => {
+            this.showPopup = this.cartItems.length > 0;
+        }, 0);
     }
 
     ngOnInit() {
-        this.getDeliveryFormatTable()
-        this.productId.valueChanges.subscribe(() => {
-            this.quantityId.setValue(0);
-        });
+        this.getDeliveryFormatTable();
     }
 
     getDeliveryFormatTable() {
@@ -98,6 +110,9 @@ export class SummaryComponent {
                         this.deliveryFormatTable = {};
                     } else {
                         this.deliveryFormatTable = response;
+                        for (let deliveryFormat in this.deliveryFormatTable) {
+                            this.deliveryFormatForm.addControl(deliveryFormat, new FormControl(0));
+                        }
                     }
                 });
         }
@@ -111,11 +126,14 @@ export class SummaryComponent {
         )
     }
 
-    getPrice(productId: any, quantityId: any) {
-        if (this.deliveryFormatTable[productId] !== undefined) {
-            let price = this.deliveryFormatTable[productId][quantityId]['price'];
-            return price;
-        }
-        return 0;
+    getPrice(deliveryFormat: any) {
+        let quantityId = this.deliveryFormatForm.get(deliveryFormat)?.value;
+        quantityId = (quantityId === true || quantityId === false) ? '0' : quantityId;
+        let price = this.deliveryFormatTable[deliveryFormat][quantityId]['price'];
+        return price;
+    }
+
+    getFormControl(key: string): FormControl {
+        return this.deliveryFormatForm.get(key) as FormControl;
     }
 }

@@ -188,7 +188,7 @@ class CartAPI(APIView):
             "count": cart.__len__(),
             "total_price": cart.get_total_price()
         }
-        return Response(data, status=status.HTTP_202_ACCEPTED)
+        return Response(data, status=status.HTTP_200_OK)
 
 
 # Helper methods

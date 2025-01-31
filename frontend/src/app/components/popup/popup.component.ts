@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-popup',
+  selector: 'cart-popup',
+  standalone: true,
   templateUrl: './popup.component.html',
-  styleUrl: './popup.component.css'
+  styleUrl: './popup.component.css',
+  imports: [CommonModule]
 })
 export class PopupComponent {
-  showPopup = true;
+  @Input() showPopup = false;
+  @Input() items: any = [];
   productName = '';
 
   togglePopup() {

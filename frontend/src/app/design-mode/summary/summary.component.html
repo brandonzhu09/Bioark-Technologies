@@ -55,9 +55,8 @@
                         <div class="form-check">
                             <input
                                 class="form-check-input"
-                                [formControl]="productId"
-                                [value]="entry.key"
-                                type="radio"
+                                [formControl]="getFormControl(entry.key)"
+                                type="checkbox"
                             />
                         </div>
                     </td>
@@ -65,29 +64,23 @@
                     <td>{{ entry.value[0].product_format_description }}</td>
                     <td>{{ entry.value[0].product_name }}</td>
                     <td>
-                        <select [formControl]="quantityId">
+                        <select [formControl]="getFormControl(entry.key)">
                             <option
                                 *ngFor="
                                     let quantity of entry.value;
                                     let i = index
                                 "
-                                [selected]="i === 0"
                                 [value]="i"
-                                [disabled]="productId.value != entry.key"
+                                [disabled]="
+                                    getFormControl(entry.key).value == ''
+                                "
                             >
                                 {{ quantity.quantity }}
                             </option>
                         </select>
                     </td>
                     <td>
-                        @if (productId.value == entry.key && quantityId.value !=
-                        -1) {
-                        <span class="price"
-                            >${{ getPrice(productId.value, quantityId.value) }}
-                        </span>
-                        } @else {
-                        <span class="price">${{ entry.value[0].price }}</span>
-                        }
+                        <span class="price">${{ getPrice(entry.key) }} </span>
                     </td>
                 </tr>
                 <!-- @for (row of deliveryFormatTable; track row) {
@@ -118,4 +111,5 @@
     <div class="button-nav-group mt-5">
         <button class="button blue" (click)="addToCart()">Add to Cart</button>
     </div>
+    <cart-popup [showPopup]="showPopup" [items]="cartItems"></cart-popup>
 </div>

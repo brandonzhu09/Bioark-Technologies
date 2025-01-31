@@ -87,7 +87,6 @@ export function initializeApp(authService: AuthService, cartService: CartService
     LoginComponent,
     SmallCardComponent,
     MessagePageComponent,
-    PopupComponent,
   ],
   imports: [
     ProductModeModule,
@@ -110,7 +109,8 @@ export function initializeApp(authService: AuthService, cartService: CartService
     MatSortModule,
     MatTableModule,
     ReactiveFormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    PopupComponent,
   ],
   providers: [
     provideClientHydration(),
