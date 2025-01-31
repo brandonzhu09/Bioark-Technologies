@@ -30,6 +30,7 @@ import { StableCellPageComponent } from './service-mode/stable-cell-page/stable-
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
 import { MessagePageComponent } from './user-mode/message-page/message-page.component';
+import { PopupComponent } from './components/popup/popup.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -59,6 +60,7 @@ const routes: Routes = [
   { path: 'quote/:serviceType', component: QuoteFormComponent },
   { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: 'resend-verification', component: ResendVerificationComponent },
+  { path: 'test', component: PopupComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' }
 ];
 

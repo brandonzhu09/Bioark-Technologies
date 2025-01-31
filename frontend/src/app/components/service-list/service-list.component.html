@@ -2,13 +2,13 @@
     <h2 class="heading">Services</h2>
     <div class="service-list">
         @for (service of servicesData; track service.name) {
-        <card
+        <small-card
             [name]="service.name"
             [description]="service.description"
             [link]="service.link"
             [image]="service.image"
             style="margin-right: 20px"
-        ></card>
+        ></small-card>
         }
     </div>
 </div>

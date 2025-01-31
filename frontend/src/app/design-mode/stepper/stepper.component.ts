@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { DesignFormService } from '../design-form.service';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { SummaryComponent } from '../summary/summary.component';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -39,6 +39,7 @@ export class StepperComponent {
     constructor(private designFormService: DesignFormService) { }
 
     @ViewChild('stepper') stepper!: MatStepper;
+    @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
     isLinear = true;
 
     errorMessages: string[] = [];
@@ -163,7 +164,9 @@ export class StepperComponent {
     checkFormCompletion(form: FormGroup) {
         if (form.invalid) {
             this.addErrorMessage('Please complete all required fields.');
+            return false;
         }
+        return true;
     }
 
     // Forms
@@ -334,5 +337,16 @@ export class StepperComponent {
         this.designFormService.getProductCategories().subscribe((response) => {
             this.productCategoryCards = response;
         });
+    }
+
+    nextTab() {
+        const selectedIndex = this.tabGroup.selectedIndex;
+        if (selectedIndex != null && selectedIndex < this.tabGroup._tabs.length - 1) {
+            this.tabGroup.selectedIndex = selectedIndex + 1;
+        } else {
+            if (this.checkFormCompletion(this.fourthFormGroup)) {
+                this.stepper.next();
+            }
+        }
     }
 }

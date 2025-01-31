@@ -176,6 +176,11 @@ tbody td {
     grid-column: 1 / -1;
 }
 
+.custom-stepper {
+    width: 65%;
+    margin: auto;
+}
+
 /* Customize the stepper header */
 .custom-stepper .mat-step-header .mat-step-text-label {
     color: black;

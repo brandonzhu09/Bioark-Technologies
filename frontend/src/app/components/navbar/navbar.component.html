@@ -1,71 +1,88 @@
 <div class="navbar">
-    <div class="left-group">
-        <div class="logo">
-            <a href="#">
-                <img src="../../../assets/Logo.png" class="src" alt="Logo" />
+    <div class="navbar-content">
+        <div class="left-group">
+            <div class="logo">
+                <a href="#">
+                    <img
+                        src="../../../assets/Logo.png"
+                        class="src"
+                        alt="Logo"
+                    />
+                </a>
+            </div>
+            <div class="contact-info">
+                <span
+                    >Call Now:
+                    <a href="tel:1-734-604-2386">1-734-604-2386</a></span
+                >
+                <span
+                    >Email:
+                    <a href="mailto:lipengwu@yahoo.com"
+                        >lipengwu&#64;yahoo.com</a
+                    ></span
+                >
+            </div>
+        </div>
+        <div class="right-group">
+            <a class="position-relative" href="/cart">
+                <div class="cart bi-cart2"></div>
+                <span
+                    class="badge rounded-pill bg-primary position-absolute"
+                    id="cart-count"
+                    style="top: 0; right: 0; transform: translate(50%, -50%)"
+                >
+                    {{ cartCount }}
+                </span>
             </a>
-        </div>
-        <div class="contact-info">
-            <span
-                >Call Now: <a href="tel:1-734-604-2386">1-734-604-2386</a></span
-            >
-            <span
-                >Email:
-                <a href="mailto:lipengwu@yahoo.com"
-                    >lipengwu&#64;yahoo.com</a
-                ></span
-            >
-        </div>
-    </div>
-    <div class="right-group">
-        <a class="position-relative" href="/cart">
-            <div class="cart bi-cart2"></div>
-            <span
-                class="badge rounded-pill bg-primary position-absolute"
-                id="cart-count"
-                style="top: 0; right: 0; transform: translate(50%, -50%)"
-            >
-                {{ cartCount }}
-            </span>
-        </a>
-        <div class="dropdown">
-            <div
-                class="profile bi bi-person-circle dropdown-toggle"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-            ></div>
-            @if (authService.isAuthenticated) {
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                <li>
-                    <a class="dropdown-item" href="/profile/settings"
-                        >Settings</a
-                    >
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
-            </ul>
-            } @else {
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/login">Login</a></li>
-                <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
-            </ul>
-            }
+            <div class="dropdown">
+                <div
+                    class="profile bi bi-person-circle dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                ></div>
+                @if (authService.isAuthenticated) {
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="/profile">Profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/profile/settings"
+                            >Settings</a
+                        >
+                    </li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                        <a class="dropdown-item" (click)="logout()">Logout</a>
+                    </li>
+                </ul>
+                } @else {
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/login">Login</a></li>
+                    <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+                </ul>
+                }
+            </div>
         </div>
     </div>
     <div class="nav-line"></div>
-    <nav>
-        <ul class="nav-items">
-            <li class="nav-item">
-                <a>Products</a>
-                <product-dropdown class="dropdown-content"></product-dropdown>
-            </li>
-            <li class="nav-item">
-                <a>Services</a>
-                <service-dropdown class="dropdown-content"></service-dropdown>
-            </li>
-            <li><a href="/design">Design</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul>
-    </nav>
+    <div class="navbar-content">
+        <nav>
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <a>Products</a>
+                    <product-dropdown
+                        class="dropdown-content"
+                    ></product-dropdown>
+                </li>
+                <li class="nav-item">
+                    <a>Services</a>
+                    <service-dropdown
+                        class="dropdown-content"
+                    ></service-dropdown>
+                </li>
+                <li><a href="/design">Design</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 </div>

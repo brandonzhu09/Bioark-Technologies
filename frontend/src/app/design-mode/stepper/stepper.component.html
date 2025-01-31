@@ -404,7 +404,7 @@
                     <span class="value">{{ getTargetSequence()! }}</span>
                 </div>
             </div>
-            <mat-tab-group class="custom-tab-group">
+            <mat-tab-group class="custom-tab-group" #tabGroup>
                 <mat-tab>
                     <ng-template mat-tab-label class="tab-label">
                         <i
@@ -594,11 +594,7 @@
             </mat-tab-group>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button
-                    mat-button
-                    matStepperNext
-                    (click)="checkFormCompletion(fourthFormGroup)"
-                >
+                <button mat-button matStepperNext (click)="nextTab()">
                     Next
                 </button>
             </div>

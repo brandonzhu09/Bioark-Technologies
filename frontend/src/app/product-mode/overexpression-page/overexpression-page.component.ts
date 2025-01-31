@@ -17,7 +17,7 @@ export class OverexpressionPageComponent {
   calculateOffsets() {
     const container = this.productContainer.nativeElement;
     const productCards = container.querySelectorAll('.product-card');
-    let cumulativeTop = 90;
+    let cumulativeTop = 180;
 
     productCards.forEach((card: HTMLElement) => {
       card.style.top = `${cumulativeTop}px`;

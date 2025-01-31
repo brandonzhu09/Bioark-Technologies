@@ -3,7 +3,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 75%;
+    /* max-width: 75%; */
     margin: auto;
 }
 
@@ -82,24 +82,34 @@ tbody td {
 /* Button groups */
 .button-design-group {
     display: flex;
-    gap: 20px; /* Space between buttons */
-    justify-content: center; /* Center the buttons */
-    padding: 20px; /* Optional padding around the buttons */
+    gap: 20px;
+    /* Space between buttons */
+    justify-content: center;
+    /* Center the buttons */
+    padding: 20px;
+    /* Optional padding around the buttons */
 }
 
 .button-service-group {
     display: flex;
-    gap: 10px; /* Space between buttons */
-    justify-content: center; /* Center the buttons */
-    padding: 20px; /* Padding around the buttons */
-    border: 1px solid #000; /* Border around the entire button group */
+    gap: 10px;
+    /* Space between buttons */
+    justify-content: center;
+    /* Center the buttons */
+    padding: 20px;
+    /* Padding around the buttons */
+    border: 1px solid #000;
+    /* Border around the entire button group */
 }
 
 .button-nav-group {
     display: flex;
-    gap: 10px; /* Space between buttons */
-    justify-content: center; /* Center the buttons */
-    padding: 20px; /* Optional padding around the buttons */
+    gap: 10px;
+    /* Space between buttons */
+    justify-content: center;
+    /* Center the buttons */
+    padding: 20px;
+    /* Optional padding around the buttons */
 }
 
 /* Basic button styles */
@@ -125,8 +135,10 @@ tbody td {
 }
 
 .button.orange {
-    background-color: #f7941e; /* Orange background */
-    color: #fff; /* White text color */
+    background-color: #f7941e;
+    /* Orange background */
+    color: #fff;
+    /* White text color */
 }
 
 /* Hover effects */
@@ -139,5 +151,6 @@ tbody td {
 }
 
 .button.orange:hover {
-    background-color: #e68700; /* Darker orange on hover */
+    background-color: #e68700;
+    /* Darker orange on hover */
 }

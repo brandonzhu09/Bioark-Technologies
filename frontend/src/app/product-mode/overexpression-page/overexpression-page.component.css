@@ -1,12 +1,12 @@
 .heading-section {
     margin: auto;
-    margin-top: 70px;
+    margin-top: 40px;
     width: 65%;
     text-align: left;
 }
 
 .heading-section h2 {
-    font-size: 82px;
+    font-size: 52px;
     font-weight: bold;
     color: #281A39;
     line-height: 1;
@@ -157,8 +157,9 @@ ol {
 }
 
 .floating-box {
-    position: relative;
-    overflow-y: auto;
+    position: fixed;
+    top: 200px;
+    /* overflow-y: auto; */
     /* Create a positioning context */
 }
 

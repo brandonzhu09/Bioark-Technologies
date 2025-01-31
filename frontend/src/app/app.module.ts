@@ -50,6 +50,7 @@ import { ResendVerificationComponent } from './components/resend-verification/re
 import { CartService } from './services/cart.service';
 import { SmallCardComponent } from './components/small-card/small-card.component';
 import { MessagePageComponent } from './user-mode/message-page/message-page.component';
+import { PopupComponent } from './components/popup/popup.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -86,6 +87,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     LoginComponent,
     SmallCardComponent,
     MessagePageComponent,
+    PopupComponent,
   ],
   imports: [
     ProductModeModule,
