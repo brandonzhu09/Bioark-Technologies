@@ -74,6 +74,7 @@ export class CheckoutComponent implements AfterViewInit {
     // this.initConfig();
     // this.renderPayPalButton();
     this.getCartItems();
+    this.autoFillShippingForm();
   }
 
   constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService,
@@ -101,6 +102,7 @@ export class CheckoutComponent implements AfterViewInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       address: ['', Validators.required],
+      apt: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
       zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
@@ -137,6 +139,20 @@ export class CheckoutComponent implements AfterViewInit {
     })
   }
 
+  autoFillShippingForm() {
+    this.authService.getUserInfo().subscribe((res) => {
+      this.shippingForm.patchValue({
+        firstName: res.first_name,
+        lastName: res.last_name,
+        address: res.shipping_address.address_line_1,
+        apt: res.shipping_address.apt_suite,
+        city: res.shipping_address.city,
+        state: res.shipping_address.state,
+        zipCode: res.shipping_address.zipcode
+      });
+    })
+  }
+
   onSignupSubmit() {
     if (this.signupForm.valid) {
       this.authService.signup(this.signupForm.value).subscribe(res => {
@@ -164,9 +180,10 @@ export class CheckoutComponent implements AfterViewInit {
       this.showSignupPreview = true;
       this.showShippingPreview = true;
       this.calculateSalesTax();
-    } else {
-      this.shippingForm.markAllAsTouched();
     }
+    // else {
+    //   this.shippingForm.markAllAsTouched();
+    // }
   }
 
   updateShippingPreview() {

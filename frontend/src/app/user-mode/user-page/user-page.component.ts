@@ -10,16 +10,19 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class UserPageComponent {
   states: any[] = US_STATES;
+  successMsg: string = '';
+  errorMsg: string = '';
 
   infoForm: FormGroup = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     institution: new FormControl(''),
-    address: new FormControl(''),
-    city: new FormControl(''),
-    state: new FormControl(''),
-    zipcode: new FormControl(''),
-  });;
+    address: new FormControl('', Validators.required),
+    apt: new FormControl(''),
+    city: new FormControl('', Validators.required),
+    state: new FormControl('', Validators.required),
+    zipcode: new FormControl('', Validators.required),
+  });
 
   constructor(private userService: UserService) { }
 
@@ -32,6 +35,7 @@ export class UserPageComponent {
         lastName: res?.['last_name'],
         institution: res?.['company'],
         address: res?.['shipping_address']?.['address_line_1'],
+        apt: res?.['shipping_address']?.['apt_suite'],
         city: res?.['shipping_address']?.['city'],
         state: res?.['shipping_address']?.['state'],
         zipcode: res?.['shipping_address']?.['zipcode'],
@@ -42,7 +46,16 @@ export class UserPageComponent {
   onSubmit() {
     if (this.infoForm.valid) {
       console.log(this.infoForm.value)
-      this.userService.updateUserInfo(this.infoForm.value).subscribe();
+      this.userService.updateUserInfo(this.infoForm.value).subscribe(
+        (res) => {
+          this.successMsg = 'Information updated successfully!';
+          this.errorMsg = '';
+        },
+        (err) => {
+          this.errorMsg = 'An error occurred. Please try again.';
+          this.successMsg = '';
+        }
+      );
     }
   }
 

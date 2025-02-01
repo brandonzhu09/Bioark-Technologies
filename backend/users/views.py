@@ -72,10 +72,11 @@ def update_user_info(request):
         user.company = data.get('institution')
         if user.shipping_address == None:
             user.shipping_address = Address.objects.create()
-        user.shipping_address.address_line_1 = data.get('address')
-        user.shipping_address.city = data.get('city')
-        user.shipping_address.state = data.get('state')
-        user.shipping_address.zipcode = data.get('zipcode')
+        user.shipping_address.address_line_1 = data.get('address', '')
+        user.shipping_address.apt_suite = data.get('apt', '')
+        user.shipping_address.city = data.get('city', '')
+        user.shipping_address.state = data.get('state', '')
+        user.shipping_address.zipcode = data.get('zipcode', '')
 
         user.shipping_address.save()
         user.save()

@@ -80,4 +80,8 @@ export class AuthService {
     });
     return this.http.post(`${environment.apiBaseUrl}/api/resend-verification/`, emailForm, { headers, withCredentials: true });
   }
+
+  getUserInfo(): Observable<any> {
+    return this.http.get(`${environment.apiBaseUrl}/api/users/view-user-info/`, { withCredentials: true });
+  }
 }

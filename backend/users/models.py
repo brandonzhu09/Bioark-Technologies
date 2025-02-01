@@ -33,6 +33,7 @@ class CustomUserManager(BaseUserManager):
 class Address(models.Model):
     address_line_1 = models.CharField()
     address_line_2 = models.CharField(null=True)
+    apt_suite = models.CharField(null=True)
     city = models.CharField()
     state = models.CharField()
     country = models.CharField()

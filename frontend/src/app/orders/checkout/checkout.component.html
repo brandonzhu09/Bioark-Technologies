@@ -83,7 +83,10 @@
                     (ngSubmit)="onShippingSubmit()"
                 >
                     <div class="form-row">
-                        <mat-form-field appearance="outline">
+                        <mat-form-field
+                            class="mat-form-field"
+                            appearance="outline"
+                        >
                             <mat-label>First Name</mat-label>
                             <input
                                 matInput
@@ -97,7 +100,10 @@
                             }
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline">
+                        <mat-form-field
+                            class="mat-form-field"
+                            appearance="outline"
+                        >
                             <mat-label>Last Name</mat-label>
                             <input
                                 matInput
@@ -118,6 +124,13 @@
                         {
                         <mat-error> Address is required </mat-error>
                         }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label
+                            >Apt, suite, unit, building, floor, etc.</mat-label
+                        >
+                        <input matInput formControlName="apt" />
                     </mat-form-field>
 
                     <div class="form-row">
@@ -168,7 +181,6 @@
                         class="primary-button"
                         color="primary"
                         type="submit"
-                        [disabled]="!shippingForm.valid"
                     >
                         Continue to Billing
                     </button>
@@ -184,7 +196,10 @@
                     <mat-panel-title> 2. Billing Information </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div id="paypal-button-container"></div>
+                <div
+                    id="paypal-button-container"
+                    class="payment-container"
+                ></div>
 
                 <!-- <div class="payment-divider">
                     <span class="payment-divider-text">or</span>

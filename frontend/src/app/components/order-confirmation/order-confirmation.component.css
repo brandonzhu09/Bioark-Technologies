@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 65%;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.header-text {
+    text-align: left;
+}
+
+
+h1 {
+    color: #333;
+}
+
+.order-box {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+.order-box p {
+    margin: 5px 0;
+}
+
+.order-summary,
+.payment-info,
+.billing-info {
+    flex: 1;
+    padding: 10px;
+    background: #fff;
+    margin: 5px;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.total {
+    font-size: 18px;
+    font-weight: bold;
+}

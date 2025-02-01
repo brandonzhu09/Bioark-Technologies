@@ -31,6 +31,7 @@ import { EmailVerificationComponent } from './components/email-verification/emai
 import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
 import { MessagePageComponent } from './user-mode/message-page/message-page.component';
 import { PopupComponent } from './components/popup/popup.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: 'resend-verification', component: ResendVerificationComponent },
   { path: 'test', component: PopupComponent },
+  { path: 'order-confirmation', component: OrderConfirmationComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' }
 ];
 

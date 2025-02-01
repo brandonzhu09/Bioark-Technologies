@@ -5,6 +5,11 @@
     grid-template-columns: 2fr 1fr;
 }
 
+.payment-container {
+    position: relative;
+    z-index: 1;
+}
+
 @media (max-width: 768px) {
     .main-container {
         width: 100%;
@@ -141,18 +146,22 @@
 
 .form-row {
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     gap: 20px;
-    margin-bottom: 20px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.mat-form-field {
+    flex: 1 1 calc(50% - 10px);
+    /* Adjust the basis to account for the gap */
+    margin: 0;
 }
 
 .full-width {
     width: 100%;
-    margin-bottom: 20px;
-}
-
-mat-form-field {
-    flex: 1;
-    margin: 0;
+    margin-bottom: 10px;
 }
 
 button {

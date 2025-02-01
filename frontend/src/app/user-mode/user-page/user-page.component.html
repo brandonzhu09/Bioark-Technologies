@@ -146,24 +146,23 @@
                 <!-- Contact Section -->
                 <div class="section mb-2">
                     <h3>Contact</h3>
-                    <div class="form-row">
-                        <mat-form-field class="full-width" appearance="outline">
-                            <mat-label>First Name</mat-label>
-                            <input
-                                type="text"
-                                formControlName="firstName"
-                                matInput
-                            />
-                        </mat-form-field>
-                        <mat-form-field class="full-width" appearance="outline">
-                            <mat-label>Last Name</mat-label>
-                            <input
-                                type="text"
-                                formControlName="lastName"
-                                matInput
-                            />
-                        </mat-form-field>
-                    </div>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input
+                            type="text"
+                            formControlName="firstName"
+                            matInput
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input
+                            type="text"
+                            formControlName="lastName"
+                            matInput
+                        />
+                    </mat-form-field>
+
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Institution Name</mat-label>
                         <input
@@ -182,30 +181,40 @@
                         <mat-label>Address</mat-label>
                         <input type="text" formControlName="address" matInput />
                     </mat-form-field>
-                    <div class="form-row">
-                        <mat-form-field class="full-width" appearance="outline">
-                            <mat-label>City</mat-label>
-                            <input matInput formControlName="city" />
-                        </mat-form-field>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label
+                            >Apt, suite, unit, building, floor, etc.</mat-label
+                        >
+                        <input type="text" formControlName="apt" matInput />
+                    </mat-form-field>
 
-                        <mat-form-field class="full-width" appearance="outline">
-                            <mat-label>State</mat-label>
-                            <mat-select formControlName="state">
-                                @for (state of states; track state.code) {
-                                <mat-option [value]="state.code">
-                                    {{ state.name }}
-                                </mat-option>
-                                }
-                            </mat-select>
-                        </mat-form-field>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>City</mat-label>
+                        <input matInput formControlName="city" />
+                    </mat-form-field>
 
-                        <mat-form-field class="full-width" appearance="outline">
-                            <mat-label>ZIP Code</mat-label>
-                            <input matInput formControlName="zipcode" />
-                        </mat-form-field>
-                    </div>
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName="state">
+                            @for (state of states; track state.code) {
+                            <mat-option [value]="state.code">
+                                {{ state.name }}
+                            </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>ZIP Code</mat-label>
+                        <input matInput formControlName="zipcode" />
+                    </mat-form-field>
                 </div>
                 <button class="primary-button" type="submit">Update</button>
+                @if (successMsg) {
+                <div class="success-message">{{ successMsg }}</div>
+                } @if (errorMsg) {
+                <div class="error-message">{{ errorMsg }}</div>
+                }
             </div>
         </form>
     </div>
