@@ -8,5 +8,6 @@ urlpatterns = [
     path('get-code-p-parameters/', views.get_code_p_parameters),
     path('get-gene-table-by-symbol/', views.get_gene_table_by_symbol),
     path('get-delivery-format-table/', views.get_delivery_format_table),
-    path('get-product-properties/', views.get_product_properties),
+    path('get-product-summary/', views.get_product_summary),
+    path('get-product-sku/', views.get_product_sku),
 ]

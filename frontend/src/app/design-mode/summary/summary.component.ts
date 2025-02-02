@@ -4,6 +4,7 @@ import { CartService } from '../../services/cart.service';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PopupComponent } from '../../components/popup/popup.component';
+import { ProductService } from '../../services/product.service';
 
 interface DeliveryFormat {
     product_sku: string;
@@ -24,7 +25,7 @@ interface DeliveryFormat {
     imports: [ReactiveFormsModule, CommonModule, PopupComponent]
 })
 export class SummaryComponent {
-    constructor(private designFormService: DesignFormService, private cartService: CartService) {
+    constructor(private designFormService: DesignFormService, private cartService: CartService, private productService: ProductService) {
     }
 
     @Input() product_name: string = 'Product Name';
@@ -90,6 +91,7 @@ export class SummaryComponent {
 
     ngOnInit() {
         this.getDeliveryFormatTable();
+        this.getProductSku();
     }
 
     getDeliveryFormatTable() {
@@ -114,6 +116,25 @@ export class SummaryComponent {
                             this.deliveryFormatForm.addControl(deliveryFormat, new FormControl(0));
                         }
                     }
+                });
+        }
+    }
+
+    getProductSku() {
+        if (this.target_sequence !== null || this.target_sequence !== "IGNORE" || this.target_sequence !== "null") {
+            this.productService
+                .getProductSku(
+                    this.structure_type_name,
+                    this.function_type_name,
+                    this.promoter_name,
+                    this.protein_tag_name,
+                    this.fluorescene_marker_name,
+                    this.selection_marker_name,
+                    this.bacterial_marker_name,
+                    this.target_sequence
+                )
+                .subscribe((response) => {
+                    this.product_sku = response.product_sku;
                 });
         }
     }

@@ -9,12 +9,16 @@
                     <div class="product-price">${{ item.price }}</div>
                 </div>
 
-                <quantity-input
-                    [quantity]="item.quantity"
-                    (quantityChange)="onQuantityChange(item.id, $event)"
-                ></quantity-input>
+                <div class="right-content">
+                    <quantity-input
+                        [quantity]="item.quantity"
+                        (quantityChange)="onQuantityChange(item.id, $event)"
+                    ></quantity-input>
 
-                <div class="total-price">${{ item.price * item.quantity }}</div>
+                    <div class="total-price">
+                        ${{ item.price * item.quantity }}
+                    </div>
+                </div>
 
                 <button class="delete-button" (click)="removeItem(item.id)">
                     🗑️
@@ -22,9 +26,9 @@
             </div>
             }
 
-            <div class="promo-code">🏷️ Enter a promo code</div>
+            <!-- <div class="promo-code">🏷️ Enter a promo code</div>
 
-            <div class="note">📝 Add a note</div>
+            <div class="note">📝 Add a note</div> -->
         </div>
 
         <div class="order-summary">
