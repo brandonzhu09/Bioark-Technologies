@@ -32,7 +32,7 @@ h2 {
     display: grid;
     grid-template-columns: 2fr auto auto auto;
     gap: 20px;
-    align-items: center;
+    align-items: first baseline;
     padding-bottom: 24px;
 }
 

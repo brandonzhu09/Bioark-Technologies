@@ -75,12 +75,12 @@ export class SummaryComponent {
             }
             if (quantityId !== false && quantityId !== 0 || (typeof quantityId === 'string' && !isNaN(Number(quantityId)))) {
                 let product_sku = this.deliveryFormatTable[key][quantityId].product_sku;
-                let product_name = this.deliveryFormatTable[key][quantityId].product_name;
                 let unit_size = this.deliveryFormatTable[key][quantityId].quantity;
                 let price = this.deliveryFormatTable[key][quantityId].price;
                 let adjusted_price = this.deliveryFormatTable[key][quantityId].adjusted_price;
                 let ready_status = this.deliveryFormatTable[key][quantityId].ready_status;
                 let delivery_format_name = this.deliveryFormatTable[key][quantityId].delivery_format_name;
+                let product_name = product_sku;
 
                 this.cartService.addToCart(
                     product_sku, product_name, unit_size, price, adjusted_price, ready_status,

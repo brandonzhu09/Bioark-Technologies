@@ -139,14 +139,8 @@ def get_delivery_format_table(request):
     return Response(data)
 
 @api_view(['GET'])
-def get_product_summary(request):
-    product_sku = request.GET["product_sku"]
-    
-    # order_item = OrderItem.objects.filter(product_sku=product_sku).first()
-    # serializer = OrderItemSerializer(order_item)
-
+def get_product_summary(request, product_sku):
     data = decode_product_sku(product_sku)
-
     return Response(data)
 
 @api_view(['GET'])

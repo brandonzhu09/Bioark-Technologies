@@ -1,5 +1,5 @@
 <div class="product-page">
-    <h1>{{ product_name }}</h1>
+    <h1>{{ product_name$.value }}</h1>
     <div class="content">
         <div class="diagram">
             <img src="../../../assets/lego-design-diagram.png" alt="Diagram" />
@@ -7,31 +7,116 @@
         <div class="description">
             <!-- <h2>Products</h2> -->
             <p><strong>SKU Number:</strong>{{ product_sku }}</p>
-            <p><strong>Function Type: </strong>{{ function_type_name }}</p>
-            <p class="mb-3"></p>
-            <p><strong>Structure Type: </strong>{{ structure_type_name }}</p>
-            <!-- <h2>Structure</h2> -->
-            <p><strong>Promoter: </strong>{{ promoter_name }}</p>
-            <p><strong>Protein Tag: </strong>{{ protein_tag_name }}</p>
             <p>
-                <strong>Fluorescene Marker: </strong
-                >{{ fluorescene_marker_name }}
-            </p>
-            <p>
-                <strong>Selection Marker: </strong>{{ selection_marker_name }}
+                <strong>Function Type: </strong>{{ function_type_name$.value }}
             </p>
             <p class="mb-3">
-                <strong>Antibiotics: </strong>{{ bacterial_marker_name }}
+                <strong>Structure Type: </strong
+                >{{ structure_type_name$.value }}
+            </p>
+            <!-- <h2>Structure</h2> -->
+            <p><strong>Promoter: </strong>{{ promoter_name$.value }}</p>
+            <p><strong>Protein Tag: </strong>{{ protein_tag_name$.value }}</p>
+            <p>
+                <strong>Fluorescene Marker: </strong
+                >{{ fluorescene_marker_name$.value }}
+            </p>
+            <p>
+                <strong>Selection Marker: </strong
+                >{{ selection_marker_name$.value }}
+            </p>
+            <p class="mb-3">
+                <strong>Antibiotics: </strong>{{ bacterial_marker_name$.value }}
             </p>
             <!-- <h2>Target Gene</h2> -->
             <p class="mb-3">
-                <strong>Target Sequence: </strong>{{ target_sequence }}
+                <strong>Target Sequence: </strong>{{ target_sequence$.value }}
             </p>
             <div class="button-service-group">
                 <button class="button orange">Save Design</button>
+                @if (showProtocol()) {
                 <button class="button orange">View Protocol</button>
+                }
                 <button class="button orange">Customer Service</button>
             </div>
         </div>
     </div>
+    <div class="mt-3">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Delivery Format</th>
+                    <th>Format Description</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let entry of deliveryFormatTable | keyvalue">
+                    <td>
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                [formControl]="getFormControl(entry.key)"
+                                type="checkbox"
+                            />
+                        </div>
+                    </td>
+                    <td>{{ entry.value[0].delivery_format_name }}</td>
+                    <td>{{ entry.value[0].product_format_description }}</td>
+                    <td>{{ entry.value[0].product_name }}</td>
+                    <td>
+                        <select [formControl]="getFormControl(entry.key)">
+                            <option
+                                *ngFor="
+                                    let quantity of entry.value;
+                                    let i = index
+                                "
+                                [value]="i"
+                                [disabled]="
+                                    getFormControl(entry.key).value == ''
+                                "
+                            >
+                                {{ quantity.quantity }}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <span class="price">${{ getPrice(entry.key) }} </span>
+                    </td>
+                </tr>
+                <!-- @for (row of deliveryFormatTable; track row) {
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                [formControl]="productId"
+                                [value]="row['product_id']"
+                                type="radio"
+                            />
+                        </div>
+                    </td>
+                    @for (column of deliveryFormatColumns; track column) { @if
+                    (column == 'price') {
+                    <td>
+                        <span class="price">${{ row[column] }}</span>
+                    </td>
+                    } @else {
+                    <td>{{ row[column] }}</td>
+                    } }
+                </tr>
+                } -->
+            </tbody>
+        </table>
+    </div>
+    <div class="button-nav-group mt-5">
+        <button class="button blue" (click)="addToCart()">Add to Cart</button>
+        <button class="button blue" (click)="addTestProduct()">
+            Add test product
+        </button>
+    </div>
+    <cart-popup [showPopup]="showPopup" [items]="cartItems"></cart-popup>
 </div>

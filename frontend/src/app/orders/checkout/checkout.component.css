@@ -299,7 +299,12 @@ mat-panel-description {
 }
 
 .order-label {
+    display: flex;
+    flex-direction: row;
     font-weight: normal;
+    flex-wrap: wrap;
+    width: 70%;
+    text-align: left;
 }
 
 .order-value {

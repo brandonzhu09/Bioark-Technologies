@@ -10,7 +10,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getProductDetails(product_sku: string) {
-    return this.http.get<any>(`${environment.apiBaseUrl}/products/decode-product-sku`)
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/products/get-product-summary/${product_sku}/`, { withCredentials: true })
   }
 
   getProductSku(
