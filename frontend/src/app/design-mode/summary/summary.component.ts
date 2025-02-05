@@ -56,6 +56,16 @@ export class SummaryComponent {
         this.getDeliveryFormatTable();
     }
 
+    addTestProduct() {
+        // DELETE: add $1 test product
+        this.cartService.addToCart(
+            'TEST_SKU', 'product', 'unit_size', '1', '1', 'Yes',
+            this.function_type_name, this.structure_type_name, this.promoter_name,
+            this.protein_tag_name, this.fluorescene_marker_name, this.selection_marker_name,
+            this.bacterial_marker_name, this.target_sequence, 'delivery_format_name'
+        ).subscribe((res) => { });
+    }
+
     addToCart() {
         let items: any = [];
         for (let key in this.deliveryFormatForm.controls) {
