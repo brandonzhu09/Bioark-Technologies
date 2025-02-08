@@ -1,1 +1,16 @@
-<p>blog-post works!</p>
+<header>
+    <div class="blog-header">
+        <h1 class="blog-title">{{ title }}</h1>
+        <p class="blog-meta">
+            February 8, 2025 • <span class="author">{{ author }}</span> •
+            Principal Research Scientist, Bioark Technologies
+        </p>
+    </div>
+</header>
+
+<main>
+    <article>
+        <img class="blog-image" [src]="fullImageUrl" alt="Blog Image" />
+        <div class="blog-content" [innerHTML]="content"></div>
+    </article>
+</main>

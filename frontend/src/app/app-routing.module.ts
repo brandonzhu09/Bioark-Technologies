@@ -32,6 +32,7 @@ import { ResendVerificationComponent } from './components/resend-verification/re
 import { MessagePageComponent } from './user-mode/message-page/message-page.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+import { BlogPostComponent } from './components/blog-post/blog-post.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -63,6 +64,7 @@ const routes: Routes = [
   { path: 'resend-verification', component: ResendVerificationComponent },
   { path: 'test', component: PopupComponent },
   { path: 'order-confirmation', component: OrderConfirmationComponent },
+  { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' }
 ];
 

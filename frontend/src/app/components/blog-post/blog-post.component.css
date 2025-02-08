@@ -1,0 +1,47 @@
+body {
+    font-family: 'Google Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #202124;
+    background-color: #fff;
+}
+
+.blog-header {
+    max-width: 65%;
+    margin: 20px auto 0;
+}
+
+.blog-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.blog-meta {
+    font-size: 14px;
+    color: #5f6368;
+}
+
+.author {
+    font-weight: 600;
+    color: #202124;
+}
+
+main {
+    width: 65%;
+    margin: 0 auto;
+}
+
+.blog-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: auto;
+    object-fit: fit;
+}
+
+.blog-content {
+    font-size: 16px;
+    margin: 20px auto;
+}
