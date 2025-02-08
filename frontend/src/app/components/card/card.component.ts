@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'card',
@@ -11,5 +12,9 @@ export class CardComponent {
   @Input() description: string = '';
   @Input() link: string = '/';
   @Input() image: string | undefined = '';
+
+  get imageUrl() {
+    return `${environment.apiBaseUrl}/${this.image}`;
+  }
 
 }

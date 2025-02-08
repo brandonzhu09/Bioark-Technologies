@@ -13,4 +13,8 @@ export class BlogService {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/blogs/get-blog/${blogId}/`, { withCredentials: true });
   }
 
+  getLatestBlogs() {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/blogs/get-latest-blogs/`, { withCredentials: true });
+  }
+
 }

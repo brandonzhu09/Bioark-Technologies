@@ -1,12 +1,13 @@
 <div class="blog-container">
     <h2 class="heading">Research Blog</h2>
     <div class="blog-list">
-        @for (blog of blogsData; track blog.name) {
+        @for (blog of blogs; track blog) {
         <card
-            [name]="blog.name"
-            [date]="blog.date"
+            [name]="blog.title"
+            [date]="blog.date_posted"
             [image]="blog.image"
             [description]="blog.description"
+            link="blog/{{ blog.id }}"
             style="margin-right: 20px"
         ></card>
         }

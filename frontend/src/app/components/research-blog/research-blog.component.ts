@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LandingPageService } from '../../services/landing.service';
+import { BlogService } from '../../services/blog.service';
 
 @Component({
   selector: 'research-blog',
@@ -8,7 +9,15 @@ import { LandingPageService } from '../../services/landing.service';
 })
 export class ResearchBlogComponent {
 
-  constructor(private landingPageService: LandingPageService) { }
+  constructor(private blogService: BlogService) { }
 
-  blogsData = this.landingPageService.get_blogs();
+  blogs: any = [];
+
+  ngOnInit() {
+    this.blogService.getLatestBlogs().subscribe((data) => {
+      this.blogs = data;
+      console.log(this.blogs);
+    });
+  }
+
 }
