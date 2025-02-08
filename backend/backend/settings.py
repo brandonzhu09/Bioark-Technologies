@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'products',
     'orders',
+    'blogs',
 ]
 
 
@@ -183,6 +184,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = '/var/www/django/static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = '/var/www/django/media/'
 
 
 # Default primary key field type

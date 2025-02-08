@@ -14,6 +14,7 @@ jsonpickle==3.0.4
 jsonpointer==2.4
 msgpack==1.1.0
 paypal-server-sdk==0.5.2
+pillow==11.1.0
 psycopg2-binary==2.9.9
 PyJWT==2.9.0
 python-dateutil==2.8.2
