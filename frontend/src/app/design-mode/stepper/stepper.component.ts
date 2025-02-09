@@ -337,6 +337,15 @@ export class StepperComponent {
         this.designFormService.getProductCategories().subscribe((response) => {
             this.productCategoryCards = response;
         });
+
+        // this.loadFormData();
+
+        // this.firstFormGroup.valueChanges.subscribe(() => this.saveFormData());
+        // this.secondFormGroup.valueChanges.subscribe(() => this.saveFormData());
+        // this.thirdFormGroup.valueChanges.subscribe(() => this.saveFormData());
+        // this.fourthFormGroup.valueChanges.subscribe(() => this.saveFormData());
+        // this.fifthFormGroup.valueChanges.subscribe(() => this.saveFormData());
+        // this.searchGeneGroup.valueChanges.subscribe(() => this.saveFormData());
     }
 
     nextTab() {
@@ -347,6 +356,40 @@ export class StepperComponent {
             if (this.checkFormCompletion(this.fourthFormGroup)) {
                 this.stepper.next();
             }
+        }
+    }
+
+    // Save form data to localStorage
+    saveFormData() {
+        console.log('Saving form data');
+        const formData = {
+            firstFormGroup: this.firstFormGroup.value,
+            secondFormGroup: this.secondFormGroup.value,
+            thirdFormGroup: this.thirdFormGroup.value,
+            fourthFormGroup: this.fourthFormGroup.value,
+            fifthFormGroup: this.fifthFormGroup.value,
+            searchGeneGroup: this.searchGeneGroup.value,
+            selectedTargetSequence: this.selectedTargetSequence,
+            toggleSummaryStep: this.toggleSummaryStep,
+        };
+        localStorage.setItem('stepperFormData', JSON.stringify(formData));
+    }
+
+    // Load form data from localStorage
+    loadFormData() {
+        const savedData = localStorage.getItem('stepperFormData');
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            this.firstFormGroup.setValue(formData.firstFormGroup);
+            this.secondFormGroup.setValue(formData.secondFormGroup);
+            this.thirdFormGroup.setValue(formData.thirdFormGroup);
+            this.fourthFormGroup.setValue(formData.fourthFormGroup);
+            this.fifthFormGroup.setValue(formData.fifthFormGroup);
+            this.searchGeneGroup.setValue(formData.searchGeneGroup);
+            this.selectedTargetSequence = formData.selectedTargetSequence;
+            this.toggleSummaryStep = formData.toggleSummaryStep;
+
+            console.log(this.secondFormGroup.value);
         }
     }
 }
