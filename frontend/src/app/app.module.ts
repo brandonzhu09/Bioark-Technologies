@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +12,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ProductDropdownComponent } from './components/product-dropdown/product-dropdown.component';
-import { ProductModeModule } from './product-mode/product-mode.module';
 import { StepperComponent } from './design-mode/stepper/stepper.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
@@ -52,6 +51,12 @@ import { SmallCardComponent } from './components/small-card/small-card.component
 import { MessagePageComponent } from './user-mode/message-page/message-page.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+import { ProductSidebarComponent } from './components/product-sidebar/product-sidebar.component';
+import { OverexpressionPageComponent } from './product-mode/overexpression-page/overexpression-page.component';
+import { GeneDeletionPageComponent } from './product-mode/gene-deletion-page/gene-deletion-page.component';
+import { GeneKnockInPageComponent } from './product-mode/gene-knock-in-page/gene-knock-in-page.component';
+import { GeneKnockOutPageComponent } from './product-mode/gene-knock-out-page/gene-knock-out-page.component';
+import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rna-knock-down-page.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -89,9 +94,14 @@ export function initializeApp(authService: AuthService, cartService: CartService
     SmallCardComponent,
     MessagePageComponent,
     OrderConfirmationComponent,
+    OverexpressionPageComponent,
+    GeneDeletionPageComponent,
+    GeneKnockInPageComponent,
+    GeneKnockOutPageComponent,
+    RnaKnockDownPageComponent,
+    ProductSidebarComponent,
   ],
   imports: [
-    ProductModeModule,
     StepperComponent,
     BrowserModule,
     AppRoutingModule,
@@ -129,6 +139,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

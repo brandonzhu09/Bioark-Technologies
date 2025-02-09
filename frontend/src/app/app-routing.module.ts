@@ -7,7 +7,6 @@ import { StepperComponent } from './design-mode/stepper/stepper.component';
 import { SummaryComponent } from './design-mode/summary/summary.component';
 import { CartComponent } from './orders/cart/cart.component';
 import { TestingComponent } from './testing/testing.component';
-import { ProductHomeComponent } from './product-mode/product-home/product-home.component';
 import { ServiceHomeComponent } from './service-mode/service-home/service-home.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { OverexpressionPageComponent } from './product-mode/overexpression-page/overexpression-page.component';
@@ -33,6 +32,7 @@ import { MessagePageComponent } from './user-mode/message-page/message-page.comp
 import { PopupComponent } from './components/popup/popup.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
+import { ProductSidebarComponent } from './components/product-sidebar/product-sidebar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -62,10 +62,10 @@ const routes: Routes = [
   { path: 'quote/:serviceType', component: QuoteFormComponent },
   { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: 'resend-verification', component: ResendVerificationComponent },
-  { path: 'test', component: PopupComponent },
   { path: 'order-confirmation', component: OrderConfirmationComponent },
   { path: 'blog/:id', component: BlogPostComponent },
-  { path: '', component: LandingComponent, pathMatch: 'full' }
+  { path: '', component: LandingComponent, pathMatch: 'full' },
+  { path: 'test', component: ProductSidebarComponent },
 ];
 
 @NgModule({
