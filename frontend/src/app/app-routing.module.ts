@@ -62,7 +62,7 @@ const routes: Routes = [
   { path: 'quote/:serviceType', component: QuoteFormComponent },
   { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: 'resend-verification', component: ResendVerificationComponent },
-  { path: 'order-confirmation', component: OrderConfirmationComponent },
+  { path: 'order-confirmation/:token', component: OrderConfirmationComponent },
   { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
   { path: 'test', component: ProductSidebarComponent },

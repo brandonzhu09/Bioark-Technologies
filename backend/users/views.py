@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import check_password
 import json
 
 from orders.models import *
-from orders.serializers import OrderItemSerializer
+from orders.serializers import *
 from users.serializers import UserSerializer
 
 
@@ -21,6 +21,13 @@ def example_view(request):
         'auth': str(request.auth),  # None
     }
     return Response(content)
+
+@api_view(['GET'])
+def view_order(request, payment_token):
+    order = Order.objects.get(payment_token=payment_token)
+    serializer = OrderSerializer(order)
+    
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def view_orders(request):

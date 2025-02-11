@@ -98,13 +98,22 @@ def capture_order(request, order_id):
     cart = body.get("cart")
     quantity = body.get("quantity")
     discount_code = body.get("discount_code")
+    subtotal = body.get("subtotal")
+    shipping_amount = body.get("shipping_amount")
+    tax_amount = body.get("tax_amount")
 
     order = orders_controller.orders_capture(
         {"id": order_id, "prefer": "return=representation"}
     )
     data = json.loads(ApiHelper.json_serialize(order.body))
-    payment_token = data["id"]
+    payment_token = data["purchase_units"][0]["payments"]["captures"][0]["id"]
     total_price = data["purchase_units"][0]["amount"]["value"]
+
+    payment_source = "Made with PayPal"
+    last_digits = None
+    if "card" in data["payment_source"]:
+        payment_source = data["payment_source"]["card"]["brand"]
+        last_digits = data["payment_source"]["card"]["last_digits"]
 
     address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
                                                          city=address["city"],
@@ -112,10 +121,16 @@ def capture_order(request, order_id):
                                                          zipcode=address["zipcode"])
 
     order_obj = Order.objects.create(payment_token=payment_token,
+                                     subtotal=subtotal,
+                                     shipping_amount=shipping_amount,
+                                     tax_amount=tax_amount,
+                                     payment_source=payment_source,
+                                     last_digits=last_digits,
                                      total_price=total_price,
                                      quantity=quantity,
                                      discount_code=discount_code,
                                      shipping_address=address_obj,
+                                     billing_address=address_obj,
                                      user=request.user)
     
     for item in cart:

@@ -6,6 +6,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ThisReceiver } from '@angular/compiler';
 import { US_STATES } from '../../../../references';
 import { OrderService } from '../../services/order.service';
@@ -35,7 +36,7 @@ interface OrderSummary {
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule, PrimaryButtonComponent],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule, MatProgressSpinnerModule, PrimaryButtonComponent],
 })
 export class CheckoutComponent implements AfterViewInit {
   signupForm: FormGroup;
@@ -48,6 +49,7 @@ export class CheckoutComponent implements AfterViewInit {
   isBillingPanelDisabled = true;
   showSignupPreview = false;
   showShippingPreview = false;
+  isLoading = false;
   shippingPreview: ShippingPreview = {
     name: '',
     address: '',
@@ -69,10 +71,9 @@ export class CheckoutComponent implements AfterViewInit {
   cardField: any;
 
   signupErrorMsg: string = '';
+  paymentErrorMsg: string = '';
 
   ngOnInit(): void {
-    // this.initConfig();
-    // this.renderPayPalButton();
     this.getCartItems();
     this.autoFillShippingForm();
   }
@@ -110,25 +111,10 @@ export class CheckoutComponent implements AfterViewInit {
 
     this.billingAddressForm = this.fb.group({
       address: ['', Validators.required],
-      countryCode: ['US', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
       zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
     });
-
-    // this.cardField = paypal_sdk.CardFields({
-    //   createOrder: this.createOrderCallback,
-    //   onApprove: this.onApproveCallback,
-    //   style: {
-    //     input: {
-    //       "font-size": "16px",
-    //       "font-family": "courier, monospace",
-    //       "font-weight": "lighter",
-    //       color: "#ccc",
-    //     },
-    //     ".invalid": { color: "purple" },
-    //   },
-    // });
-
-    this.initCardFields();
   }
 
   getCartItems() {
@@ -233,6 +219,7 @@ export class CheckoutComponent implements AfterViewInit {
         onApprove: this.onApproveCallback
       }
     ).render('#paypal-button-container');
+    this.initCardFields();
   }
 
   createOrderCallback = () => {
@@ -269,11 +256,14 @@ export class CheckoutComponent implements AfterViewInit {
         },
         cart: this.cartItems,
         quantity: this.quantity,
-        discount_code: this.discountCode
+        discount_code: this.discountCode,
+        subtotal: this.subTotal,
+        tax_amount: this.taxAmount,
+        shipping_amount: 0,
       })
     }).then(function (res) {
       return res.json();
-    }).then(function (orderData) {
+    }).then((orderData) => {
       console.log(orderData);
       // Three cases to handle:
       //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
@@ -299,44 +289,88 @@ export class CheckoutComponent implements AfterViewInit {
       // Successful capture! For demo purposes:
       console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
       var transaction = orderData.purchase_units[0].payments.captures[0];
-      alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+      // alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
 
-      // Replace the above to show a success message within this page, e.g.
-      // const element = document.getElementById('paypal-button-container');
-      // element.innerHTML = '';
-      // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-      // Or go to another URL:  actions.redirect('thank_you.html');
+      // Redirect to order confirmation page
+      this.cartService.clearCart().subscribe(() => {
+        this.router.navigate(['/order-confirmation', transaction.id]).then(() => {
+          window.location.reload();
+        });
+      });
+    }
+    ).catch((error: any) => {
+      console.log(error);
+    }).finally(() => {
+      this.isLoading = false;
     });
   }
 
   initCardFields = () => {
-    // console.log("HI")
-    // const nameField = this.cardField.NameField({
-    //   style: { input: { color: "blue" }, ".invalid": { color: "purple" } },
-    // });
-    // nameField.render("#card-name-field-container");
+    this.cardField = paypal_sdk.CardFields({
+      createOrder: this.createOrderCallback,
+      onApprove: this.onApproveCallback,
+      style: {
+        input: {
+          "font-size": "16px",
+          "font-family": "courier, monospace",
+          "font-weight": "lighter",
+          color: "#ccc",
+        },
+        ".invalid": { color: "purple" },
+      },
+    });
 
-    // const numberField = this.cardField.NumberField({
-    //   style: { input: { color: "blue" } },
-    // });
-    // numberField.render("#card-number-field-container");
+    if (this.cardField.isEligible()) {
 
-    // const cvvField = this.cardField.CVVField({
-    //   style: { input: { color: "blue" } },
-    // });
-    // cvvField.render("#card-cvv-field-container");
+      const nameField = this.cardField.NameField({
+        style: { input: { color: "blue" }, ".invalid": { color: "purple" } },
+      });
+      nameField.render("#card-name-field-container");
 
-    // const expiryField = this.cardField.ExpiryField({
-    //   style: { input: { color: "blue" } },
-    // });
-    // expiryField.render("#card-expiry-field-container");
+      const numberField = this.cardField.NumberField({
+        style: { input: { color: "blue" } },
+      });
+      numberField.render("#card-number-field-container");
+
+      const cvvField = this.cardField.CVVField({
+        style: { input: { color: "blue" } },
+      });
+      cvvField.render("#card-cvv-field-container");
+
+      const expiryField = this.cardField.ExpiryField({
+        style: { input: { color: "blue" } },
+      });
+      expiryField.render("#card-expiry-field-container");
+    }
   }
 
   submitCardField = () => {
+    this.isLoading = true;
     this.cardField.submit()
       .then(() => {
         // submit successful
+      })
+      .catch((error: any) => {
+        this.paymentErrorMsg = 'An error occurred while processing your card. Please try again.';
+
+        console.log(error);
+        console.log(error.details);
+        console.log(error.message);
+
+        if (error.message == "INVALID_NUMBER") {
+          this.paymentErrorMsg = 'Invalid card number. Please check and try again.';
+        }
+        else if (error.message == "INVALID_CVV") {
+          this.paymentErrorMsg = 'Invalid CCV. Please check and try again.';
+        }
+        else if (error.message == "INVALID_EXPIRY") {
+          this.paymentErrorMsg = 'Invalid expiry date. Please check and try again.';
+        }
+      })
+      .finally(() => {
+        this.isLoading = false;
       });
+
   }
 
 }

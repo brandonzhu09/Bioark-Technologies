@@ -28,6 +28,22 @@ export class CartService {
     const cartResponse = await lastValueFrom(this.loadCartCountFromServer());
   }
 
+  clearCart() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    const body = {
+      'clear': true
+    }
+
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/cart/`, body, {
+      headers: headers,
+      withCredentials: true
+    });
+  }
+
   addToCart(product_sku: string, product_name: string, unit_size: string,
     price: string, adjusted_price: string, ready_status: string,
     function_type_name: string, structure_type_name: string,

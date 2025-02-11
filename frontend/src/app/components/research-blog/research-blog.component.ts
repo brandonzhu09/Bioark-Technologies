@@ -16,7 +16,6 @@ export class ResearchBlogComponent {
   ngOnInit() {
     this.blogService.getLatestBlogs().subscribe((data) => {
       this.blogs = data;
-      console.log(this.blogs);
     });
   }
 

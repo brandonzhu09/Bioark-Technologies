@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from orders.models import *
+from users.serializers import AddressSerializer
 
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,3 +17,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
     def get_order_placed_date(self, obj):
         order = Order.objects.get(order_id=obj.order_id)
         return order.order_placed_date.date()
+
+class OrderSerializer(serializers.ModelSerializer):
+    shipping_address = AddressSerializer()
+    billing_address = AddressSerializer()
+    
+    class Meta:
+        model = Order
+        fields = '__all__'

@@ -201,46 +201,62 @@
                     class="payment-container"
                 ></div>
 
-                <!-- <div class="payment-divider">
+                <div class="payment-divider">
                     <span class="payment-divider-text">or</span>
-                </div> -->
-                <!-- <div id="card-form" class="card_container">
+                </div>
+                <div id="card-form" class="card_container">
                     <div id="card-name-field-container"></div>
                     <div id="card-number-field-container"></div>
                     <div id="card-expiry-field-container"></div>
                     <div id="card-cvv-field-container"></div>
 
+                    <!-- <label>Billing Address</label>
+
                     <form
-                    [formGroup]="billingAddressForm"
-                    (ngSubmit)="submitCardField()"
-                >
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Address</mat-label>
-                        <input matInput formControlName="address" required />
-                        @if (billingAddressForm.get('address')?.hasError('required'))
-                        {
-                        <mat-error> Address is required </mat-error>
-                        }
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Address</mat-label>
-                        <input matInput formControlName="address" required />
-                        @if (billingAddressForm.get('address')?.hasError('required'))
-                        {
-                        <mat-error> Address is required </mat-error>
-                        }
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Address</mat-label>
-                        <input matInput formControlName="address" required />
-                        @if (billingAddressForm.get('address')?.hasError('required'))
-                        {
-                        <mat-error> Address is required </mat-error>
-                        }
-                    </mat-form-field>
-                    </div>
-                </form>
-                    <br /><br />
+                        [formGroup]="billingAddressForm"
+                        (ngSubmit)="submitCardField()"
+                    >
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Address Line 1</mat-label>
+                            <input
+                                matInput
+                                formControlName="address"
+                                required
+                            />
+                            @if
+                            (billingAddressForm.get('address')?.hasError('required'))
+                            {
+                            <mat-error> Address is required </mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>City</mat-label>
+                            <input
+                                matInput
+                                formControlName="address"
+                                required
+                            />
+                            @if
+                            (billingAddressForm.get('address')?.hasError('required'))
+                            {
+                            <mat-error> Address is required </mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>State</mat-label>
+                            <input
+                                matInput
+                                formControlName="address"
+                                required
+                            />
+                            @if
+                            (billingAddressForm.get('address')?.hasError('required'))
+                            {
+                            <mat-error> Address is required </mat-error>
+                            }
+                        </mat-form-field>
+                    </form> -->
+                    <!-- <br /><br /> -->
 
                     <button
                         mat-raised-button
@@ -250,7 +266,10 @@
                     >
                         Place Order
                     </button>
-                </div> -->
+                    @if (paymentErrorMsg !== '') {
+                    <div class="error-message">{{ paymentErrorMsg }}</div>
+                    }
+                </div>
             </mat-expansion-panel>
             }
         </mat-accordion>
@@ -294,4 +313,9 @@
             </div>
         </div>
     </div>
+    @if (isLoading) {
+    <div class="spinner-overlay">
+        <mat-spinner></mat-spinner>
+    </div>
+    }
 </div>

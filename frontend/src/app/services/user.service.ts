@@ -11,6 +11,10 @@ export class UserService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
+  viewOrder(payment_token: string) {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-order/${payment_token}`, { withCredentials: true });
+  }
+
   viewOrders() {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-orders/`, { withCredentials: true });
   }
