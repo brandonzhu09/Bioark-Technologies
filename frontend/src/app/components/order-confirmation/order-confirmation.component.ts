@@ -18,6 +18,9 @@ export class OrderConfirmationComponent {
   last_digits: string = '';
   order_placed_date: string = '';
   delivery_date: string = '';
+  first_name: string = '';
+  last_name: string = '';
+  email: string = '';
 
   shipping_address: any;
   billing_address: any;
@@ -40,9 +43,13 @@ export class OrderConfirmationComponent {
         this.last_digits = res.last_digits;
         this.shipping_address = res.shipping_address;
         this.billing_address = res.billing_address;
+        this.first_name = res.user.first_name;
+        this.last_name = res.user.last_name;
+        this.email = res.user.email;
         this.order_placed_date = this.formatDate(res.order_placed_date);
         // TODO: replace this
         this.delivery_date = 'Sat, May 10'
+
       }
     )
   }

@@ -14,12 +14,13 @@
         <p><strong>Order placed:</strong> {{ order_placed_date }}</p>
         <p><strong>Arrives by:</strong> {{ delivery_date }}</p>
         <p><strong>Shipping Address:</strong></p>
-        <p>John Newman</p>
+        <p>{{ first_name }} {{ last_name }}</p>
         <p>{{ shipping_address.address_line_1 }}</p>
         <p>
             {{ shipping_address.city }}, {{ shipping_address.state }}
             {{ shipping_address.zipcode }}
         </p>
+        <p>{{ email }}</p>
     </div>
 
     <div class="info-container">
@@ -39,19 +40,20 @@
             @if (payment_source !== 'Made with PayPal') {
             <p>{{ payment_source }} ending in {{ last_digits }}</p>
             } @else {
-            <p>Made with PayPal</p>
+            <p>Paid with PayPal</p>
             }
         </div>
 
         <div class="billing-info">
             <h2>Billing Address</h2>
             <hr />
-            <p>John Newman</p>
+            <p>{{ first_name }} {{ last_name }}</p>
             <p>{{ shipping_address.address_line_1 }}</p>
             <p>
                 {{ shipping_address.city }}, {{ shipping_address.state }}
                 {{ shipping_address.zipcode }}
             </p>
+            <p>{{ email }}</p>
         </div>
     </div>
 </div>

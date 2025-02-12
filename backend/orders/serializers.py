@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from orders.models import *
-from users.serializers import AddressSerializer
+from users.serializers import *
 
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +21,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     shipping_address = AddressSerializer()
     billing_address = AddressSerializer()
+    user = UserSerializer()
     
     class Meta:
         model = Order
