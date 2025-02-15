@@ -12,13 +12,13 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
-    list_display = ('session_key', 'expire_date', 'username', 'session_data')
+    list_display = ('session_key', 'expire_date', 'email', 'session_data')
 
     def session_data(self, obj):
         return obj.get_decoded()
 
-    def username(self, obj):
+    def email(self, obj):
         decoded_data = obj.get_decoded()
         user_id = decoded_data.get('_auth_user_id', None)
         user = User.objects.get(id=user_id)
-        return user.username
+        return user.email

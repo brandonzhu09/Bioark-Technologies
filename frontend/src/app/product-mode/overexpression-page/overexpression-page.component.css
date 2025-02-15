@@ -1,7 +1,13 @@
+.container {
+    display: flex;
+    width: 65%;
+    margin: 0 auto;
+}
+
 .heading-section {
     margin: auto;
     margin-top: 40px;
-    width: 65%;
+    /* width: 65%; */
     text-align: left;
 }
 
@@ -27,7 +33,6 @@
 }
 
 .product-container {
-    width: 65%;
     margin: 0 auto;
     /* padding: 2rem; */
 }
@@ -163,6 +168,17 @@ ol {
     /* Create a positioning context */
 }
 
+.product-sidebar {
+    width: 25%;
+    margin-top: 40px;
+}
+
+.main-content {
+    /* margin-left: 22%; */
+    /* Adjust this value to create space for the sidebar */
+    width: 75%;
+}
+
 .product-card {
     position: fixed;
     /* Keeps it outside the flow of the page */
@@ -202,4 +218,37 @@ ol {
     /* Matching the red color for the price */
     font-weight: bold;
     padding-bottom: 10px;
+}
+
+
+@media (max-width: 1624px) {
+    .container {
+        width: 100%;
+    }
+
+    .product-sidebar {
+        width: 25%;
+    }
+
+    .main-content {
+        width: 75%;
+    }
+}
+
+@media (max-width: 1300px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .product-sidebar {
+        position: relative;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
 }

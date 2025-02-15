@@ -4,7 +4,7 @@
         @for (blog of blogs; track blog) {
         <card
             [name]="blog.title"
-            [date]="blog.date_posted"
+            [date]="formatDate(blog.date_posted)"
             [image]="blog.image"
             [description]="blog.description"
             link="blog/{{ blog.id }}"
