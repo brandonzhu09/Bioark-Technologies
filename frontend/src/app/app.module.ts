@@ -57,6 +57,7 @@ import { GeneDeletionPageComponent } from './product-mode/gene-deletion-page/gen
 import { GeneKnockInPageComponent } from './product-mode/gene-knock-in-page/gene-knock-in-page.component';
 import { GeneKnockOutPageComponent } from './product-mode/gene-knock-out-page/gene-knock-out-page.component';
 import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rna-knock-down-page.component';
+import { PromotionSectionComponent } from './components/promotion-section/promotion-section.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -100,6 +101,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     GeneKnockOutPageComponent,
     RnaKnockDownPageComponent,
     ProductSidebarComponent,
+    PromotionSectionComponent,
   ],
   imports: [
     StepperComponent,

@@ -33,6 +33,7 @@ import { PopupComponent } from './components/popup/popup.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
 import { ProductSidebarComponent } from './components/product-sidebar/product-sidebar.component';
+import { PromotionSectionComponent } from './components/promotion-section/promotion-section.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -65,7 +66,7 @@ const routes: Routes = [
   { path: 'order-confirmation/:token', component: OrderConfirmationComponent },
   { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
-  { path: 'test', component: ProductSidebarComponent },
+  { path: 'test', component: PromotionSectionComponent },
 ];
 
 @NgModule({
