@@ -53,6 +53,14 @@ def get_code_p_parameters(request):
     }
     return Response(data)
 
+@api_view(['GET'])
+def get_product_search_results(request):
+    product_name = request.GET["product_name"]
+    symbol = symbol.upper()
+    queryset = GeneLibrary.objects.filter(__contains=symbol)[:10]
+    serializer = GeneLibrarySerializer(queryset, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def get_gene_table_by_symbol(request):
