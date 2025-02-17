@@ -52,12 +52,14 @@ import { MessagePageComponent } from './user-mode/message-page/message-page.comp
 import { PopupComponent } from './components/popup/popup.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { ProductSidebarComponent } from './components/product-sidebar/product-sidebar.component';
-import { OverexpressionPageComponent } from './product-mode/overexpression-page/overexpression-page.component';
-import { GeneDeletionPageComponent } from './product-mode/gene-deletion-page/gene-deletion-page.component';
-import { GeneKnockInPageComponent } from './product-mode/gene-knock-in-page/gene-knock-in-page.component';
-import { GeneKnockOutPageComponent } from './product-mode/gene-knock-out-page/gene-knock-out-page.component';
-import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rna-knock-down-page.component';
+// import { OverexpressionPageComponent } from './product-mode/overexpression-page/overexpression-page.component';
+// import { GeneDeletionPageComponent } from './product-mode/gene-deletion-page/gene-deletion-page.component';
+// import { GeneKnockInPageComponent } from './product-mode/gene-knock-in-page/gene-knock-in-page.component';
+// import { GeneKnockOutPageComponent } from './product-mode/gene-knock-out-page/gene-knock-out-page.component';
+// import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rna-knock-down-page.component';
 import { PromotionSectionComponent } from './components/promotion-section/promotion-section.component';
+import { ProductModePageComponent } from './product-mode/product-mode-page/product-mode-page.component';
+import { ServiceModePageComponent } from './service-mode/service-mode-page/service-mode-page.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -95,13 +97,10 @@ export function initializeApp(authService: AuthService, cartService: CartService
     SmallCardComponent,
     MessagePageComponent,
     OrderConfirmationComponent,
-    OverexpressionPageComponent,
-    GeneDeletionPageComponent,
-    GeneKnockInPageComponent,
-    GeneKnockOutPageComponent,
-    RnaKnockDownPageComponent,
     ProductSidebarComponent,
     PromotionSectionComponent,
+    ProductModePageComponent,
+    ServiceModePageComponent,
   ],
   imports: [
     StepperComponent,

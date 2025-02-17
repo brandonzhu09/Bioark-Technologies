@@ -9,11 +9,6 @@ import { CartComponent } from './orders/cart/cart.component';
 import { TestingComponent } from './testing/testing.component';
 import { ServiceHomeComponent } from './service-mode/service-home/service-home.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
-import { OverexpressionPageComponent } from './product-mode/overexpression-page/overexpression-page.component';
-import { GeneKnockInPageComponent } from './product-mode/gene-knock-in-page/gene-knock-in-page.component';
-import { GeneKnockOutPageComponent } from './product-mode/gene-knock-out-page/gene-knock-out-page.component';
-import { GeneDeletionPageComponent } from './product-mode/gene-deletion-page/gene-deletion-page.component';
-import { RnaKnockDownPageComponent } from './product-mode/rna-knock-down-page/rna-knock-down-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { QuoteFormComponent } from './components/quote-form/quote-form.component';
@@ -34,6 +29,8 @@ import { OrderConfirmationComponent } from './components/order-confirmation/orde
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
 import { ProductSidebarComponent } from './components/product-sidebar/product-sidebar.component';
 import { PromotionSectionComponent } from './components/promotion-section/promotion-section.component';
+import { ProductModePageComponent } from './product-mode/product-mode-page/product-mode-page.component';
+import { ServiceModePageComponent } from './service-mode/service-mode-page/service-mode-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -49,15 +46,9 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'testing', component: TestingComponent },
-  { path: 'products/overexpression', component: OverexpressionPageComponent },
-  { path: 'products/gene-knock-in', component: GeneKnockInPageComponent },
-  { path: 'products/gene-knock-out', component: GeneKnockOutPageComponent },
-  { path: 'products/gene-deletion', component: GeneDeletionPageComponent },
-  { path: 'products/rna-knock-down', component: RnaKnockDownPageComponent },
-  { path: 'products/:product-sku', component: ProductSummaryComponent },
-  { path: 'services/custom-cloning', component: CustomCloningPageComponent },
-  { path: 'services/lentivirus-package', component: LentivirusPackagePageComponent },
-  { path: 'services/stable-cell-line', component: StableCellPageComponent },
+  { path: 'products/item/:product-sku', component: ProductSummaryComponent },
+  { path: 'products/:url', component: ProductModePageComponent },
+  { path: 'services/:url', component: ServiceModePageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'quote', component: QuoteFormComponent },
   { path: 'quote/:serviceType', component: QuoteFormComponent },
@@ -66,7 +57,7 @@ const routes: Routes = [
   { path: 'order-confirmation/:token', component: OrderConfirmationComponent },
   { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
-  { path: 'test', component: PromotionSectionComponent },
+  { path: 'test', component: ServiceModePageComponent },
 ];
 
 @NgModule({

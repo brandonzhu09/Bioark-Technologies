@@ -9,6 +9,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('orders/', include('orders.urls')),
     path('blogs/', include('blogs.urls')),
+    path('interface/', include('interface.urls')),
     path('csrf/', views.get_csrf, name='api-csrf'),
     path('signup/', views.signup_view, name='api-signup'),
     path('login/', views.login_view, name='api-login'),
