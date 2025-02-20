@@ -1,11 +1,10 @@
 .blog-container {
     width: 65%;
     margin: auto;
-    margin-bottom: 50px;
 }
 
 .heading {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     text-align: left;
     font-size: 32px;
     font-weight: bold;

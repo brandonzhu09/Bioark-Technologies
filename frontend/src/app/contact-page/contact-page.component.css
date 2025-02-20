@@ -84,3 +84,33 @@ button {
 button:hover {
     opacity: 0.9;
 }
+
+.about-container {
+    margin-bottom: 100px;
+}
+
+.heading-section {
+    margin: auto;
+    /* width: 65%; */
+    text-align: left;
+}
+
+.heading-section h2 {
+    font-size: 56px;
+    font-weight: bold;
+    line-height: 1em;
+}
+
+.about-section {
+    border-radius: 3px;
+    border: 1px solid #eaeaea;
+    background: white;
+    padding: 1rem;
+}
+
+.about-section p {
+    font-size: 16px;
+    /* font-weight: 400; */
+    line-height: 21px;
+    color: #777777
+}
