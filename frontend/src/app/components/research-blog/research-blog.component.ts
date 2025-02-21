@@ -11,12 +11,12 @@ export class ResearchBlogComponent {
 
   constructor(private blogService: BlogService) { }
 
-  blogs: any = [];
+  blogs: any = [{}, {}, {}, {}];
 
   ngOnInit() {
-    this.blogService.getLatestBlogs().subscribe((data) => {
-      this.blogs = data;
-    });
+    // this.blogService.getLatestBlogs().subscribe((data) => {
+    //   this.blogs = data;
+    // });
   }
 
   formatDate(dateString: string): string {

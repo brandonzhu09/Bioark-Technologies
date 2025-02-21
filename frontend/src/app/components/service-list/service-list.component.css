@@ -1,5 +1,5 @@
 .service-list-container {
-    width: 65%;
+    width: 66%;
     margin: auto;
 }
 
@@ -13,6 +13,7 @@
 .service-list {
     display: flex;
     justify-content: start;
+    flex-wrap: wrap;
     /* margin: 20px; */
     margin-top: 20px;
 }

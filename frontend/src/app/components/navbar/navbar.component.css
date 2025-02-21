@@ -150,6 +150,14 @@ nav ul {
   transition: color 0.3s ease;
 }
 
+@media screen and (max-width: 1372px) {
+  .contact-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
   .navbar {
