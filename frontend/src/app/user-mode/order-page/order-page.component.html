@@ -226,7 +226,11 @@
                                     Product Name
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <a href="/products/{{ row.product_sku }}">
+                                    <a
+                                        href="/products/item/{{
+                                            row.product_sku
+                                        }}"
+                                    >
                                         {{ row.product_name }}</a
                                     >
                                 </td>
@@ -382,7 +386,11 @@
                                     Product Name
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <a href="/products/{{ row.product_sku }}">
+                                    <a
+                                        href="/products/item/{{
+                                            row.product_sku
+                                        }}"
+                                    >
                                         {{ row.product_name }}</a
                                     >
                                 </td>
@@ -534,7 +542,11 @@
                                     Product Name
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <a href="/products/{{ row.product_sku }}">
+                                    <a
+                                        href="/products/item/{{
+                                            row.product_sku
+                                        }}"
+                                    >
                                         {{ row.product_name }}</a
                                     >
                                 </td>

@@ -768,7 +768,10 @@
                 <button
                     mat-button
                     matStepperNext
-                    (click)="checkFormCompletion(fifthFormGroup)"
+                    (click)="
+                        checkFormCompletion(fifthFormGroup);
+                        redirectToSummaryPage()
+                    "
                 >
                     Next
                 </button>
@@ -783,7 +786,7 @@
             </div>
         </form>
     </mat-step>
-    @if (toggleSummaryStep) {
+    <!-- @if (toggleSummaryStep) {
     <mat-step>
         <ng-template matStepLabel>Summary</ng-template>
         <design-summary
@@ -804,5 +807,5 @@
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
     </mat-step>
-    }
+    } -->
 </mat-stepper>

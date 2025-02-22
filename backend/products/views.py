@@ -209,7 +209,6 @@ def decode_product_sku(product_sku):
         bacterial_marker_code = part2[4]
         
         target_sequence = target_sequence_with_delivery[:6]
-        delivery_format_code = target_sequence_with_delivery[-1]
         
         # Retrieve data from the database
         function_type_name = FunctionType.objects.get(function_type_symbol=function_type_code).function_type_name
@@ -232,7 +231,6 @@ def decode_product_sku(product_sku):
         protein_tag_name = ProteinTag.objects.get(protein_tag_code=protein_tag_code).protein_tag_name
         fluorescene_marker_name = FluoresceneMarker.objects.get(fluorescene_marker_code=fluorescene_marker_code).fluorescene_marker_name
         selection_marker_name = SelectionMarker.objects.get(selection_marker_code=selection_marker_code).selection_marker_name
-        delivery_format_name = DeliveryFormat.objects.get(delivery_format_symbol=delivery_format_code).delivery_format_name
 
         # Return the decoded components as a dictionary
         return {
@@ -244,7 +242,6 @@ def decode_product_sku(product_sku):
             "selection_marker_name": selection_marker_name,
             "bacterial_marker_name": bacterial_marker_name,
             "target_sequence": target_sequence,
-            "delivery_format_name": delivery_format_name,
         }
     
     except ObjectDoesNotExist as e:

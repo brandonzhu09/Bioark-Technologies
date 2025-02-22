@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { SummaryComponent } from '../summary/summary.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'stepper',
@@ -36,7 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
     ],
 })
 export class StepperComponent {
-    constructor(private designFormService: DesignFormService) { }
+    constructor(private designFormService: DesignFormService, private productService: ProductService, private router: Router) { }
 
     @ViewChild('stepper') stepper!: MatStepper;
     @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
@@ -74,6 +76,8 @@ export class StepperComponent {
         'price',
     ];
     deliveryFormatTable: any[] = [];
+
+    product_sku: string = '';
 
     firstFormGroup = new FormGroup({
         productCategoryId: new FormControl('', [
@@ -318,6 +322,24 @@ export class StepperComponent {
         }
     }
 
+    redirectToSummaryPage() {
+        this.productService.getProductSku(
+            this.thirdFormGroup.value.structureTypeName!,
+            this.secondFormGroup.value.functionTypeName!,
+            this.fourthFormGroup.value.promoterName!,
+            this.fourthFormGroup.value.proteinTagName!,
+            this.fourthFormGroup.value.fluoresceneMarkerName!,
+            this.fourthFormGroup.value.selectionMarkerName!,
+            this.fourthFormGroup.value.bacterialMarkerName!,
+            this.getTargetSequence()
+        ).subscribe(res => {
+            this.product_sku = res.product_sku;
+            this.router.navigate(['/products/item/' + this.product_sku]).then(() => {
+                window.location.reload();
+            });
+        })
+    }
+
     getTargetSequence() {
         if (this.fifthFormGroup.value.targetSequence == null || this.fifthFormGroup.value.targetSequence === "IGNORE") {
             return "XXXXXX";
@@ -360,36 +382,36 @@ export class StepperComponent {
     }
 
     // Save form data to localStorage
-    saveFormData() {
-        console.log('Saving form data');
-        const formData = {
-            firstFormGroup: this.firstFormGroup.value,
-            secondFormGroup: this.secondFormGroup.value,
-            thirdFormGroup: this.thirdFormGroup.value,
-            fourthFormGroup: this.fourthFormGroup.value,
-            fifthFormGroup: this.fifthFormGroup.value,
-            searchGeneGroup: this.searchGeneGroup.value,
-            selectedTargetSequence: this.selectedTargetSequence,
-            toggleSummaryStep: this.toggleSummaryStep,
-        };
-        localStorage.setItem('stepperFormData', JSON.stringify(formData));
-    }
+    // saveFormData() {
+    //     console.log('Saving form data');
+    //     const formData = {
+    //         firstFormGroup: this.firstFormGroup.value,
+    //         secondFormGroup: this.secondFormGroup.value,
+    //         thirdFormGroup: this.thirdFormGroup.value,
+    //         fourthFormGroup: this.fourthFormGroup.value,
+    //         fifthFormGroup: this.fifthFormGroup.value,
+    //         searchGeneGroup: this.searchGeneGroup.value,
+    //         selectedTargetSequence: this.selectedTargetSequence,
+    //         toggleSummaryStep: this.toggleSummaryStep,
+    //     };
+    //     localStorage.setItem('stepperFormData', JSON.stringify(formData));
+    // }
 
     // Load form data from localStorage
-    loadFormData() {
-        const savedData = localStorage.getItem('stepperFormData');
-        if (savedData) {
-            const formData = JSON.parse(savedData);
-            this.firstFormGroup.setValue(formData.firstFormGroup);
-            this.secondFormGroup.setValue(formData.secondFormGroup);
-            this.thirdFormGroup.setValue(formData.thirdFormGroup);
-            this.fourthFormGroup.setValue(formData.fourthFormGroup);
-            this.fifthFormGroup.setValue(formData.fifthFormGroup);
-            this.searchGeneGroup.setValue(formData.searchGeneGroup);
-            this.selectedTargetSequence = formData.selectedTargetSequence;
-            this.toggleSummaryStep = formData.toggleSummaryStep;
+    // loadFormData() {
+    //     const savedData = localStorage.getItem('stepperFormData');
+    //     if (savedData) {
+    //         const formData = JSON.parse(savedData);
+    //         this.firstFormGroup.setValue(formData.firstFormGroup);
+    //         this.secondFormGroup.setValue(formData.secondFormGroup);
+    //         this.thirdFormGroup.setValue(formData.thirdFormGroup);
+    //         this.fourthFormGroup.setValue(formData.fourthFormGroup);
+    //         this.fifthFormGroup.setValue(formData.fifthFormGroup);
+    //         this.searchGeneGroup.setValue(formData.searchGeneGroup);
+    //         this.selectedTargetSequence = formData.selectedTargetSequence;
+    //         this.toggleSummaryStep = formData.toggleSummaryStep;
 
-            console.log(this.secondFormGroup.value);
-        }
-    }
+    //         console.log(this.secondFormGroup.value);
+    //     }
+    // }
 }
