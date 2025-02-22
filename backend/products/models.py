@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import Q
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
 
 
 class Promoter(models.Model):
@@ -169,6 +171,15 @@ class DesignLibrary(models.Model):
     class Meta:
         db_table = 'design_library'
 
+class ProductsUnion(models.Model):
+    product_id = models.CharField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'products_union'
+    
+    def __str__(self):
+        return self.product_id
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
@@ -194,6 +205,67 @@ class Product(models.Model):
     inventory = models.ForeignKey(ProductInventory, on_delete=models.PROTECT)
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
     gene = models.ForeignKey(GeneLibrary, null=True, on_delete=models.PROTECT)
+    union = models.OneToOneField(ProductsUnion, on_delete=models.CASCADE, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.union:
+            self.union = ProductsUnion.objects.create(product_id=self.product_sku)
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = 'products'
+
+
+class FeaturedProduct(models.Model):
+    category_number = models.CharField()
+    product_name = models.CharField()
+    description = models.CharField()
+    key_features = models.CharField()
+    performance_data = models.CharField()
+    storage_info = models.CharField()
+    shelf_status = models.BooleanField()
+    units_in_stock = models.IntegerField()
+    units = models.CharField()
+    ship_info = models.CharField()
+    union = models.OneToOneField(ProductsUnion, on_delete=models.CASCADE, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.union:
+            self.union = ProductsUnion.objects.create(product_id=self.category_number)
+        super().save(*args, **kwargs)
+
+    class Meta:
+        db_table = 'featured_products'
+
+
+class Image(models.Model):
+    union = models.ForeignKey(ProductsUnion, on_delete=models.CASCADE)
+    name = models.CharField()
+    image = models.ImageField(upload_to='product_images')
+
+    class Meta:
+        db_table = 'images'
+
+class ManualFile(models.Model):
+    union = models.ForeignKey(ProductsUnion, on_delete=models.CASCADE)
+    name = models.CharField()
+    manual = models.FileField(upload_to='manual_files')
+
+    class Meta:
+        db_table = 'manual_files'
+
+class UnitPrice(models.Model):
+    union = models.ForeignKey(ProductsUnion, on_delete=models.CASCADE)
+    unit_size = models.CharField()
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    class Meta:
+        db_table = 'unit_prices'
+
+
+# Signal to create a ProductsUnion entry before saving a Product or FeaturedProduct
+@receiver(pre_save, sender=Product)
+@receiver(pre_save, sender=FeaturedProduct)
+def create_union_entry(sender, instance, **kwargs):
+    if not instance.union_id:  # Ensure we only create one per product
+        instance.union = ProductsUnion.objects.create()

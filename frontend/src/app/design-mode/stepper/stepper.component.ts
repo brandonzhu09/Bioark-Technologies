@@ -323,21 +323,23 @@ export class StepperComponent {
     }
 
     redirectToSummaryPage() {
-        this.productService.getProductSku(
-            this.thirdFormGroup.value.structureTypeName!,
-            this.secondFormGroup.value.functionTypeName!,
-            this.fourthFormGroup.value.promoterName!,
-            this.fourthFormGroup.value.proteinTagName!,
-            this.fourthFormGroup.value.fluoresceneMarkerName!,
-            this.fourthFormGroup.value.selectionMarkerName!,
-            this.fourthFormGroup.value.bacterialMarkerName!,
-            this.getTargetSequence()
-        ).subscribe(res => {
-            this.product_sku = res.product_sku;
-            this.router.navigate(['/products/item/' + this.product_sku]).then(() => {
-                window.location.reload();
-            });
-        })
+        if (this.fifthFormGroup.valid) {
+            this.productService.getProductSku(
+                this.thirdFormGroup.value.structureTypeName!,
+                this.secondFormGroup.value.functionTypeName!,
+                this.fourthFormGroup.value.promoterName!,
+                this.fourthFormGroup.value.proteinTagName!,
+                this.fourthFormGroup.value.fluoresceneMarkerName!,
+                this.fourthFormGroup.value.selectionMarkerName!,
+                this.fourthFormGroup.value.bacterialMarkerName!,
+                this.getTargetSequence()
+            ).subscribe(res => {
+                this.product_sku = res.product_sku;
+                this.router.navigate(['/products/item/' + this.product_sku]).then(() => {
+                    window.location.reload();
+                });
+            })
+        }
     }
 
     getTargetSequence() {
