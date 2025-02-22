@@ -115,3 +115,45 @@ class ProductSerializer(serializers.ModelSerializer):
             return None
         except Exception:
             return None
+
+class FeaturedProductSerializer(serializers.ModelSerializer):
+    images = serializers.SerializerMethodField()
+    manuals = serializers.SerializerMethodField()
+    unit_prices = serializers.SerializerMethodField()
+
+    class Meta:
+        model = FeaturedProduct
+        fields = ['product_name', 'catalog_number', 'description', 'key_features', 'performance_data', 'storage_info', 'ship_info', 'images', 'manuals', 'unit_prices']
+    
+    def get_images(self, product):
+        images = Image.objects.filter(union=product.union)
+        serializer = ImageSerializer(images, many=True)
+        return serializer.data
+    
+    def get_manuals(self, product):
+        manuals = ManualFile.objects.filter(union=product.union)
+        serializer = ManualFileSerializer(manuals, many=True)
+        return serializer.data
+    
+    def get_unit_prices(self, product):
+        unit_prices = UnitPrice.objects.filter(union=product.union)
+        serializer = UnitPriceSerializer(unit_prices, many=True)
+        return serializer.data
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = "__all__"
+
+
+class ManualFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManualFile
+        fields = "__all__"
+
+
+class UnitPriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnitPrice
+        fields = "__all__"

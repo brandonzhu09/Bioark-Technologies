@@ -10,4 +10,5 @@ urlpatterns = [
     path('get-delivery-format-table/', views.get_delivery_format_table),
     path('get-product-summary/<str:product_sku>/', views.get_product_summary),
     path('get-product-sku/', views.get_product_sku),
+    path('load-featured-product-page/<str:catalog_number>', views.load_featured_product_page),
 ]

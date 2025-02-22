@@ -8,7 +8,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(FeaturedProduct)
 class FeaturedProductAdmin(admin.ModelAdmin):
-    list_display = ('category_number', 'product_name', 'shelf_status', 'units_in_stock', 'union')
+    list_display = ('catalog_number', 'product_name', 'shelf_status', 'units_in_stock', 'union')
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):

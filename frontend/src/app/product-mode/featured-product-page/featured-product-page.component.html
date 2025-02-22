@@ -1,0 +1,93 @@
+<div class="product-page">
+    <h1>{{ product_name }}</h1>
+    <div class="content">
+        <div class="diagram">
+            <img src="../../../assets/placeholder-card.jpg" alt="Diagram" />
+        </div>
+        <div class="description">
+            <p>
+                {{ description }}
+            </p>
+        </div>
+    </div>
+    <div class="product-info-table">
+        <div class="product-info-nav">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        [class.active]="activeTab === 'specifications'"
+                        (click)="setActiveTab('specifications')"
+                        aria-current="page"
+                        >Specifications</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        [class.active]="activeTab === 'performance-data'"
+                        (click)="setActiveTab('performance-data')"
+                        >Performance Data</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        [class.active]="activeTab === 'manuals'"
+                        (click)="setActiveTab('manuals')"
+                        >Manuals</a
+                    >
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="activeTab === 'specifications'">
+            <div class="tab-header">Product Information</div>
+            <table>
+                <tr>
+                    <td class="first-column">
+                        <strong>Features</strong>
+                    </td>
+                    <td>
+                        {{ key_features }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first-column highlight">
+                        <strong>Shipping</strong>
+                    </td>
+                    <td class="highlight">{{ ship_info }}</td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="activeTab === 'performance-data'">
+            <div class="tab-header">Performance Data</div>
+            <table>
+                <tr>
+                    <td>
+                        {{ performance_data }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="activeTab === 'manuals'">
+            <div class="tab-header">Manuals</div>
+            <div class="manual-table">
+                <ul class="list-unstyled">
+                    @for (manual of manuals; track manual.id) {
+                    <li>
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            [href]="fullUrl(manual.manual)"
+                            class="pdf-link"
+                        >
+                            <i class="bi bi-file-earmark-pdf h1"></i>
+                            {{ manual.name }}
+                        </a>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

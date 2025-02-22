@@ -31,6 +31,7 @@ import { ProductSidebarComponent } from './components/product-sidebar/product-si
 import { PromotionSectionComponent } from './components/promotion-section/promotion-section.component';
 import { ProductModePageComponent } from './product-mode/product-mode-page/product-mode-page.component';
 import { ServiceModePageComponent } from './service-mode/service-mode-page/service-mode-page.component';
+import { FeaturedProductPageComponent } from './product-mode/featured-product-page/featured-product-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'summary-temp', component: SummaryComponent },
   { path: 'design', component: StepperComponent },
   { path: 'product', component: ProductPageComponent },
+  { path: 'product/featured/:catalog-number', component: FeaturedProductPageComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'testing', component: TestingComponent },

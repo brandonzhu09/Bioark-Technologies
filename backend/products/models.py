@@ -217,7 +217,7 @@ class Product(models.Model):
 
 
 class FeaturedProduct(models.Model):
-    category_number = models.CharField()
+    catalog_number = models.CharField()
     product_name = models.CharField()
     description = models.CharField()
     key_features = models.CharField()

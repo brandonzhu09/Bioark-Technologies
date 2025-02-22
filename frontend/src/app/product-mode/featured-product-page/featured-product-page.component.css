@@ -1,0 +1,175 @@
+.product-page {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 75%;
+    margin: auto;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+}
+
+.diagram img {
+    /* width: 200px;
+    height: 200px; */
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.description {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.description p {
+    margin: 2px 0;
+}
+
+.description strong {
+    display: inline-block;
+    width: 200px;
+}
+
+.overview {
+    margin-top: 50px;
+}
+
+/* Product Information Table */
+.product-info-table {
+    margin-top: 50px;
+}
+
+.product-info-nav li a {
+    color: black !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+td.highlight {
+    background-color: #f0f0f0;
+}
+
+td.first-column {
+    white-space: nowrap;
+    width: 1px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+/* Product Order Table */
+.product-order-table {
+    margin-top: 50px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+tbody td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    position: relative;
+}
+
+.price-column {
+    width: 30%;
+}
+
+.price-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+}
+
+.price {
+    color: red;
+    font-weight: bold;
+    display: block;
+}
+
+input[type="number"] {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #ff8c00;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-end;
+    position: absolute;
+    bottom: 10px;
+    /* right: 10px; */
+}
+
+button:hover {
+    background-color: #ff7a00;
+}
+
+.manual-table {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 20px;
+}
+
+.tab-header {
+    background-color: #f0f0f0;
+    padding: 15px 10px;
+    border-bottom: 1px solid #ccc;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.pdf-link {
+    color: green;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.pdf-link:hover {
+    text-decoration: underline;
+}
+
+.pdf-link i {
+    margin-right: 5px;
+}

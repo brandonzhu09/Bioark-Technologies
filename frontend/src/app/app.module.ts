@@ -60,6 +60,7 @@ import { ProductSidebarComponent } from './components/product-sidebar/product-si
 import { PromotionSectionComponent } from './components/promotion-section/promotion-section.component';
 import { ProductModePageComponent } from './product-mode/product-mode-page/product-mode-page.component';
 import { ServiceModePageComponent } from './service-mode/service-mode-page/service-mode-page.component';
+import { FeaturedProductPageComponent } from './product-mode/featured-product-page/featured-product-page.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -101,6 +102,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     PromotionSectionComponent,
     ProductModePageComponent,
     ServiceModePageComponent,
+    FeaturedProductPageComponent,
   ],
   imports: [
     StepperComponent,

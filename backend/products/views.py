@@ -169,6 +169,19 @@ def get_product_sku(request):
     return Response({"product_sku": product_sku})
 
 
+@api_view(['GET'])
+def load_featured_product_page(request, catalog_number):
+    product = FeaturedProduct.objects.get(catalog_number=catalog_number)
+    serializer = FeaturedProductSerializer(product)
+
+    return Response(serializer.data)
+
+
+
+
+## HELPER METHODS
+
+
 def generate_product_sku(function_type_name, structure_type_name, promoter_name, protein_tag_name, fluorescene_marker_name, selection_marker_name,
                          bacterial_marker_name, target_sequence, delivery_format_name=None):
     function_type_code = FunctionType.objects.get(function_type_name=function_type_name).function_type_symbol
