@@ -12,12 +12,16 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Q
 
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
+from products.serializers import ProductSerializer
 from users.models import User
 from api.models import EmailVerificationToken
+from products.models import Product
 
 FRONTEND_DOMAIN = os.environ.get('FRONTEND_DOMAIN')
 
@@ -232,3 +236,16 @@ def resend_verification(request):
     send_verification_email(user)
 
     return JsonResponse({'detail': 'A new verification link has been sent to your email.'})
+
+@api_view(['GET'])
+def search_product(request, keywords):
+    list_keywords = keywords.split()
+
+    search_query = Q()
+    for keyword in list_keywords:
+        search_query |= Q(product_name__icontains=keyword)
+
+    products = Product.objects.filter(search_query)
+    serializer = ProductSerializer(products, many=True)
+
+    return Response(serializer.data)

@@ -51,14 +51,14 @@ class ProductSerializer(serializers.ModelSerializer):
         try:
             function_type = FunctionType.objects.filter(symbol=product.function_type_code).first()
             return function_type.function_type_name
-        except FunctionType.DoesNotExist:
+        except Exception:
             return None
 
     def get_delivery_type_name(self, product):
         try:
             delivery_type = DeliveryLibrary.objects.filter(delivery_type_symbol=product.delivery_type_code).first()
             return delivery_type.delivery_type_name
-        except DeliveryLibrary.DoesNotExist:
+        except Exception:
             return None
     
     def get_promoter_name(self, product):
@@ -74,21 +74,21 @@ class ProductSerializer(serializers.ModelSerializer):
         try:
             protein_tag = ProteinTag.objects.filter(protein_tag_code=product.protein_tag_code).first()
             return protein_tag.protein_tag_name
-        except ProteinTag.DoesNotExist:
+        except Exception:
             return None
     
     def get_fluorescene_marker_name(self, product):
         try:
             fluorescene_marker = FluoresceneMarker.objects.filter(fluorescene_marker_code=product.fluorescene_marker_code).first()
             return fluorescene_marker.fluorescene_marker_name
-        except FluoresceneMarker.DoesNotExist:
+        except Exception:
             return None
     
     def get_selection_marker_name(self, product):
         try:
             selection_marker = SelectionMarker.objects.filter(selection_marker_code=product.selection_marker_code).first()
             return selection_marker.selection_marker_name
-        except SelectionMarker.DoesNotExist:
+        except Exception:
             return None
     
     def get_bacterial_marker_name(self, product):
@@ -104,7 +104,7 @@ class ProductSerializer(serializers.ModelSerializer):
         try:
             delivery_format = DeliveryLibrary.objects.filter(delivery_format_symbol=product.delivery_format_code).first()
             return delivery_format.delivery_format_name
-        except DeliveryLibrary.DoesNotExist:
+        except Exception:
             return None
 
     def get_target_sequence(self, product):
@@ -113,5 +113,5 @@ class ProductSerializer(serializers.ModelSerializer):
                 gene = GeneLibrary.objects.get(gene_library_id=product.gene_id)
                 return gene.target_sequence
             return None
-        except GeneLibrary.DoesNotExist:
+        except Exception:
             return None
