@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', home_view),
-    path('api/', include('api.urls'))
+    path('api/', include('api.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 # Serve media files in development

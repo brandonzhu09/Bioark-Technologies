@@ -217,22 +217,22 @@ class Product(models.Model):
 
 
 class FeaturedProduct(models.Model):
-    catalog_number = models.CharField()
+    catalog_number = models.CharField(unique=True)
     product_name = models.CharField()
-    description = models.CharField()
-    key_features = models.CharField()
-    performance_data = models.CharField()
+    description = models.TextField()
+    key_features = models.TextField()
+    performance_data = models.TextField()
     storage_info = models.CharField()
+    ship_info = models.CharField()
     shelf_status = models.BooleanField()
     on_display = models.BooleanField(default=False)
     units_in_stock = models.IntegerField()
     units = models.CharField()
-    ship_info = models.CharField()
     union = models.OneToOneField(ProductsUnion, on_delete=models.CASCADE, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.union:
-            self.union = ProductsUnion.objects.create(product_id=self.category_number)
+            self.union = ProductsUnion.objects.create(product_id=self.catalog_number)
         super().save(*args, **kwargs)
 
     class Meta:
@@ -263,10 +263,3 @@ class UnitPrice(models.Model):
     class Meta:
         db_table = 'unit_prices'
 
-
-# Signal to create a ProductsUnion entry before saving a Product or FeaturedProduct
-@receiver(pre_save, sender=Product)
-@receiver(pre_save, sender=FeaturedProduct)
-def create_union_entry(sender, instance, **kwargs):
-    if not instance.union_id:  # Ensure we only create one per product
-        instance.union = ProductsUnion.objects.create()
