@@ -224,6 +224,7 @@ class FeaturedProduct(models.Model):
     performance_data = models.CharField()
     storage_info = models.CharField()
     shelf_status = models.BooleanField()
+    on_display = models.BooleanField(default=False)
     units_in_stock = models.IntegerField()
     units = models.CharField()
     ship_info = models.CharField()

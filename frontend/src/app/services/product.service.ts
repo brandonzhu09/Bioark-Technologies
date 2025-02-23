@@ -42,4 +42,8 @@ export class ProductService {
   loadFeaturedProductPage(catalog_number: string) {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/products/load-featured-product-page/${catalog_number}`, { withCredentials: true })
   }
+
+  getLatestFeaturedProducts() {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/products/get-latest-featured-products/`, { withCredentials: true })
+  }
 }

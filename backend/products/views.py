@@ -177,7 +177,12 @@ def load_featured_product_page(request, catalog_number):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_latest_featured_products(request):
+    products = FeaturedProduct.objects.filter(on_display=True)[:10]
+    serializer = PreviewFeaturedProductSerializer(products, many=True)
 
+    return Response(serializer.data)
 
 ## HELPER METHODS
 
