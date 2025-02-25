@@ -32,21 +32,23 @@ import { PromotionSectionComponent } from './components/promotion-section/promot
 import { ProductModePageComponent } from './product-mode/product-mode-page/product-mode-page.component';
 import { ServiceModePageComponent } from './service-mode/service-mode-page/service-mode-page.component';
 import { FeaturedProductPageComponent } from './product-mode/featured-product-page/featured-product-page.component';
+import { authGuard } from './guards/auth.guard';
+import { checkoutGuard } from './guards/checkout.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'profile', component: UserPageComponent },
-  { path: 'profile/orders', component: OrderPageComponent },
-  { path: 'profile/settings', component: UserSettingsComponent },
-  { path: 'profile/services/:service', component: ServiceFormComponent },
-  { path: 'profile/messages', component: MessagePageComponent },
+  { path: 'profile', component: UserPageComponent, canActivate: [authGuard] },
+  { path: 'profile/orders', component: OrderPageComponent, canActivate: [authGuard] },
+  { path: 'profile/settings', component: UserSettingsComponent, canActivate: [authGuard] },
+  { path: 'profile/services/:service', component: ServiceFormComponent, canActivate: [authGuard] },
+  { path: 'profile/messages', component: MessagePageComponent, canActivate: [authGuard] },
   { path: 'summary-temp', component: SummaryComponent },
   { path: 'design', component: StepperComponent },
   { path: 'product', component: ProductPageComponent },
   { path: 'product/featured/:catalog-number', component: FeaturedProductPageComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [checkoutGuard] },
   { path: 'testing', component: TestingComponent },
   { path: 'products/item/:product-sku', component: ProductSummaryComponent },
   { path: 'products/:url', component: ProductModePageComponent },
@@ -56,7 +58,7 @@ const routes: Routes = [
   { path: 'quote/:serviceType', component: QuoteFormComponent },
   { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: 'resend-verification', component: ResendVerificationComponent },
-  { path: 'order-confirmation/:token', component: OrderConfirmationComponent },
+  { path: 'order-confirmation/:token', component: OrderConfirmationComponent, canActivate: [authGuard] },
   { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
   { path: 'test', component: ServiceModePageComponent },

@@ -8,7 +8,7 @@
 
             <mat-radio-group formControlName="type" (change)="handleTypes()">
                 <mat-radio-button value="productType"
-                    >Product Type</mat-radio-button
+                    >Gene Editing Type</mat-radio-button
                 >
                 <mat-radio-button value="serviceType"
                     >Service Type</mat-radio-button
@@ -29,8 +29,18 @@
                         >Gene Knock-out</mat-option
                     >
                     <mat-option value="Gene Deletion">Gene Deletion</mat-option>
-                    <mat-option value="CRISPR RNA">CRISPR RNA</mat-option>
-                    <mat-option value="Knock-down">Knock-down</mat-option>
+                    <mat-option value="CRISPR RNA Knock-down"
+                        >CRISPR RNA Knock-down</mat-option
+                    >
+                    <mat-option value="CRISPR Activation"
+                        >CRISPR Activation</mat-option
+                    >
+                    <mat-option value="CRISPR Inhibition"
+                        >CRISPR Inhibition</mat-option
+                    >
+                    <mat-option value="CRISPR Editing"
+                        >CRISPR Editing</mat-option
+                    >
                 </mat-select>
             </mat-form-field>
             } @if (this.quoteForm.value.type === "serviceType") {
@@ -62,16 +72,26 @@
                     rows="3"
                 ></textarea>
             </mat-form-field>
-        </div>
-
-        <!-- Gene Species -->
-        <div class="section">
-            <h3>3. Gene Species</h3>
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Select Species</mat-label>
                 <mat-select formControlName="geneSpecies">
                     <mat-option value="Mouse">Mouse</mat-option>
                     <mat-option value="Human">Human</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <!-- Gene Species -->
+        <div class="section">
+            <h3>3. Virus Type</h3>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Select Species</mat-label>
+                <mat-select formControlName="virusType">
+                    <mat-option value="Lentivirus">Lentivirus</mat-option>
+                    <mat-option value="AAV Virus" disabled
+                        >AAV Virus</mat-option
+                    >
+                    <mat-option value="n/a">Not applicable</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -100,10 +120,21 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Virus Amount</mat-label>
+                <mat-select formControlName="plasmidAmount">
+                    <mat-option value="5ug">5μg</mat-option>
+                    <mat-option value="10ug">10μg</mat-option>
+                    <mat-option value="20ug">20μg</mat-option>
+                    <mat-option value="n/a">Not applicable</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Cell Line Amount</mat-label>
                 <mat-select formControlName="cellLineAmount">
                     <mat-option value="1x10^6">1X10⁶ cells</mat-option>
                     <mat-option value="2x10^6">2X10⁶ cells</mat-option>
+                    <mat-option value="n/a">Not applicable</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
