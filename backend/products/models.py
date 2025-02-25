@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
+from tinymce.models import HTMLField
 
 
 class Promoter(models.Model):
@@ -198,7 +199,6 @@ class Product(models.Model):
     delivery_format_code = models.CharField()
     base_price = models.DecimalField(max_digits=8, decimal_places=2)
     adjusted_price = models.DecimalField(max_digits=8, decimal_places=2)
-    amount = models.CharField()
     unit_size = models.CharField()
     discount_code = models.CharField(null=True)
     ready_status = models.CharField(blank=True, null=True)
@@ -219,9 +219,9 @@ class Product(models.Model):
 class FeaturedProduct(models.Model):
     catalog_number = models.CharField(unique=True)
     product_name = models.CharField()
-    description = models.TextField()
-    key_features = models.TextField()
-    performance_data = models.TextField()
+    description = HTMLField()
+    key_features = HTMLField()
+    performance_data = HTMLField()
     storage_info = models.CharField()
     ship_info = models.CharField()
     shelf_status = models.BooleanField()

@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'orders',
     'blogs',
     'interface',
-    'tinymce',
+    'import_export',
+    'tinymce'
 ]
 
 

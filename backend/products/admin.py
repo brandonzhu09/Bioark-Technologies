@@ -1,9 +1,19 @@
 from django.contrib import admin
 from .models import *
+from import_export.admin import ImportExportActionModelAdmin
+from import_export import resources
+
 
 # Register your models here.
+class ProductResource(resources.ModelResource):
+
+    class Meta:
+        model = Product
+        import_id_fields = ('product_id',)
+
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportActionModelAdmin):
+    resource_classes = [ProductResource]
     list_display = ('product_id', 'product_sku', 'product_name', 'base_price', 'unit_size', 'ready_status')
 
 @admin.register(FeaturedProduct)
