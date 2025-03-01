@@ -20,10 +20,10 @@ class DeliveryLibraryResource(resources.ModelResource):
         model = DeliveryLibrary
         import_id_fields = ('delivery_library_id',)
 
-# @admin.register(Product)
-# class ProductAdmin(ImportExportActionModelAdmin):
-#     resource_classes = [ProductResource]
-#     list_display = ('product_id', 'product_sku', 'product_name', 'base_price', 'unit_size', 'ready_status')
+@admin.register(Product)
+class ProductAdmin(ImportExportActionModelAdmin):
+    resource_classes = [ProductResource]
+    list_display = ('product_id', 'product_sku', 'product_name', 'base_price', 'unit_size', 'ready_status')
 
 @admin.register(FeaturedProduct)
 class FeaturedProductAdmin(admin.ModelAdmin):
@@ -34,17 +34,17 @@ class FeaturedProductAdmin(admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('union', 'name', 'image')
 
-# @admin.register(ManualFile)
-# class ManualFileAdmin(admin.ModelAdmin):
-#     list_display = ('union', 'name', 'manual')
+@admin.register(ManualFile)
+class ManualFileAdmin(admin.ModelAdmin):
+    list_display = ('union', 'name', 'manual')
 
-# @admin.register(UnitPrice)
-# class UnitPriceAdmin(admin.ModelAdmin):
-#     list_display = ('union', 'unit_size', 'price')
+@admin.register(UnitPrice)
+class UnitPriceAdmin(admin.ModelAdmin):
+    list_display = ('union', 'unit_size', 'price')
 
-# @admin.register(ProductInventory)
-# class ProductInventoryAdmin(admin.ModelAdmin):
-#     list_display = ('inventory_id', 'units_in_stock', 'units_on_order', 'loaded', 'currency', 'manufacturer')
+@admin.register(ProductInventory)
+class ProductInventoryAdmin(admin.ModelAdmin):
+    list_display = ('inventory_id', 'units_in_stock', 'units_on_order', 'loaded', 'currency', 'manufacturer')
 
 @admin.register(DeliveryLibrary)
 class DeliveryLibraryAdmin(ImportExportActionModelAdmin):
