@@ -2,12 +2,19 @@
     <h1>{{ product_name }}</h1>
     <div class="content">
         <div class="diagram">
-            <img src="../../../assets/placeholder-card.jpg" alt="Diagram" />
+            <img [src]="mainImage" class="main-image" />
+            <div class="preview">
+                @for (image of images; track image) {
+                <img
+                    src="{{ fullUrl(image.image) }}"
+                    alt="Diagram"
+                    (click)="changeMainImage(fullUrl(image.image))"
+                />
+                }
+            </div>
         </div>
         <div class="description">
-            <p>
-                {{ description }}
-            </p>
+            <p [innerHTML]="description"></p>
         </div>
     </div>
     <div class="product-info-table">
@@ -47,9 +54,7 @@
                     <td class="first-column">
                         <strong>Features</strong>
                     </td>
-                    <td>
-                        {{ key_features }}
-                    </td>
+                    <td [innerHTML]="key_features"></td>
                 </tr>
                 <tr>
                     <td class="first-column highlight">
@@ -63,9 +68,7 @@
             <div class="tab-header">Performance Data</div>
             <table>
                 <tr>
-                    <td>
-                        {{ performance_data }}
-                    </td>
+                    <td [innerHTML]="performance_data"></td>
                 </tr>
             </table>
         </div>

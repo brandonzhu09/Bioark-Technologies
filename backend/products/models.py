@@ -159,15 +159,16 @@ class DeliveryFormat(models.Model):
 
 
 class DesignLibrary(models.Model):
+    function_type_code = models.CharField()
     structure_type_code = models.CharField()
     delivery_format_code = models.CharField()
-    ready_status = models.CharField()
-    amount = models.CharField()
+    target_sequence = models.CharField()
+    shelf_status = models.BooleanField()
     unit_size = models.CharField()
+    unit = models.CharField()
     discount_code = models.CharField(null=True)
-    base_price = models.DecimalField(max_digits=8, decimal_places=2)
-    adjusted_price = models.DecimalField(null=True, max_digits=8, decimal_places=2)
-    currency = models.CharField()
+    list_price = models.DecimalField(max_digits=8, decimal_places=2)
+    unit_price = models.DecimalField(null=True, max_digits=8, decimal_places=2)
 
     class Meta:
         db_table = 'design_library'

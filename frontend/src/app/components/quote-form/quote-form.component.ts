@@ -35,8 +35,10 @@ export class QuoteFormComponent {
       serviceType: [this.currentType],
       geneSequence: [''],
       geneSpecies: [''],
+      virusType: [''],
       mammalianCells: [''],
       plasmidAmount: [''],
+      virusAmount: [''],
       cellLineAmount: [''],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -57,6 +59,8 @@ export class QuoteFormComponent {
     else if (this.quoteForm.value.type == "serviceType") {
       this.quoteForm.controls['serviceType'].addValidators(Validators.required)
     }
+    this.quoteForm.controls['productType'].updateValueAndValidity();
+    this.quoteForm.controls['serviceType'].updateValueAndValidity();
   }
 
   onSubmit() {

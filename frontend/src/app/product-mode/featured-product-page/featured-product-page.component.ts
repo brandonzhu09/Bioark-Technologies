@@ -21,11 +21,16 @@ export class FeaturedProductPageComponent {
   unit_prices: any[] = [];
 
   activeTab: string = 'specifications';
+  mainImage: string = '../../../assets/placeholder-card.jpg';
 
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;
+  }
+
+  changeMainImage(imageUrl: string) {
+    this.mainImage = imageUrl;
   }
 
   ngOnInit() {
@@ -45,6 +50,7 @@ export class FeaturedProductPageComponent {
       this.storage_info = res.storage_info;
       this.ship_info = res.ship_info;
       this.images = res.images;
+      this.mainImage = environment.apiBaseUrl + this.images[0].image;
       this.manuals = res.manuals;
       this.unit_prices = res.unit_prices;
     })

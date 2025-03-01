@@ -3,7 +3,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 75%;
+    max-width: 65%;
     margin: auto;
 }
 
@@ -17,12 +17,32 @@ h1 {
     gap: 20px;
 }
 
-.diagram img {
-    /* width: 200px;
-    height: 200px; */
-    object-fit: cover;
+.diagram {
+    display: flex-column;
+}
+
+.diagram .main-image {
+    display: flex;
+    width: 600px;
+    height: 200px;
+    object-fit: fit;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.preview {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+}
+
+.preview img {
+    width: 50px;
+    height: 50px;
+    object-fit: fit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .description {
@@ -172,4 +192,42 @@ button:hover {
 
 .pdf-link i {
     margin-right: 5px;
+}
+
+@media (max-width: 1600px) {
+    .diagram .main-image {
+        width: 400px;
+        height: 133px;
+    }
+
+    .description {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 1300px) {
+    .content {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .diagram .main-image {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview {
+        justify-content: left;
+    }
+
+    .description {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 1300px) {
+    .diagram .main-image {
+        width: 200px;
+        height: 66px;
+    }
 }
