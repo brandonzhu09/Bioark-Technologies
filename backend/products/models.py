@@ -9,6 +9,8 @@ class Promoter(models.Model):
     promoter_id = models.AutoField(primary_key=True)
     promoter_name = models.CharField()
     promoter_code = models.CharField()
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'promoters'
@@ -17,23 +19,20 @@ class PromoterSpecialCase(models.Model):
     promoter_id = models.AutoField(primary_key=True)
     promoter_name = models.CharField()
     promoter_code = models.CharField()
-    function_type_symbol = models.CharField(null=True)
-    structure_type_symbol = models.CharField(null=True)
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
+    function_type_symbol = models.CharField()
 
     class Meta:
         db_table = 'promoters_special_case'
-        constraints = [
-            models.CheckConstraint(
-                check=Q(function_type_symbol__isnull=False) | Q(structure_type_symbol__isnull=False),
-                name='not_both_null'
-            )
-        ]
 
 
 class Property(models.Model):
     property_id = models.AutoField(primary_key=True)
     property_name = models.CharField()
     property_code = models.CharField()
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'property'
@@ -43,6 +42,8 @@ class ProteinTag(models.Model):
     protein_tag_id = models.AutoField(primary_key=True)
     protein_tag_name = models.CharField()
     protein_tag_code = models.CharField()
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'protein_tags'
@@ -52,6 +53,8 @@ class FluoresceneMarker(models.Model):
     fluorescene_marker_id = models.AutoField(primary_key=True)
     fluorescene_marker_name = models.CharField()
     fluorescene_marker_code = models.CharField()
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'fluorescene_markers'
@@ -61,6 +64,8 @@ class SelectionMarker(models.Model):
     selection_marker_id = models.AutoField(primary_key=True)
     selection_marker_name = models.CharField()
     selection_marker_code = models.CharField()
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'selection_markers'
@@ -70,6 +75,8 @@ class BacterialMarker(models.Model):
     bacterial_marker_id = models.AutoField(primary_key=True)
     bacterial_marker_name = models.CharField()
     bacterial_marker_code = models.CharField()
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'bacterial_markers'
@@ -79,6 +86,8 @@ class BacterialMarkerSpecialCase(models.Model):
     bacterial_marker_id = models.AutoField(primary_key=True)
     bacterial_marker_name = models.CharField()
     bacterial_marker_code = models.CharField()
+    priority = models.IntegerField(default=1)
+    enabled = models.BooleanField(default=True)
     structure_type_symbol = models.CharField()
 
     class Meta:
@@ -144,6 +153,7 @@ class StructureType(models.Model):
     structure_type_id = models.AutoField(primary_key=True)
     structure_type_symbol = models.CharField(unique=True)
     structure_type_name = models.CharField(unique=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'structure_types'

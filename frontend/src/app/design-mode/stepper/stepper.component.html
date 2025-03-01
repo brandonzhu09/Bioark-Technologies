@@ -15,7 +15,7 @@
             [formGroup]="firstFormGroup"
             (ngSubmit)="submitFirstForm(); resetFormsAfter(1)"
         >
-            <ng-template matStepLabel>Select function category</ng-template>
+            <ng-template matStepLabel>Select category</ng-template>
             <div class="header">Design Overview</div>
 
             <!-- Products Section -->
@@ -95,6 +95,12 @@
                 >
                     <i class="bi bi-boxes h1"></i>
                     <div class="text">{{ card.category_name }}</div>
+                    <i
+                        class="bi bi-info-circle info-icon position-absolute fs-4"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        [attr.title]="card.description"
+                    ></i>
                 </button>
                 }
             </div>
@@ -117,7 +123,7 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Select structure type">
+    <mat-step [stepControl]="secondFormGroup" label="Select function Type">
         <form
             [formGroup]="secondFormGroup"
             (ngSubmit)="submitSecondForm(); resetFormsAfter(2)"
@@ -200,7 +206,7 @@
                     <i class="bi bi-boxes h1"></i>
                     <div class="text">{{ card.function_type_name }}</div>
                     <i
-                        class="bi bi-info-circle info-icon position-absolute"
+                        class="bi bi-info-circle info-icon position-absolute fs-4"
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
                         [attr.title]="card.description"
@@ -311,6 +317,12 @@
                 >
                     <i class="bi bi-boxes h1"></i>
                     <div class="text">{{ card.structure_type_name }}</div>
+                    <i
+                        class="bi bi-info-circle info-icon position-absolute fs-4"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        [attr.title]="card.description"
+                    ></i>
                 </button>
                 }
             </div>
@@ -337,7 +349,7 @@
     <mat-step
         [stepControl]="fourthFormGroup"
         errorMessage="test"
-        label="Select structure"
+        label="Select structure map"
     >
         <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
             <!-- Products Section -->
@@ -449,12 +461,13 @@
                                     card.protein_tag_name
                             }"
                             (click)="handleProteinTagClick(card)"
+                            [disabled]="!card.enabled"
                         >
                             <i class="bi bi-box-seam h1"></i>
                             <div class="text">{{ card.protein_tag_name }}</div>
                         </button>
                         }
-                        <button
+                        <!-- <button
                             class="button-card"
                             [ngClass]="{
                                 selected:
@@ -469,7 +482,7 @@
                         >
                             <i class="bi bi-gear h1"></i>
                             <div class="text">Customize</div>
-                        </button>
+                        </button> -->
                     </div>
                 </mat-tab>
                 <mat-tab label="Fluorescene Marker">
@@ -499,7 +512,7 @@
                             </div>
                         </button>
                         }
-                        <button
+                        <!-- <button
                             class="button-card"
                             [ngClass]="{
                                 selected:
@@ -514,7 +527,7 @@
                         >
                             <i class="bi bi-gear h1"></i>
                             <div class="text">Customize</div>
-                        </button>
+                        </button> -->
                     </div>
                 </mat-tab>
                 <mat-tab label="Selection Marker">
@@ -544,7 +557,7 @@
                             </div>
                         </button>
                         }
-                        <button
+                        <!-- <button
                             class="button-card"
                             [ngClass]="{
                                 selected:
@@ -559,7 +572,7 @@
                         >
                             <i class="bi bi-gear h1"></i>
                             <div class="text">Customize</div>
-                        </button>
+                        </button> -->
                     </div>
                 </mat-tab>
                 <mat-tab label="Antibiotics">
@@ -609,7 +622,7 @@
         </form>
     </mat-step>
 
-    <mat-step [stepControl]="fifthFormGroup" label="Select gene type">
+    <mat-step [stepControl]="fifthFormGroup" label="Select target gene">
         <form
             [formGroup]="fifthFormGroup"
             (ngSubmit)="submitFifthForm(); resetFormsAfter(5)"

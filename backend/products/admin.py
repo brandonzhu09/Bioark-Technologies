@@ -72,7 +72,7 @@ class DeliveryFormatAdmin(admin.ModelAdmin):
 
 @admin.register(PromoterSpecialCase)
 class PromoterSpecialCaseAdmin(admin.ModelAdmin):
-    list_display = ('promoter_id',)
+    list_display = ('promoter_id', 'promoter_name', 'function_type_symbol', 'priority')
 
 @admin.register(BacterialMarkerSpecialCase)
 class BacterialMarkerSpecialCaseAdmin(admin.ModelAdmin):

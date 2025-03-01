@@ -31,7 +31,7 @@ def get_function_types_by_category(request):
 def get_structure_types_by_function_type(request):
     function_type_symbol = request.GET["function_type_symbol"]
     structure_types = DeliveryLibrary.objects.filter(function_type_symbol=function_type_symbol).values("structure_type_symbol").distinct()
-    queryset = StructureType.objects.filter(structure_type_symbol__in=structure_types).values("structure_type_symbol", "structure_type_name")
+    queryset = StructureType.objects.filter(structure_type_symbol__in=structure_types).values("structure_type_symbol", "structure_type_name", "description")
 
     return Response(list(queryset))
 
@@ -281,34 +281,34 @@ def get_promoters(function_type_symbol, structure_type_symbol):
     # check the special case for promoter options
     function_type_count = PromoterSpecialCase.objects.filter(function_type_symbol=function_type_symbol).count()
     if function_type_count > 0:
-        queryset = PromoterSpecialCase.objects.filter(function_type_symbol=function_type_symbol).values("promoter_name", "promoter_code")
+        queryset = PromoterSpecialCase.objects.filter(function_type_symbol=function_type_symbol).order_by('priority').values("promoter_name", "promoter_code", "enabled")
         return list(queryset)
     
-    structure_type_count = PromoterSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).count()
-    if structure_type_count > 0:
-        queryset = PromoterSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).values("promoter_name", "promoter_code")
-        return list(queryset)
+    # structure_type_count = PromoterSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).count()
+    # if structure_type_count > 0:
+    #     queryset = PromoterSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).values("promoter_name", "promoter_code")
+    #     return list(queryset)
     
     # return the default promoter options
-    queryset = Promoter.objects.all().values("promoter_name", "promoter_code")
+    queryset = Promoter.objects.all().order_by('priority').values("promoter_name", "promoter_code", "enabled")
     return list(queryset)
 
 def get_protein_tags():
-    queryset = ProteinTag.objects.all().values("protein_tag_name", "protein_tag_code")
+    queryset = ProteinTag.objects.all().order_by('priority').values("protein_tag_name", "protein_tag_code", "enabled")
     return list(queryset)
 
 def get_fluorescene_markers():
-    queryset = FluoresceneMarker.objects.all().values("fluorescene_marker_name", "fluorescene_marker_code")
+    queryset = FluoresceneMarker.objects.all().order_by('priority').values("fluorescene_marker_name", "fluorescene_marker_code", "enabled")
     return list(queryset)
 
 def get_selection_markers():
-    queryset = SelectionMarker.objects.all().values("selection_marker_name", "selection_marker_code")
+    queryset = SelectionMarker.objects.all().order_by('priority').values("selection_marker_name", "selection_marker_code", "enabled")
     return list(queryset)
 
 def get_bacterial_markers(structure_type_symbol):
     # check the special case for bacterial marker options
-    queryset = BacterialMarkerSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).values("bacterial_marker_name", "bacterial_marker_code")
+    queryset = BacterialMarkerSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).order_by('priority').values("bacterial_marker_name", "bacterial_marker_code", "enabled")
     if len(queryset) > 0:
         return list(queryset)
-    queryset = BacterialMarker.objects.all().values("bacterial_marker_name", "bacterial_marker_code")
+    queryset = BacterialMarker.objects.all().order_by('priority').values("bacterial_marker_name", "bacterial_marker_code", "enabled")
     return list(queryset)
