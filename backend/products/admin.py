@@ -15,6 +15,11 @@ class DesignLibraryResource(resources.ModelResource):
         model = DesignLibrary
         import_id_fields = ('id',)
 
+class DeliveryLibraryResource(resources.ModelResource):
+    class Meta:
+        model = DeliveryLibrary
+        import_id_fields = ('delivery_library_id',)
+
 # @admin.register(Product)
 # class ProductAdmin(ImportExportActionModelAdmin):
 #     resource_classes = [ProductResource]
@@ -41,9 +46,11 @@ class ImageAdmin(admin.ModelAdmin):
 # class ProductInventoryAdmin(admin.ModelAdmin):
 #     list_display = ('inventory_id', 'units_in_stock', 'units_on_order', 'loaded', 'currency', 'manufacturer')
 
-# @admin.register(DeliveryLibrary)
-# class DeliveryLibraryAdmin(admin.ModelAdmin):
-#     list_display = ('delivery_library_id', 'structure_type_symbol', 'delivery_format_symbol', 'function_type')
+@admin.register(DeliveryLibrary)
+class DeliveryLibraryAdmin(ImportExportActionModelAdmin):
+    resource_classes = [DeliveryLibraryResource]
+    list_display = ('delivery_library_id', 'structure_type_symbol', 'delivery_format_symbol', 'function_type_symbol')
+
 
 @admin.register(DesignLibrary)
 class DesignLibraryAdmin(ImportExportActionModelAdmin):
@@ -62,3 +69,11 @@ class StructureTypeAdmin(admin.ModelAdmin):
 @admin.register(DeliveryFormat)
 class DeliveryFormatAdmin(admin.ModelAdmin):
     list_display = ('delivery_format_symbol', 'delivery_format_name')
+
+@admin.register(PromoterSpecialCase)
+class PromoterSpecialCaseAdmin(admin.ModelAdmin):
+    list_display = ('promoter_id',)
+
+@admin.register(BacterialMarkerSpecialCase)
+class BacterialMarkerSpecialCaseAdmin(admin.ModelAdmin):
+    list_display = ('bacterial_marker_id',)

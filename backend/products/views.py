@@ -29,8 +29,8 @@ def get_function_types_by_category(request):
 
 @api_view(['GET'])
 def get_structure_types_by_function_type(request):
-    function_type_id = request.GET["function_type_id"]
-    structure_types = DeliveryLibrary.objects.filter(function_type_id=function_type_id).values("structure_type_symbol").distinct()
+    function_type_symbol = request.GET["function_type_symbol"]
+    structure_types = DeliveryLibrary.objects.filter(function_type_symbol=function_type_symbol).values("structure_type_symbol").distinct()
     queryset = StructureType.objects.filter(structure_type_symbol__in=structure_types).values("structure_type_symbol", "structure_type_name")
 
     return Response(list(queryset))
@@ -102,20 +102,29 @@ def get_delivery_format_table(request):
                                       gene=GeneLibrary.objects.get(target_sequence=target_sequence),
                                       ).distinct()
     
+    function_type_code = 'Others'
     structure_type_code = 'Others'
-    ready_status = 'Not'
+    target_sequence_code = ''
+    shelf_status = 0
+    # check whether function type is CD
+    if function_type_name == 'CRISPR Donor':
+        function_type_code = 'CD'
     # check whether structure type is M or B
     if structure_type_name == 'Lenti-AIO':
-        structure_type_code = 'M'
-    if structure_type_name == 'AAV-AIO':
-        structure_type_code = 'B'
+        structure_type_code = 'M or B'
+    # map target sequence to the right code in design library
+    if target_sequence == 'XXXXXX' or target_sequence == '000000':
+        target_sequence_code = 'None; Scramble'
+    
     # check whether product is on-shelf or custom made
     if len(products) > 0:
-        ready_status = 'Yes'
+        shelf_status = 1
 
     design_products = DesignLibrary.objects.filter(delivery_format_code__in=delivery_format_codes,
+                                                   function_type_code=function_type_code,
                                                    structure_type_code=structure_type_code,
-                                                   ready_status=ready_status)
+                                                   target_sequence=target_sequence_code,
+                                                   shelf_status=shelf_status)
     
     data = {}
     product_id = 0
@@ -130,10 +139,10 @@ def get_delivery_format_table(request):
             'product_name': "Test",
             'delivery_format_name': delivery_format_name,
             'product_format_description': DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).description,
-            'quantity': instance.amount + " " + instance.unit_size,
-            'price': instance.base_price,
-            'adjusted_price': instance.adjusted_price,
-            'ready_status': ready_status
+            'quantity': instance.kit_amount + " " + instance.unit,
+            'price': instance.list_price,
+            'adjusted_price': instance.unit_price,
+            'ready_status': str(shelf_status)
         }
         if delivery_format_name not in data:
             data[delivery_format_name] = [product]

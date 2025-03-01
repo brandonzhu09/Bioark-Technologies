@@ -134,7 +134,7 @@ class DeliveryLibrary(models.Model):
     delivery_library_id = models.AutoField(primary_key=True)
     structure_type_symbol = models.CharField()
     delivery_format_symbol = models.CharField()
-    function_type = models.ForeignKey(FunctionType, on_delete=models.PROTECT)
+    function_type_symbol = models.CharField()
 
     class Meta:
         db_table = 'delivery_library'
@@ -162,13 +162,13 @@ class DesignLibrary(models.Model):
     function_type_code = models.CharField()
     structure_type_code = models.CharField()
     delivery_format_code = models.CharField()
-    target_sequence = models.CharField()
+    target_sequence = models.CharField(blank=True, null=True)
     shelf_status = models.BooleanField()
-    unit_size = models.CharField()
+    kit_amount = models.CharField()
     unit = models.CharField()
-    discount_code = models.CharField(null=True)
-    list_price = models.DecimalField(max_digits=8, decimal_places=2)
-    unit_price = models.DecimalField(null=True, max_digits=8, decimal_places=2)
+    discount_code = models.CharField(blank=True, null=True)
+    list_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    unit_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
 
     class Meta:
         db_table = 'design_library'

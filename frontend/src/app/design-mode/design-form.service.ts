@@ -22,10 +22,10 @@ export class DesignFormService {
         );
     }
 
-    getStructureTypesByFunctionType(functionTypeId: string) {
+    getStructureTypesByFunctionType(functionTypeSymbol: string) {
         return this.http.get(
             `${environment.apiBaseUrl}/api/products/get-structure-types-by-function-type/`,
-            { params: { function_type_id: functionTypeId } }
+            { params: { function_type_symbol: functionTypeSymbol } }
         );
     }
 

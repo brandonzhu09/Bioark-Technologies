@@ -98,6 +98,10 @@ export class StepperComponent {
             Validators.required,
             Validators.minLength(3),
         ]),
+        functionTypeSymbol: new FormControl('', [
+            Validators.required,
+            Validators.minLength(2),
+        ]),
     });
     thirdFormGroup = new FormGroup({
         structureTypeSymbol: new FormControl('', [
@@ -189,6 +193,9 @@ export class StepperComponent {
         this.secondFormGroup.controls.functionTypeName.setValue(
             card.function_type_name
         );
+        this.secondFormGroup.controls.functionTypeSymbol.setValue(
+            card.function_type_symbol
+        );
     };
     handleDeliveryTypeClick = (card: any) => {
         this.thirdFormGroup.controls.structureTypeSymbol.setValue(
@@ -266,10 +273,10 @@ export class StepperComponent {
     }
 
     submitSecondForm() {
-        let function_type_id = this.secondFormGroup.value.functionTypeId;
-        if (function_type_id != '' && function_type_id != null) {
+        let function_type_symbol = this.secondFormGroup.value.functionTypeSymbol;
+        if (function_type_symbol != '' && function_type_symbol != null) {
             this.designFormService
-                .getStructureTypesByFunctionType(function_type_id)
+                .getStructureTypesByFunctionType(function_type_symbol)
                 .subscribe((response) => {
                     this.structureTypeCards = response;
                 });
