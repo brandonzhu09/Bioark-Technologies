@@ -1,5 +1,71 @@
 /* Summary Table for Structure Type Form */
 
+.container {
+    display: flex;
+    gap: 110px;
+    height: 500px;
+}
+
+.lego-diagram {
+    width: 40%;
+    padding-top: 50px;
+    padding-left: 100px;
+    object-fit: contain;
+}
+
+.lego-diagram img {
+    width: 350px;
+}
+
+.textbox {
+    width: 100px;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 10px;
+}
+
+.s1 {
+    position: relative;
+    bottom: 200px;
+    left: 355px;
+}
+
+.s2 {
+    position: relative;
+    bottom: 70px;
+    left: 280px;
+    width: 140px;
+}
+
+.s3 {
+    position: relative;
+    bottom: 60px;
+    left: 120px;
+}
+
+.s4 {
+    position: relative;
+    bottom: 140px;
+    right: 30px;
+}
+
+.s5 {
+    position: relative;
+    bottom: 270px;
+    right: 100px;
+}
+
+.s6 {
+    position: relative;
+    bottom: 560px;
+    left: 120px;
+}
+
+/* .table {
+    width: 800px;
+} */
+
 .header {
     background-color: #f9f9f9;
     padding: 6px 12px;
@@ -13,20 +79,6 @@
     padding: 6px 12px;
     font-weight: bold;
     border: 1px solid #ddd;
-    margin-bottom: -1px;
-}
-
-.grid-3-cols {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-left: 1px solid #ddd;
-    margin-bottom: -1px;
-}
-
-.grid-5-cols {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    border-left: 1px solid #ddd;
     margin-bottom: -1px;
 }
 
@@ -49,11 +101,22 @@
     color: #666;
 }
 
-.full-width {
-    grid-column: 1 / -1;
+
+@media (max-width: 1900px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+        gap: 0;
+    }
+
+    .lego-diagram {
+        height: 460px;
+    }
 }
 
-.custom-stepper {
-    width: 65%;
-    margin: auto;
+@media (max-width: 1000px) {
+
+    .lego-diagram img {
+        width: 250px;
+    }
 }

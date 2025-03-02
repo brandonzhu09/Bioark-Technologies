@@ -1,4 +1,13 @@
 <div class="container">
+    <div class="lego-diagram">
+        <img src="../../../assets/Lego-diagram.png" />
+        <div class="textbox s1">S1: {{ promoterName }}</div>
+        <div class="textbox s2">X: {{ functionTypeName }}</div>
+        <div class="textbox s3">S3: {{ proteinTagName }}</div>
+        <div class="textbox s4">S4: {{ fluoresceneMarkerName }}</div>
+        <div class="textbox s5">S5: {{ selectionMarkerName }}</div>
+        <div class="textbox s6">S6: {{ bacterialMarkerName }}</div>
+    </div>
     <div class="table">
         <div class="header">Design Overview</div>
 
@@ -19,27 +28,25 @@
 
         <!-- Structure Section -->
         <div class="section-header">Structure</div>
-        <div class="grid-5-cols">
-            <div class="grid-item">
-                <span class="label">Promoter:</span>
-                <span class="value">{{ promoterName }}</span>
-            </div>
-            <div class="grid-item">
-                <span class="label">Protein Tag:</span>
-                <span class="value">{{ proteinTagName }}</span>
-            </div>
-            <div class="grid-item">
-                <span class="label">Fluorescene Marker:</span>
-                <span class="value">{{ fluoresceneMarkerName }}</span>
-            </div>
-            <div class="grid-item">
-                <span class="label">Selection Marker:</span>
-                <span class="value">{{ selectionMarkerName }}</span>
-            </div>
-            <div class="grid-item">
-                <span class="label">Antibiotics:</span>
-                <span class="value">{{ bacterialMarkerName }}</span>
-            </div>
+        <div class="grid-item">
+            <span class="label">Promoter:</span>
+            <span class="value">{{ promoterName }}</span>
+        </div>
+        <div class="grid-item">
+            <span class="label">Protein Tag:</span>
+            <span class="value">{{ proteinTagName }}</span>
+        </div>
+        <div class="grid-item">
+            <span class="label">Fluorescene Marker:</span>
+            <span class="value">{{ fluoresceneMarkerName }}</span>
+        </div>
+        <div class="grid-item">
+            <span class="label">Selection Marker:</span>
+            <span class="value">{{ selectionMarkerName }}</span>
+        </div>
+        <div class="grid-item">
+            <span class="label">Antibiotics:</span>
+            <span class="value">{{ bacterialMarkerName }}</span>
         </div>
 
         <!-- Target Gene Section -->

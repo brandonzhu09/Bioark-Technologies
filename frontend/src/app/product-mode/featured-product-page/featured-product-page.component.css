@@ -228,6 +228,10 @@ button:hover {
     cursor: pointer;
 }
 
+.cart-button {
+    margin-top: 20px;
+}
+
 .spec-container {
     display: inline-block;
     margin-top: 10px;
