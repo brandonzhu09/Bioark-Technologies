@@ -61,6 +61,7 @@ import { PromotionSectionComponent } from './components/promotion-section/promot
 import { ProductModePageComponent } from './product-mode/product-mode-page/product-mode-page.component';
 import { ServiceModePageComponent } from './service-mode/service-mode-page/service-mode-page.component';
 import { FeaturedProductPageComponent } from './product-mode/featured-product-page/featured-product-page.component';
+import { QuantityInputComponent } from './components/quantity-input/quantity-input.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -126,6 +127,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     ReactiveFormsModule,
     GoogleMapsModule,
     PopupComponent,
+    QuantityInputComponent,
   ],
   providers: [
     provideClientHydration(),

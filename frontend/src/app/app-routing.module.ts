@@ -34,6 +34,7 @@ import { ServiceModePageComponent } from './service-mode/service-mode-page/servi
 import { FeaturedProductPageComponent } from './product-mode/featured-product-page/featured-product-page.component';
 import { authGuard } from './guards/auth.guard';
 import { checkoutGuard } from './guards/checkout.guard';
+import { DesignDiagramComponent } from './design-mode/design-diagram/design-diagram.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -61,7 +62,7 @@ const routes: Routes = [
   { path: 'order-confirmation/:token', component: OrderConfirmationComponent, canActivate: [authGuard] },
   { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
-  { path: 'test', component: ServiceModePageComponent },
+  { path: 'test', component: DesignDiagramComponent },
 ];
 
 @NgModule({

@@ -194,6 +194,69 @@ button:hover {
     margin-right: 5px;
 }
 
+.product-container {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.availability {
+    color: green;
+}
+
+.price {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.quantity input {
+    width: 30px;
+    text-align: center;
+}
+
+.btn {
+    background-color: #2196F3;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.spec-container {
+    display: inline-block;
+    margin-top: 10px;
+    vertical-align: top;
+}
+
+.spec-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.spec-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.spec-tag {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    min-width: 110px;
+    text-decoration: none;
+    color: black;
+}
+
 @media (max-width: 1600px) {
     .diagram .main-image {
         width: 400px;

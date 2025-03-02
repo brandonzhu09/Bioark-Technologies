@@ -1,5 +1,5 @@
 <div class="product-page">
-    <h1>{{ product_name }}</h1>
+    <!-- <h1>{{ product_name }}</h1> -->
     <div class="content">
         <div class="diagram">
             <img [src]="mainImage" class="main-image" />
@@ -13,8 +13,35 @@
                 }
             </div>
         </div>
-        <div class="description">
+        <!-- <div class="description">
             <p [innerHTML]="description"></p>
+        </div> -->
+        <div class="product-container">
+            <h2>{{ product_name }}</h2>
+            <p>Cat. #: <strong>M0016-05</strong></p>
+            <p class="availability">Availability: In Stock</p>
+
+            <div class="spec-container">
+                <span class="spec-label">Spec.:</span>
+                <div class="spec-options">
+                    <a class="spec-tag"> 1 mL (None ROX) </a>
+                    <a class="spec-tag">5 mL (None ROX)</a>
+                    <a class="spec-tag">15 mL (None ROX)</a>
+                    <a class="spec-tag">1 mL (Low ROX)</a>
+                    <a class="spec-tag">5 mL (Low ROX)</a>
+                    <a class="spec-tag">15 mL (Low ROX)</a>
+                    <a class="spec-tag">1 mL (High ROX)</a>
+                    <a class="spec-tag">5 mL (High ROX)</a>
+                    <a class="spec-tag">15 mL (High ROX)</a>
+                </div>
+            </div>
+
+            <p class="price">$259.00</p>
+            <div class="quantity">
+                <label for="qty">Qty</label>
+                <quantity-input [quantity]="1"></quantity-input>
+            </div>
+            <button class="btn">Add to Cart</button>
         </div>
     </div>
     <div class="product-info-table">

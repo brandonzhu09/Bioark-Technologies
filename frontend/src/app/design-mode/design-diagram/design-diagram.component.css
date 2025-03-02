@@ -1,0 +1,59 @@
+/* Summary Table for Structure Type Form */
+
+.header {
+    background-color: #f9f9f9;
+    padding: 6px 12px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    margin-bottom: -1px;
+}
+
+.section-header {
+    background-color: #e0e0e0;
+    padding: 6px 12px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    margin-bottom: -1px;
+}
+
+.grid-3-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-left: 1px solid #ddd;
+    margin-bottom: -1px;
+}
+
+.grid-5-cols {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-left: 1px solid #ddd;
+    margin-bottom: -1px;
+}
+
+.grid-item {
+    padding: 6px 12px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    font-weight: 500;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+
+.value {
+    color: #666;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.custom-stepper {
+    width: 65%;
+    margin: auto;
+}

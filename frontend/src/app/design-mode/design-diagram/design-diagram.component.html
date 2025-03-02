@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="table">
+        <div class="header">Design Overview</div>
+
+        <!-- Products Section -->
+        <div class="section-header">Products</div>
+        <div class="grid-item">
+            <span class="label">Category:</span>
+            <span class="value">{{ category }}</span>
+        </div>
+        <div class="grid-item">
+            <span class="label">Function Type: </span>
+            <span class="value">{{ functionTypeName }}</span>
+        </div>
+        <div class="grid-item">
+            <span class="label">Delivery Type:</span>
+            <span class="value">{{ structureTypeName }}</span>
+        </div>
+
+        <!-- Structure Section -->
+        <div class="section-header">Structure</div>
+        <div class="grid-5-cols">
+            <div class="grid-item">
+                <span class="label">Promoter:</span>
+                <span class="value">{{ promoterName }}</span>
+            </div>
+            <div class="grid-item">
+                <span class="label">Protein Tag:</span>
+                <span class="value">{{ proteinTagName }}</span>
+            </div>
+            <div class="grid-item">
+                <span class="label">Fluorescene Marker:</span>
+                <span class="value">{{ fluoresceneMarkerName }}</span>
+            </div>
+            <div class="grid-item">
+                <span class="label">Selection Marker:</span>
+                <span class="value">{{ selectionMarkerName }}</span>
+            </div>
+            <div class="grid-item">
+                <span class="label">Antibiotics:</span>
+                <span class="value">{{ bacterialMarkerName }}</span>
+            </div>
+        </div>
+
+        <!-- Target Gene Section -->
+        <div class="section-header">Target Gene</div>
+        <div class="grid-3-cols">
+            <div class="grid-item full-width">
+                <span class="label">Target Sequence:</span>
+                <span class="value">{{ targetSequence }}</span>
+            </div>
+        </div>
+    </div>
+</div>

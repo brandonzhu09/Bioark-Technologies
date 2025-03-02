@@ -17,6 +17,7 @@ import { SummaryComponent } from '../summary/summary.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
+import { DesignDiagramComponent } from '../design-diagram/design-diagram.component';
 
 @Component({
     selector: 'stepper',
@@ -34,7 +35,8 @@ import { Router } from '@angular/router';
         CommonModule,
         MatTabsModule,
         SummaryComponent,
-        MatIconModule
+        MatIconModule,
+        DesignDiagramComponent
     ],
 })
 export class StepperComponent {
