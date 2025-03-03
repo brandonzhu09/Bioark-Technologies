@@ -112,7 +112,7 @@ export class ProductSummaryComponent implements OnInit {
   addTestProduct() {
     // DELETE: add $1 test product
     this.cartService.addToCart(
-      'TEST_SKU', 'product', 'unit_size', '1', '1', 'Yes',
+      'TEST_SKU', 'product', 1, 'unit_size', 1, 1, 'Yes',
       this.function_type_name$.value, this.structure_type_name$.value, this.promoter_name$.value,
       this.protein_tag_name$.value, this.fluorescene_marker_name$.value, this.selection_marker_name$.value,
       this.bacterial_marker_name$.value, this.target_sequence$.value, 'delivery_format_name'
@@ -129,14 +129,14 @@ export class ProductSummaryComponent implements OnInit {
       if (quantityId !== false && quantityId !== 0 || (typeof quantityId === 'string' && !isNaN(Number(quantityId)))) {
         let product_sku = this.deliveryFormatTable[key][quantityId].product_sku;
         let unit_size = this.deliveryFormatTable[key][quantityId].quantity;
-        let price = this.deliveryFormatTable[key][quantityId].price;
-        let adjusted_price = this.deliveryFormatTable[key][quantityId].adjusted_price;
+        let price = Number(this.deliveryFormatTable[key][quantityId].price);
+        let adjusted_price = Number(this.deliveryFormatTable[key][quantityId].adjusted_price);
         let ready_status = this.deliveryFormatTable[key][quantityId].ready_status;
         let delivery_format_name = this.deliveryFormatTable[key][quantityId].delivery_format_name;
         let product_name = product_sku;
 
         this.cartService.addToCart(
-          product_sku, product_name, unit_size, price, adjusted_price, ready_status,
+          product_sku, product_name, 1, unit_size, price, adjusted_price, ready_status,
           this.function_type_name$.value, this.structure_type_name$.value, this.promoter_name$.value,
           this.protein_tag_name$.value, this.fluorescene_marker_name$.value, this.selection_marker_name$.value,
           this.bacterial_marker_name$.value, this.target_sequence$.value, delivery_format_name

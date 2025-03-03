@@ -1,14 +1,16 @@
 <div class="service-list-container">
     <h2 class="heading">Services</h2>
-    <div class="service-list">
-        @for (service of servicesData; track service.name) {
-        <small-card
-            [name]="service.name"
-            [description]="service.description"
-            [link]="service.link"
-            [image]="service.image"
-            style="margin-right: 20px; margin-bottom: 20px"
-        ></small-card>
-        }
+    <div class="primary-container">
+        <div class="service-list">
+            @for (service of servicesData; track service.name) {
+            <small-card
+                [name]="service.name"
+                [description]="service.description"
+                [link]="service.link"
+                [image]="service.image"
+                style="margin-right: 20px; margin-bottom: 20px"
+            ></small-card>
+            }
+        </div>
     </div>
 </div>

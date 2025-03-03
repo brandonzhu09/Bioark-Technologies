@@ -225,11 +225,7 @@ export class StepperComponent {
             card.selection_marker_name
         );
     };
-    handleBacterialMarkerClick = (card: any) => {
-        this.fourthFormGroup.controls.bacterialMarkerName.setValue(
-            card.bacterial_marker_name
-        );
-    };
+
     handleTargetSequenceClick = (option: string, sequence: string) => {
         this.fifthFormGroup.controls.geneOption.setValue(option);
         this.fifthFormGroup.controls.targetSequence.setValue(sequence);
@@ -297,7 +293,8 @@ export class StepperComponent {
                     this.proteinTagCards = response.protein_tags;
                     this.fluoresceneMarkerCards = response.fluorescene_markers;
                     this.selectionMarkerCards = response.selection_markers;
-                    this.bacterialMarkerCards = response.bacterial_markers;
+                    this.fourthFormGroup.controls.bacterialMarkerName.setValue(
+                        response.bacterial_markers[0].bacterial_marker_name)
                 });
         }
     }

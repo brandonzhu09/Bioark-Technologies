@@ -14,7 +14,7 @@ export class LandingPageService {
   ]
 
   servicesData = [
-    { name: 'Custom Cloning Services', description: 'We offer various plasmid construction services, complemented by a web design that facilitates customer involvement in the plasmid design process.', link: '/services/custom-cloning', image: '../../assets/Service-1 Custom Cloning Services.jpg' },
+    { name: 'Cloning Services', description: 'We offer various plasmid construction services, complemented by a web design that facilitates customer involvement in the plasmid design process.', link: '/services/custom-cloning', image: '../../assets/Service-1 Custom Cloning Services.jpg' },
     { name: 'Lentivirus Package', description: 'We offer high-quality lentivirus package service at a competitive price.', link: '/services/lentivirus-package', image: '../../assets/Service-2 Lentivirus Package.jpeg' },
     { name: 'Stable Cell Line', description: 'We offer stable cell line construction tailored to various requirements across different cancer cell lines and adherent cell lines at a relatively affordable price. Our services include gene overexpression, knockout, knock-in, and deletion.', link: '/services/stable-cell-line', image: '../../assets/Service-3 Stable Cell Line Services.jpeg' },
     { name: 'Experiment Services', description: 'We offer stable cell line construction tailored to various requirements across different cancer cell lines and adherent cell lines at a relatively affordable price. Our services include gene overexpression, knockout, knock-in, and deletion.', link: '/services/stable-cell-line', image: '../../assets/Service-4 Experiment Services.jpg' },

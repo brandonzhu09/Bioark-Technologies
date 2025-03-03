@@ -44,13 +44,13 @@ export class CartService {
     });
   }
 
-  addToCart(product_sku: string, product_name: string, unit_size: string,
-    price: string, adjusted_price: string, ready_status: string,
-    function_type_name: string, structure_type_name: string,
-    promoter_name: string, protein_tag_name: string, fluorescene_marker_name: string,
-    selection_marker_name: string, bacterial_marker_name: string, target_sequence: string,
-    delivery_format_name: string) {
-    this.incrementCartCount();
+  addToCart(product_sku: string, product_name: string, quantity: number, unit_size: string,
+    price: number, adjusted_price: number, ready_status: string = "Yes",
+    function_type_name: string = "", structure_type_name: string = "",
+    promoter_name: string = "", protein_tag_name: string = "", fluorescene_marker_name: string = "",
+    selection_marker_name: string = "", bacterial_marker_name: string = "", target_sequence: string = "",
+    delivery_format_name: string = "") {
+    this.incrementCartCount(quantity);
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export class CartService {
         "target_sequence": target_sequence,
         "delivery_format_name": delivery_format_name,
       },
-      'quantity': 1,
+      'quantity': quantity,
     }
 
     return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/cart/`, body, {
@@ -139,9 +139,9 @@ export class CartService {
     localStorage.setItem(this.CART_COUNT_KEY, count.toString());
   }
 
-  incrementCartCount(): void {
+  incrementCartCount(quantity: number): void {
     const currentCount = this.getCartCount();
-    this.setCartCount(currentCount + 1);
+    this.setCartCount(currentCount + quantity);
   }
 
   decrementCartCount(): void {

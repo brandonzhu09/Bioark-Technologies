@@ -1,9 +1,9 @@
 .product-list-container {
-    width: 66%;
+    width: 65%;
     margin: auto;
 }
 
-.heading {
+.product-heading {
     text-align: left;
     font-size: 32px;
     font-weight: bold;

@@ -218,7 +218,7 @@ def generate_product_sku(function_type_name, structure_type_name, promoter_name,
     else:
         delivery_format_code = ""
 
-    product_sku = function_type_code + structure_type_code + "-" + promoter_code + protein_tag_code + fluorescene_marker_code + selection_marker_code + bacterial_marker_code + "-" + target_sequence + delivery_format_code
+    product_sku = function_type_code + structure_type_code + "-" + promoter_code + 'X' + protein_tag_code + fluorescene_marker_code + selection_marker_code + bacterial_marker_code + "-" + target_sequence + delivery_format_code
 
     return product_sku
 
@@ -230,10 +230,10 @@ def decode_product_sku(product_sku):
         structure_type_code = part1[2:]
         
         promoter_code = part2[0]
-        protein_tag_code = part2[1]
-        fluorescene_marker_code = part2[2]
-        selection_marker_code = part2[3]
-        bacterial_marker_code = part2[4]
+        protein_tag_code = part2[2]
+        fluorescene_marker_code = part2[3]
+        selection_marker_code = part2[4]
+        bacterial_marker_code = part2[5]
         
         target_sequence = target_sequence_with_delivery[:6]
         

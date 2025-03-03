@@ -1,14 +1,16 @@
 <div class="product-list-container">
-    <h2 class="heading">Products</h2>
-    <div class="product-list">
-        @for (product of productsData; track product.name) {
-        <small-card
-            [name]="product.name"
-            [description]="product.description"
-            [link]="product.link"
-            [image]="product.image"
-            style="margin-right: 20px; margin-bottom: 20px"
-        ></small-card>
-        }
+    <h2 class="product-heading">Products</h2>
+    <div class="primary-container">
+        <div class="product-list">
+            @for (product of productsData; track product.name) {
+            <small-card
+                [name]="product.name"
+                [description]="product.description"
+                [link]="product.link"
+                [image]="product.image"
+                style="margin-right: 20px; margin-bottom: 20px"
+            ></small-card>
+            }
+        </div>
     </div>
 </div>

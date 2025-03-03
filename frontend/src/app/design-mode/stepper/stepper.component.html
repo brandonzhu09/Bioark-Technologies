@@ -385,35 +385,6 @@
                         </button> -->
                     </div>
                 </mat-tab>
-                <mat-tab label="Antibiotics">
-                    <ng-template mat-tab-label class="tab-label">
-                        <i
-                            class="bi bi-5-circle fs-5"
-                            style="margin-right: 1rem"
-                        ></i>
-                        Antibiotics
-                    </ng-template>
-                    <div class="container">
-                        @for (card of bacterialMarkerCards; track
-                        card.bacterial_marker_code) {
-                        <button
-                            class="button-card"
-                            [ngClass]="{
-                                selected:
-                                    fourthFormGroup.value
-                                        .bacterialMarkerName ===
-                                    card.bacterial_marker_name
-                            }"
-                            (click)="handleBacterialMarkerClick(card)"
-                        >
-                            <i class="bi bi-box-seam h1"></i>
-                            <div class="text">
-                                {{ card.bacterial_marker_name }}
-                            </div>
-                        </button>
-                        }
-                    </div>
-                </mat-tab>
             </mat-tab-group>
             <div>
                 <button mat-button matStepperPrevious>Back</button>

@@ -68,3 +68,24 @@ body {
     margin-bottom: 5px;
     animation: fadeout 10s forwards;
 }
+
+.cart-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.cart-button:hover {
+    background-color: #0056b3;
+}
+
+.primary-container {
+    border-radius: 3px;
+    border: 1px solid #eaeaea;
+    background: white;
+    padding: 1rem;
+}
