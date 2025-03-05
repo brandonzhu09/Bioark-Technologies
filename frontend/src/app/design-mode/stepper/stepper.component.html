@@ -13,20 +13,6 @@
     <mat-step [stepControl]="firstFormGroup">
         <design-diagram
             [category]="firstFormGroup.controls.productCategoryName.value!"
-            [functionTypeName]="this.secondFormGroup.value.functionTypeName!"
-            [structureTypeName]="this.thirdFormGroup.value.structureTypeName!"
-            [promoterName]="this.fourthFormGroup.value.promoterName!"
-            [proteinTagName]="this.fourthFormGroup.value.proteinTagName!"
-            [fluoresceneMarkerName]="
-                this.fourthFormGroup.value.fluoresceneMarkerName!
-            "
-            [selectionMarkerName]="
-                this.fourthFormGroup.value.selectionMarkerName!
-            "
-            [bacterialMarkerName]="
-                this.fourthFormGroup.value.bacterialMarkerName!
-            "
-            [targetSequence]="this.getTargetSequence()!"
         ></design-diagram>
         <form
             [formGroup]="firstFormGroup"
@@ -77,20 +63,7 @@
     <mat-step [stepControl]="secondFormGroup" label="Select function type">
         <design-diagram
             [category]="firstFormGroup.controls.productCategoryName.value!"
-            [functionTypeName]="this.secondFormGroup.value.functionTypeName!"
-            [structureTypeName]="this.thirdFormGroup.value.structureTypeName!"
-            [promoterName]="this.fourthFormGroup.value.promoterName!"
-            [proteinTagName]="this.fourthFormGroup.value.proteinTagName!"
-            [fluoresceneMarkerName]="
-                this.fourthFormGroup.value.fluoresceneMarkerName!
-            "
-            [selectionMarkerName]="
-                this.fourthFormGroup.value.selectionMarkerName!
-            "
-            [bacterialMarkerName]="
-                this.fourthFormGroup.value.bacterialMarkerName!
-            "
-            [targetSequence]="this.getTargetSequence()!"
+            [functionTypeName]="this.secondFormGroup.value.functionTypeName ?? ''"
         ></design-diagram>
         <form
             [formGroup]="secondFormGroup"
@@ -143,18 +116,6 @@
             [category]="firstFormGroup.controls.productCategoryName.value!"
             [functionTypeName]="this.secondFormGroup.value.functionTypeName!"
             [structureTypeName]="this.thirdFormGroup.value.structureTypeName!"
-            [promoterName]="this.fourthFormGroup.value.promoterName!"
-            [proteinTagName]="this.fourthFormGroup.value.proteinTagName!"
-            [fluoresceneMarkerName]="
-                this.fourthFormGroup.value.fluoresceneMarkerName!
-            "
-            [selectionMarkerName]="
-                this.fourthFormGroup.value.selectionMarkerName!
-            "
-            [bacterialMarkerName]="
-                this.fourthFormGroup.value.bacterialMarkerName!
-            "
-            [targetSequence]="this.getTargetSequence()!"
         ></design-diagram>
         <form
             [formGroup]="thirdFormGroup"
@@ -223,7 +184,6 @@
             [bacterialMarkerName]="
                 this.fourthFormGroup.value.bacterialMarkerName!
             "
-            [targetSequence]="this.getTargetSequence()!"
         ></design-diagram>
         <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
             <mat-tab-group class="custom-tab-group" #tabGroup>
@@ -388,7 +348,7 @@
             </mat-tab-group>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="nextTab()">
+                <button mat-button (click)="nextTab()">
                     Next
                 </button>
             </div>

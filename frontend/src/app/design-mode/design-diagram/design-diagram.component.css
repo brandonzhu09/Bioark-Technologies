@@ -62,6 +62,10 @@
     left: 120px;
 }
 
+.s-hidden {
+    opacity: 0;
+}
+
 /* .table {
     width: 800px;
 } */

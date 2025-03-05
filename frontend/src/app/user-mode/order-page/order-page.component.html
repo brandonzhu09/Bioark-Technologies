@@ -294,10 +294,13 @@
                             </tr>
                         </table>
 
-                        <mat-paginator
+                        <!-- <mat-paginator
+                            [length]="totalItems"
+                            [pageSize]="pageSize"
                             [pageSizeOptions]="[5, 10, 25, 100]"
+                            (page)="handlePageEvent($event)"
                             aria-label="Select page of users"
-                        ></mat-paginator>
+                        ></mat-paginator> -->
                     </div>
                 </mat-tab>
                 <mat-tab label="Cloning Overexpression Orders">

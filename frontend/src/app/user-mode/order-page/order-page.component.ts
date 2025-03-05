@@ -22,6 +22,9 @@ export class OrderPageComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  totalItems = 0;
+  pageSize = 0;
+
   constructor(private userService: UserService) {
     this.crisprOrders = new MatTableDataSource(this.crisprOrdersData);
     this.overexpressionOrders = new MatTableDataSource(this.overexpressionOrdersData);
@@ -111,5 +114,9 @@ export class OrderPageComponent {
         return 'Unknown Status';
     }
   }
+
+  // handlePageEvent(event: any) {
+  //   console.log(event)
+  // }
 
 }

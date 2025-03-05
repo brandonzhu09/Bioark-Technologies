@@ -380,9 +380,10 @@ export class StepperComponent {
 
     nextTab() {
         const selectedIndex = this.tabGroup.selectedIndex;
+        console.log(selectedIndex, this.tabGroup._tabs.length - 1)
         if (selectedIndex != null && selectedIndex < this.tabGroup._tabs.length - 1) {
             this.tabGroup.selectedIndex = selectedIndex + 1;
-        } else {
+        } else if (selectedIndex == this.tabGroup._tabs.length - 1) {
             if (this.checkFormCompletion(this.fourthFormGroup)) {
                 this.stepper.next();
             }
