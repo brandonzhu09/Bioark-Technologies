@@ -22,8 +22,9 @@ export class OrderPageComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  totalItems = 0;
-  pageSize = 0;
+  crisprNumItems = 0;
+  overexpressionNumItems = 0;
+  rnaiNumItems = 0;
 
   constructor(private userService: UserService) {
     this.crisprOrders = new MatTableDataSource(this.crisprOrdersData);
@@ -33,15 +34,18 @@ export class OrderPageComponent {
 
   viewOrders() {
     this.userService.viewCloningCRISPROrders().subscribe(res => {
-      this.crisprOrdersData = res;
+      this.crisprOrdersData = res.order_items;
+      this.crisprNumItems = res.total;
       this.crisprOrders = new MatTableDataSource(this.crisprOrdersData);
     })
     this.userService.viewCloningOverexpressionOrders().subscribe(res => {
-      this.overexpressionOrdersData = res;
+      this.overexpressionOrdersData = res.order_items;
+      this.overexpressionNumItems = res.total;
       this.overexpressionOrders = new MatTableDataSource(this.overexpressionOrdersData);
     })
     this.userService.viewCloningRNAiOrders().subscribe(res => {
-      this.rnaiOrdersData = res;
+      this.rnaiOrdersData = res.order_items;
+      this.rnaiNumItems = res.total;
       this.rnaiOrders = new MatTableDataSource(this.rnaiOrdersData);
     })
   }
@@ -115,8 +119,28 @@ export class OrderPageComponent {
     }
   }
 
-  // handlePageEvent(event: any) {
-  //   console.log(event)
-  // }
+  handleCrisprPageEvent(event: any) {
+    this.userService.viewCloningCRISPROrders(event.pageIndex + 1, event.pageSize).subscribe(res => {
+      this.crisprOrdersData = res.order_items;
+      this.crisprNumItems = res.total;
+      this.crisprOrders = new MatTableDataSource(this.crisprOrdersData);
+    })
+  }
+
+  handleOverexpressionPageEvent(event: any) {
+    this.userService.viewCloningOverexpressionOrders(event.pageIndex + 1, event.pageSize).subscribe(res => {
+      this.overexpressionOrdersData = res.order_items;
+      this.overexpressionNumItems = res.total;
+      this.overexpressionOrders = new MatTableDataSource(this.overexpressionOrdersData);
+    })
+  }
+
+  handleRnaiPageEvent(event: any) {
+    this.userService.viewCloningRNAiOrders(event.pageIndex + 1, event.pageSize).subscribe(res => {
+      this.rnaiOrdersData = res.order_items;
+      this.rnaiNumItems = res.total;
+      this.rnaiOrders = new MatTableDataSource(this.rnaiOrdersData);
+    })
+  }
 
 }

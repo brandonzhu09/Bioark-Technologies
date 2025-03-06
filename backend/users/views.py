@@ -7,6 +7,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import check_password
 import json
+from django.core.paginator import Paginator
 
 from orders.models import *
 from orders.serializers import *
@@ -39,27 +40,63 @@ def view_orders(request):
 
 @api_view(['GET'])
 def view_cloning_crispr_orders(request):
+    page_number = request.query_params.get('page_number', 1)
+    page_size = request.query_params.get('page_size', 5)
+
     orders = Order.objects.filter(user_id=request.user.id)
     order_items = OrderItem.objects.filter(order_id__in=orders, order_class='Cloning-CRISPR').order_by('-order_placed_date')
-    serializer = OrderItemSerializer(order_items, many=True)
 
-    return Response(serializer.data)
+    paginator = Paginator(order_items, page_size)
+    page_obj = paginator.get_page(page_number)
+
+    serializer = OrderItemSerializer(page_obj, many=True)
+
+    data = {
+        'total': order_items.count(),
+        'order_items': serializer.data
+    }
+
+    return Response(data)
 
 @api_view(['GET'])
 def view_cloning_overexpression_orders(request):
+    page_number = request.query_params.get('page_number', 1)
+    page_size = request.query_params.get('page_size', 5)
+
     orders = Order.objects.filter(user_id=request.user.id)
     order_items = OrderItem.objects.filter(order_id__in=orders, order_class='Cloning-Overexpression').order_by('-order_placed_date')
-    serializer = OrderItemSerializer(order_items, many=True)
+    
+    paginator = Paginator(order_items, page_size)
+    page_obj = paginator.get_page(page_number)
+    
+    serializer = OrderItemSerializer(page_obj, many=True)
 
-    return Response(serializer.data)
+    data = {
+        'total': order_items.count(),
+        'order_items': serializer.data
+    }
+
+    return Response(data)
 
 @api_view(['GET'])
 def view_cloning_rnai_orders(request):
+    page_number = request.query_params.get('page_number', 1)
+    page_size = request.query_params.get('page_size', 5)
+    
     orders = Order.objects.filter(user_id=request.user.id)
     order_items = OrderItem.objects.filter(order_id__in=orders, order_class='Cloning-RNAi').order_by('-order_placed_date')
-    serializer = OrderItemSerializer(order_items, many=True)
+    
+    paginator = Paginator(order_items, page_size)
+    page_obj = paginator.get_page(page_number)
 
-    return Response(serializer.data)
+    serializer = OrderItemSerializer(page_obj, many=True)
+
+    data = {
+        'total': order_items.count(),
+        'order_items': serializer.data
+    }
+
+    return Response(data)
 
 @api_view(['GET'])
 def view_user_info(request):

@@ -19,16 +19,16 @@ export class UserService {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-orders/`, { withCredentials: true });
   }
 
-  viewCloningCRISPROrders() {
-    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-cloning-crispr-orders/`, { withCredentials: true });
+  viewCloningCRISPROrders(page_number: number = 1, page_size: number = 5) {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-cloning-crispr-orders/?page_number=${page_number}&page_size=${page_size}`, { withCredentials: true });
   }
 
-  viewCloningOverexpressionOrders() {
-    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-cloning-overexpression-orders/`, { withCredentials: true });
+  viewCloningOverexpressionOrders(page_number: number = 1, page_size: number = 5) {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-cloning-overexpression-orders/?page_number=${page_number}&page_size=${page_size}`, { withCredentials: true });
   }
 
-  viewCloningRNAiOrders() {
-    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-cloning-rnai-orders/`, { withCredentials: true });
+  viewCloningRNAiOrders(page_number: number = 1, page_size: number = 5) {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-cloning-rnai-orders/?page_number=${page_number}&page_size=${page_size}`, { withCredentials: true });
   }
 
   submitContactForm(message: any): Observable<any> {

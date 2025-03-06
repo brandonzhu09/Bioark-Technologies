@@ -294,13 +294,11 @@
                             </tr>
                         </table>
 
-                        <!-- <mat-paginator
-                            [length]="totalItems"
-                            [pageSize]="pageSize"
+                        <mat-paginator
+                            [length]="crisprNumItems"
                             [pageSizeOptions]="[5, 10, 25, 100]"
-                            (page)="handlePageEvent($event)"
-                            aria-label="Select page of users"
-                        ></mat-paginator> -->
+                            (page)="handleCrisprPageEvent($event)"
+                        ></mat-paginator>
                     </div>
                 </mat-tab>
                 <mat-tab label="Cloning Overexpression Orders">
@@ -458,8 +456,9 @@
                         </table>
 
                         <mat-paginator
+                            [length]="overexpressionNumItems"
                             [pageSizeOptions]="[5, 10, 25, 100]"
-                            aria-label="Select page of users"
+                            (page)="handleOverexpressionPageEvent($event)"
                         ></mat-paginator>
                     </div>
                 </mat-tab>
@@ -614,8 +613,9 @@
                         </table>
 
                         <mat-paginator
+                            [length]="rnaiNumItems"
                             [pageSizeOptions]="[5, 10, 25, 100]"
-                            aria-label="Select page of users"
+                            (page)="handleRnaiPageEvent($event)"
                         ></mat-paginator>
                     </div>
                 </mat-tab>
