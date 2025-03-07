@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
                 ('units_in_stock', models.IntegerField()),
                 ('units', models.CharField()),
                 ('ship_info', models.CharField()),
-                ('union', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='products.productsunion')),
+                ('union', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='products.productsunion')),
             ],
             options={
                 'db_table': 'featured_products',
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='union',
-            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, to='products.productsunion'),
+            field=models.OneToOneField(null=True, blank=True, on_delete=django.db.models.deletion.CASCADE, to='products.productsunion'),
             preserve_default=False,
         ),
         migrations.CreateModel(
