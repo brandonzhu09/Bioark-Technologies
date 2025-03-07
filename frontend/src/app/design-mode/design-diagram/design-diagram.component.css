@@ -7,13 +7,13 @@
 }
 
 .lego-diagram {
-    width: 40%;
-    padding-top: 50px;
-    padding-left: 100px;
+    width: 60%;
     object-fit: contain;
 }
 
 .lego-diagram img {
+    margin-top: 30px;
+    margin-left: 100px;
     width: 350px;
 }
 
@@ -28,38 +28,46 @@
 .s1 {
     position: relative;
     bottom: 200px;
-    left: 355px;
+    left: 455px;
 }
 
 .s2 {
     position: relative;
     bottom: 70px;
-    left: 280px;
+    left: 380px;
     width: 140px;
 }
 
 .s3 {
     position: relative;
     bottom: 60px;
-    left: 120px;
+    left: 220px;
 }
 
 .s4 {
     position: relative;
     bottom: 140px;
-    right: 30px;
+    right: -70px;
 }
 
 .s5 {
     position: relative;
     bottom: 270px;
-    right: 100px;
 }
 
 .s6 {
     position: relative;
     bottom: 560px;
-    left: 120px;
+    left: 220px;
+}
+
+.short-name {
+    position: relative;
+    bottom: 400px;
+    left: 200px;
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .s-hidden {

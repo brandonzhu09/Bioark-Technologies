@@ -5,6 +5,12 @@
     color: #281A39;
 }
 
+.contact-image {
+    max-height: 350px;
+    object-fit: cover;
+    margin-bottom: 40px;
+}
+
 .contact-container {
     display: flex;
     gap: 40px;

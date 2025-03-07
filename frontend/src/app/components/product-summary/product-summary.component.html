@@ -84,7 +84,13 @@
                         </select>
                     </td>
                     <td>
+                        @if (entry.value[0].price !== null) {
                         <span class="price">${{ getPrice(entry.key) }} </span>
+                        } @else {
+                        <button (click)="goToConsult()" class="cart-button">
+                            Consult
+                        </button>
+                        }
                     </td>
                 </tr>
                 <!-- @for (row of deliveryFormatTable; track row) {

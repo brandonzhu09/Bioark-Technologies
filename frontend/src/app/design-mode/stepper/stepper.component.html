@@ -63,7 +63,9 @@
     <mat-step [stepControl]="secondFormGroup" label="Select function type">
         <design-diagram
             [category]="firstFormGroup.controls.productCategoryName.value!"
-            [functionTypeName]="this.secondFormGroup.value.functionTypeName ?? ''"
+            [functionTypeName]="
+                this.secondFormGroup.value.functionTypeName ?? ''
+            "
         ></design-diagram>
         <form
             [formGroup]="secondFormGroup"
@@ -348,9 +350,7 @@
             </mat-tab-group>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="nextTab()">
-                    Next
-                </button>
+                <button mat-button (click)="nextTab()">Next</button>
             </div>
             <div class="error-container">
                 <div

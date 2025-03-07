@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { BehaviorSubject, combineLatest, filter, skip } from 'rxjs';
 import { DesignFormService } from '../../design-mode/design-form.service';
@@ -34,6 +34,7 @@ export class ProductSummaryComponent implements OnInit {
   selection_marker_name$ = new BehaviorSubject<string>('');
   bacterial_marker_name$ = new BehaviorSubject<string>('');
   target_sequence$ = new BehaviorSubject<string>('');
+  delivery_format_name$ = new BehaviorSubject<string>('');
 
   product: any;
   deliveryFormatColumns: string[] = [
@@ -49,7 +50,7 @@ export class ProductSummaryComponent implements OnInit {
   cartItems: any = [];
 
   constructor(private route: ActivatedRoute, private productService: ProductService,
-    private designFormService: DesignFormService, private cartService: CartService) { }
+    private designFormService: DesignFormService, private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -72,6 +73,7 @@ export class ProductSummaryComponent implements OnInit {
       this.selection_marker_name$.next(data.selection_marker_name);
       this.bacterial_marker_name$.next(data.bacterial_marker_name);
       this.target_sequence$.next(data.target_sequence);
+      this.delivery_format_name$.next(data.delivery_format_name);
 
       this.getDeliveryFormatTable();
 
@@ -103,6 +105,7 @@ export class ProductSummaryComponent implements OnInit {
             this.deliveryFormatTable = response;
             for (let deliveryFormat in this.deliveryFormatTable) {
               this.deliveryFormatForm.addControl(deliveryFormat, new FormControl(0));
+              this.deliveryFormatForm.addControl(deliveryFormat, new FormControl(0));
             }
           }
         });
@@ -133,7 +136,7 @@ export class ProductSummaryComponent implements OnInit {
         let adjusted_price = Number(this.deliveryFormatTable[key][quantityId].adjusted_price);
         let ready_status = this.deliveryFormatTable[key][quantityId].ready_status;
         let delivery_format_name = this.deliveryFormatTable[key][quantityId].delivery_format_name;
-        let product_name = product_sku;
+        let product_name = this.deliveryFormatTable[key][quantityId].product_name;
 
         this.cartService.addToCart(
           product_sku, product_name, 1, unit_size, price, adjusted_price, ready_status,
@@ -169,6 +172,10 @@ export class ProductSummaryComponent implements OnInit {
 
   getFormControl(key: string): FormControl {
     return this.deliveryFormatForm.get(key) as FormControl;
+  }
+
+  goToConsult() {
+    this.router.navigate(['/quote'])
   }
 
 }

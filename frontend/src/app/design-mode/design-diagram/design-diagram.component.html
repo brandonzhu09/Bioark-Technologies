@@ -1,12 +1,43 @@
 <div class="container">
     <div class="lego-diagram">
+        <h1>{{ getLongName() }}</h1>
         <img src="../../../assets/Lego-diagram.png" />
-        <div class="textbox s1" [ngClass]="{'s-hidden': promoterName == ''}">S1: {{ promoterName }}</div>
-        <div class="textbox s2" [ngClass]="{'s-hidden': functionTypeName == ''}">X: {{ functionTypeName }}</div>
-        <div class="textbox s3" [ngClass]="{'s-hidden': proteinTagName == ''}">S3: {{ proteinTagName }}</div>
-        <div class="textbox s4" [ngClass]="{'s-hidden': fluoresceneMarkerName == ''}">S4: {{ fluoresceneMarkerName }}</div>
-        <div class="textbox s5" [ngClass]="{'s-hidden': selectionMarkerName == ''}">S5: {{ selectionMarkerName }}</div>
-        <div class="textbox s6" [ngClass]="{'s-hidden': bacterialMarkerName == ''}">S6: {{ bacterialMarkerName }}</div>
+        <div class="textbox s1" [ngClass]="{ 's-hidden': promoterName == '' }">
+            S1: {{ promoterName }}
+        </div>
+        <div
+            class="textbox s2"
+            [ngClass]="{ 's-hidden': functionTypeName == '' }"
+        >
+            X: {{ functionTypeName }}
+        </div>
+        <div
+            class="textbox s3"
+            [ngClass]="{ 's-hidden': proteinTagName == '' }"
+        >
+            S3: {{ proteinTagName }}
+        </div>
+        <div
+            class="textbox s4"
+            [ngClass]="{ 's-hidden': fluoresceneMarkerName == '' }"
+        >
+            S4: {{ fluoresceneMarkerName }}
+        </div>
+        <div
+            class="textbox s5"
+            [ngClass]="{ 's-hidden': selectionMarkerName == '' }"
+        >
+            S5: {{ selectionMarkerName }}
+        </div>
+        <div
+            class="textbox s6"
+            [ngClass]="{ 's-hidden': bacterialMarkerName == '' }"
+        >
+            S6: {{ bacterialMarkerName }}
+        </div>
+        <div class="short-name">
+            {{ getShortName() }}
+        </div>
     </div>
     <div class="table">
         <div class="header">Design Overview</div>

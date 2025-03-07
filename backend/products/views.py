@@ -103,40 +103,50 @@ def get_delivery_format_table(request):
                                       ).distinct()
     
     function_type_code = 'Others'
-    structure_type_code = 'Others'
+    structure_type_code = ''
+    structure_type_code_2 = None
     target_sequence_code = ''
+    target_sequence_code_2 = None
     shelf_status = 0
     # check whether function type is CD
     if function_type_name == 'CRISPR Donor':
         function_type_code = 'CD'
-    # check whether structure type is M or B
-    if structure_type_name == 'Lenti-AIO':
-        structure_type_code = 'M or B'
+    # check whether structure type is S/T/L/M
+    structure_type_code = StructureType.objects.get(structure_type_name=structure_type_name).structure_type_symbol
+    if structure_type_name == 'Standard' or structure_type_name == 'Lenti':
+        structure_type_code_2 = 'S or L'
+    else:
+        structure_type_code_2 = 'M or T'
     # map target sequence to the right code in design library
     if target_sequence == 'XXXXXX' or target_sequence == '000000':
-        target_sequence_code = 'None; Scramble'
+        target_sequence_code = 'Control'
+        target_sequence_code_2 = 'Non-Insert; Control'
+    else:
+        target_sequence_code = 'Gene'
     
     # check whether product is on-shelf or custom made
     if len(products) > 0:
         shelf_status = 1
 
     design_products = DesignLibrary.objects.filter(delivery_format_code__in=delivery_format_codes,
+                                                   shelf_status=shelf_status,
                                                    function_type_code=function_type_code,
-                                                   structure_type_code=structure_type_code,
-                                                   target_sequence=target_sequence_code,
-                                                   shelf_status=shelf_status)
+                                                   structure_type_code__in=[structure_type_code, structure_type_code_2],
+                                                   target_sequence__in=[target_sequence_code, target_sequence_code_2],
+                                                   )
     
     data = {}
     product_id = 0
 
     for instance in design_products:
         delivery_format_name = DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).delivery_format_name
+        product_sku = generate_product_sku(function_type_name, structure_type_name, promoter_name,
+                                           protein_tag_name, fluorescene_marker_name, selection_marker_name,
+                                           bacterial_marker_name, target_sequence, delivery_format_name)
         product = {
             'product_id': product_id,
-            'product_sku': generate_product_sku(function_type_name, structure_type_name, promoter_name,
-                                                protein_tag_name, fluorescene_marker_name, selection_marker_name,
-                                                bacterial_marker_name, target_sequence, delivery_format_name),
-            'product_name': "Test",
+            'product_sku': product_sku,
+            'product_name': generate_product_name(product_sku),
             'delivery_format_name': delivery_format_name,
             'product_format_description': DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).description,
             'quantity': instance.kit_amount + " " + instance.unit,
@@ -236,6 +246,11 @@ def decode_product_sku(product_sku):
         bacterial_marker_code = part2[5]
         
         target_sequence = target_sequence_with_delivery[:6]
+
+        delivery_format_code = None
+        # Check if delivery format code is present
+        if len(target_sequence_with_delivery) == 7:
+            delivery_format_code = target_sequence_with_delivery[-1]
         
         # Retrieve data from the database
         function_type_name = FunctionType.objects.get(function_type_symbol=function_type_code).function_type_name
@@ -259,6 +274,12 @@ def decode_product_sku(product_sku):
         fluorescene_marker_name = FluoresceneMarker.objects.get(fluorescene_marker_code=fluorescene_marker_code).fluorescene_marker_name
         selection_marker_name = SelectionMarker.objects.get(selection_marker_code=selection_marker_code).selection_marker_name
 
+        # Get the delivery format name if it exists
+        if delivery_format_code:
+            delivery_format_name = DeliveryFormat.objects.get(delivery_format_symbol=delivery_format_code).delivery_format_name
+        else:
+            delivery_format_name = ''
+
         # Return the decoded components as a dictionary
         return {
             "function_type_name": function_type_name,
@@ -269,12 +290,27 @@ def decode_product_sku(product_sku):
             "selection_marker_name": selection_marker_name,
             "bacterial_marker_name": bacterial_marker_name,
             "target_sequence": target_sequence,
+            "delivery_format_name": delivery_format_name,
         }
     
     except ObjectDoesNotExist as e:
         raise ValueError(f"Decoding failed: {str(e)}")
     except Exception as e:
         raise ValueError(f"Unexpected error during decoding: {str(e)}")
+
+
+def generate_product_name(product_sku):
+    decoded_sku = decode_product_sku(product_sku)
+    function_type_name = decoded_sku['function_type_name']
+    structure_type_name = decoded_sku['structure_type_name']
+    target_sequence = decoded_sku['target_sequence']
+    delivery_format_name = decoded_sku['delivery_format_name']
+
+    target_sequence = GeneLibrary.objects.get(target_sequence=target_sequence).symbol
+
+    product_name = f"{function_type_name} {structure_type_name} Kit--Gene {target_sequence}, {delivery_format_name} type"
+
+    return product_name
 
 
 def get_promoters(function_type_symbol, structure_type_symbol):
