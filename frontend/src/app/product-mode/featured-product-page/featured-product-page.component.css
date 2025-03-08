@@ -36,8 +36,8 @@ h1 {
 
 .diagram .main-image {
     display: flex;
-    width: 400px;
-    height: 133px;
+    max-width: 400px;
+    max-height: 200px;
     object-fit: fit;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -263,28 +263,27 @@ input[type="number"] {
 
 @media (max-width: 1600px) {
     .diagram .main-image {
-        width: 400px;
-        height: 133px;
+        max-width: 400px;
     }
 
     .description {
         padding-left: 0;
     }
 
-    .container {
+    /* .container {
         flex-direction: column;
-    }
+    } */
 
-    .product-page {
-        width: 100%;
+    .container {
+        gap: 60px;
     }
 }
 
 @media (max-width: 1300px) {
-    .content {
+    /* .content {
         flex-direction: column;
         justify-content: center;
-    }
+    } */
 
     .diagram .main-image {
         align-items: center;
@@ -302,7 +301,6 @@ input[type="number"] {
 
 @media (max-width: 1300px) {
     .diagram .main-image {
-        width: 200px;
-        height: 66px;
+        max-width: 350px;
     }
 }

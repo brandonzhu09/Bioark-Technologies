@@ -31,7 +31,7 @@ def get_function_types_by_category(request):
 def get_structure_types_by_function_type(request):
     function_type_symbol = request.GET["function_type_symbol"]
     structure_types = DeliveryLibrary.objects.filter(function_type_symbol=function_type_symbol).values("structure_type_symbol").distinct()
-    queryset = StructureType.objects.filter(structure_type_symbol__in=structure_types).values("structure_type_symbol", "structure_type_name", "description")
+    queryset = StructureType.objects.filter(structure_type_symbol__in=structure_types).order_by("priority").values("structure_type_symbol", "structure_type_name", "description")
 
     return Response(list(queryset))
 

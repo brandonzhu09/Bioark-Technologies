@@ -93,16 +93,16 @@
                         <td [innerHTML]="description"></td>
                     </tr>
                     <tr>
-                        <td class="first-column">
+                        <td class="first-column highlight">
                             <strong>Key Features</strong>
                         </td>
-                        <td [innerHTML]="key_features"></td>
+                        <td class="highlight" [innerHTML]="key_features"></td>
                     </tr>
                     <tr>
-                        <td class="first-column highlight">
-                            <strong>Shipping</strong>
+                        <td class="first-column">
+                            <strong>Storage & Stability</strong>
                         </td>
-                        <td class="highlight">{{ ship_info }}</td>
+                        <td [innerHTML]="storage_info"></td>
                     </tr>
                 </table>
             </div>

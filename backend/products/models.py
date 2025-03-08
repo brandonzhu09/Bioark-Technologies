@@ -154,6 +154,7 @@ class StructureType(models.Model):
     structure_type_symbol = models.CharField(unique=True)
     structure_type_name = models.CharField(unique=True)
     description = models.CharField(blank=True, null=True)
+    priority = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'structure_types'
@@ -233,7 +234,7 @@ class FeaturedProduct(models.Model):
     description = HTMLField()
     key_features = HTMLField()
     performance_data = HTMLField()
-    storage_info = models.CharField()
+    storage_info = HTMLField()
     ship_info = models.CharField()
     shelf_status = models.BooleanField()
     on_display = models.BooleanField(default=False)
