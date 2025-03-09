@@ -5,6 +5,11 @@
     border: 1px solid #eaeaea;
 }
 
+h4 {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
 .result-item {
     display: flex;
     flex-direction: column;

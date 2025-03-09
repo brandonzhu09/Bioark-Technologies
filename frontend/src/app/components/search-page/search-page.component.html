@@ -1,14 +1,26 @@
 <div class="search-container">
-    <h1>Search results for: {{ query }}</h1>
+    @if (search_results.length === 0) {
+    <h4>No results found for: "{{ query }}"</h4>
+
+    } @else {
+    <h4>{{ length }} products matching: "{{ query }}"</h4>
     <mat-paginator
         [length]="length"
-        [pageSizeOptions]="[5, 10, 25, 100]"
+        [pageSizeOptions]="[10, 20, 50, 100]"
         (page)="handlePageEvent($event)"
     ></mat-paginator>
     <div class="main-container">
         <div class="filter-bar"></div>
         <div class="results-container">
-            <a class="result-item" href=""></a>
+            @for (result of search_results; track result.product_id) {
+            <a class="result-item" href="">{{ result.product_name }}</a>
+            }
         </div>
     </div>
+    <mat-paginator
+        [length]="length"
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        (page)="handlePageEvent($event)"
+    ></mat-paginator>
+    }
 </div>

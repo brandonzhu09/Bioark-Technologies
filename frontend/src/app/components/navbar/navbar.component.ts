@@ -38,9 +38,7 @@ export class NavbarComponent {
   }
 
   search() {
-    this.router.navigate(['/search'], { queryParams: { q: this.queryForm.value.query } }).then(() => {
-      window.location.reload();
-    });
+    this.router.navigate(['/search'], { queryParams: { q: this.queryForm.value.query } })
 
   }
 }

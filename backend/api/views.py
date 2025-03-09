@@ -13,6 +13,8 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import Q
+from django.core.paginator import Paginator
+
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -240,6 +242,8 @@ def resend_verification(request):
 @api_view(['GET'])
 def search_product(request):
     query = request.query_params.get('q', '')
+    page_size = request.query_params.get('page_size', 10)
+    page_number = request.query_params.get('page_number', 1)
 
     list_keywords = query.split()
 
@@ -249,7 +253,15 @@ def search_product(request):
         search_query |= Q(product_sku__icontains=keyword)
         search_query |= Q(description__icontains=keyword)
 
-    products = Product.objects.filter(search_query)
-    serializer = ProductSerializer(products, many=True)
+    products = Product.objects.filter(search_query).order_by("product_name")
+    paginator = Paginator(products, page_size)
+    page_obj = paginator.get_page(page_number)
 
-    return Response(serializer.data)
+    serializer = ProductSerializer(page_obj, many=True)
+
+    data = {
+        "length": products.count(),
+        "results": serializer.data
+    }
+
+    return Response(data)
