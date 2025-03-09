@@ -58,8 +58,8 @@ tbody td {
 }
 
 .diagram img {
-    /* width: 200px;
-    height: 200px; */
+    max-width: 300px;
+    /* height: 200px; */
     object-fit: cover;
     /* border: 1px solid #ccc;
     border-radius: 4px; */

@@ -35,10 +35,12 @@ import { FeaturedProductPageComponent } from './product-mode/featured-product-pa
 import { authGuard } from './guards/auth.guard';
 import { checkoutGuard } from './guards/checkout.guard';
 import { DesignDiagramComponent } from './design-mode/design-diagram/design-diagram.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'search', component: SearchPageComponent },
   { path: 'profile', component: UserPageComponent, canActivate: [authGuard] },
   { path: 'profile/orders', component: OrderPageComponent, canActivate: [authGuard] },
   { path: 'profile/settings', component: UserSettingsComponent, canActivate: [authGuard] },
@@ -62,7 +64,7 @@ const routes: Routes = [
   { path: 'order-confirmation/:token', component: OrderConfirmationComponent, canActivate: [authGuard] },
   { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
-  { path: 'test', component: DesignDiagramComponent },
+  { path: 'test', component: SearchPageComponent },
 ];
 
 @NgModule({

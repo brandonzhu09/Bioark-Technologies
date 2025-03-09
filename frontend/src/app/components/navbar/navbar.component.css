@@ -48,6 +48,36 @@
   font-weight: bold;
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 2px solid #42b6f5;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 300px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-button {
+  background-color: #42b6f5;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .nav-item {
   position: relative;
   display: inline-block;

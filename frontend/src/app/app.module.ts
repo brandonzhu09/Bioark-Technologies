@@ -62,6 +62,7 @@ import { ProductModePageComponent } from './product-mode/product-mode-page/produ
 import { ServiceModePageComponent } from './service-mode/service-mode-page/service-mode-page.component';
 import { FeaturedProductPageComponent } from './product-mode/featured-product-page/featured-product-page.component';
 import { QuantityInputComponent } from './components/quantity-input/quantity-input.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -104,6 +105,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     ProductModePageComponent,
     ServiceModePageComponent,
     FeaturedProductPageComponent,
+    SearchPageComponent,
   ],
   imports: [
     StepperComponent,

@@ -20,5 +20,5 @@ urlpatterns = [
     path('resend-verification/', views.resend_verification, name='resend_verification'),
     path('contact-us/', views.send_contact_form, name='contact-us'),
     path('quote/', views.send_quote_form, name='quote'),
-    path('search/<str:keywords>', views.search_product, name='search'),
+    path('search/', views.search_product, name='search'),
 ]

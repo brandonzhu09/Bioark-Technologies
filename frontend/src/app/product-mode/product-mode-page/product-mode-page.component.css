@@ -90,7 +90,7 @@ ol {
 }
 
 .services-section {
-    max-width: 75%;
+    width: 75%;
     margin: 70px auto;
     display: flex;
     flex-wrap: wrap;
@@ -305,22 +305,11 @@ ol {
     .main-content {
         width: 75%;
     }
+
 }
 
 @media (max-width: 1300px) {
-    .container {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .product-sidebar {
-        position: relative;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .main-content {
-        margin-left: 0;
+    .services-section {
         width: 100%;
     }
 }

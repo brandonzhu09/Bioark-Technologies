@@ -3,6 +3,7 @@ import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -12,6 +13,9 @@ import { Location } from '@angular/common';
 })
 export class NavbarComponent {
   cartCount = 0;
+  queryForm = new FormGroup({
+    query: new FormControl(''),
+  });
 
   constructor(private cartService: CartService, public authService: AuthService, private router: Router, private location: Location) { }
 
@@ -31,5 +35,12 @@ export class NavbarComponent {
 
       this.authService.isAuthenticated = false;
     });
+  }
+
+  search() {
+    this.router.navigate(['/search'], { queryParams: { q: this.queryForm.value.query } }).then(() => {
+      window.location.reload();
+    });
+
   }
 }

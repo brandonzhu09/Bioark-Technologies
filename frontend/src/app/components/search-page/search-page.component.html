@@ -1,0 +1,14 @@
+<div class="search-container">
+    <h1>Search results for: {{ query }}</h1>
+    <mat-paginator
+        [length]="length"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="handlePageEvent($event)"
+    ></mat-paginator>
+    <div class="main-container">
+        <div class="filter-bar"></div>
+        <div class="results-container">
+            <a class="result-item" href=""></a>
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@
             href="/product/featured/{{ product.catalog_number }}"
             class="promo-item"
         >
-            <!-- <img src="product-image.png" alt="Product 1" /> -->
+            <img src="{{ fullUrl(product.image) }}" alt="Product 1" />
             <div class="promo-title">
                 {{ product.product_name }}
                 <span class="badge">NEW!</span>

@@ -13,11 +13,8 @@
 .promotions-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    /* 3 columns */
     grid-template-rows: repeat(2, auto);
-    /* 2 rows */
-    border: 1px solid #ddd;
-    /* Outer border */
+    border: 1px solid #eaeaea;
 }
 
 .promo-item {
@@ -27,24 +24,20 @@
     background: #fff;
     text-align: center;
     padding: 15px;
-    border: 1px solid #ddd;
-    /* Shared border */
+    border: 1px solid #eaeaea;
     text-decoration: none;
-    /* Removes underline from links */
     color: inherit;
-    /* Inherits text color */
     transition: 0.3s;
 }
 
 .promo-item:hover {
     background-color: #f0f0f0;
-    /* Light background on hover */
     cursor: pointer;
 }
 
 .promo-item img {
     width: 100%;
-    max-height: 150px;
+    height: 150px;
     object-fit: cover;
     margin-bottom: 10px;
 }

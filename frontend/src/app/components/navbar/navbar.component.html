@@ -21,6 +21,20 @@
                         >support&#64;bioarktech.com</a
                     ></span
                 >
+
+                <form [formGroup]="queryForm" (ngSubmit)="search()">
+                    <div class="search-container">
+                        <input
+                            type="text"
+                            class="search-input"
+                            formControlName="query"
+                            placeholder="Search"
+                        />
+                        <button type="submit" class="search-button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="right-group">

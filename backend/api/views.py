@@ -238,12 +238,16 @@ def resend_verification(request):
     return JsonResponse({'detail': 'A new verification link has been sent to your email.'})
 
 @api_view(['GET'])
-def search_product(request, keywords):
-    list_keywords = keywords.split()
+def search_product(request):
+    query = request.query_params.get('q', '')
+
+    list_keywords = query.split()
 
     search_query = Q()
     for keyword in list_keywords:
         search_query |= Q(product_name__icontains=keyword)
+        search_query |= Q(product_sku__icontains=keyword)
+        search_query |= Q(description__icontains=keyword)
 
     products = Product.objects.filter(search_query)
     serializer = ProductSerializer(products, many=True)

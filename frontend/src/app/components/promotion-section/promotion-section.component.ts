@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'promotion-section',
@@ -15,6 +16,10 @@ export class PromotionSectionComponent {
     this.productService.getLatestFeaturedProducts().subscribe(res => {
       this.products = res;
     })
+  }
+
+  fullUrl(url: string) {
+    return environment.apiBaseUrl + url;
   }
 
 }
