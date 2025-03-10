@@ -98,6 +98,7 @@ class GeneLibrary(models.Model):
     gene_library_id = models.AutoField(primary_key=True)
     target_sequence = models.CharField(max_length=6)
     gene_name = models.CharField()
+    abbreviation = models.CharField(blank=True, null=True)
     symbol = models.CharField()
     locus_id = models.IntegerField(null=True)
     species = models.CharField(null=True)
@@ -132,6 +133,7 @@ class FunctionType(models.Model):
     function_type_id = models.AutoField(primary_key=True)
     function_type_symbol = models.CharField(unique=True) # TODO: enum
     function_type_name = models.CharField(unique=True)
+    abbreviation = models.CharField()
     description = models.CharField(blank=True, null=True)
     load_status = models.CharField(blank=True, null=True, default="Loaded")
     category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
@@ -153,6 +155,7 @@ class StructureType(models.Model):
     structure_type_id = models.AutoField(primary_key=True)
     structure_type_symbol = models.CharField(unique=True)
     structure_type_name = models.CharField(unique=True)
+    abbreviation = models.CharField()
     description = models.CharField(blank=True, null=True)
     priority = models.IntegerField(default=1)
 
@@ -199,9 +202,19 @@ class Product(models.Model):
     product_sku = models.CharField()
     product_name = models.CharField()
     description = models.CharField(blank=True, null=True)
+    base_price = models.DecimalField(max_digits=8, decimal_places=2)
+    adjusted_price = models.DecimalField(max_digits=8, decimal_places=2)
+    unit_size = models.CharField()
+    discount_code = models.CharField(null=True)
+    ready_status = models.CharField(blank=True, null=True)
+    target_sequence = models.CharField(max_length=6)
+    units_in_stock = models.IntegerField()
+    units = models.CharField()
+    ship_condition = models.CharField()
+    union = models.OneToOneField(ProductsUnion, on_delete=models.CASCADE, blank=True, null=True)
+    # product codes
     function_type_code = models.CharField()
     structure_type_code = models.CharField()
-    serial_id = models.CharField()
     promoter_code = models.CharField()
     property_code = models.CharField()
     protein_tag_code = models.CharField()
@@ -209,15 +222,6 @@ class Product(models.Model):
     selection_marker_code = models.CharField()
     bacterial_marker_code = models.CharField()
     delivery_format_code = models.CharField()
-    base_price = models.DecimalField(max_digits=8, decimal_places=2)
-    adjusted_price = models.DecimalField(max_digits=8, decimal_places=2)
-    unit_size = models.CharField()
-    discount_code = models.CharField(null=True)
-    ready_status = models.CharField(blank=True, null=True)
-    inventory = models.ForeignKey(ProductInventory, on_delete=models.PROTECT)
-    category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
-    gene = models.ForeignKey(GeneLibrary, null=True, on_delete=models.PROTECT)
-    union = models.OneToOneField(ProductsUnion, on_delete=models.CASCADE, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.union:
@@ -253,7 +257,7 @@ class FeaturedProduct(models.Model):
 
 class Image(models.Model):
     union = models.ForeignKey(ProductsUnion, on_delete=models.CASCADE)
-    name = models.CharField()
+    on_display = models.BooleanField(default=False)
     image = models.ImageField(upload_to='product_images')
 
     class Meta:
