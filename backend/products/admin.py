@@ -57,7 +57,6 @@ class DesignLibraryAdmin(ImportExportActionModelAdmin):
     resource_classes = [DesignLibraryResource]
     list_display = ('structure_type_code', 'delivery_format_code')
 
-
 @admin.register(FunctionType)
 class FunctionTypeAdmin(admin.ModelAdmin):
     list_display = ('function_type_id', 'function_type_symbol', 'function_type_name')

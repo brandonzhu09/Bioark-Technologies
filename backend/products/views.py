@@ -7,6 +7,7 @@ from products.serializers import *
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from orders.models import OrderItem
+from genes.models import *
 
 # Create your views here.
 @api_view(['GET'])
