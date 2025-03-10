@@ -5,11 +5,9 @@
             @for (item of cartItems; track item.id) {
             <div class="cart-item">
                 <div class="product-info">
-                    <a
-                        href="/products/item/{{ item.product_sku }}"
-                        class="product-title"
-                        >{{ item.product_name }}</a
-                    >
+                    <a href="{{ item.url }}" class="product-title">{{
+                        item.product_name
+                    }}</a>
                     <div class="product-price">${{ item.price }}</div>
                 </div>
 

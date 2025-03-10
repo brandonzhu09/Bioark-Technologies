@@ -285,9 +285,15 @@ input[type="number"] {
         justify-content: center;
     } */
 
+    .container {
+        width: 100%;
+        padding: 0 20px;
+    }
+
     .diagram .main-image {
         align-items: center;
         justify-content: center;
+        max-width: 350px;
     }
 
     .preview {
@@ -296,11 +302,5 @@ input[type="number"] {
 
     .description {
         padding-left: 0;
-    }
-}
-
-@media (max-width: 1300px) {
-    .diagram .main-image {
-        max-width: 350px;
     }
 }

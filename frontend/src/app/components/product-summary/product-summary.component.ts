@@ -5,6 +5,7 @@ import { BehaviorSubject, combineLatest, filter, skip } from 'rxjs';
 import { DesignFormService } from '../../design-mode/design-form.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
+import { environment } from '../../../environment/environment';
 
 interface DeliveryFormat {
   product_sku: string;
@@ -114,8 +115,9 @@ export class ProductSummaryComponent implements OnInit {
 
   addTestProduct() {
     // DELETE: add $1 test product
+    let url = `/products/item/CDS-CX000C-000000k`
     this.cartService.addToCart(
-      'TEST_SKU', 'product', 1, 'unit_size', 1, 1, 'Yes',
+      'CDS-CX000C-000000k', 'product', 1, 'unit_size', 1, 1, url, 'Yes',
       this.function_type_name$.value, this.structure_type_name$.value, this.promoter_name$.value,
       this.protein_tag_name$.value, this.fluorescene_marker_name$.value, this.selection_marker_name$.value,
       this.bacterial_marker_name$.value, this.target_sequence$.value, 'delivery_format_name'
@@ -135,11 +137,12 @@ export class ProductSummaryComponent implements OnInit {
         let price = Number(this.deliveryFormatTable[key][quantityId].price);
         let adjusted_price = Number(this.deliveryFormatTable[key][quantityId].adjusted_price);
         let ready_status = this.deliveryFormatTable[key][quantityId].ready_status;
+        let url = `/products/item/${product_sku}`
         let delivery_format_name = this.deliveryFormatTable[key][quantityId].delivery_format_name;
         let product_name = this.deliveryFormatTable[key][quantityId].product_name;
 
         this.cartService.addToCart(
-          product_sku, product_name, 1, unit_size, price, adjusted_price, ready_status,
+          product_sku, product_name, 1, unit_size, price, adjusted_price, url, ready_status,
           this.function_type_name$.value, this.structure_type_name$.value, this.promoter_name$.value,
           this.protein_tag_name$.value, this.fluorescene_marker_name$.value, this.selection_marker_name$.value,
           this.bacterial_marker_name$.value, this.target_sequence$.value, delivery_format_name

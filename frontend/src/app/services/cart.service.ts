@@ -45,7 +45,7 @@ export class CartService {
   }
 
   addToCart(product_sku: string, product_name: string, quantity: number, unit_size: string,
-    price: number, adjusted_price: number, ready_status: string = "Yes",
+    price: number, adjusted_price: number, url: string, ready_status: string = "Yes",
     function_type_name: string = "", structure_type_name: string = "",
     promoter_name: string = "", protein_tag_name: string = "", fluorescene_marker_name: string = "",
     selection_marker_name: string = "", bacterial_marker_name: string = "", target_sequence: string = "",
@@ -64,6 +64,7 @@ export class CartService {
         'unit_size': unit_size,
         'price': price,
         'adjusted_price': adjusted_price,
+        'url': url,
         'ready_status': ready_status,
         "function_type_name": function_type_name,
         "structure_type_name": structure_type_name,

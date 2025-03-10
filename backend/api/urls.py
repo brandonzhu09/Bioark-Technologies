@@ -3,6 +3,10 @@ from django.contrib import admin
 
 from . import views
 
+admin.site.site_header = "Bioark Site Administration"
+admin.site.site_title = "Bioark Site Administration"
+admin.site.index_title = "Database Tables"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include('products.urls')),

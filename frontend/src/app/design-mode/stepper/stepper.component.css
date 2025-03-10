@@ -204,11 +204,11 @@ tbody td {
     color: #007CBB;
 }
 
-.plasmid-container {
+.manual-container {
     border: 5px solid red;
     background-color: #f1f1f1;
     padding: 20px;
-    max-width: 65%;
+    width: 65%;
     margin: 50px auto;
     text-align: left;
     color: black;
@@ -216,7 +216,7 @@ tbody td {
     border-radius: 10px;
 }
 
-.plasmid-container h1 {
+.manual-container h1 {
     font-size: 20px;
     margin-bottom: 15px;
     text-align: center;
@@ -224,7 +224,18 @@ tbody td {
     font-weight: bold;
 }
 
-.plasmid-container p {
+.manual-container p {
     font-size: 14px;
     line-height: 1.6;
+}
+
+@media (max-width: 1300px) {
+    .custom-stepper {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .manual-container {
+        width: 90%;
+    }
 }

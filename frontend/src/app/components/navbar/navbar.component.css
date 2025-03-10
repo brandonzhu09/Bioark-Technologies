@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: left;
-  padding: 20px 0px;
+  /* padding: 20px 0px; */
   background-color: white;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,6 @@
   display: flex;
   align-items: center;
   gap: 80px;
-  margin-bottom: 20px;
 }
 
 .logo img {
@@ -152,7 +151,7 @@ nav {
   /* flex: 1; */
   display: flex;
   justify-content: left;
-  margin-top: 10px;
+  padding: 2px 0;
 }
 
 nav ul {
@@ -180,10 +179,28 @@ nav ul {
   transition: color 0.3s ease;
 }
 
-@media screen and (max-width: 1372px) {
+@media screen and (max-width: 1300px) {
+
+  .navbar-content {
+    width: 87%;
+  }
+
+
+
+}
+
+@media screen and (max-width: 964px) {
   .contact-info {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .navbar-content {
+    flex-direction: column;
+  }
+
+  .right-group {
+    margin-top: 20px;
   }
 
 }
@@ -201,15 +218,20 @@ nav ul {
   }
 
   .right-group {
-    justify-content: flex-end;
+    align-items: first baseline;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   nav ul {
-    flex-direction: column;
-    gap: 10px;
+    /* flex-direction: column; */
+    gap: 0px;
     width: 100%;
     text-align: left;
+  }
+
+  nav ul li a {
+    font-size: 12px;
+    margin-right: 20px;
   }
 }

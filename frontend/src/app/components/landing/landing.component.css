@@ -1,7 +1,18 @@
+.landing-container {
+    width: 65%;
+}
+
 .list-container {
     margin: 50px 0;
 }
 
 .research-blog {
     margin-bottom: 30px;
+}
+
+@media (max-width: 1300px) {
+    .landing-container {
+        width: 100%;
+        padding: 0 20px;
+    }
 }

@@ -142,6 +142,7 @@ def capture_order(request, order_id):
                                 total_price=float(item['price']) * item['quantity'],
                                 unit_size=item['unit_size'],
                                 quantity=item['quantity'],
+                                url=item['url'],
                                 discount_code=item['discount_code'],
                                 order=order_obj,
                                 work_period=get_work_period(item['product_sku'], item['ready_status']),

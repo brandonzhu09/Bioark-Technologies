@@ -47,7 +47,7 @@
 .product-section {
     text-align: left;
     max-width: 100%;
-    margin-bottom: 4em;
+    margin-bottom: 1rem;
 }
 
 .product-section h1 {
@@ -90,7 +90,7 @@ ol {
 }
 
 .services-section {
-    max-width: 75%;
+    width: 75%;
     margin: 70px auto;
     display: flex;
     flex-wrap: wrap;
@@ -144,9 +144,11 @@ ol {
 
 .custom-design-button {
     display: inline-block;
-    padding: 12px 24px;
-    background-color: transparent;
-    border: 2px solid white;
+    padding: 6px 24px;
+    width: 160px;
+    border: 2px solid;
+    background-color: green;
+    border-radius: 5px;
     color: white;
     text-decoration: none;
     font-size: 16px;
@@ -154,8 +156,9 @@ ol {
 }
 
 .custom-design-button:hover {
-    background-color: white;
-    color: #281A39;
+    background-color: darkgreen;
+    text-decoration: none;
+    color: white;
 }
 
 .quote-section {
@@ -305,22 +308,11 @@ ol {
     .main-content {
         width: 75%;
     }
+
 }
 
 @media (max-width: 1300px) {
-    .container {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .product-sidebar {
-        position: relative;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .main-content {
-        margin-left: 0;
+    .services-section {
         width: 100%;
     }
 }

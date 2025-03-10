@@ -66,6 +66,7 @@ class OrderItem(models.Model):
     unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
     discount_code = models.CharField(blank=True, max_length=20)
+    url = models.CharField()
     # attribute names
     function_type_name = models.CharField()
     structure_type_name = models.CharField()
@@ -110,6 +111,7 @@ class CartItem(models.Model):
     unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
     discount_code = models.CharField(max_length=20)
+    url = models.CharField()
     # attribute names
     function_type_name = models.CharField()
     structure_type_name = models.CharField()
@@ -144,7 +146,7 @@ class Cart(object):
         Add product to the cart or update its quantity
         """
         cart_item, created = CartItem.objects.get_or_create(session_key=self.session.session_key, product_sku=cart_item['product_sku'], product_name=cart_item['product_name'],
-                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'], ready_status=cart_item['ready_status'],
+                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'], url=cart_item['url'], ready_status=cart_item['ready_status'],
                                                             function_type_name=cart_item['function_type_name'], structure_type_name=cart_item['structure_type_name'],
                                                             promoter_name=cart_item['promoter_name'], protein_tag_name=cart_item['protein_tag_name'],
                                                             fluorescene_marker_name=cart_item['fluorescene_marker_name'], selection_marker_name=cart_item['selection_marker_name'],

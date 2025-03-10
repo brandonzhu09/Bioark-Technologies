@@ -2,38 +2,23 @@
     <div class="lego-diagram">
         <h1>{{ getLongName() }}</h1>
         <img src="../../../assets/Lego-diagram.png" />
-        <div class="textbox s1" [ngClass]="{ 's-hidden': promoterName == '' }">
-            S1: {{ promoterName }}
+        <div class="s1" [ngClass]="{ 's-hidden': promoterName == '' }">
+            {{ promoterName }}
         </div>
-        <div
-            class="textbox s2"
-            [ngClass]="{ 's-hidden': functionTypeName == '' }"
-        >
-            X: {{ functionTypeName }}
+        <div class="s2" [ngClass]="{ 's-hidden': functionTypeName == '' }">
+            {{ functionTypeName }}
         </div>
-        <div
-            class="textbox s3"
-            [ngClass]="{ 's-hidden': proteinTagName == '' }"
-        >
-            S3: {{ proteinTagName }}
+        <div class="s3" [ngClass]="{ 's-hidden': proteinTagName == '' }">
+            {{ proteinTagName }}
         </div>
-        <div
-            class="textbox s4"
-            [ngClass]="{ 's-hidden': fluoresceneMarkerName == '' }"
-        >
-            S4: {{ fluoresceneMarkerName }}
+        <div class="s4" [ngClass]="{ 's-hidden': fluoresceneMarkerName == '' }">
+            {{ fluoresceneMarkerName }}
         </div>
-        <div
-            class="textbox s5"
-            [ngClass]="{ 's-hidden': selectionMarkerName == '' }"
-        >
-            S5: {{ selectionMarkerName }}
+        <div class="s5" [ngClass]="{ 's-hidden': selectionMarkerName == '' }">
+            {{ selectionMarkerName }}
         </div>
-        <div
-            class="textbox s6"
-            [ngClass]="{ 's-hidden': bacterialMarkerName == '' }"
-        >
-            S6: {{ bacterialMarkerName }}
+        <div class="s6" [ngClass]="{ 's-hidden': bacterialMarkerName == '' }">
+            {{ bacterialMarkerName }}
         </div>
         <div class="short-name">
             {{ getShortName() }}

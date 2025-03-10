@@ -81,7 +81,8 @@ export class FeaturedProductPageComponent {
   addToCart() {
     const unit_size = this.unit_prices.find((up) => up.id === this.unit_size_id)?.unit_size;
     const totalPrice = this.price * this.quantity;
-    this.cartService.addToCart(this.catalog_number, this.product_name, this.quantity, unit_size, totalPrice, totalPrice, 'Yes').subscribe((res) => { });
+    let url = `/product/featured/${this.catalog_number}`
+    this.cartService.addToCart(this.catalog_number, this.product_name, this.quantity, unit_size, totalPrice, totalPrice, url, 'Yes').subscribe((res) => { });
 
     this.cartItems = [{ 'product_sku': this.product_name, 'quantity': unit_size }];
     this.showPopup = false;

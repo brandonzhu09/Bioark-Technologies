@@ -14,7 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class NavbarComponent {
   cartCount = 0;
   queryForm = new FormGroup({
-    query: new FormControl(''),
+    query: new FormControl('', [Validators.minLength(1)]),
   });
 
   constructor(private cartService: CartService, public authService: AuthService, private router: Router, private location: Location) { }
@@ -38,7 +38,8 @@ export class NavbarComponent {
   }
 
   search() {
-    this.router.navigate(['/search'], { queryParams: { q: this.queryForm.value.query } })
-
+    if (this.queryForm.value.query !== '') {
+      this.router.navigate(['/search'], { queryParams: { q: this.queryForm.value.query } })
+    }
   }
 }

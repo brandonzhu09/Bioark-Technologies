@@ -39,3 +39,9 @@
   background-color: gray;
   /* Change this to your desired color */
 }
+
+@media (max-width: 1300px) {
+  .carousel {
+    width: 95%;
+  }
+}

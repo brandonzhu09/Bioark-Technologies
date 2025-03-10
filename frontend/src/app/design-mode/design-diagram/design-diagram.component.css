@@ -17,14 +17,6 @@
     width: 350px;
 }
 
-.textbox {
-    width: 100px;
-    padding: 6px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 10px;
-}
-
 .s1 {
     position: relative;
     bottom: 200px;
@@ -34,36 +26,36 @@
 .s2 {
     position: relative;
     bottom: 70px;
-    left: 380px;
-    width: 140px;
+    left: 410px;
 }
 
 .s3 {
     position: relative;
-    bottom: 60px;
-    left: 220px;
+    bottom: 40px;
+    left: 250px;
 }
 
 .s4 {
     position: relative;
-    bottom: 140px;
-    right: -70px;
+    bottom: 110px;
+    left: 80px;
 }
 
 .s5 {
     position: relative;
-    bottom: 270px;
+    bottom: 220px;
+    left: 60px;
 }
 
 .s6 {
     position: relative;
-    bottom: 560px;
-    left: 220px;
+    bottom: 480px;
+    left: 250px;
 }
 
 .short-name {
     position: relative;
-    bottom: 400px;
+    bottom: 300px;
     left: 200px;
     color: red;
     font-size: 14px;
@@ -114,7 +106,7 @@
 }
 
 
-@media (max-width: 1900px) {
+/* @media (max-width: 1900px) {
     .container {
         flex-direction: column;
         height: auto;
@@ -131,4 +123,4 @@
     .lego-diagram img {
         width: 250px;
     }
-}
+} */
