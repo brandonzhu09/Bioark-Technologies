@@ -121,7 +121,7 @@ class FunctionType(models.Model):
     abbreviation = models.CharField()
     description = models.CharField(blank=True, null=True)
     load_status = models.CharField(blank=True, null=True, default="Loaded")
-    category = models.ForeignKey(ProductCategory, on_delete=models.PROTECT)
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'function_types'

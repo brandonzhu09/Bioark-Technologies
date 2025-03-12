@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'blogs',
     'interface',
     'import_export',
-    'tinymce'
+    'tinymce',
+    'django_truncate'
 ]
 
 
