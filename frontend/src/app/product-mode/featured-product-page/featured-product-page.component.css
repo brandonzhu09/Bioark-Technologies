@@ -147,9 +147,27 @@ tbody td {
 }
 
 .price {
-    color: red;
+    margin-top: 20px;
+    font-size: 24px;
+    color: #007bff;
     font-weight: bold;
-    display: block;
+}
+
+.list-price {
+    text-decoration: line-through;
+}
+
+.discount-price {
+    margin-top: 20px;
+    display: flex;
+    align-items: first baseline;
+}
+
+.discount-percent {
+    color: red;
+    margin-right: 10px;
+    font-size: 24px;
+    font-weight: lighter;
 }
 
 input[type="number"] {
@@ -197,12 +215,6 @@ input[type="number"] {
 
 .availability {
     color: green;
-}
-
-.price {
-    margin-top: 30px;
-    font-size: 24px;
-    color: #007bff;
 }
 
 .quantity {

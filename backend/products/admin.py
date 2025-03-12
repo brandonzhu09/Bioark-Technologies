@@ -32,7 +32,7 @@ class FeaturedProductAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('union', 'on_display', 'image')
+    list_display = ('union', 'main_display', 'image')
 
 @admin.register(ManualFile)
 class ManualFileAdmin(admin.ModelAdmin):
@@ -40,7 +40,7 @@ class ManualFileAdmin(admin.ModelAdmin):
 
 @admin.register(UnitPrice)
 class UnitPriceAdmin(admin.ModelAdmin):
-    list_display = ('union', 'unit_size', 'price')
+    list_display = ('union', 'unit_size', 'unit_price')
 
 @admin.register(ProductInventory)
 class ProductInventoryAdmin(admin.ModelAdmin):

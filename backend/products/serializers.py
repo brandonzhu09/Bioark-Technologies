@@ -143,15 +143,15 @@ class FeaturedProductSerializer(serializers.ModelSerializer):
 
 
 class PreviewFeaturedProductSerializer(serializers.ModelSerializer):
-    price = serializers.SerializerMethodField()
+    unit_price = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
 
     class Meta:
         model = FeaturedProduct
-        fields = ['product_name', 'catalog_number', 'price', 'image']
+        fields = ['product_name', 'catalog_number', 'unit_price', 'image']
     
-    def get_price(self, product):
-        price = UnitPrice.objects.filter(union=product.union).first().price
+    def get_unit_price(self, product):
+        price = UnitPrice.objects.filter(union=product.union).first().unit_price
         return price
 
     def get_image(self, product):

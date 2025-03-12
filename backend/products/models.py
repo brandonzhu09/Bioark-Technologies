@@ -245,7 +245,7 @@ class FeaturedProduct(models.Model):
 
 class Image(models.Model):
     union = models.ForeignKey(ProductsUnion, on_delete=models.CASCADE)
-    on_display = models.BooleanField(default=False)
+    main_display = models.BooleanField(default=False)
     image = models.ImageField(upload_to='product_images')
 
     class Meta:
@@ -262,7 +262,9 @@ class ManualFile(models.Model):
 class UnitPrice(models.Model):
     union = models.ForeignKey(ProductsUnion, on_delete=models.CASCADE)
     unit_size = models.CharField()
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    list_price = models.DecimalField(max_digits=8, decimal_places=2)
+    unit_price = models.DecimalField(max_digits=8, decimal_places=2)
+    on_discount = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'unit_prices'

@@ -32,7 +32,14 @@
                             [ngClass]="{
                                 'spec-selected': unit_size_id === unit.id
                             }"
-                            (click)="selectUnitSize(unit.id, unit.price)"
+                            (click)="
+                                selectUnitSize(
+                                    unit.id,
+                                    unit.unit_price,
+                                    unit.list_price,
+                                    unit.on_discount
+                                )
+                            "
                         >
                             {{ unit.unit_size }}
                         </a>
@@ -40,7 +47,23 @@
                     </div>
                 </div>
 
+                @if (on_discount) {
+                <p class="discount-price">
+                    <span class="discount-percent"
+                        >-{{
+                            ((list_price - unit_price) / list_price) * 100
+                                | number : "1.0-0"
+                        }}%</span
+                    >
+                    <span class="price">${{ unit_price }}</span>
+                </p>
+                <p class="list-price-block">
+                    List Price:
+                    <span class="list-price">${{ list_price }}</span>
+                </p>
+                } @else {
                 <p class="price">${{ unit_price }}</p>
+                }
                 <div class="quantity">
                     <label for="qty">Qty</label>
                     <quantity-input

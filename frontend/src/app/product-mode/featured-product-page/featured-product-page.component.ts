@@ -25,6 +25,7 @@ export class FeaturedProductPageComponent {
   mainImage: string = '../../../assets/placeholder-card.jpg';
   list_price: number = 0;
   unit_price: number = 0;
+  on_discount: boolean = false;
   quantity: number = 1;
   unit_size_id: number = 0;
   showPopup: boolean = false;
@@ -61,7 +62,9 @@ export class FeaturedProductPageComponent {
       this.manuals = res.manuals;
       this.unit_prices = res.unit_prices;
 
-      this.unit_price = this.unit_prices[0].price;
+      this.unit_price = this.unit_prices[0].unit_price;
+      this.list_price = this.unit_prices[0].list_price;
+      this.on_discount = this.unit_prices[0].on_discount;
       this.unit_size_id = this.unit_prices[0].id;
     })
   }
@@ -70,9 +73,11 @@ export class FeaturedProductPageComponent {
     return environment.apiBaseUrl + url;
   }
 
-  selectUnitSize(unit_size_id: number, price: number) {
+  selectUnitSize(unit_size_id: number, unit_price: number, list_price: number, on_discount: boolean) {
     this.unit_size_id = unit_size_id;
-    this.unit_price = price;
+    this.unit_price = unit_price;
+    this.list_price = list_price;
+    this.on_discount = on_discount;
   }
 
   onQuantityChange(quantity: number) {
