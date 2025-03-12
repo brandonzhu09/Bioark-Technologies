@@ -14,8 +14,9 @@ interface DeliveryFormat {
   product_name: string;
   quantity: string;
   price: string;
-  adjusted_price: string;
+  list_price: string;
   ready_status: string;
+  on_discount: boolean;
 }
 
 @Component({
@@ -135,7 +136,7 @@ export class ProductSummaryComponent implements OnInit {
         let product_sku = this.deliveryFormatTable[key][quantityId].product_sku;
         let unit_size = this.deliveryFormatTable[key][quantityId].quantity;
         let price = Number(this.deliveryFormatTable[key][quantityId].price);
-        let adjusted_price = Number(this.deliveryFormatTable[key][quantityId].adjusted_price);
+        let adjusted_price = Number(this.deliveryFormatTable[key][quantityId].list_price);
         let ready_status = this.deliveryFormatTable[key][quantityId].ready_status;
         let url = `/products/item/${product_sku}`
         let delivery_format_name = this.deliveryFormatTable[key][quantityId].delivery_format_name;

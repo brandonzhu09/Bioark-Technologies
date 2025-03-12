@@ -23,7 +23,8 @@ export class FeaturedProductPageComponent {
 
   activeTab: string = 'specifications';
   mainImage: string = '../../../assets/placeholder-card.jpg';
-  price: number = 0;
+  list_price: number = 0;
+  unit_price: number = 0;
   quantity: number = 1;
   unit_size_id: number = 0;
   showPopup: boolean = false;
@@ -60,7 +61,7 @@ export class FeaturedProductPageComponent {
       this.manuals = res.manuals;
       this.unit_prices = res.unit_prices;
 
-      this.price = this.unit_prices[0].price;
+      this.unit_price = this.unit_prices[0].price;
       this.unit_size_id = this.unit_prices[0].id;
     })
   }
@@ -71,7 +72,7 @@ export class FeaturedProductPageComponent {
 
   selectUnitSize(unit_size_id: number, price: number) {
     this.unit_size_id = unit_size_id;
-    this.price = price;
+    this.unit_price = price;
   }
 
   onQuantityChange(quantity: number) {
@@ -80,9 +81,8 @@ export class FeaturedProductPageComponent {
 
   addToCart() {
     const unit_size = this.unit_prices.find((up) => up.id === this.unit_size_id)?.unit_size;
-    const totalPrice = this.price * this.quantity;
     let url = `/product/featured/${this.catalog_number}`
-    this.cartService.addToCart(this.catalog_number, this.product_name, this.quantity, unit_size, totalPrice, totalPrice, url, 'Yes').subscribe((res) => { });
+    this.cartService.addToCart(this.catalog_number, this.product_name, this.quantity, unit_size, this.unit_price, this.unit_price, url, 'Yes').subscribe((res) => { });
 
     this.cartItems = [{ 'product_sku': this.product_name, 'quantity': unit_size }];
     this.showPopup = false;

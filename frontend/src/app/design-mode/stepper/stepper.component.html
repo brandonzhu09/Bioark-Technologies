@@ -400,22 +400,22 @@
                 <button
                     class="button-card"
                     [ngClass]="{
-                        selected: fifthFormGroup.value.geneOption === 'scramble'
+                        selected: fifthFormGroup.value.geneOption === 'none'
                     }"
-                    (click)="handleTargetSequenceClick('scramble', 'XXXXXX')"
+                    (click)="handleTargetSequenceClick('none', 'XXXXXX')"
                 >
                     <i class="bi bi-virus h1"></i>
-                    <div class="text">Scramble</div>
+                    <div class="text">Non-Insert</div>
                 </button>
                 <button
                     class="button-card"
                     [ngClass]="{
-                        selected: fifthFormGroup.value.geneOption === 'none'
+                        selected: fifthFormGroup.value.geneOption === 'control'
                     }"
-                    (click)="handleTargetSequenceClick('none', '000000')"
+                    (click)="handleTargetSequenceClick('control', '000000')"
                 >
-                    <i class="bi bi-ban h1"></i>
-                    <div class="text">None</div>
+                    <i class="bi bi-virus h1"></i>
+                    <div class="text">Control</div>
                 </button>
             </div>
             @if (showSearchGeneGroup) {

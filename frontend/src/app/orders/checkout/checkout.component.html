@@ -280,9 +280,7 @@
             @for (item of cartItems; track item.id) {
             <div class="order-item">
                 <span class="order-label"
-                    >{{ item.product_name }}, {{ item.unit_size }} ({{
-                        item.quantity
-                    }})</span
+                    >{{ item.product_name }} ({{ item.quantity }})</span
                 >
                 <span class="order-value"
                     >${{ item.price * item.quantity }}</span

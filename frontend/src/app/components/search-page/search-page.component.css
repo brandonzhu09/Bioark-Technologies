@@ -19,8 +19,23 @@ h4 {
     padding: 15px;
     border: 1px solid #eaeaea;
     text-decoration: none;
+    font-weight: bold;
     color: inherit;
     transition: 0.3s;
+}
+
+.result-title {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.result-price {
+    font-size: 18px;
+    color: #018bc8;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .result-item:hover {

@@ -11,6 +11,57 @@ from genes.models import *
 
 # Create your views here.
 @api_view(['GET'])
+def update_shelf_price(request):
+    # if request.user.is_authenticated:
+    products = Product.objects.all()
+    
+    for product in products:
+        function_type_code = 'Others'
+        structure_type_code_2 = None
+        target_sequence_code_2 = None
+
+        function_type = product.function_type_code
+        structure_type_code = product.structure_type_code
+        target_sequence = product.target_sequence.upper()
+
+        delivery_format_codes = DeliveryLibrary.objects.filter(structure_type_symbol=structure_type_code).distinct().values("delivery_format_symbol")
+
+        # check whether function type is CD
+        if function_type == 'CD':
+            function_type_code = 'CD'
+        # check whether structure type is S/T/L/M
+        if structure_type_code == 'S' or structure_type_code == 'L':
+            structure_type_code_2 = 'S or L'
+        else:
+            structure_type_code_2 = 'M or T'
+        # map target sequence to the right code in design library
+        if target_sequence == '000000':
+            target_sequence_code = 'Control'
+            target_sequence_code_2 = 'Non-Insert; Control'
+        elif target_sequence == 'XXXXXX':
+            target_sequence_code = 'Non-Insert'
+            target_sequence_code_2 = 'Non-Insert; Control'
+        else:
+            target_sequence_code = 'Gene'
+
+        design_product = DesignLibrary.objects.filter(delivery_format_code__in=product.delivery_format_code,
+                                                   shelf_status=True,
+                                                   function_type_code=function_type_code,
+                                                   structure_type_code__in=[structure_type_code, structure_type_code_2],
+                                                   target_sequence__in=[target_sequence_code, target_sequence_code_2],
+                                                   ).first()
+        print("Product: ", product.product_sku, function_type_code, structure_type_code, structure_type_code_2, target_sequence_code, target_sequence_code_2)
+        
+        if design_product != None:
+            product.list_price = design_product.list_price
+            product.unit_price = design_product.unit_price
+            product.target_sequence = product.target_sequence.upper()
+            product.product_sku = product.product_sku[:-1].upper() + product.product_sku[-1]
+            product.save()
+
+    return Response({'success': True})
+
+@api_view(['GET'])
 def load_product_categories(request):
     # if request.user.is_authenticated:
     queryset = ProductCategory.objects.all()
@@ -81,7 +132,7 @@ def get_delivery_format_table(request):
     fluorescene_marker_name = request.GET["fluorescene_marker_name"]
     selection_marker_name = request.GET["selection_marker_name"]
     bacterial_marker_name = request.GET["bacterial_marker_name"]
-    target_sequence = request.GET["target_sequence"]
+    target_sequence = request.GET["target_sequence"].upper()
 
     structure_type_symbol = StructureType.objects.get(structure_type_name=structure_type_name).structure_type_symbol
     delivery_format_codes = DeliveryLibrary.objects.filter(structure_type_symbol=structure_type_symbol).distinct().values("delivery_format_symbol")
@@ -100,7 +151,7 @@ def get_delivery_format_table(request):
                                       fluorescene_marker_code=FluoresceneMarker.objects.get(fluorescene_marker_name=fluorescene_marker_name).fluorescene_marker_code,
                                       selection_marker_code=SelectionMarker.objects.get(selection_marker_name=selection_marker_name).selection_marker_code,
                                       bacterial_marker_code=bacterial_marker_code,
-                                      gene=GeneLibrary.objects.get(target_sequence=target_sequence),
+                                      target_sequence=target_sequence,
                                       ).distinct()
     
     function_type_code = 'Others'
@@ -119,8 +170,11 @@ def get_delivery_format_table(request):
     else:
         structure_type_code_2 = 'M or T'
     # map target sequence to the right code in design library
-    if target_sequence == 'XXXXXX' or target_sequence == '000000':
+    if target_sequence == '000000':
         target_sequence_code = 'Control'
+        target_sequence_code_2 = 'Non-Insert; Control'
+    elif target_sequence == 'XXXXXX':
+        target_sequence_code = 'Non-Insert'
         target_sequence_code_2 = 'Non-Insert; Control'
     else:
         target_sequence_code = 'Gene'
@@ -151,9 +205,10 @@ def get_delivery_format_table(request):
             'delivery_format_name': delivery_format_name,
             'product_format_description': DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).description,
             'quantity': instance.kit_amount + " " + instance.unit,
-            'price': instance.list_price,
-            'adjusted_price': instance.unit_price,
-            'ready_status': str(shelf_status)
+            'price': instance.unit_price,
+            'list_price': instance.list_price,
+            'ready_status': str(shelf_status),
+            'on_discount': instance.on_discount
         }
         if delivery_format_name not in data:
             data[delivery_format_name] = [product]

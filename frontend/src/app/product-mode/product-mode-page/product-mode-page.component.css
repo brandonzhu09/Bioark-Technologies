@@ -295,6 +295,37 @@ ol {
     text-decoration: none;
 }
 
+th {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+td.highlight {
+    background-color: #f0f0f0;
+}
+
+td.first-column {
+    white-space: nowrap;
+    width: 1px;
+}
+
+.tab-1 {
+    background-color: #f1ceee;
+}
+
+.tab-2 {
+    background-color: #fae2d6;
+}
+
+.tab-3 {
+    background-color: #c1f0c8;
+}
+
 
 @media (max-width: 1624px) {
     .container {

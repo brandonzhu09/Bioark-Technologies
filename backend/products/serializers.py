@@ -46,7 +46,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['product_id', 'product_sku', 'product_name', 'description', 'function_type_name', 'delivery_type_name', 'promoter_name', 'protein_tag_name', 'fluorescene_marker_name', 'selection_marker_name', 'bacterial_marker_name', 'delivery_format_name', 'target_sequence']
+        fields = ['product_id', 'product_sku', 'product_name', 'description', 'function_type_name', 'delivery_type_name', 'promoter_name', 'protein_tag_name', 'fluorescene_marker_name', 'selection_marker_name', 'bacterial_marker_name', 'delivery_format_name', 'target_sequence', 'unit_price', 'list_price']
     
     def get_function_type_name(self, product):
         try:

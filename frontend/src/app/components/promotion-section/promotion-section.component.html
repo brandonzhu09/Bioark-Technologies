@@ -1,5 +1,5 @@
 <div class="promotion-container">
-    <h1 class="heading">Promotions</h1>
+    <h1 class="heading">Featured Products</h1>
 
     <div class="promotions-container">
         @for (product of products; track product.catalog_number) {
@@ -15,7 +15,6 @@
             <div class="promo-price">
                 ${{ product.price | number : "1.2-2" }}
             </div>
-            <div class="promo-button">Get Details</div>
         </a>
         }
     </div>

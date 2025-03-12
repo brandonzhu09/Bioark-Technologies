@@ -3,7 +3,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 65%;
+    width: 65%;
     margin: auto;
 }
 
@@ -50,6 +50,11 @@ tbody td {
     color: red;
     font-weight: bold;
     display: block;
+}
+
+.list-price {
+    font-weight: bold;
+    text-decoration: line-through;
 }
 
 .content {
@@ -153,4 +158,10 @@ tbody td {
 .button.orange:hover {
     background-color: #e68700;
     /* Darker orange on hover */
+}
+
+@media (max-width: 1300px) {
+    .product-page {
+        width: 90%;
+    }
 }
