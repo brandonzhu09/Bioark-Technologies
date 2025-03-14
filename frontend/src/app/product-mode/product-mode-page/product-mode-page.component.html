@@ -199,34 +199,276 @@
                             </td>
                         </tr>
                     </table>
+                    } @else if (url == 'vectors-on-shelf') {
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                [class.active]="activeTab === 'tab-1'"
+                                (click)="setActiveTab('tab-1')"
+                                aria-current="page"
+                                >CRISPRa</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                [class.active]="activeTab === 'tab-2'"
+                                (click)="setActiveTab('tab-2')"
+                                aria-current="page"
+                                >CRISPRi</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                [class.active]="activeTab === 'tab-3'"
+                                (click)="setActiveTab('tab-3')"
+                                aria-current="page"
+                                >CRISPR KO</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                [class.active]="activeTab === 'tab-4'"
+                                (click)="setActiveTab('tab-4')"
+                                aria-current="page"
+                                >CRISPR RNA KD</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                [class.active]="activeTab === 'tab-5'"
+                                (click)="setActiveTab('tab-5')"
+                                aria-current="page"
+                                >RNAi</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                [class.active]="activeTab === 'tab-6'"
+                                (click)="setActiveTab('tab-6')"
+                                aria-current="page"
+                                >Overexpression</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                [class.active]="activeTab === 'tab-7'"
+                                (click)="setActiveTab('tab-7')"
+                                aria-current="page"
+                                >Inducible Expression</a
+                            >
+                        </li>
+                    </ul>
+                    <table>
+                        <tr>
+                            <th rowspan="2">Class</th>
+                            <th colspan="3">Major Vector</th>
+                            <th colspan="4">Features</th>
+                            <th colspan="2">Scramble Vector</th>
+                        </tr>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>SKU</th>
+                            <th>Accessary Vector</th>
+                            <th>Promoter</th>
+                            <th>Tag</th>
+                            <th>Fluorescence Marker</th>
+                            <th>Selection Marker</th>
+                            <th>Control Sample</th>
+                            <th>SKU</th>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-1'">
+                            <td>Non-Viral All-in-One</td>
+                            <td>CRISPRa AIO Kit</td>
+                            <td>CAT-FXD00A-xxxxxxk</td>
+                            <td>None</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>None</td>
+                            <td>scramble control</td>
+                            <td>CAT-FXD00A-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-1'">
+                            <td>Viral All-in-one</td>
+                            <td>CRISPRa AIO Kit</td>
+                            <td>CAM-FXD0PC-xxxxxxk</td>
+                            <td>None</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Puro</td>
+                            <td>scramble control</td>
+                            <td>CAM-FXD0PC-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-2'">
+                            <td>Non-Viral All-in-One</td>
+                            <td>CRISPRi AIO Kit</td>
+                            <td>CIT-FXD0PA-xxxxxxk</td>
+                            <td>None</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Puro</td>
+                            <td>scramble control</td>
+                            <td>CIT-FXD0PA-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-2'">
+                            <td>Viral Standard</td>
+                            <td>CRISPRi Lenti Kit</td>
+                            <td>CIL-FXD0BC-xxxxxxk</td>
+                            <td>standalone gRNA Vector</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Bla</td>
+                            <td>scramble control</td>
+                            <td>CIL-FXD0BC-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-2'">
+                            <td>Viral All-in-one</td>
+                            <td>CRISPRi Lenti-AIO kit</td>
+                            <td>CIM-FXD0BC-xxxxxxk</td>
+                            <td>None</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Bla</td>
+                            <td>scramble control</td>
+                            <td>CIM-FXD0BC-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-3'">
+                            <td>Viral All-in-one</td>
+                            <td>CRISPR KN AIO kit</td>
+                            <td>COM-FXD0PC-xxxxxxk</td>
+                            <td>None</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Puro</td>
+                            <td>scramble control</td>
+                            <td>COM-FXD0PC-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-4'">
+                            <td>Non-Viral All-in-One</td>
+                            <td>CRISPR KD AIO kit</td>
+                            <td>CRT-FXD0PA-xxxxxxk</td>
+                            <td>None</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Puro</td>
+                            <td>scramble control</td>
+                            <td>CRT-FXD0PA-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-4'">
+                            <td>Viral All-in-one</td>
+                            <td>CRISPR KD Lenti-AIO Kit</td>
+                            <td>CRM-FXD0PC-xxxxxxk</td>
+                            <td>None</td>
+                            <td>EF1core</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Puro</td>
+                            <td>scramble control</td>
+                            <td>CRM-FXD0PC-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-5'">
+                            <td>Viral</td>
+                            <td>RNAi Lenti Kit</td>
+                            <td>SHL-UX00PC-xxxxxxk</td>
+                            <td>None</td>
+                            <td>U6</td>
+                            <td>None</td>
+                            <td>None</td>
+                            <td>Puro</td>
+                            <td>scramble control</td>
+                            <td>SHL-UX00PC-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-6'">
+                            <td>Non-viral</td>
+                            <td>OverExp Std Kit</td>
+                            <td>EMS-CXDG0A-xxxxxxk</td>
+                            <td>None</td>
+                            <td>PCMV</td>
+                            <td>MycDDK</td>
+                            <td>GFP</td>
+                            <td>Neo</td>
+                            <td>GFP control</td>
+                            <td>EMS-CXDGNA-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-6'">
+                            <td>Viral</td>
+                            <td>OverExp Lenti Kit</td>
+                            <td>EML-CXD00C-xxxxxxk</td>
+                            <td>None</td>
+                            <td>PCMV</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>None</td>
+                            <td>GFP control</td>
+                            <td>EML-CXDG0C-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-7'">
+                            <td>Non-viral All-in-one</td>
+                            <td>Inducible AIO kit</td>
+                            <td>IMT-DX0GNA-xxxxxxk</td>
+                            <td>None</td>
+                            <td>Inducible</td>
+                            <td>None</td>
+                            <td>GFP</td>
+                            <td>Neo</td>
+                            <td>GFP control</td>
+                            <td>IMT-DX0GNA-000000k</td>
+                        </tr>
+                        <tr *ngIf="activeTab === 'tab-7'">
+                            <td>Viral All-in-one</td>
+                            <td>Inducible Lenti-AIO Kit</td>
+                            <td>IMM-DXD0PC-xxxxxxk</td>
+                            <td>None</td>
+                            <td>Inducible</td>
+                            <td>MycDDK</td>
+                            <td>None</td>
+                            <td>Puro</td>
+                            <td>GFP control</td>
+                            <td>IMM-DXDGPC-000000k</td>
+                        </tr>
+                    </table>
+
                     }
-                </div>
-                <div class="product-section">
-                    <p>
-                        Our design program assists customers in adjusting vector
-                        components and developing specific functions tailored to
-                        their unique requirements.
-                    </p>
-                    <a href="/design" class="custom-design-button"
-                        >Go to Design</a
-                    >
-                </div>
-                <div class="product-section">
-                    <p>
-                        If you have any further inquiries regarding your
-                        project, please click the button to contact us. We are
-                        fully equipped to accommodate a wide range of your
-                        requirements.
-                    </p>
-                    <a href="/quote" class="custom-design-button"
-                        >Get a Quote</a
-                    >
+
+                    <div class="product-section">
+                        <p>
+                            Our design program assists customers in adjusting
+                            vector components and developing specific functions
+                            tailored to their unique requirements.
+                        </p>
+                        <a href="/design" class="custom-design-button"
+                            >Go to Design</a
+                        >
+                    </div>
+                    <div class="product-section">
+                        <p>
+                            If you have any further inquiries regarding your
+                            project, please click the button to contact us. We
+                            are fully equipped to accommodate a wide range of
+                            your requirements.
+                        </p>
+                        <a href="/quote" class="custom-design-button"
+                            >Get a Quote</a
+                        >
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- <div class="services-section">
+        <!-- <div class="services-section">
         <div class="service-card">
             <a class="primary-button">Plasmid Kits</a>
             <p>
@@ -250,4 +492,5 @@
             </p>
         </div>
     </div> -->
+    </div>
 </div>

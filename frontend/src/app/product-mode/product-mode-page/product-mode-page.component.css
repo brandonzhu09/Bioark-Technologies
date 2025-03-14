@@ -303,6 +303,10 @@ ol {
     background-color: #dae9f7;
 }
 
+table {
+    margin-bottom: 20px;
+}
+
 th {
     padding: 10px;
     border: 1px solid #ccc;
@@ -321,6 +325,10 @@ td.highlight {
 td.first-column {
     white-space: nowrap;
     width: 1px;
+}
+
+ul li a {
+    color: black !important;
 }
 
 .tab-1 {

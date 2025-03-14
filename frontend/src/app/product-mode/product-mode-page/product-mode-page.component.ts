@@ -12,6 +12,7 @@ export class ProductModePageComponent {
   url: string = '';
   title: string = '';
   content: string = '';
+  activeTab: string = 'tab-1';
 
   constructor(private route: ActivatedRoute, private interfaceService: InterfaceService) { }
 
@@ -27,6 +28,10 @@ export class ProductModePageComponent {
       this.title = res.title;
       this.content = res.content;
     })
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
   }
 
 }
