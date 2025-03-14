@@ -231,7 +231,8 @@ export class CheckoutComponent implements AfterViewInit {
           "Content-Type": "application/json",
           "Accept": "application/json" // Optional, but can help indicate that you expect a JSON response
         },
-        body: JSON.stringify({ total_price: this.subTotal + this.taxAmount })
+        body: JSON.stringify({ total_price: this.subTotal })
+        // body: JSON.stringify({ total_price: this.subTotal + this.taxAmount })
       }
     )
       .then((res: any) => { return res.json(); })

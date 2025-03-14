@@ -45,8 +45,8 @@ class OrderItem(models.Model):
 
     order_item_id = models.AutoField(primary_key=True)
     order_class = models.CharField()
-    work_period = models.CharField()
-    est_delivery_date = models.DateField()
+    work_period = models.CharField(blank=True, null=True)
+    est_delivery_date = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
     order_placed_date = models.DateTimeField(default=datetime.now)
     order_process_date = models.DateTimeField(blank=True, null=True)

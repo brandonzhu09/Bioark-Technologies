@@ -55,7 +55,7 @@ class DeliveryLibraryAdmin(ImportExportActionModelAdmin):
 @admin.register(DesignLibrary)
 class DesignLibraryAdmin(ImportExportActionModelAdmin):
     resource_classes = [DesignLibraryResource]
-    list_display = ('structure_type_code', 'delivery_format_code')
+    list_display = ('id', 'function_type_code', 'structure_type_code', 'target_sequence', 'delivery_format_code', 'shelf_status', 'list_price', 'unit_price')
 
 @admin.register(FunctionType)
 class FunctionTypeAdmin(admin.ModelAdmin):

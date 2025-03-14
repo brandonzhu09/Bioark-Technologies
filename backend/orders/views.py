@@ -93,71 +93,98 @@ def create_order(request):
 
 @api_view(['POST'])
 def capture_order(request, order_id):
-    body = request.data
-    address = body.get("address")
-    cart = body.get("cart")
-    quantity = body.get("quantity")
-    discount_code = body.get("discount_code")
-    subtotal = body.get("subtotal")
-    shipping_amount = body.get("shipping_amount")
-    tax_amount = body.get("tax_amount")
+    try:
+        body = request.data
+        address = body.get("address")
+        cart = body.get("cart")
+        quantity = body.get("quantity")
+        discount_code = body.get("discount_code")
+        subtotal = body.get("subtotal")
+        shipping_amount = body.get("shipping_amount")
+        tax_amount = body.get("tax_amount", 0)
+        tax_amount = 0 if tax_amount == None else tax_amount
 
-    order = orders_controller.orders_capture(
-        {"id": order_id, "prefer": "return=representation"}
-    )
-    data = json.loads(ApiHelper.json_serialize(order.body))
-    payment_token = data["purchase_units"][0]["payments"]["captures"][0]["id"]
-    total_price = data["purchase_units"][0]["amount"]["value"]
+        order = orders_controller.orders_capture(
+            {"id": order_id, "prefer": "return=representation"}
+        )
+        data = json.loads(ApiHelper.json_serialize(order.body))
+        payment_token = data["purchase_units"][0]["payments"]["captures"][0]["id"]
+        total_price = data["purchase_units"][0]["amount"]["value"]
 
-    payment_source = "Made with PayPal"
-    last_digits = None
-    if "card" in data["payment_source"]:
-        payment_source = data["payment_source"]["card"]["brand"]
-        last_digits = data["payment_source"]["card"]["last_digits"]
+        payment_source = "Made with PayPal"
+        last_digits = None
+        if "card" in data["payment_source"]:
+            payment_source = data["payment_source"]["card"]["brand"]
+            last_digits = data["payment_source"]["card"]["last_digits"]
 
-    address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
-                                                         city=address["city"],
-                                                         state=address["state"],
-                                                         zipcode=address["zipcode"])
+        address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
+                                                            city=address["city"],
+                                                            state=address["state"],
+                                                            zipcode=address["zipcode"])
 
-    order_obj = Order.objects.create(payment_token=payment_token,
-                                     subtotal=subtotal,
-                                     shipping_amount=shipping_amount,
-                                     tax_amount=tax_amount,
-                                     payment_source=payment_source,
-                                     last_digits=last_digits,
-                                     total_price=total_price,
-                                     quantity=quantity,
-                                     discount_code=discount_code,
-                                     shipping_address=address_obj,
-                                     billing_address=address_obj,
-                                     user=request.user)
+        order_obj = Order.objects.create(payment_token=payment_token,
+                                        subtotal=subtotal,
+                                        shipping_amount=shipping_amount,
+                                        tax_amount=tax_amount,
+                                        payment_source=payment_source,
+                                        last_digits=last_digits,
+                                        total_price=total_price,
+                                        quantity=quantity,
+                                        discount_code=discount_code,
+                                        shipping_address=address_obj,
+                                        billing_address=address_obj,
+                                        user=request.user)
+        
+        for item in cart:
+            OrderItem.objects.create(product_sku=item['product_sku'],
+                                    order_class=get_order_class(item['product_sku']),
+                                    product_name=item['product_name'],
+                                    ready_status=item['ready_status'],
+                                    unit_price=item['price'],
+                                    total_price=float(item['price']) * item['quantity'],
+                                    unit_size=item['unit_size'],
+                                    quantity=item['quantity'],
+                                    url=item['url'],
+                                    discount_code=item['discount_code'],
+                                    order=order_obj,
+                                    work_period=get_work_period(item['product_sku'], item['ready_status']),
+                                    est_delivery_date=get_est_delivery_date(item['product_sku'], item['ready_status']),
+                                    function_type_name=item['function_type_name'],
+                                    structure_type_name=item['structure_type_name'],
+                                    promoter_name=item['promoter_name'],
+                                    protein_tag_name=item['protein_tag_name'],
+                                    fluorescene_marker_name=item['fluorescene_marker_name'],
+                                    selection_marker_name=item['selection_marker_name'],
+                                    bacterial_marker_name=item['bacterial_marker_name'],
+                                    target_sequence=item['target_sequence'],
+                                    delivery_format_name=item['delivery_format_name'])
+
+        return Response(json.loads(ApiHelper.json_serialize(order.body)))
     
-    for item in cart:
-        OrderItem.objects.create(product_sku=item['product_sku'],
-                                 order_class=get_order_class(item['product_sku']),
-                                product_name=item['product_name'],
-                                ready_status=item['ready_status'],
-                                unit_price=item['price'],
-                                total_price=float(item['price']) * item['quantity'],
-                                unit_size=item['unit_size'],
-                                quantity=item['quantity'],
-                                url=item['url'],
-                                discount_code=item['discount_code'],
-                                order=order_obj,
-                                work_period=get_work_period(item['product_sku'], item['ready_status']),
-                                est_delivery_date=get_est_delivery_date(item['product_sku'], item['ready_status']),
-                                function_type_name=item['function_type_name'],
-                                structure_type_name=item['structure_type_name'],
-                                promoter_name=item['promoter_name'],
-                                protein_tag_name=item['protein_tag_name'],
-                                fluorescene_marker_name=item['fluorescene_marker_name'],
-                                selection_marker_name=item['selection_marker_name'],
-                                bacterial_marker_name=item['bacterial_marker_name'],
-                                target_sequence=item['target_sequence'],
-                                delivery_format_name=item['delivery_format_name'])
-
-    return Response(json.loads(ApiHelper.json_serialize(order.body)))
+    except WorkSchedule.DoesNotExist:
+        for item in cart:
+            OrderItem.objects.create(product_sku=item['product_sku'],
+                                    order_class=get_order_class(item['product_sku']),
+                                    product_name=item['product_name'],
+                                    ready_status=item['ready_status'],
+                                    unit_price=item['price'],
+                                    total_price=float(item['price']) * item['quantity'],
+                                    unit_size=item['unit_size'],
+                                    quantity=item['quantity'],
+                                    url=item['url'],
+                                    discount_code=item['discount_code'],
+                                    order=order_obj,
+                                    function_type_name=item['function_type_name'],
+                                    structure_type_name=item['structure_type_name'],
+                                    promoter_name=item['promoter_name'],
+                                    protein_tag_name=item['protein_tag_name'],
+                                    fluorescene_marker_name=item['fluorescene_marker_name'],
+                                    selection_marker_name=item['selection_marker_name'],
+                                    bacterial_marker_name=item['bacterial_marker_name'],
+                                    target_sequence=item['target_sequence'],
+                                    delivery_format_name=item['delivery_format_name'])
+        
+        return Response(json.loads(ApiHelper.json_serialize(order.body)))
 
 
 class CartAPI(APIView):

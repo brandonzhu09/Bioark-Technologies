@@ -13,7 +13,7 @@ interface DeliveryFormat {
   product_format_description: string;
   product_name: string;
   quantity: string;
-  price: string;
+  unit_price: string;
   list_price: string;
   ready_status: string;
   on_discount: boolean;
@@ -135,7 +135,7 @@ export class ProductSummaryComponent implements OnInit {
       if (quantityId !== false && quantityId !== 0 || (typeof quantityId === 'string' && !isNaN(Number(quantityId)))) {
         let product_sku = this.deliveryFormatTable[key][quantityId].product_sku;
         let unit_size = this.deliveryFormatTable[key][quantityId].quantity;
-        let price = Number(this.deliveryFormatTable[key][quantityId].price);
+        let price = Number(this.deliveryFormatTable[key][quantityId].unit_price);
         let adjusted_price = Number(this.deliveryFormatTable[key][quantityId].list_price);
         let ready_status = this.deliveryFormatTable[key][quantityId].ready_status;
         let url = `/products/item/${product_sku}`
@@ -167,10 +167,17 @@ export class ProductSummaryComponent implements OnInit {
     )
   }
 
-  getPrice(deliveryFormat: any) {
+  getUnitPrice(deliveryFormat: any) {
     let quantityId = this.deliveryFormatForm.get(deliveryFormat)?.value;
     quantityId = (quantityId === true || quantityId === false) ? '0' : quantityId;
-    let price = this.deliveryFormatTable[deliveryFormat][quantityId]['price'];
+    let price = this.deliveryFormatTable[deliveryFormat][quantityId]['unit_price'];
+    return price;
+  }
+
+  getListPrice(deliveryFormat: any) {
+    let quantityId = this.deliveryFormatForm.get(deliveryFormat)?.value;
+    quantityId = (quantityId === true || quantityId === false) ? '0' : quantityId;
+    let price = this.deliveryFormatTable[deliveryFormat][quantityId]['list_price'];
     return price;
   }
 

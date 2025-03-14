@@ -51,7 +51,8 @@ def update_shelf_price(request):
                                                    target_sequence__in=[target_sequence_code, target_sequence_code_2],
                                                    ).first()
         print("Product: ", product.product_sku, function_type_code, structure_type_code, structure_type_code_2, target_sequence_code, target_sequence_code_2)
-        
+        print("Unit price:", design_product.unit_price, "List price:", design_product.list_price)
+
         if design_product != None:
             product.list_price = design_product.list_price
             product.unit_price = design_product.unit_price
@@ -205,7 +206,7 @@ def get_delivery_format_table(request):
             'delivery_format_name': delivery_format_name,
             'product_format_description': DeliveryFormat.objects.get(delivery_format_symbol=instance.delivery_format_code).description,
             'quantity': instance.kit_amount + " " + instance.unit,
-            'price': instance.unit_price,
+            'unit_price': instance.unit_price,
             'list_price': instance.list_price,
             'ready_status': str(shelf_status),
             'on_discount': instance.on_discount

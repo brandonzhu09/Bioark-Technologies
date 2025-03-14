@@ -21,14 +21,17 @@
 
             <div class="product-container">
                 <div class="product-section" [innerHTML]="content"></div>
-                <!-- <div>
+                <div class="kit-button-form">
+                    @if (url == 'overexpression') {
                     <table>
-                        <tr>
+                        <tr class="main-header">
+                            <th colspan="3"></th>
                             <th colspan="3">Major Vector</th>
                             <th colspan="3">Donor Vector</th>
                             <th colspan="3">Scramble Control Vector</th>
                         </tr>
                         <tr>
+                            <th class="tab-1" colspan="3">Class</th>
                             <th class="tab-1">Product Name</th>
                             <th class="tab-1">SKU</th>
                             <th class="tab-1">Information</th>
@@ -40,10 +43,164 @@
                             <th class="tab-3">Information</th>
                         </tr>
                         <tr>
-                            <td>hi</td>
+                            <td rowspan="2" colspan="3">Non-Viral CDS-P011k</td>
+                            <td>CRISPR KN AIO Kit-Gene AAVS1, Vector type</td>
+                            <td>COT-FXD00A-AAVS1gk</td>
+                            <td>
+                                The CRISPR tool specifically designed to target
+                                and cut human AAVS1 safe harbor site.
+                            </td>
+                            <td>AAVS1 Dnr Std Kit</td>
+                            <td>CDS-FX00PA-XXXXXXk</td>
+                            <td>
+                                Insert Customer Gene into human AAVS1 site,
+                                please specify your genes by clicking the button
+                            </td>
+                            <td>
+                                GFP Donor Control AAVS1 Dnr Std Ctrl Kit, vector
+                                type
+                            </td>
+                            <td>CDS-FX0GPA-000000k</td>
+                            <td>Insert GFP into human AAVS1 site as control</td>
+                        </tr>
+                        <tr>
+                            <td>CRISPR KN AIO Kit-Gene ROSA26, Vector type</td>
+                            <td>COT-FXD00A-ROSA26gk</td>
+                            <td>
+                                The CRISPR tool specifically designed to target
+                                and cut mouse ROSA26 safe harbor site.
+                            </td>
+                            <td>Dnr Std Kit-ROSA26 Site</td>
+                            <td>Quote Link</td>
+                            <td>
+                                Insert Customer Gene into mouse ROSA26 site,
+                                please specify your custom gene by clicking the
+                                button
+                            </td>
+                            <td>
+                                GFP Donor Control Dnr Std Kit-ROSA26 Site,
+                                vector type
+                            </td>
+                            <td>Quote Link</td>
+                            <td>
+                                Insert GFP into mouse ROSA26 site as control
+                            </td>
                         </tr>
                     </table>
-                </div> -->
+                    } @else if (url == 'gene-knock-out') {
+                    <table>
+                        <tr class="main-header">
+                            <th></th>
+                            <th colspan="3">Major Vector</th>
+                            <th colspan="3">Scramble Control Vector</th>
+                        </tr>
+                        <tr>
+                            <th class="tab-1">Class</th>
+                            <th class="tab-1">Product Name</th>
+                            <th class="tab-1">SKU</th>
+                            <th class="tab-1">Information</th>
+                            <th class="tab-3">Scramble Name</th>
+                            <th class="tab-3">SKU</th>
+                            <th class="tab-3">Information</th>
+                        </tr>
+                        <tr>
+                            <td>Non-Viral All-In-one COT-P031k</td>
+                            <td>CRISPR KN AIO Kit</td>
+                            <td>COT-FXD0PA-XXXXXXk</td>
+                            <td>
+                                The non-viral CRISPR kit includes three
+                                AI-designed gRNA sites tailored to target the
+                                customer-specified genes. Please click button to
+                                design the target genes.
+                            </td>
+                            <td>
+                                Scramble Control CRISPR KN AIO Ctrl Kit, Vector
+                                type
+                            </td>
+                            <td>COT-FXD0PA-000000k</td>
+                            <td>
+                                The scramble sequence are used as non-specific
+                                cutting control
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Viral All-in-one COM-P032k</td>
+                            <td>CRISPR KN Lenti-AIO Kit</td>
+                            <td>COM-FXD0PA-XXXXXXl</td>
+                            <td>
+                                The CRISPR lentivirus kit packages three
+                                AI-designed gRNA sites into a single mixture
+                                tube for precise targeting and cutting of
+                                customer-specified genes. Please click button to
+                                design the target genes.
+                            </td>
+                            <td>
+                                Scramble Control CRISPR KN Lenti-AIO Ctrl Kit,
+                                lentivirus type
+                            </td>
+                            <td>COM-FXD0PA-000000l</td>
+                            <td>
+                                The scramble sequence are used as non-specific
+                                cutting control
+                            </td>
+                        </tr>
+                    </table>
+                    } @else if (url == 'rna-knock-down') {
+                    <table>
+                        <tr class="main-header">
+                            <th></th>
+                            <th colspan="3">Major Vector</th>
+                            <th colspan="3">Scramble Control Vector</th>
+                        </tr>
+                        <tr>
+                            <th class="tab-1">Class</th>
+                            <th class="tab-1">Product Name</th>
+                            <th class="tab-1">SKU</th>
+                            <th class="tab-1">Information</th>
+                            <th class="tab-3">Scramble Name</th>
+                            <th class="tab-3">SKU</th>
+                            <th class="tab-3">Information</th>
+                        </tr>
+                        <tr>
+                            <td>Non-Viral All-In-one CRT-P051k</td>
+                            <td>CRISPR KD AIO kit</td>
+                            <td>CRT-FXD0PA-XXXXXXk</td>
+                            <td>
+                                The non-viral CRISPR RNA knockdown kit includes
+                                three AI-designed gRNA sites tailored to target
+                                the customer-specified RNA. Please click button
+                                to design the target RNA.
+                            </td>
+                            <td>CRISPR KD AIO Ctrl kit, Vector Type</td>
+                            <td>CRT-FXD0PA-000000k</td>
+                            <td>
+                                The scramble sequence are used as non-specific
+                                control; Please click the button to include it
+                                in the kit.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Viral All-in-one CRM-P052l</td>
+                            <td>CRISPR KD Lenti-AIO Kit</td>
+                            <td>CRM-FXD0PC-XXXXXXl</td>
+                            <td>
+                                The CRISPR lentivirus kit packages three
+                                AI-designed gRNA sites into a single mixture
+                                tube for precise targeting and cutting of
+                                customer-specified RNA. Please click button to
+                                design the target RNA.
+                            </td>
+                            <td>CRISPR KD Lenti-AIO Ctrl Kit, Vector Type</td>
+                            <td>CRM-FXD0PC-000000l</td>
+                            <td>
+                                The scramble sequence are used as non-specific
+                                control; Please click the button to include it
+                                in the kit.
+                            </td>
+                        </tr>
+                    </table>
+                    }
+                </div>
                 <div class="product-section">
                     <p>
                         Our design program assists customers in adjusting vector

@@ -84,15 +84,19 @@
                         </select>
                     </td>
                     <td>
-                        @if (entry.value[0].price !== null) { @if
-                        (entry.value[0].on_discount) {
+                        @if (entry.value[0].unit_price !== null) { @if
+                        (entry.value[0].on_discount && getUnitPrice(entry.key)
+                        != getListPrice(entry.key)) {
                         <span class="list-price"
-                            >${{ entry.value[0].list_price }}</span
+                            >${{ getListPrice(entry.key) }}</span
                         >
-                        <span class="price">${{ getPrice(entry.key) }}</span>
+                        <span class="price"
+                            >${{ getUnitPrice(entry.key) }}</span
+                        >
                         } @else {
-                        <span class="price">${{ getPrice(entry.key) }} </span>}
-                        } @else {
+                        <span class="price"
+                            >${{ getUnitPrice(entry.key) }} </span
+                        >} } @else {
                         <button (click)="goToConsult()" class="cart-button">
                             Consult
                         </button>
