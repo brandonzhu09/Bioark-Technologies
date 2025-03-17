@@ -365,7 +365,10 @@ def generate_product_name(product_sku):
 
     target_sequence = GeneLibrary.objects.get(target_sequence=target_sequence).symbol
 
-    product_name = f"{function_type_name} {structure_type_name} Kit--Gene {target_sequence}, {delivery_format_name} type"
+    function_type_abbr = FunctionType.objects.get(function_type_name=function_type_name).abbreviation
+    structure_type_abbr = StructureType.objects.get(structure_type_name=structure_type_name).abbreviation
+
+    product_name = f"{function_type_abbr} {structure_type_abbr} Kit--Gene {target_sequence}, {delivery_format_name} type"
 
     return product_name
 
