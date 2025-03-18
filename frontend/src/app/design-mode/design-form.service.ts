@@ -15,27 +15,27 @@ export class DesignFormService {
         );
     }
 
-    getFunctionTypesByCategory(categoryId: string) {
+    getFunctionTypesByCategory(categoryName: string) {
         return this.http.get(
             `${environment.apiBaseUrl}/api/products/get-function-types-by-category/`,
-            { params: { category_id: categoryId } }
+            { params: { category_name: categoryName } }
         );
     }
 
-    getStructureTypesByFunctionType(functionTypeSymbol: string) {
+    getStructureTypesByFunctionType(functionTypeName: string) {
         return this.http.get(
             `${environment.apiBaseUrl}/api/products/get-structure-types-by-function-type/`,
-            { params: { function_type_symbol: functionTypeSymbol } }
+            { params: { function_type_name: functionTypeName } }
         );
     }
 
-    getCodeP(functionTypeId: string, structureTypeSymbol: string) {
+    getCodeP(functionTypeName: string, structureTypeName: string) {
         return this.http.get<any>(
             `${environment.apiBaseUrl}/api/products/get-code-p-parameters/`,
             {
                 params: {
-                    function_type_id: functionTypeId,
-                    structure_type_symbol: structureTypeSymbol,
+                    function_type_name: functionTypeName,
+                    structure_type_name: structureTypeName,
                 },
             }
         );

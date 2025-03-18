@@ -74,15 +74,16 @@ def load_product_categories(request):
 
 @api_view(['GET'])
 def get_function_types_by_category(request):
-    category_id = request.GET["category_id"]
-    queryset = FunctionType.objects.filter(category_id=category_id)
+    category_name = request.GET["category_name"]
+    queryset = FunctionType.objects.filter(category=category_name)
     serializer = FunctionCategorySerializer(queryset, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 def get_structure_types_by_function_type(request):
-    function_type_symbol = request.GET["function_type_symbol"]
+    function_type_name = request.GET["function_type_name"]
+    function_type_symbol = FunctionType.objects.get(function_type_name=function_type_name).function_type_symbol
     structure_types = DeliveryLibrary.objects.filter(function_type_symbol=function_type_symbol).values("structure_type_symbol").distinct()
     queryset = StructureType.objects.filter(structure_type_symbol__in=structure_types).order_by("priority").values("structure_type_symbol", "structure_type_name", "description")
 
@@ -91,11 +92,12 @@ def get_structure_types_by_function_type(request):
 
 @api_view(['GET'])
 def get_code_p_parameters(request):
-    function_type_id = request.GET["function_type_id"]
-    structure_type_symbol = request.GET["structure_type_symbol"]
+    function_type_name = request.GET["function_type_name"]
+    structure_type_name = request.GET["structure_type_name"]
     # TODO: perform correlation check with function and structure type
     # get function type symbol
-    function_type_symbol = FunctionType.objects.get(function_type_id=function_type_id).function_type_symbol
+    function_type_symbol = FunctionType.objects.get(function_type_name=function_type_name).function_type_symbol
+    structure_type_symbol = StructureType.objects.get(structure_type_name=structure_type_name).structure_type_symbol
 
     data = {
         "promoters": get_promoters(function_type_symbol, structure_type_symbol),
@@ -133,7 +135,7 @@ def get_delivery_format_table(request):
     fluorescene_marker_name = request.GET["fluorescene_marker_name"]
     selection_marker_name = request.GET["selection_marker_name"]
     bacterial_marker_name = request.GET["bacterial_marker_name"]
-    target_sequence = request.GET["target_sequence"].upper()
+    target_sequence = request.GET["target_sequence"]
 
     structure_type_symbol = StructureType.objects.get(structure_type_name=structure_type_name).structure_type_symbol
     delivery_format_codes = DeliveryLibrary.objects.filter(structure_type_symbol=structure_type_symbol).distinct().values("delivery_format_symbol")
@@ -310,6 +312,7 @@ def decode_product_sku(product_sku):
             delivery_format_code = target_sequence_with_delivery[-1]
         
         # Retrieve data from the database
+        product_category = FunctionType.objects.get(function_type_symbol=function_type_code).category
         function_type_name = FunctionType.objects.get(function_type_symbol=function_type_code).function_type_name
         structure_type_name = StructureType.objects.get(structure_type_symbol=structure_type_code).structure_type_name
 
@@ -339,6 +342,7 @@ def decode_product_sku(product_sku):
 
         # Return the decoded components as a dictionary
         return {
+            "product_category": product_category,
             "function_type_name": function_type_name,
             "structure_type_name": structure_type_name,
             "promoter_name": promoter_name,

@@ -1,4 +1,9 @@
-<mat-stepper [linear]="isLinear" #stepper class="custom-stepper">
+<mat-stepper
+    [linear]="isLinear"
+    #stepper
+    class="custom-stepper"
+    [selectedIndex]="selectedStep"
+>
     <ng-template matStepperIcon="edit">
         <i class="bi bi-check-lg text-white"></i>
     </ng-template>
@@ -25,8 +30,8 @@
                     class="button-card"
                     [ngClass]="{
                         selected:
-                            firstFormGroup.value.productCategoryId ===
-                            card.category_id
+                            firstFormGroup.value.productCategoryName ===
+                            card.category_name
                     }"
                     (click)="handleProductCategoryClick(card)"
                 >
@@ -77,8 +82,8 @@
                     class="button-card"
                     [ngClass]="{
                         selected:
-                            secondFormGroup.value.functionTypeId ===
-                            card.function_type_id
+                            secondFormGroup.value.functionTypeName ===
+                            card.function_type_name
                     }"
                     (click)="handleFunctionTypeClick(card)"
                 >
@@ -130,8 +135,8 @@
                     class="button-card"
                     [ngClass]="{
                         selected:
-                            thirdFormGroup.value.structureTypeSymbol ===
-                            card.structure_type_symbol
+                            thirdFormGroup.value.structureTypeName ===
+                            card.structure_type_name
                     }"
                     (click)="handleDeliveryTypeClick(card)"
                 >
@@ -400,9 +405,9 @@
                 <button
                     class="button-card"
                     [ngClass]="{
-                        selected: fifthFormGroup.value.geneOption === 'none'
+                        selected: fifthFormGroup.value.geneOption === 'template'
                     }"
-                    (click)="handleTargetSequenceClick('none', 'XXXXXX')"
+                    (click)="handleTargetSequenceClick('template', 'XXXXXX')"
                 >
                     <i class="bi bi-virus h1"></i>
                     <div class="text">Non-Insert</div>

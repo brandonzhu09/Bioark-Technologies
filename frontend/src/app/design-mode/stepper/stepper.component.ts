@@ -16,7 +16,7 @@ import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { SummaryComponent } from '../summary/summary.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductService } from '../../services/product.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DesignDiagramComponent } from '../design-diagram/design-diagram.component';
 
 @Component({
@@ -40,7 +40,7 @@ import { DesignDiagramComponent } from '../design-diagram/design-diagram.compone
     ],
 })
 export class StepperComponent {
-    constructor(private designFormService: DesignFormService, private productService: ProductService, private router: Router) { }
+    constructor(private designFormService: DesignFormService, private productService: ProductService, private router: Router, private route: ActivatedRoute) { }
 
     @ViewChild('stepper') stepper!: MatStepper;
     @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
@@ -69,6 +69,7 @@ export class StepperComponent {
     selectedTargetSequence: string | null | undefined = '';
 
     toggleSummaryStep = false;
+    selectedStep = 0;
 
     deliveryFormatColumns: string[] = [
         'delivery_format_name',
@@ -82,34 +83,18 @@ export class StepperComponent {
     product_sku: string = '';
 
     firstFormGroup = new FormGroup({
-        productCategoryId: new FormControl('', [
-            Validators.required,
-            Validators.minLength(3),
-        ]),
         productCategoryName: new FormControl('', [
             Validators.required,
             Validators.minLength(3),
         ]),
     });
     secondFormGroup = new FormGroup({
-        functionTypeId: new FormControl('', [
-            Validators.required,
-            Validators.minLength(3),
-        ]),
         functionTypeName: new FormControl('', [
-            Validators.required,
-            Validators.minLength(3),
-        ]),
-        functionTypeSymbol: new FormControl('', [
             Validators.required,
             Validators.minLength(2),
         ]),
     });
     thirdFormGroup = new FormGroup({
-        structureTypeSymbol: new FormControl('', [
-            Validators.required,
-            Validators.minLength(1),
-        ]),
         structureTypeName: new FormControl('', [
             Validators.required,
             Validators.minLength(1),
@@ -150,16 +135,6 @@ export class StepperComponent {
             Validators.minLength(1),
         ]),
     });
-    searchGeneGroup = new FormGroup({
-        geneSymbol: new FormControl('', [
-            Validators.required,
-            Validators.minLength(1),
-        ]),
-        targetSequence: new FormControl('', [
-            Validators.required,
-            Validators.minLength(6),
-        ]),
-    });
 
     // Errors
     addErrorMessage(message: string) {
@@ -181,28 +156,16 @@ export class StepperComponent {
 
     // Forms
     handleProductCategoryClick = (card: any) => {
-        this.firstFormGroup.controls.productCategoryId.setValue(
-            card.category_id
-        );
         this.firstFormGroup.controls.productCategoryName.setValue(
             card.category_name
         );
     };
     handleFunctionTypeClick = (card: any) => {
-        this.secondFormGroup.controls.functionTypeId.setValue(
-            card.function_type_id
-        );
         this.secondFormGroup.controls.functionTypeName.setValue(
             card.function_type_name
         );
-        this.secondFormGroup.controls.functionTypeSymbol.setValue(
-            card.function_type_symbol
-        );
     };
     handleDeliveryTypeClick = (card: any) => {
-        this.thirdFormGroup.controls.structureTypeSymbol.setValue(
-            card.structure_type_symbol
-        );
         this.thirdFormGroup.controls.structureTypeName.setValue(
             card.structure_type_name
         );
@@ -236,9 +199,6 @@ export class StepperComponent {
         if (index == 5) {
             this.toggleSummaryStep = true;
         }
-        if (index <= 5) {
-            this.searchGeneGroup.reset();
-        }
         if (index <= 4) {
             this.fifthFormGroup.reset();
         }
@@ -260,10 +220,10 @@ export class StepperComponent {
     }
 
     submitFirstForm() {
-        let category_id = this.firstFormGroup.value.productCategoryId;
-        if (category_id != '' && category_id != null) {
+        let name = this.firstFormGroup.value.productCategoryName;
+        if (name != '' && name != null) {
             this.designFormService
-                .getFunctionTypesByCategory(category_id)
+                .getFunctionTypesByCategory(name)
                 .subscribe((response) => {
                     this.functionTypeCards = response;
                 });
@@ -271,10 +231,10 @@ export class StepperComponent {
     }
 
     submitSecondForm() {
-        let function_type_symbol = this.secondFormGroup.value.functionTypeSymbol;
-        if (function_type_symbol != '' && function_type_symbol != null) {
+        let function_type_name = this.secondFormGroup.value.functionTypeName;
+        if (function_type_name != '' && function_type_name != null) {
             this.designFormService
-                .getStructureTypesByFunctionType(function_type_symbol)
+                .getStructureTypesByFunctionType(function_type_name)
                 .subscribe((response) => {
                     this.structureTypeCards = response;
                 });
@@ -282,12 +242,12 @@ export class StepperComponent {
     }
 
     submitThirdForm() {
-        let function_type_id = this.secondFormGroup.value.functionTypeId;
-        let structure_type_symbol =
-            this.thirdFormGroup.value.structureTypeSymbol;
-        if (function_type_id != null && structure_type_symbol != null) {
+        let function_type_name = this.secondFormGroup.value.functionTypeName;
+        let structure_type_name =
+            this.thirdFormGroup.value.structureTypeName;
+        if (function_type_name != null && structure_type_name != null) {
             this.designFormService
-                .getCodeP(function_type_id, structure_type_symbol)
+                .getCodeP(function_type_name, structure_type_name)
                 .subscribe((response) => {
                     this.promoterCards = response.promoters;
                     this.proteinTagCards = response.protein_tags;
@@ -368,7 +328,10 @@ export class StepperComponent {
             this.productCategoryCards = response;
         });
 
-        // this.loadFormData();
+        this.route.queryParams.subscribe(params => {
+            this.product_sku = params['sku'] || '';
+            this.loadFormData();
+        })
 
         // this.firstFormGroup.valueChanges.subscribe(() => this.saveFormData());
         // this.secondFormGroup.valueChanges.subscribe(() => this.saveFormData());
@@ -407,20 +370,42 @@ export class StepperComponent {
     // }
 
     // Load form data from localStorage
-    // loadFormData() {
-    //     const savedData = localStorage.getItem('stepperFormData');
-    //     if (savedData) {
-    //         const formData = JSON.parse(savedData);
-    //         this.firstFormGroup.setValue(formData.firstFormGroup);
-    //         this.secondFormGroup.setValue(formData.secondFormGroup);
-    //         this.thirdFormGroup.setValue(formData.thirdFormGroup);
-    //         this.fourthFormGroup.setValue(formData.fourthFormGroup);
-    //         this.fifthFormGroup.setValue(formData.fifthFormGroup);
-    //         this.searchGeneGroup.setValue(formData.searchGeneGroup);
-    //         this.selectedTargetSequence = formData.selectedTargetSequence;
-    //         this.toggleSummaryStep = formData.toggleSummaryStep;
+    loadFormData() {
+        if (this.product_sku !== '') {
+            this.goToStep(4);
+            this.productService.getProductDetails(this.product_sku).subscribe(res => {
+                this.firstFormGroup.controls.productCategoryName.setValue(res.product_category)
+                this.submitFirstForm()
+                this.secondFormGroup.controls.functionTypeName.setValue(res.function_type_name)
+                this.submitSecondForm()
+                this.thirdFormGroup.controls.structureTypeName.setValue(res.structure_type_name)
+                this.submitThirdForm()
+                this.fourthFormGroup.controls.promoterName.setValue(res.promoter_name)
+                this.fourthFormGroup.controls.proteinTagName.setValue(res.protein_tag_name)
+                this.fourthFormGroup.controls.fluoresceneMarkerName.setValue(res.fluorescene_marker_name)
+                this.fourthFormGroup.controls.selectionMarkerName.setValue(res.selection_marker_name)
+                this.fourthFormGroup.controls.bacterialMarkerName.setValue(res.bacterial_marker_name)
+            })
+        }
 
-    //         console.log(this.secondFormGroup.value);
-    //     }
-    // }
+
+        // const savedData = localStorage.getItem('stepperFormData');
+        // if (savedData) {
+        //     const formData = JSON.parse(savedData);
+        //     this.firstFormGroup.setValue(formData.firstFormGroup);
+        //     this.secondFormGroup.setValue(formData.secondFormGroup);
+        //     this.thirdFormGroup.setValue(formData.thirdFormGroup);
+        //     this.fourthFormGroup.setValue(formData.fourthFormGroup);
+        //     this.fifthFormGroup.setValue(formData.fifthFormGroup);
+        //     this.searchGeneGroup.setValue(formData.searchGeneGroup);
+        //     this.selectedTargetSequence = formData.selectedTargetSequence;
+        //     this.toggleSummaryStep = formData.toggleSummaryStep;
+
+        //     console.log(this.secondFormGroup.value);
+        // }
+    }
+
+    goToStep(step: number) {
+        this.selectedStep = step;
+    }
 }

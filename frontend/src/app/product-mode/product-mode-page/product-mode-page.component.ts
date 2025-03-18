@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InterfaceService } from '../../services/interface.service';
 
 @Component({
@@ -12,9 +12,10 @@ export class ProductModePageComponent {
   url: string = '';
   title: string = '';
   content: string = '';
+  raw_html: string = '';
   activeTab: string = 'tab-1';
 
-  constructor(private route: ActivatedRoute, private interfaceService: InterfaceService) { }
+  constructor(private route: ActivatedRoute, private interfaceService: InterfaceService, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -27,11 +28,16 @@ export class ProductModePageComponent {
     this.interfaceService.getProductPage(this.url).subscribe(res => {
       this.title = res.title;
       this.content = res.content;
+      this.raw_html = res.raw_html;
     })
   }
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;
+  }
+
+  goToQuotePage() {
+    this.router.navigate(['/quote']);
   }
 
 }
