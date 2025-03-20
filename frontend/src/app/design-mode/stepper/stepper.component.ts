@@ -291,8 +291,8 @@ export class StepperComponent {
     redirectToSummaryPage() {
         if (this.fifthFormGroup.valid) {
             this.productService.getProductSku(
-                this.thirdFormGroup.value.structureTypeName!,
                 this.secondFormGroup.value.functionTypeName!,
+                this.thirdFormGroup.value.structureTypeName!,
                 this.fourthFormGroup.value.promoterName!,
                 this.fourthFormGroup.value.proteinTagName!,
                 this.fourthFormGroup.value.fluoresceneMarkerName!,
