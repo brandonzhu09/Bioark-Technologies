@@ -28,6 +28,7 @@ export class ProductSummaryComponent implements OnInit {
   product_sku: string | null = '';
 
   product_name$ = new BehaviorSubject<string>('');
+  product_category$ = new BehaviorSubject<string>('');
   function_type_name$ = new BehaviorSubject<string>('');
   structure_type_name$ = new BehaviorSubject<string>('');
   promoter_name$ = new BehaviorSubject<string>('');
@@ -36,6 +37,7 @@ export class ProductSummaryComponent implements OnInit {
   selection_marker_name$ = new BehaviorSubject<string>('');
   bacterial_marker_name$ = new BehaviorSubject<string>('');
   target_sequence$ = new BehaviorSubject<string>('');
+  gene_symbol$ = new BehaviorSubject<string>('');
   delivery_format_name$ = new BehaviorSubject<string>('');
 
   product: any;
@@ -64,9 +66,10 @@ export class ProductSummaryComponent implements OnInit {
   getProductDetails() {
     if (!this.product_sku) return;
 
-    return this.productService.getProductDetails(this.product_sku).subscribe((data) => {
+    this.productService.getProductDetails(this.product_sku).subscribe((data) => {
       // Updating BehaviorSubjects
       this.product_name$.next(data.product_name);
+      this.product_category$.next(data.product_category);
       this.function_type_name$.next(data.function_type_name);
       this.structure_type_name$.next(data.structure_type_name);
       this.promoter_name$.next(data.promoter_name);
@@ -75,7 +78,10 @@ export class ProductSummaryComponent implements OnInit {
       this.selection_marker_name$.next(data.selection_marker_name);
       this.bacterial_marker_name$.next(data.bacterial_marker_name);
       this.target_sequence$.next(data.target_sequence);
+      this.gene_symbol$.next(data.gene_symbol);
       this.delivery_format_name$.next(data.delivery_format_name);
+
+      console.log(this.function_type_name$.value)
 
       this.getDeliveryFormatTable();
 

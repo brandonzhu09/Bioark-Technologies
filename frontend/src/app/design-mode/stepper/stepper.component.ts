@@ -315,6 +315,19 @@ export class StepperComponent {
         return this.fifthFormGroup.value.targetSequence;
     }
 
+    getGeneSymbol() {
+        if (this.fifthFormGroup.value.targetSequence == "XXXXXX") {
+            return "Template";
+        }
+        else if (this.fifthFormGroup.value.targetSequence == "000000") {
+            return "Ctrl";
+        }
+        else if (this.fifthFormGroup.value.geneOption == "geneSearch" && this.fifthFormGroup.value.geneSymbol) {
+            return this.fifthFormGroup.value.geneSymbol;
+        }
+        return "Template";
+    }
+
     // loadSummaryResources() {
     //   let structure_type_name = this.thirdFormGroup.value.structureTypeName;
     //   if (structure_type_name != null) {

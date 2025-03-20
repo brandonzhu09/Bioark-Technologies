@@ -7,10 +7,10 @@
             href="/product/featured/{{ product.catalog_number }}"
             class="promo-item"
         >
+            <span class="badge">NEW!</span>
             <img src="{{ fullUrl(product.image) }}" alt="Product 1" />
             <div class="promo-title">
                 {{ product.product_name }}
-                <span class="badge">NEW!</span>
             </div>
             <div class="promo-price">
                 ${{ product.unit_price | number : "1.2-2" }}

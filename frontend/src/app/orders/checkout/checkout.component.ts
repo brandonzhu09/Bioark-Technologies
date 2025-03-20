@@ -321,6 +321,8 @@ export class CheckoutComponent implements AfterViewInit {
       },
     });
 
+    console.log(this.cardField.isEligible());
+
     if (this.cardField.isEligible()) {
 
       const nameField = this.cardField.NameField({

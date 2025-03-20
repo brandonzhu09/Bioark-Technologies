@@ -385,6 +385,7 @@
                 this.fourthFormGroup.value.bacterialMarkerName!
             "
             [targetSequence]="this.getTargetSequence()!"
+            [geneSymbol]="this.getGeneSymbol()!"
         ></design-diagram>
         <form
             [formGroup]="fifthFormGroup"
@@ -405,22 +406,22 @@
                 <button
                     class="button-card"
                     [ngClass]="{
-                        selected: fifthFormGroup.value.geneOption === 'template'
-                    }"
-                    (click)="handleTargetSequenceClick('template', 'XXXXXX')"
-                >
-                    <i class="bi bi-virus h1"></i>
-                    <div class="text">Non-Insert</div>
-                </button>
-                <button
-                    class="button-card"
-                    [ngClass]="{
                         selected: fifthFormGroup.value.geneOption === 'control'
                     }"
                     (click)="handleTargetSequenceClick('control', '000000')"
                 >
                     <i class="bi bi-virus h1"></i>
-                    <div class="text">Control</div>
+                    <div class="text">Control (or Scramble)</div>
+                </button>
+                <button
+                    class="button-card"
+                    [ngClass]="{
+                        selected: fifthFormGroup.value.geneOption === 'template'
+                    }"
+                    (click)="handleTargetSequenceClick('template', 'XXXXXX')"
+                >
+                    <i class="bi bi-virus h1"></i>
+                    <div class="text">Non-Insert (or Template)</div>
                 </button>
             </div>
             @if (showSearchGeneGroup) {

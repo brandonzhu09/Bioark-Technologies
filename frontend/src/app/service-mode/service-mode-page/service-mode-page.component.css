@@ -77,6 +77,10 @@ ol {
     padding-left: 2em;
 }
 
+.product-section tr {
+    border: 1px solid #777777;
+}
+
 .applications {
     background-color: #f1f8ff;
     padding: 3rem;
@@ -293,6 +297,11 @@ ol {
     outline: 0;
     color: #333333;
     text-decoration: none;
+}
+
+.info-image {
+    width: 100%;
+    object-fit: cover;
 }
 
 

@@ -65,7 +65,7 @@ def update_shelf_price(request):
 @api_view(['GET'])
 def load_product_categories(request):
     # if request.user.is_authenticated:
-    queryset = ProductCategory.objects.all()
+    queryset = ProductCategory.objects.all().order_by("category_id")
     serializer = ProductCategorySerializer(queryset, many=True)
     return Response(serializer.data)
     
@@ -257,7 +257,7 @@ def load_featured_product_page(request, catalog_number):
 
 @api_view(['GET'])
 def get_latest_featured_products(request):
-    products = FeaturedProduct.objects.filter(on_display=True)[:10]
+    products = FeaturedProduct.objects.filter(on_display=True).order_by("-catalog_number")[:10]
     serializer = PreviewFeaturedProductSerializer(products, many=True)
 
     return Response(serializer.data)
@@ -269,18 +269,33 @@ def generate_product_sku(function_type_name, structure_type_name, promoter_name,
                          bacterial_marker_name, target_sequence, delivery_format_name=None):
     function_type_code = FunctionType.objects.get(function_type_name=function_type_name).function_type_symbol
     structure_type_code = StructureType.objects.get(structure_type_name=structure_type_name).structure_type_symbol
-    # Promoter code - check special case
-    promoter_queryset = Promoter.objects.filter(promoter_name=promoter_name).values("promoter_code")
-    promoter_special_case_queryset = PromoterSpecialCase.objects.filter(promoter_name=promoter_name).values("promoter_code")
-    promoter_code = promoter_queryset.union(promoter_special_case_queryset)[0]['promoter_code']
-    # Bacterial Marker code - check special case
-    bacterial_marker_queryset = BacterialMarker.objects.filter(bacterial_marker_name=bacterial_marker_name).values("bacterial_marker_code")
-    bacterial_marker_special_case_queryset = BacterialMarkerSpecialCase.objects.filter(bacterial_marker_name=bacterial_marker_name).values("bacterial_marker_code")
-    bacterial_marker_code = bacterial_marker_queryset.union(bacterial_marker_special_case_queryset)[0]['bacterial_marker_code']
 
-    protein_tag_code = ProteinTag.objects.get(protein_tag_name=protein_tag_name).protein_tag_code
-    fluorescene_marker_code = FluoresceneMarker.objects.get(fluorescene_marker_name=fluorescene_marker_name).fluorescene_marker_code
-    selection_marker_code = SelectionMarker.objects.get(selection_marker_name=selection_marker_name).selection_marker_code
+    # Set default values for CodeP
+    promoter_code = '0'
+    protein_tag_code = '0'
+    fluorescene_marker_code = '0'
+    selection_marker_code = '0'
+    bacterial_marker_code = '0'
+
+    # Promoter code - check special case
+    if promoter_name != '':
+        promoter_queryset = Promoter.objects.filter(promoter_name=promoter_name).values("promoter_code")
+        promoter_special_case_queryset = PromoterSpecialCase.objects.filter(promoter_name=promoter_name).values("promoter_code")
+        promoter_code = promoter_queryset.union(promoter_special_case_queryset)[0]['promoter_code']
+    # Bacterial Marker code - check special case
+    if bacterial_marker_name != '':
+        bacterial_marker_queryset = BacterialMarker.objects.filter(bacterial_marker_name=bacterial_marker_name).values("bacterial_marker_code")
+        bacterial_marker_special_case_queryset = BacterialMarkerSpecialCase.objects.filter(bacterial_marker_name=bacterial_marker_name).values("bacterial_marker_code")
+        bacterial_marker_code = bacterial_marker_queryset.union(bacterial_marker_special_case_queryset)[0]['bacterial_marker_code']
+
+    if protein_tag_name != '':
+        protein_tag_code = ProteinTag.objects.get(protein_tag_name=protein_tag_name).protein_tag_code
+    
+    if fluorescene_marker_name != '':
+        fluorescene_marker_code = FluoresceneMarker.objects.get(fluorescene_marker_name=fluorescene_marker_name).fluorescene_marker_code
+    
+    if selection_marker_name != '':
+        selection_marker_code = SelectionMarker.objects.get(selection_marker_name=selection_marker_name).selection_marker_code
     
     if delivery_format_name:
         delivery_format_code = DeliveryFormat.objects.get(delivery_format_name=delivery_format_name).delivery_format_symbol
@@ -315,6 +330,7 @@ def decode_product_sku(product_sku):
         product_category = FunctionType.objects.get(function_type_symbol=function_type_code).category
         function_type_name = FunctionType.objects.get(function_type_symbol=function_type_code).function_type_name
         structure_type_name = StructureType.objects.get(structure_type_symbol=structure_type_code).structure_type_name
+        gene_symbol = GeneLibrary.objects.get(target_sequence=target_sequence).symbol
 
         promoter = Promoter.objects.filter(promoter_code=promoter_code).first()
         if promoter:
@@ -351,6 +367,7 @@ def decode_product_sku(product_sku):
             "selection_marker_name": selection_marker_name,
             "bacterial_marker_name": bacterial_marker_name,
             "target_sequence": target_sequence,
+            "gene_symbol": gene_symbol,
             "delivery_format_name": delivery_format_name,
         }
     

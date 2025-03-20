@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'design-diagram',
@@ -17,10 +18,20 @@ export class DesignDiagramComponent {
   @Input() fluoresceneMarkerName: string = '';
   @Input() selectionMarkerName: string = '';
   @Input() bacterialMarkerName: string = '';
-  @Input() targetSequence: string = '';
+  @Input() targetSequence: string = 'XXXXXX';
+  @Input() geneSymbol: string = '';
 
   longName: string = '';
+  product_sku: string = '0';
 
+  constructor(private productService: ProductService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['functionTypeName'] || changes['structureTypeName'] || changes['promoterName'] || changes['proteinTagName'] ||
+      changes['fluoresceneMarkerName'] || changes['selectionMarkerName'] || changes['bacterialMarkerName'] || changes['targetSequence']) {
+      this.getLongName();
+    }
+  }
 
   getLongName() {
     this.longName = '';
@@ -30,10 +41,17 @@ export class DesignDiagramComponent {
     if (this.structureTypeName !== '' && this.structureTypeName !== null) {
       this.longName += this.structureTypeName + ' Kit';
     }
-    if (this.targetSequence !== '' && this.targetSequence !== 'XXXXXX' && this.targetSequence !== '000000') {
+    if (this.geneSymbol !== '') {
       this.longName += '--Gene ' + this.targetSequence;
     }
-    return this.longName;
+    if (this.promoterName !== '') {
+      this.productService.getProductSku(this.functionTypeName, this.structureTypeName, this.promoterName,
+        this.proteinTagName, this.fluoresceneMarkerName, this.selectionMarkerName, this.bacterialMarkerName, this.targetSequence
+      ).subscribe(res => {
+        this.product_sku = res.product_sku;
+        this.longName += "; " + this.product_sku;
+      })
+    }
   }
 
   getShortName() {

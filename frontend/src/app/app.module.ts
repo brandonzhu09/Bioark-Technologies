@@ -63,6 +63,8 @@ import { ServiceModePageComponent } from './service-mode/service-mode-page/servi
 import { FeaturedProductPageComponent } from './product-mode/featured-product-page/featured-product-page.component';
 import { QuantityInputComponent } from './components/quantity-input/quantity-input.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
+import { DesignDiagramComponent } from './design-mode/design-diagram/design-diagram.component';
+
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
   return async () => {
@@ -130,6 +132,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     GoogleMapsModule,
     PopupComponent,
     QuantityInputComponent,
+    DesignDiagramComponent
   ],
   providers: [
     provideClientHydration(),

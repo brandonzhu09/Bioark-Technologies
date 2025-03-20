@@ -14,8 +14,8 @@ export class ProductService {
   }
 
   getProductSku(
-    structureTypeName: string,
     functionTypeName: string,
+    structureTypeName: string,
     promoterName: string,
     proteinTagName: string,
     fluoresceneMarkerName: string,

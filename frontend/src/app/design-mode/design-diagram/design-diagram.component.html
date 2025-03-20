@@ -1,6 +1,6 @@
+<h1>{{ longName }}</h1>
 <div class="container">
     <div class="lego-diagram">
-        <h1>{{ getLongName() }}</h1>
         <img src="../../../assets/Lego-diagram.png" />
         <div class="s1" [ngClass]="{ 's-hidden': promoterName == '' }">
             {{ promoterName }}
@@ -53,7 +53,7 @@
             <span class="value">{{ proteinTagName }}</span>
         </div>
         <div class="grid-item">
-            <span class="label">Fluorescene Marker:</span>
+            <span class="label">Fluorescence Marker:</span>
             <span class="value">{{ fluoresceneMarkerName }}</span>
         </div>
         <div class="grid-item">

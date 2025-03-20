@@ -110,6 +110,7 @@ class ProductCategory(models.Model):
     category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(unique=True)
     description = models.CharField(blank=True, null=True)
+    priority = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'product_category'
@@ -120,6 +121,7 @@ class FunctionType(models.Model):
     function_type_name = models.CharField(unique=True)
     abbreviation = models.CharField()
     description = models.CharField(blank=True, null=True)
+    priority = models.IntegerField(default=1)
     load_status = models.CharField(blank=True, null=True, default="Loaded")
     category = models.CharField()
 
@@ -230,6 +232,7 @@ class FeaturedProduct(models.Model):
     shelf_status = models.BooleanField()
     on_display = models.BooleanField(default=False)
     on_discount = models.BooleanField(default=True)
+    priority = models.IntegerField(default=1)
     units_in_stock = models.IntegerField()
     units = models.CharField()
     union = models.OneToOneField(ProductsUnion, on_delete=models.CASCADE, blank=True, null=True)

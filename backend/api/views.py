@@ -168,7 +168,7 @@ def send_contact_form(request):
     send_mail(
         subject=f"New message from Bioark Tech: {subject}",
         message=f"Customer: {last_name}, {first_name}\nEmail: {email}\nPhone: {phone}\n{message}",
-        from_email=email,
+        from_email=settings.EMAIL_HOST_USER,
         recipient_list=["no-reply@bioarktech.com"],
     )
 
