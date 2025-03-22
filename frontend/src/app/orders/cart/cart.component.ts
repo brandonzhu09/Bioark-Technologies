@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { PrimaryButtonComponent } from '../../components/primary-button/primary-button.component';
 import { QuantityInputComponent } from '../../components/quantity-input/quantity-input.component';
+import { CheckoutService } from '../../services/checkout.service';
 
 declare var paypal_sdk: any;
 
@@ -18,7 +19,7 @@ export class CartComponent implements OnInit {
   subTotal: number = 0;
   totalItems: number = 0;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, public checkoutService: CheckoutService) { }
 
   onQuantityChange(item_id: number, quantity: number): void {
     // Handle quantity change - e.g., update total price, save to backend, etc.

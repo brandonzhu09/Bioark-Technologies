@@ -91,13 +91,16 @@ h2 {
     color: #4b5563;
 }
 
-.total-row {
+.order-row {
     display: flex;
     justify-content: space-between;
     margin: 24px 0;
-    font-weight: 600;
     color: #1f2937;
     font-size: 18px;
+}
+
+.total-row {
+    font-weight: 600;
 }
 
 .secure-text {
@@ -108,6 +111,10 @@ h2 {
     align-items: center;
     justify-content: center;
     gap: 6px;
+}
+
+hr.solid {
+    border-top: 3px solid #bbb;
 }
 
 @media (max-width: 768px) {

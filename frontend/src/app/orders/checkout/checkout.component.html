@@ -292,6 +292,16 @@
                 <span class="order-label">Subtotal ({{ quantity }})</span>
                 <span class="order-value">${{ subTotal }}</span>
             </div>
+            <div class="order-item">
+                <span class="order-label">Delivery Fee</span>
+                <span class="order-value"
+                    >${{ checkoutService.calculateDeliveryFee(subTotal) }}</span
+                >
+            </div>
+            <div class="order-item">
+                <span class="order-label">Tax</span>
+                <span class="order-value">Free</span>
+            </div>
             <!-- <div class="order-item">
                 <span class="order-label">Tax</span>
                 @if (taxRate == 1) {
@@ -303,12 +313,13 @@
             <hr class="solid" />
             <div class="order-item order-total">
                 <span class="order-label">Total</span>
-                @if (taxRate == 1) {
-                <span class="order-value">-</span>
-                } @else {
-                <span class="order-value">${{ subTotal }}</span>
+                <span class="order-value"
+                    >${{
+                        subTotal +
+                            checkoutService.calculateDeliveryFee(subTotal)
+                    }}</span
+                >
                 <!-- <span class="order-value">${{ subTotal + taxAmount }}</span> -->
-                }
             </div>
         </div>
     </div>

@@ -2,9 +2,10 @@
     background: #f8f8f8;
     width: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 30px;
 }
 
-.container {
+.main-container {
     display: flex;
     width: 65%;
     margin: 0 auto;
@@ -77,8 +78,18 @@ ol {
     padding-left: 2em;
 }
 
-.product-section tr {
-    border: 1px solid #777777;
+.product-section tr,
+th,
+td {
+    border-width: 1px;
+}
+
+.product-section table {
+    width: 100%;
+}
+
+.table-header {
+    background-color: #fae2d6;
 }
 
 .applications {
@@ -306,7 +317,7 @@ ol {
 
 
 @media (max-width: 1624px) {
-    .container {
+    .main-container {
         width: 100%;
     }
 

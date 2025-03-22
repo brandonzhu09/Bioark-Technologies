@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environment/environment';
+import { CheckoutService } from '../../services/checkout.service';
 
 declare var paypal_sdk: any;
 
@@ -79,7 +80,7 @@ export class CheckoutComponent implements AfterViewInit {
   }
 
   constructor(private fb: FormBuilder, private orderService: OrderService, private cartService: CartService,
-    public authService: AuthService, private http: HttpClient, private router: Router) {
+    public authService: AuthService, private http: HttpClient, private router: Router, public checkoutService: CheckoutService) {
     // open sign up form if user is not logged in
     this.authService.getSession().subscribe((response) => {
       if (response.isAuthenticated) {
@@ -165,7 +166,7 @@ export class CheckoutComponent implements AfterViewInit {
       this.isBillingPanelDisabled = false;
       this.showSignupPreview = true;
       this.showShippingPreview = true;
-      this.calculateSalesTax();
+      // this.calculateSalesTax();
     }
     // else {
     //   this.shippingForm.markAllAsTouched();

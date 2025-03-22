@@ -1,5 +1,5 @@
 <div class="full-container">
-    <div class="container">
+    <div class="main-container">
         <div class="product-sidebar">
             <product-sidebar></product-sidebar>
         </div>
@@ -11,6 +11,102 @@
 
             <div class="product-container">
                 <div class="product-section" [innerHTML]="content"></div>
+                <div class="product-section" [innerHTML]="raw_html"></div>
+
+                @if (url == 'lab-supplies') {
+                <div class="product-section">
+                    <h1>Reagents</h1>
+                    <table>
+                        <tr class="table-header">
+                            <th>Class</th>
+                            <th>Cat No (Order Link)</th>
+                            <th>Product Name</th>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">Transfection</td>
+                            <td>
+                                <a href="/product/featured/BAL100668"
+                                    >BAL100668</a
+                                >
+                            </td>
+                            <td>BAJet® In Vitro DNA Transfection Reagent</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/product/featured/BAL100468"
+                                    >BAL100468</a
+                                >
+                            </td>
+                            <td>
+                                BioArkLipo® In Vitro Transfection Kit (Ver. II)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/product/featured/BAL100688"
+                                    >BAL100688</a
+                                >
+                            </td>
+                            <td>BAPoly® In Vitro DNA Transfection Reagent</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">QPCR</td>
+                            <td>
+                                <a href="/product/featured/BSY3320">BSY3320</a>
+                            </td>
+                            <td>2 x SYBR Green qPCR Master Mix</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/product/featured/BSY3323">BSY3323</a>
+                            </td>
+                            <td>2 x Fast SYBR Green qPCR Master Mix</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">DNA Marker</td>
+                            <td>
+                                <a href="/product/featured/BADM3362"
+                                    >BADM3362</a
+                                >
+                            </td>
+                            <td>GN8K DNA Marker (100-8000bp)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/product/featured/BADM3363"
+                                    >BADM3363</a
+                                >
+                            </td>
+                            <td>GN10K DNA Marker (300-10000bp)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/product/featured/BADM3364"
+                                    >BADM3364</a
+                                >
+                            </td>
+                            <td>GN15K DNA Marker (500-15000bp)</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Protein Marker</td>
+                            <td>
+                                <a href="/product/featured/BAPM2083"
+                                    >BAPM2083</a
+                                >
+                            </td>
+                            <td>Prestained Protein Marker Ⅳ (8-200 kDa)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/product/featured/BAPM2086"
+                                    >BAPM2086</a
+                                >
+                            </td>
+                            <td>Western Protein Marker I (Exposure)</td>
+                        </tr>
+                    </table>
+                </div>
+                }
                 <!-- <img src="../../../assets/Service-0.png" class="info-image" /> -->
                 <div class="product-section">
                     <p>

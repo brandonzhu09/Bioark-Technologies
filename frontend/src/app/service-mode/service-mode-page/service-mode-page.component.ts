@@ -12,6 +12,7 @@ export class ServiceModePageComponent {
   url: string = '';
   title: string = '';
   content: string = '';
+  raw_html: string = '';
 
   constructor(private route: ActivatedRoute, private interfaceService: InterfaceService) { }
 
@@ -26,6 +27,7 @@ export class ServiceModePageComponent {
     this.interfaceService.getServicePage(this.url).subscribe(res => {
       this.title = res.title;
       this.content = res.content;
+      this.raw_html = res.raw_html;
     })
   }
 }

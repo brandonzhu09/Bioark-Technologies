@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'design-diagram',
@@ -20,11 +21,16 @@ export class DesignDiagramComponent {
   @Input() bacterialMarkerName: string = '';
   @Input() targetSequence: string = 'XXXXXX';
   @Input() geneSymbol: string = '';
+  @Input() sku: string = '';
 
   longName: string = '';
-  product_sku: string = '0';
+  product_sku: string = '';
 
   constructor(private productService: ProductService) { }
+
+  ngOnInit() {
+    this.getLongName();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['functionTypeName'] || changes['structureTypeName'] || changes['promoterName'] || changes['proteinTagName'] ||
@@ -33,7 +39,7 @@ export class DesignDiagramComponent {
     }
   }
 
-  getLongName() {
+  async getLongName() {
     this.longName = '';
     if (this.functionTypeName !== '') {
       this.longName += this.functionTypeName + ' ';
@@ -44,13 +50,15 @@ export class DesignDiagramComponent {
     if (this.geneSymbol !== '') {
       this.longName += '--Gene ' + this.targetSequence;
     }
-    if (this.promoterName !== '') {
-      this.productService.getProductSku(this.functionTypeName, this.structureTypeName, this.promoterName,
+    if (this.sku !== '') {
+      this.longName += "; " + this.sku;
+    }
+    else if (this.promoterName !== '') {
+      const res = await firstValueFrom(this.productService.getProductSku(this.functionTypeName, this.structureTypeName, this.promoterName,
         this.proteinTagName, this.fluoresceneMarkerName, this.selectionMarkerName, this.bacterialMarkerName, this.targetSequence
-      ).subscribe(res => {
-        this.product_sku = res.product_sku;
-        this.longName += "; " + this.product_sku;
-      })
+      ))
+
+      this.longName += "; " + res.product_sku;
     }
   }
 

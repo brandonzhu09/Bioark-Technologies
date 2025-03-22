@@ -36,10 +36,34 @@
         <div class="order-summary">
             <h2>Order summary</h2>
 
-            <div class="total-row">
+            <div class="order-row">
                 <span>Subtotal ({{ totalItems }} items)</span>
                 <span>${{ subTotal }}</span>
             </div>
+
+            @if (totalItems > 0) {
+            <hr class="solid" />
+            <div class="order-row">
+                <span>Delivery Fee</span>
+                <span
+                    >${{ checkoutService.calculateDeliveryFee(subTotal) }}</span
+                >
+            </div>
+            <div class="order-row">
+                <span>Tax</span>
+                <span>Free</span>
+            </div>
+            <hr class="solid" />
+            <div class="order-row total-row">
+                <span>Total</span>
+                <span
+                    >${{
+                        subTotal +
+                            checkoutService.calculateDeliveryFee(subTotal)
+                    }}</span
+                >
+            </div>
+            }
 
             <primary-button url="/checkout"></primary-button>
 
