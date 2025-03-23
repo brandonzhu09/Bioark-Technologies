@@ -65,6 +65,8 @@
     border-radius: 20px;
     display: inline-block;
     align-self: first baseline;
+    margin-left: 5px;
+    margin-top: 5px;
 }
 
 
