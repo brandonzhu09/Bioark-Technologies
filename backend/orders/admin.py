@@ -1,5 +1,12 @@
 from django.contrib import admin
 from .models import *
+from import_export.admin import ImportExportActionModelAdmin
+from import_export import resources
+
+class WorkScheduleResource(resources.ModelResource):
+    class Meta:
+        model = WorkSchedule
+        import_id_fields = ('id',)
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -11,9 +18,6 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
-
-    def order_id(self, obj):
-        return obj.order_id
 
 
 @admin.register(CloningCRISPRItem)
@@ -45,3 +49,8 @@ class CloningRNAiOrderItemAdmin(admin.ModelAdmin):
         # Override to ensure the filtered queryset
         qs = super().get_queryset(request)
         return qs.filter(order_class="Cloning-RNAi")
+
+@admin.register(WorkSchedule)
+class WorkScheduleAdmin(ImportExportActionModelAdmin):
+    resources = [WorkScheduleResource]
+    list_display = ('id', 'structure_type_code', 'delivery_format_code', 'ready_status', 'work_period_earliest', 'work_period_latest', 'shipping_temp', 'storage_temp', 'stability_period')

@@ -196,21 +196,30 @@
                     <mat-panel-title> 2. Billing Information </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div
-                    id="paypal-button-container"
-                    class="payment-container"
-                ></div>
+                <mat-tab-group>
+                    <mat-tab>
+                        <ng-template mat-tab-label class="tab-label">
+                            <i
+                                class="bi bi-credit-card fs-5"
+                                style="margin-right: 1rem"
+                            ></i>
+                            Credit Card
+                        </ng-template>
+                        <div
+                            id="paypal-button-container"
+                            class="payment-container mt-4"
+                        ></div>
 
-                <div class="payment-divider">
-                    <span class="payment-divider-text">or</span>
-                </div>
-                <div id="card-form" class="card_container">
-                    <div id="card-name-field-container"></div>
-                    <div id="card-number-field-container"></div>
-                    <div id="card-expiry-field-container"></div>
-                    <div id="card-cvv-field-container"></div>
+                        <div class="payment-divider">
+                            <span class="payment-divider-text">or</span>
+                        </div>
+                        <div id="card-form" class="card_container">
+                            <div id="card-name-field-container"></div>
+                            <div id="card-number-field-container"></div>
+                            <div id="card-expiry-field-container"></div>
+                            <div id="card-cvv-field-container"></div>
 
-                    <!-- <label>Billing Address</label>
+                            <!-- <label>Billing Address</label>
 
                     <form
                         [formGroup]="billingAddressForm"
@@ -256,20 +265,82 @@
                             }
                         </mat-form-field>
                     </form> -->
-                    <!-- <br /><br /> -->
-
-                    <button
-                        mat-raised-button
-                        class="primary-button"
-                        type="submit"
-                        (click)="submitCardField()"
-                    >
-                        Place Order
-                    </button>
-                    @if (paymentErrorMsg !== '') {
-                    <div class="error-message">{{ paymentErrorMsg }}</div>
+                            <!-- <br /><br /> -->
+                        </div>
+                    </mat-tab>
+                    @if (totalPrice >= 100) {
+                    <mat-tab>
+                        <ng-template mat-tab-label class="tab-label">
+                            <i
+                                class="bi bi-file-earmark-text fs-5"
+                                style="margin-right: 1rem"
+                            ></i>
+                            Purchase Order (PO)
+                        </ng-template>
+                        <form [formGroup]="purchaseOrderForm" class="mt-4">
+                            <mat-form-field
+                                appearance="outline"
+                                class="full-width"
+                            >
+                                <mat-label>Purchase Order Number</mat-label>
+                                <input
+                                    matInput
+                                    formControlName="order_number"
+                                />
+                            </mat-form-field>
+                            <div class="ml-1 mb-4">
+                                <label class="form-label h6"
+                                    >Upload PO Document<span class="text-danger"
+                                        >*</span
+                                    ></label
+                                >
+                                <input
+                                    class="form-control"
+                                    type="file"
+                                    accept="application/pdf"
+                                    (change)="onPOFileUpload($event)"
+                                />
+                            </div>
+                        </form>
+                    </mat-tab>
                     }
+                </mat-tab-group>
+                <mat-button-toggle-group
+                    class="full-width d-flex"
+                    [formControl]="paymentOption"
+                >
+                    <mat-button-toggle value="credit" class="flex-fill"
+                        >Pay with Credit Card</mat-button-toggle
+                    >
+                    @if (totalPrice >= 100 && totalPrice <= 1000) {
+                    <mat-button-toggle
+                        value="po"
+                        class="flex-fill"
+                        (click)="updatePricingForPO()"
+                        >Pay with Purchase Order (PO)</mat-button-toggle
+                    >
+                    } @if (totalPrice > 1000) {
+                    <mat-button-toggle
+                        value="split"
+                        class="flex-fill"
+                        (click)="updatePricingForPOSplit()"
+                        >Pay 50% Credit 50% PO</mat-button-toggle
+                    >
+                    }
+                </mat-button-toggle-group>
+                <button
+                    mat-raised-button
+                    class="primary-button"
+                    type="submit"
+                    (click)="checkoutOrder()"
+                >
+                    Place Order
+                </button>
+                @if (paymentErrorMsg !== '') {
+                <div class="error-message">
+                    {{ paymentErrorMsg }}
                 </div>
+                }
             </mat-expansion-panel>
             }
         </mat-accordion>
@@ -293,10 +364,8 @@
                 <span class="order-value">${{ subTotal }}</span>
             </div>
             <div class="order-item">
-                <span class="order-label">Delivery Fee</span>
-                <span class="order-value"
-                    >${{ checkoutService.calculateDeliveryFee(subTotal) }}</span
-                >
+                <span class="order-label">Shipping Fee</span>
+                <span class="order-value">${{ shippingFee }}</span>
             </div>
             <div class="order-item">
                 <span class="order-label">Tax</span>
@@ -311,16 +380,23 @@
                 }
             </div> -->
             <hr class="solid" />
+            @if (paymentOption.value === 'po' || paymentOption.value ===
+            'split') {
+            <div class="order-item order-total">
+                <span class="order-label">PO Payment</span>
+                <span class="order-value">${{ poPrice }}</span>
+            </div>
+            <div class="order-item order-total">
+                <span class="order-label">Amount Due</span>
+                <span class="order-value">${{ creditPrice }}</span>
+            </div>
+            } @else {
             <div class="order-item order-total">
                 <span class="order-label">Total</span>
-                <span class="order-value"
-                    >${{
-                        subTotal +
-                            checkoutService.calculateDeliveryFee(subTotal)
-                    }}</span
-                >
+                <span class="order-value">${{ totalPrice }}</span>
                 <!-- <span class="order-value">${{ subTotal + taxAmount }}</span> -->
             </div>
+            }
         </div>
     </div>
     @if (isLoading) {

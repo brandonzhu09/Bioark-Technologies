@@ -132,7 +132,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     GoogleMapsModule,
     PopupComponent,
     QuantityInputComponent,
-    DesignDiagramComponent
+    DesignDiagramComponent,
   ],
   providers: [
     provideClientHydration(),

@@ -9,6 +9,7 @@ import os
 from dotenv import load_dotenv
 import logging
 import json
+import secrets
 
 # PayPal SDK
 from paypalserversdk.http.auth.o_auth_2 import ClientCredentialsAuthCredentials
@@ -122,69 +123,88 @@ def capture_order(request, order_id):
                                                             state=address["state"],
                                                             zipcode=address["zipcode"])
 
-        order_obj = Order.objects.create(payment_token=payment_token,
-                                        subtotal=subtotal,
-                                        shipping_amount=shipping_amount,
-                                        tax_amount=tax_amount,
-                                        payment_source=payment_source,
-                                        last_digits=last_digits,
-                                        total_price=total_price,
-                                        quantity=quantity,
-                                        discount_code=discount_code,
-                                        shipping_address=address_obj,
-                                        billing_address=address_obj,
-                                        user=request.user)
-        
-        for item in cart:
-            OrderItem.objects.create(product_sku=item['product_sku'],
-                                    order_class=get_order_class(item['product_sku']),
-                                    product_name=item['product_name'],
-                                    ready_status=item['ready_status'],
-                                    unit_price=item['price'],
-                                    total_price=float(item['price']) * item['quantity'],
-                                    unit_size=item['unit_size'],
-                                    quantity=item['quantity'],
-                                    url=item['url'],
-                                    discount_code=item['discount_code'],
-                                    order=order_obj,
-                                    work_period=get_work_period(item['product_sku'], item['ready_status']),
-                                    est_delivery_date=get_est_delivery_date(item['product_sku'], item['ready_status']),
-                                    function_type_name=item['function_type_name'],
-                                    structure_type_name=item['structure_type_name'],
-                                    promoter_name=item['promoter_name'],
-                                    protein_tag_name=item['protein_tag_name'],
-                                    fluorescene_marker_name=item['fluorescene_marker_name'],
-                                    selection_marker_name=item['selection_marker_name'],
-                                    bacterial_marker_name=item['bacterial_marker_name'],
-                                    target_sequence=item['target_sequence'],
-                                    delivery_format_name=item['delivery_format_name'])
+        # Create order dictionary
+        order_data = {
+            "payment_token": payment_token,
+            "subtotal": subtotal,
+            "shipping_amount": shipping_amount,
+            "tax_amount": tax_amount,
+            "discount_code": discount_code,
+            "payment_source": payment_source,
+            "last_digits": last_digits,
+            "total_price": total_price,
+            "quantity": quantity,
+            "shipping_address": address_obj,
+            "billing_address": address_obj,
+            "user": request.user
+        }
 
-        return Response(json.loads(ApiHelper.json_serialize(order.body)))
+        order_obj = Order.objects.create(**order_data)
+
+        # Create order items
+        create_order_items(cart, order_obj)
+
+    except Exception as e:
+        return Response({"error": "Failed to capture order. Please try again."}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(json.loads(ApiHelper.json_serialize(order.body)))
+
+
+@api_view(['POST'])
+def pay_with_purchase_order(request):
+    order_number = request.data.get("order_number")
+    po_file = request.FILES.get("po_file")
+    cart = request.data.get("cart")
+    quantity = request.data.get("quantity")
+    subtotal = request.data.get("subtotal")
+    shipping_amount = request.data.get("shipping_amount")
+    tax_amount = request.data.get("tax_amount", 0)
+    tax_amount = 0 if tax_amount == None else tax_amount
+    total_price = request.data.get("total_price")
+    address = json.loads(request.data.get("address"))
+    credit_price = request.data.get("credit_price")
+    po_price = request.data.get("po_price")
+
+    payment_source = 'Paid with Purchase Order (PO)'
+
+    # Ensure payment token is unique
+    payment_token = secrets.token_urlsafe(8).upper()
+    while Order.objects.filter(payment_token=payment_token).exists():
+        payment_token = secrets.token_urlsafe(8).upper()
     
-    except WorkSchedule.DoesNotExist:
-        for item in cart:
-            OrderItem.objects.create(product_sku=item['product_sku'],
-                                    order_class=get_order_class(item['product_sku']),
-                                    product_name=item['product_name'],
-                                    ready_status=item['ready_status'],
-                                    unit_price=item['price'],
-                                    total_price=float(item['price']) * item['quantity'],
-                                    unit_size=item['unit_size'],
-                                    quantity=item['quantity'],
-                                    url=item['url'],
-                                    discount_code=item['discount_code'],
-                                    order=order_obj,
-                                    function_type_name=item['function_type_name'],
-                                    structure_type_name=item['structure_type_name'],
-                                    promoter_name=item['promoter_name'],
-                                    protein_tag_name=item['protein_tag_name'],
-                                    fluorescene_marker_name=item['fluorescene_marker_name'],
-                                    selection_marker_name=item['selection_marker_name'],
-                                    bacterial_marker_name=item['bacterial_marker_name'],
-                                    target_sequence=item['target_sequence'],
-                                    delivery_format_name=item['delivery_format_name'])
+    address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
+                                                        city=address["city"],
+                                                        state=address["state"],
+                                                        zipcode=address["zipcode"])
+
+    # Create order dictionary
+    order_data = {
+        "payment_token": payment_token,
+        "subtotal": subtotal,
+        "shipping_amount": shipping_amount,
+        "tax_amount": tax_amount,
+        "payment_source": payment_source,
+        "total_price": total_price,
+        "quantity": quantity,
+        "total_paid": credit_price,
+        "minimum_payment": calculate_minimum_payment(total_price),
+        "shipping_address": address_obj,
+        "billing_address": address_obj,
+        "user": request.user,
+        "invoice_amount": po_price,
+    }
+
+    order_obj = Order.objects.create(**order_data)
         
-        return Response(json.loads(ApiHelper.json_serialize(order.body)))
+    # Create order items
+    try:
+        create_order_items(cart, order_obj)
+    except WorkSchedule.DoesNotExist or Exception as e:
+        # Handle exception if work schedule does not exist
+        logging.error(f"Error creating order items: {str(e)}")
+        return Response({"error": "Failed to create order items."}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({"message": "Payment successful."}, status=status.HTTP_200_OK)
 
 
 class CartAPI(APIView):
@@ -235,6 +255,74 @@ class CartAPI(APIView):
 
 
 # Helper methods
+def create_order_items(cart, order_obj):
+    try:
+        for item in cart:
+            OrderItem.objects.create(product_sku=item['product_sku'],
+                                    order_class=get_order_class(item['product_sku']),
+                                    product_name=item['product_name'],
+                                    ready_status=item['ready_status'],
+                                    unit_price=item['price'],
+                                    total_price=float(item['price']) * item['quantity'],
+                                    unit_size=item['unit_size'],
+                                    quantity=item['quantity'],
+                                    url=item['url'],
+                                    discount_code=item['discount_code'],
+                                    order=order_obj,
+                                    work_period=get_work_period(item['product_sku'], item['ready_status']),
+                                    est_delivery_date=get_est_delivery_date(item['product_sku'], item['ready_status']),
+                                    function_type_name=item['function_type_name'],
+                                    structure_type_name=item['structure_type_name'],
+                                    promoter_name=item['promoter_name'],
+                                    protein_tag_name=item['protein_tag_name'],
+                                    fluorescene_marker_name=item['fluorescene_marker_name'],
+                                    selection_marker_name=item['selection_marker_name'],
+                                    bacterial_marker_name=item['bacterial_marker_name'],
+                                    target_sequence=item['target_sequence'],
+                                    delivery_format_name=item['delivery_format_name'])
+
+    except WorkSchedule.DoesNotExist or Exception:
+        for item in cart:
+            OrderItem.objects.create(product_sku=item['product_sku'],
+                                    order_class=get_order_class(item['product_sku']),
+                                    product_name=item['product_name'],
+                                    ready_status=item['ready_status'],
+                                    unit_price=item['price'],
+                                    total_price=float(item['price']) * item['quantity'],
+                                    unit_size=item['unit_size'],
+                                    quantity=item['quantity'],
+                                    url=item['url'],
+                                    discount_code=item['discount_code'],
+                                    order=order_obj,
+                                    function_type_name=item['function_type_name'],
+                                    structure_type_name=item['structure_type_name'],
+                                    promoter_name=item['promoter_name'],
+                                    protein_tag_name=item['protein_tag_name'],
+                                    fluorescene_marker_name=item['fluorescene_marker_name'],
+                                    selection_marker_name=item['selection_marker_name'],
+                                    bacterial_marker_name=item['bacterial_marker_name'],
+                                    target_sequence=item['target_sequence'],
+                                    delivery_format_name=item['delivery_format_name'])
+
+
+def calculate_minimum_payment(total_price):
+    if total_price < 100:
+        return total_price
+    elif total_price >= 100 and total_price <= 1000:
+        return 0
+    elif total_price > 1000:
+        return "{:.2f}".format(total_price / 2)
+
+
+def calculate_maximum_invoice(total_price):
+    if total_price < 100:
+        return 0
+    elif total_price >= 100 and total_price <= 1000:
+        return total_price
+    elif total_price > 1000:
+        return "{:.2f}".format(total_price / 2)
+
+
 def get_order_class(product_sku):
     obj_class = product_sku[:2]
     if obj_class == 'CA' or obj_class == 'CI' or obj_class == 'CO' or obj_class == 'CN' or obj_class == 'CD' or obj_class == 'CR':
@@ -248,17 +336,19 @@ def get_order_class(product_sku):
 
 
 def get_work_period(product_sku, ready_status):
-    delivery_format_code = product_sku[len(product_sku)-1]
+    structure_type_code = product_sku[2]
+    delivery_format_code = product_sku[-1]
     ready_status = ready_status
-    work_period_days = WorkSchedule.objects.get(delivery_format_code=delivery_format_code, ready_status=ready_status).work_period_earliest
+    work_period_days = WorkSchedule.objects.get(structure_type_code=structure_type_code, delivery_format_code=delivery_format_code, ready_status=ready_status).work_period_earliest
     
     return f"{work_period_days} days"
 
 
 def get_est_delivery_date(product_sku, ready_status):
-    delivery_format_code = product_sku[len(product_sku)-1]
+    structure_type_code = product_sku[2]
+    delivery_format_code = product_sku[-1]
     ready_status = ready_status
-    work_period_days = WorkSchedule.objects.get(delivery_format_code=delivery_format_code, ready_status=ready_status).work_period_earliest
+    work_period_days = WorkSchedule.objects.get(structure_type_code=structure_type_code, delivery_format_code=delivery_format_code, ready_status=ready_status).work_period_earliest
     
     current_date = date.today()
     delta = timedelta(days=work_period_days)

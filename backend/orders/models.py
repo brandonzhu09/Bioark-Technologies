@@ -7,7 +7,47 @@ from users.models import User, Address
 
 from decimal import Decimal
 
-# Create your models here.
+class Quote(models.Model):
+    request_date = models.DateTimeField()
+    quote_number = models.CharField()
+    quote_file = models.FileField(upload_to='quote_files/')
+    description = models.TextField()
+    shelf_status = models.BooleanField()
+    quantity = models.IntegerField()
+    amount = models.CharField()
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    unit_price = models.DecimalField(decimal_places=2, max_digits=10)
+    total_price = models.DecimalField(decimal_places=2, max_digits=10)
+    work_period_days = models.IntegerField()
+
+    class Meta:
+        db_table = 'quotes'
+
+class Invoice(models.Model):
+    order_placed_date = models.DateTimeField(default=datetime.now)
+    order_number = models.CharField()
+    order_status = models.CharField(default='Effective')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    service_finished = models.BooleanField(default=False)
+    invoice_sent = models.BooleanField(default=False)
+    delivery_date = models.DateField(null=True, blank=True)
+    billing_date = models.DateField(null=True, blank=True) 
+    invoice_number = models.CharField(blank=True, null=True)
+    invoice_due = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+    po_file = models.FileField(upload_to='po_files/', blank=True, null=True)
+    po_number = models.CharField(blank=True, null=True)
+    po_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="po_invoices")
+    billing_address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name="billing_invoices")
+    shipping_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="shipping_invoices")
+    # credit billing
+    is_paid = models.BooleanField(default=False)
+    receipt_number = models.CharField(blank=True, null=True)
+    invoice_payment = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+
+    class Meta:
+        db_table = 'invoices'
+
+
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     payment_token = models.CharField()
@@ -15,6 +55,8 @@ class Order(models.Model):
     shipping_amount = models.DecimalField(max_digits=8, decimal_places=2)
     tax_amount = models.DecimalField(max_digits=8, decimal_places=2)
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
+    total_paid = models.DecimalField(max_digits=8, decimal_places=2)
+    minimum_payment = models.DecimalField(max_digits=8, decimal_places=2)
     payment_source = models.CharField()
     last_digits = models.DecimalField(max_digits=4, decimal_places=0, blank=True, null=True)
     quantity = models.IntegerField()
@@ -31,6 +73,15 @@ class Order(models.Model):
     paid = models.BooleanField(default=True)
     notes = models.CharField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
+    # PO billing information
+    invoice = models.ForeignKey(Invoice, on_delete=models.PROTECT, blank=True, null=True)
+    invoice_number = models.CharField(blank=True, null=True)
+    invoice_amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+    invoice_maximum_amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+    po_file = models.FileField(upload_to='po_files/', blank=True, null=True)
+    po_number = models.CharField(blank=True, null=True)
+    po_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="po_orders", blank=True, null=True)
+    receipt_number = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'orders'
@@ -42,7 +93,6 @@ class OrderItem(models.Model):
         ('ready_for_delivery', 'Ready For Delivery'),
         ('arrived', 'Arrived'),
     ]
-
     order_item_id = models.AutoField(primary_key=True)
     order_class = models.CharField()
     work_period = models.CharField(blank=True, null=True)
@@ -206,10 +256,11 @@ class Cart(object):
         self.save()
 
 class WorkSchedule(models.Model):
+    structure_type_code = models.CharField()
     delivery_format_code = models.CharField()
     ready_status = models.CharField()
     work_period_earliest = models.IntegerField() # estimate time of arrival in days
-    work_period_latest = models.IntegerField(null=True)
+    work_period_latest = models.IntegerField(blank=True, null=True)
     shipping_temp = models.CharField()
     storage_temp = models.CharField()
     stability_period = models.CharField()

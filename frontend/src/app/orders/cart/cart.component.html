@@ -46,7 +46,7 @@
             <div class="order-row">
                 <span>Delivery Fee</span>
                 <span
-                    >${{ checkoutService.calculateDeliveryFee(subTotal) }}</span
+                    >${{ checkoutService.calculateShippingFee(subTotal) }}</span
                 >
             </div>
             <div class="order-row">
@@ -59,7 +59,7 @@
                 <span
                     >${{
                         subTotal +
-                            checkoutService.calculateDeliveryFee(subTotal)
+                            checkoutService.calculateShippingFee(subTotal)
                     }}</span
                 >
             </div>

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -17,6 +17,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environment/environment';
 import { CheckoutService } from '../../services/checkout.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 declare var paypal_sdk: any;
 
@@ -37,12 +39,16 @@ interface OrderSummary {
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule, MatProgressSpinnerModule, PrimaryButtonComponent],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule,
+    MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule,
+    MatProgressSpinnerModule, PrimaryButtonComponent, MatTabsModule, MatButtonToggleModule],
 })
 export class CheckoutComponent implements AfterViewInit {
   signupForm: FormGroup;
   shippingForm: FormGroup;
   billingAddressForm: FormGroup;
+  purchaseOrderForm: FormGroup;
+  paymentOption: FormControl;
   isSignupPanelOpen = false;
   isSignupPanelDisabled = true;
   isShippingPanelOpen = true;
@@ -68,11 +74,17 @@ export class CheckoutComponent implements AfterViewInit {
   taxAmount: number = 0;
   totalPrice: number = 0;
   quantity: number = 0;
+  shippingFee: number = 0;
   discountCode: string = '';
   cardField: any;
+  paypalButton: any;
 
   signupErrorMsg: string = '';
   paymentErrorMsg: string = '';
+
+  // Credit & PO (Purchase Order) related variables
+  creditPrice: number = 0;
+  poPrice: number = 0;
 
   ngOnInit(): void {
     this.getCartItems();
@@ -116,6 +128,13 @@ export class CheckoutComponent implements AfterViewInit {
       state: ['', Validators.required],
       zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
     });
+
+    this.purchaseOrderForm = this.fb.group({
+      order_number: ['', Validators.required],
+      po_file: [null, Validators.required]
+    })
+
+    this.paymentOption = new FormControl('credit', Validators.required);
   }
 
   getCartItems() {
@@ -123,6 +142,9 @@ export class CheckoutComponent implements AfterViewInit {
       this.cartItems = res.data;
       this.subTotal = res.total_price;
       this.quantity = res.count;
+      this.shippingFee = this.checkoutService.calculateShippingFee(this.subTotal);
+      this.totalPrice = this.subTotal + this.shippingFee;
+      this.creditPrice = this.totalPrice;
     })
   }
 
@@ -212,7 +234,14 @@ export class CheckoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    paypal_sdk.Buttons(
+    this.renderPayPalButton();
+  }
+
+  renderPayPalButton() {
+    if (this.paypalButton) {
+      this.paypalButton.close();
+    }
+    this.paypalButton = paypal_sdk.Buttons(
       {
         // Call your server to set up the transaction
         createOrder: this.createOrderCallback,
@@ -232,7 +261,7 @@ export class CheckoutComponent implements AfterViewInit {
           "Content-Type": "application/json",
           "Accept": "application/json" // Optional, but can help indicate that you expect a JSON response
         },
-        body: JSON.stringify({ total_price: this.subTotal })
+        body: JSON.stringify({ total_price: this.creditPrice })
         // body: JSON.stringify({ total_price: this.subTotal + this.taxAmount })
       }
     )
@@ -261,7 +290,7 @@ export class CheckoutComponent implements AfterViewInit {
         discount_code: this.discountCode,
         subtotal: this.subTotal,
         tax_amount: this.taxAmount,
-        shipping_amount: 0,
+        shipping_amount: this.shippingFee,
       })
     }).then(function (res) {
       return res.json();
@@ -348,6 +377,47 @@ export class CheckoutComponent implements AfterViewInit {
     }
   }
 
+  checkoutOrder = () => {
+    if (this.paymentOption.valid && this.totalPrice > 0) {
+      this.paymentErrorMsg = '';
+
+      if (this.paymentOption.value === 'credit') {
+        this.submitCardField();
+      }
+
+      else if (this.purchaseOrderForm.valid && (this.paymentOption.value === 'po' || this.paymentOption.value === 'split')) {
+        const po_data = {
+          order_number: this.purchaseOrderForm.controls['order_number'].value,
+          po_file: this.purchaseOrderForm.controls['po_file'].value,
+          cart: this.cartItems,
+          quantity: this.quantity,
+          subtotal: this.subTotal,
+          shipping_amount: this.shippingFee,
+          tax_amount: this.taxAmount,
+          total_price: this.totalPrice,
+          address: {
+            address_line_1: this.shippingForm.controls["address"].value,
+            city: this.shippingForm.controls["city"].value,
+            state: this.shippingForm.controls["state"].value,
+            zipcode: this.shippingForm.controls["zipCode"].value
+          },
+          credit_price: this.creditPrice,
+          po_price: this.poPrice
+        }
+        this.checkoutService.payWithPurchaseOrder(po_data).subscribe((res) => { });
+
+        if (this.paymentOption.value === 'split' && this.totalPrice > 1000) {
+          this.submitCardField();
+        }
+      }
+
+      else {
+        this.paymentErrorMsg = 'An error has occurred. Please make sure to fill in all required fields.';
+      }
+
+    }
+  }
+
   submitCardField = () => {
     this.isLoading = true;
     this.cardField.submit()
@@ -375,6 +445,30 @@ export class CheckoutComponent implements AfterViewInit {
         this.isLoading = false;
       });
 
+  }
+
+  onPOFileUpload = (event: any) => {
+    const file = event.target.files[0];
+    this.purchaseOrderForm.controls['po_file'].setValue(file);
+  }
+
+  updatePricingForCredit() {
+    this.creditPrice = this.totalPrice;
+    this.renderPayPalButton();
+  }
+
+  updatePricingForPO() {
+    this.poPrice = this.totalPrice;
+    this.creditPrice = 0;
+    this.renderPayPalButton();
+  }
+
+  updatePricingForPOSplit() {
+    this.poPrice = Number((this.totalPrice / 2).toFixed(2));
+    this.creditPrice = this.totalPrice - this.poPrice;
+    this.renderPayPalButton();
+
+    console.log(this.poPrice, this.creditPrice);
   }
 
 }
