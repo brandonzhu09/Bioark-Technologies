@@ -152,59 +152,78 @@ def capture_order(request, order_id):
 
 @api_view(['POST'])
 def pay_with_purchase_order(request):
-    order_number = request.data.get("order_number")
-    po_file = request.FILES.get("po_file")
-    cart = request.data.get("cart")
-    quantity = request.data.get("quantity")
-    subtotal = request.data.get("subtotal")
-    shipping_amount = request.data.get("shipping_amount")
-    tax_amount = request.data.get("tax_amount", 0)
-    tax_amount = 0 if tax_amount == None else tax_amount
-    total_price = request.data.get("total_price")
-    address = json.loads(request.data.get("address"))
-    credit_price = request.data.get("credit_price")
-    po_price = request.data.get("po_price")
-
-    payment_source = 'Paid with Purchase Order (PO)'
-
-    # Ensure payment token is unique
-    payment_token = secrets.token_urlsafe(8).upper()
-    while Order.objects.filter(payment_token=payment_token).exists():
-        payment_token = secrets.token_urlsafe(8).upper()
-    
-    address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
-                                                        city=address["city"],
-                                                        state=address["state"],
-                                                        zipcode=address["zipcode"])
-
-    # Create order dictionary
-    order_data = {
-        "payment_token": payment_token,
-        "subtotal": subtotal,
-        "shipping_amount": shipping_amount,
-        "tax_amount": tax_amount,
-        "payment_source": payment_source,
-        "total_price": total_price,
-        "quantity": quantity,
-        "total_paid": credit_price,
-        "minimum_payment": calculate_minimum_payment(total_price),
-        "shipping_address": address_obj,
-        "billing_address": address_obj,
-        "user": request.user,
-        "invoice_amount": po_price,
-    }
-
-    order_obj = Order.objects.create(**order_data)
-        
-    # Create order items
     try:
-        create_order_items(cart, order_obj)
-    except WorkSchedule.DoesNotExist or Exception as e:
-        # Handle exception if work schedule does not exist
-        logging.error(f"Error creating order items: {str(e)}")
-        return Response({"error": "Failed to create order items."}, status=status.HTTP_400_BAD_REQUEST)
+        order_number = request.data.get("order_number")
+        po_file = request.FILES.get("po_file")
+        cart = json.loads(request.data.get("cart"))
+        quantity = int(request.data.get("quantity"))
+        subtotal = int(request.data.get("subtotal"))
+        shipping_amount = int(request.data.get("shipping_amount"))
+        tax_amount = int(request.data.get("tax_amount", 0))
+        tax_amount = 0 if tax_amount == None else tax_amount
+        total_price = int(request.data.get("total_price"))
+        address = json.loads(request.data.get("address"))
+        credit_price = int(request.data.get("credit_price"))
+        po_price = int(request.data.get("po_price"))
 
-    return Response({"message": "Payment successful."}, status=status.HTTP_200_OK)
+        payment_source = 'Paid with Purchase Order (PO)'
+        payment_token = generate_payment_token()
+        invoice_number = "IV-" + payment_token
+        receipt_number = "RT-" + payment_token
+
+        address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
+                                                            city=address["city"],
+                                                            state=address["state"],
+                                                            zipcode=address["zipcode"])
+
+        # Create invoice object
+        invoice_data = {
+            "order_number": payment_token,
+            "user": request.user,
+            "billing_date": datetime.now() + timedelta(days=30),
+            "invoice_number": invoice_number,
+            "invoice_due": po_price,
+            "po_file": po_file,
+            "po_number": order_number,
+            "po_address": address_obj,
+            "billing_address": address_obj,
+            "shipping_address": address_obj,
+            "receipt_number": receipt_number
+        }
+        invoice_obj = Invoice.objects.create(**invoice_data)
+
+        # Create order object
+        order_data = {
+            "payment_token": payment_token,
+            "subtotal": subtotal,
+            "shipping_amount": shipping_amount,
+            "tax_amount": tax_amount,
+            "total_price": total_price,
+            "total_paid": credit_price,
+            "minimum_payment": calculate_minimum_payment(total_price),
+            "payment_source": payment_source,
+            "quantity": quantity,
+            "shipping_address": address_obj,
+            "billing_address": address_obj,
+            "user": request.user,
+            "invoice": invoice_obj,
+            "invoice_number": invoice_number,
+            "invoice_amount": po_price,
+            "invoice_maximum_amount": calculate_maximum_invoice(total_price),
+            "po_number": order_number,
+            "po_address": address_obj,
+            "receipt_number": receipt_number
+        }
+        order_obj = Order.objects.create(**order_data)
+
+        # Create order items
+        create_order_items(cart, order_obj)
+    
+    except Exception as e:
+        raise e
+        return Response({"error": "An unexpected error has occurred. Please try again."}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({"message": "Payment successful.", "payment_token": payment_token}, status=status.HTTP_200_OK)
 
 
 class CartAPI(APIView):
@@ -321,6 +340,15 @@ def calculate_maximum_invoice(total_price):
         return total_price
     elif total_price > 1000:
         return "{:.2f}".format(total_price / 2)
+
+
+def generate_payment_token():
+    # Ensure payment token is unique
+    payment_token = secrets.token_urlsafe(8).upper()
+    while Order.objects.filter(payment_token=payment_token).exists():
+        payment_token = secrets.token_urlsafe(8).upper()
+    
+    return payment_token
 
 
 def get_order_class(product_sku):

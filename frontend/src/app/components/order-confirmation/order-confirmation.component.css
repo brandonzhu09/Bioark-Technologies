@@ -1,12 +1,13 @@
-.container {
-    max-width: 65%;
-    padding-top: 20px;
+.order-confirmation-container {
+    width: 65%;
+    margin: auto;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: start;
+    margin-top: 20px;
 }
 
 .header-text {
@@ -38,6 +39,7 @@ h1 {
     padding: 10px;
     background: #fff;
     margin: 5px;
+    margin-bottom: 20px;
 }
 
 .info-container {
@@ -49,4 +51,11 @@ h1 {
 .total {
     font-size: 18px;
     font-weight: bold;
+}
+
+@media (max-width: 1300px) {
+    .order-confirmation-container {
+        width: 100%;
+        padding: 0 20px;
+    }
 }

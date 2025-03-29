@@ -65,6 +65,7 @@ export class StepperComponent {
     ];
     geneTable: any[] = [];
     initialGeneSymbol: string = '';
+    description: string = '';
 
     selectedTargetSequence: string | null | undefined = '';
 
@@ -151,6 +152,7 @@ export class StepperComponent {
             this.addErrorMessage('Please complete all required fields.');
             return false;
         }
+        this.description = '';
         return true;
     }
 
@@ -420,5 +422,9 @@ export class StepperComponent {
 
     goToStep(step: number) {
         this.selectedStep = step;
+    }
+
+    updateDescription(description: string) {
+        this.description = description;
     }
 }

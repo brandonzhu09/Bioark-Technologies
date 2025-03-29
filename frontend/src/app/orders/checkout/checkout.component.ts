@@ -404,11 +404,22 @@ export class CheckoutComponent implements AfterViewInit {
           credit_price: this.creditPrice,
           po_price: this.poPrice
         }
-        this.checkoutService.payWithPurchaseOrder(po_data).subscribe((res) => { });
 
-        if (this.paymentOption.value === 'split' && this.totalPrice > 1000) {
-          this.submitCardField();
-        }
+        let payment_token = '';
+        this.checkoutService.payWithPurchaseOrder(po_data).subscribe((res) => {
+          payment_token = res.payment_token;
+          if (this.paymentOption.value === 'split' && this.totalPrice > 1000) {
+            // this.submitCardField();
+          }
+          else if (this.paymentOption.value === 'po') {
+            // Redirect to order confirmation page
+            this.cartService.clearCart().subscribe(() => {
+              this.router.navigate(['/order-confirmation', payment_token]).then(() => {
+                window.location.reload();
+              });
+            });
+          }
+        });
       }
 
       else {

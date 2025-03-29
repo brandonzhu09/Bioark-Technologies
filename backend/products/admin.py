@@ -61,6 +61,10 @@ class DesignLibraryAdmin(ImportExportActionModelAdmin):
 class FunctionTypeAdmin(admin.ModelAdmin):
     list_display = ('function_type_id', 'function_type_symbol', 'function_type_name')
 
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    list_display = ('category_name', 'description')
+
 @admin.register(StructureType)
 class StructureTypeAdmin(admin.ModelAdmin):
     list_display = ('structure_type_id', 'structure_type_symbol', 'structure_type_name')

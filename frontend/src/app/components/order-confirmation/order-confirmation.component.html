@@ -1,4 +1,4 @@
-<div class="container">
+<div class="order-confirmation-container">
     <div class="header">
         <div class="header-text">
             <h1>Thank you for your order #{{ token }}</h1>
@@ -37,10 +37,12 @@
         <div class="payment-info">
             <h2>Payment Type</h2>
             <hr />
-            @if (payment_source !== 'Made with PayPal') {
-            <p>{{ payment_source }} ending in {{ last_digits }}</p>
-            } @else {
+            @if (payment_source === 'Made with PayPal') {
             <p>Paid with PayPal</p>
+            } @else if (payment_source === 'Paid with Purchase Order (PO)') {
+            <p>Paid with Purchase Order</p>
+            } @else {
+            <p>{{ payment_source }} ending in {{ last_digits }}</p>
             }
         </div>
 

@@ -19,6 +19,9 @@ class OrderAdmin(admin.ModelAdmin):
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
 
+@admin.register(Invoice)
+class InvoiceAdmin(admin.ModelAdmin):
+    list_display = ('order_number', 'user', 'order', 'billing_date', 'invoice_due', 'po_file', 'po_number', 'is_paid', 'invoice_payment')
 
 @admin.register(CloningCRISPRItem)
 class CloningCRISPROrderItemAdmin(admin.ModelAdmin):

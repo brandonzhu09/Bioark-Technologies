@@ -16,7 +16,7 @@
   justify-content: space-between;
   align-items: center;
   width: 65%;
-  margin: 0 auto;
+  margin: auto;
 }
 
 .left-group {
@@ -179,17 +179,17 @@ nav ul {
   transition: color 0.3s ease;
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1650px) {
 
   .navbar-content {
-    width: 87%;
+    width: 90%;
   }
 
 
 
 }
 
-@media screen and (max-width: 964px) {
+@media screen and (max-width: 1240px) {
   .contact-info {
     flex-direction: column;
     gap: 10px;

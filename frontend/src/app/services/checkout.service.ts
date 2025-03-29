@@ -18,8 +18,8 @@ export class CheckoutService {
     const formData = new FormData();
     formData.append('order_number', data.order_number);
     formData.append('po_file', data.po_file, data.po_file.name);
-    formData.append('cart', data.cart);
-    formData.append('quantity', data.quantity.toString());
+    formData.append('cart', JSON.stringify(data.cart));
+    formData.append('quantity', data.quantity);
     formData.append('subtotal', data.subtotal);
     formData.append('shipping_amount', data.shipping_amount);
     formData.append('tax_amount', data.tax_amount);
@@ -27,7 +27,7 @@ export class CheckoutService {
     formData.append('address', JSON.stringify(data.address));
     formData.append('credit_price', data.credit_price);
     formData.append('po_price', data.po_price);
-    console.log(data.address)
+    console.log(JSON.stringify(data.cart))
 
     return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/pay-with-purchase-order/`, formData, {
       headers: headers,

@@ -312,21 +312,20 @@ td {
 
 .info-image {
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
-
 
 @media (max-width: 1624px) {
     .main-container {
-        width: 100%;
+        width: 90%;
     }
 
     .product-sidebar {
-        width: 25%;
+        width: 20%;
     }
 
     .main-content {
-        width: 75%;
+        width: 70%;
     }
 
 }

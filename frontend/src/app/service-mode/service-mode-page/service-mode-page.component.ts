@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InterfaceService } from '../../services/interface.service';
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'app-service-mode-page',
@@ -12,7 +13,7 @@ export class ServiceModePageComponent {
   url: string = '';
   title: string = '';
   content: string = '';
-  raw_html: string = '';
+  imageUrl: string = '';
 
   constructor(private route: ActivatedRoute, private interfaceService: InterfaceService) { }
 
@@ -27,7 +28,11 @@ export class ServiceModePageComponent {
     this.interfaceService.getServicePage(this.url).subscribe(res => {
       this.title = res.title;
       this.content = res.content;
-      this.raw_html = res.raw_html;
+      this.imageUrl = res.image;
     })
+  }
+
+  get fullImageUrl(): string {
+    return environment.apiBaseUrl + this.imageUrl;
   }
 }

@@ -31,18 +31,19 @@ class Invoice(models.Model):
     service_finished = models.BooleanField(default=False)
     invoice_sent = models.BooleanField(default=False)
     delivery_date = models.DateField(null=True, blank=True)
-    billing_date = models.DateField(null=True, blank=True) 
-    invoice_number = models.CharField(blank=True, null=True)
-    invoice_due = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
-    po_file = models.FileField(upload_to='po_files/', blank=True, null=True)
-    po_number = models.CharField(blank=True, null=True)
+    billing_date = models.DateField() 
+    invoice_number = models.CharField()
+    invoice_due = models.DecimalField(decimal_places=2, max_digits=10)
+    po_file = models.FileField(upload_to='po_files/')
+    po_number = models.CharField()
     po_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="po_invoices")
     billing_address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name="billing_invoices")
     shipping_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="shipping_invoices")
     # credit billing
     is_paid = models.BooleanField(default=False)
-    receipt_number = models.CharField(blank=True, null=True)
-    invoice_payment = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+    payment_date = models.DateTimeField(null=True, blank=True)
+    receipt_number = models.CharField()
+    invoice_payment = models.DecimalField(decimal_places=2, max_digits=10, default=0)
 
     class Meta:
         db_table = 'invoices'
@@ -74,11 +75,10 @@ class Order(models.Model):
     notes = models.CharField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     # PO billing information
-    invoice = models.ForeignKey(Invoice, on_delete=models.PROTECT, blank=True, null=True)
+    invoice = models.OneToOneField(Invoice, on_delete=models.PROTECT, blank=True, null=True)
     invoice_number = models.CharField(blank=True, null=True)
     invoice_amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
     invoice_maximum_amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
-    po_file = models.FileField(upload_to='po_files/', blank=True, null=True)
     po_number = models.CharField(blank=True, null=True)
     po_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="po_orders", blank=True, null=True)
     receipt_number = models.CharField(blank=True, null=True)
@@ -251,8 +251,9 @@ class Cart(object):
         return sum(CartItem.objects.get(id=item_id).price * CartItem.objects.get(id=item_id).quantity for item_id in self.cart)
 
     def clear(self):
-        # remove cart from session
-        del self.session[settings.CART_SESSION_ID]
+        # clear cart items in session
+        cart = self.session[settings.CART_SESSION_ID] = []
+        self.cart = cart
         self.save()
 
 class WorkSchedule(models.Model):
