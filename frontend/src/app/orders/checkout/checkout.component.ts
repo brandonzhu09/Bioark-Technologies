@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,7 +17,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environment/environment';
 import { CheckoutService } from '../../services/checkout.service';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CommonModule } from '@angular/common';
 
@@ -46,11 +46,12 @@ interface OrderSummary {
     MatProgressSpinnerModule, PrimaryButtonComponent, MatTabsModule, MatButtonToggleModule, CommonModule],
 })
 export class CheckoutComponent implements AfterViewInit {
+  @ViewChild('paymentTabGroup') paymentTabGroup!: MatTabGroup;
+
   signupForm: FormGroup;
   shippingForm: FormGroup;
   billingAddressForm: FormGroup;
   purchaseOrderForm: FormGroup;
-  paymentOption: FormControl;
   isSignupPanelOpen = false;
   isSignupPanelDisabled = true;
   isShippingPanelOpen = true;
@@ -135,8 +136,6 @@ export class CheckoutComponent implements AfterViewInit {
       order_number: ['', Validators.required],
       po_file: [null, Validators.required]
     })
-
-    this.paymentOption = new FormControl('credit', Validators.required);
   }
 
   getCartItems() {
@@ -380,14 +379,14 @@ export class CheckoutComponent implements AfterViewInit {
   }
 
   checkoutOrder = () => {
-    if (this.paymentOption.valid && this.totalPrice > 0) {
+    if (this.totalPrice > 0) {
       this.paymentErrorMsg = '';
 
-      if (this.paymentOption.value === 'credit') {
+      if (this.paymentTabGroup.selectedIndex === 0) {
         this.submitCardField();
       }
 
-      else if (this.purchaseOrderForm.valid && (this.paymentOption.value === 'po' || this.paymentOption.value === 'split')) {
+      else if (this.purchaseOrderForm.valid && this.paymentTabGroup.selectedIndex === 1) {
         const po_data = {
           order_number: this.purchaseOrderForm.controls['order_number'].value,
           po_file: this.purchaseOrderForm.controls['po_file'].value,
@@ -410,10 +409,10 @@ export class CheckoutComponent implements AfterViewInit {
         let payment_token = '';
         this.checkoutService.payWithPurchaseOrder(po_data).subscribe((res) => {
           payment_token = res.payment_token;
-          if (this.paymentOption.value === 'split' && this.totalPrice > 1000) {
+          if (this.totalPrice >= 1000) {
             // this.submitCardField();
           }
-          else if (this.paymentOption.value === 'po') {
+          else if (this.totalPrice >= 100 && this.totalPrice < 1000) {
             // Redirect to order confirmation page
             this.cartService.clearCart().subscribe(() => {
               this.router.navigate(['/order-confirmation', payment_token]).then(() => {
@@ -467,12 +466,14 @@ export class CheckoutComponent implements AfterViewInit {
 
   updatePricingForCredit() {
     this.creditPrice = this.totalPrice;
+    console.log(this.creditPrice);
     this.renderPayPalButton();
   }
 
   updatePricingForPO() {
     this.poPrice = this.totalPrice;
     this.creditPrice = 0;
+    console.log(this.creditPrice, this.poPrice);
     this.renderPayPalButton();
   }
 
@@ -480,6 +481,19 @@ export class CheckoutComponent implements AfterViewInit {
     this.poPrice = Number((this.totalPrice / 2).toFixed(2));
     this.creditPrice = this.totalPrice - this.poPrice;
     this.renderPayPalButton();
+  }
+
+  onPaymentTabChange(selectedIndex: number) {
+    if (selectedIndex === 0) {
+      this.updatePricingForCredit();
+    } else if (selectedIndex === 1) {
+      if (this.totalPrice >= 100 && this.totalPrice < 1000) {
+        this.updatePricingForPO();
+      }
+      else if (this.totalPrice >= 1000) {
+        this.updatePricingForPOSplit();
+      }
+    }
   }
 
 }

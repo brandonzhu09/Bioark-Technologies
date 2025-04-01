@@ -230,7 +230,7 @@ def pay_with_purchase_order(request):
 def add_quote_to_cart(request, quote_number):
     try:
         if not request.user.is_authenticated:
-            return Response({"error": "User not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"detail": "Please login before applying the quote."}, status=status.HTTP_401_UNAUTHORIZED)
 
         cart = Cart(request)
         quote = Quote.objects.get(quote_number=quote_number, user=request.user)
@@ -250,10 +250,12 @@ def add_quote_to_cart(request, quote_number):
 
         cart.save()
 
+        print(list(cart.__iter__()))
+
         return Response({"message": "Quote added to cart successfully.", "cart": list(cart.__iter__())}, status=status.HTTP_200_OK)
 
     except Quote.DoesNotExist:
-        return Response({"detail": "Quote not found."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"detail": "Quote not found. Make sure to check for typos and that you are logged in the account where you received the quote."}, status=status.HTTP_404_NOT_FOUND)
 
 
 class CartAPI(APIView):
@@ -305,53 +307,29 @@ class CartAPI(APIView):
 
 # Helper methods
 def create_order_items(cart, order_obj):
+    model_fields = [field.name for field in OrderItem._meta.get_fields()]
+
     try:
         for item in cart:
-            OrderItem.objects.create(product_sku=item['product_sku'],
+            unit_price = item['price']
+            item = {key: value for key, value in item.items() if key in model_fields}
+            OrderItem.objects.create(unit_price=unit_price,
                                     order_class=get_order_class(item['product_sku']),
-                                    product_name=item['product_name'],
-                                    ready_status=item['ready_status'],
-                                    unit_price=item['price'],
-                                    total_price=float(item['price']) * item['quantity'],
-                                    unit_size=item['unit_size'],
-                                    quantity=item['quantity'],
-                                    url=item['url'],
-                                    discount_code=item['discount_code'],
+                                    total_price=float(unit_price) * item['quantity'],
                                     order=order_obj,
                                     work_period=get_work_period(item['product_sku'], item['ready_status']),
                                     est_delivery_date=get_est_delivery_date(item['product_sku'], item['ready_status']),
-                                    function_type_name=item['function_type_name'],
-                                    structure_type_name=item['structure_type_name'],
-                                    promoter_name=item['promoter_name'],
-                                    protein_tag_name=item['protein_tag_name'],
-                                    fluorescene_marker_name=item['fluorescene_marker_name'],
-                                    selection_marker_name=item['selection_marker_name'],
-                                    bacterial_marker_name=item['bacterial_marker_name'],
-                                    target_sequence=item['target_sequence'],
-                                    delivery_format_name=item['delivery_format_name'])
+                                    **item)
 
     except WorkSchedule.DoesNotExist or Exception:
         for item in cart:
-            OrderItem.objects.create(product_sku=item['product_sku'],
+            unit_price = item['price']
+            item = {key: value for key, value in item.items() if key in model_fields}
+            OrderItem.objects.create(unit_price=unit_price,
                                     order_class=get_order_class(item['product_sku']),
-                                    product_name=item['product_name'],
-                                    ready_status=item['ready_status'],
-                                    unit_price=item['price'],
-                                    total_price=float(item['price']) * item['quantity'],
-                                    unit_size=item['unit_size'],
-                                    quantity=item['quantity'],
-                                    url=item['url'],
-                                    discount_code=item['discount_code'],
+                                    total_price=float(unit_price) * item['quantity'],
                                     order=order_obj,
-                                    function_type_name=item['function_type_name'],
-                                    structure_type_name=item['structure_type_name'],
-                                    promoter_name=item['promoter_name'],
-                                    protein_tag_name=item['protein_tag_name'],
-                                    fluorescene_marker_name=item['fluorescene_marker_name'],
-                                    selection_marker_name=item['selection_marker_name'],
-                                    bacterial_marker_name=item['bacterial_marker_name'],
-                                    target_sequence=item['target_sequence'],
-                                    delivery_format_name=item['delivery_format_name'])
+                                    **item)
 
 
 def calculate_minimum_payment(total_price):

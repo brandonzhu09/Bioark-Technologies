@@ -196,7 +196,10 @@
                     <mat-panel-title> 2. Billing Information </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <mat-tab-group>
+                <mat-tab-group
+                    #paymentTabGroup
+                    (selectedIndexChange)="onPaymentTabChange($event)"
+                >
                     <mat-tab>
                         <ng-template mat-tab-label class="tab-label">
                             <i
@@ -277,6 +280,22 @@
                             ></i>
                             Purchase Order (PO)
                         </ng-template>
+                        <div
+                            *ngIf="totalPrice >= 1000"
+                            class="alert alert-primary mt-2"
+                            role="alert"
+                        >
+                            Because your order is $1000 or over, you can must
+                            pay a 50% upfront amount of
+                            <span class="font-weight-bold"
+                                >${{ creditPrice }}</span
+                            >
+                            with credit and 50%
+                            <span class="font-weight-bold"
+                                >(${{ poPrice }})</span
+                            >
+                            with Purchase Order (PO).
+                        </div>
                         <form [formGroup]="purchaseOrderForm" class="mt-4">
                             <mat-form-field
                                 appearance="outline"
@@ -302,32 +321,25 @@
                                 />
                             </div>
                         </form>
+                        @if (totalPrice >= 1000) {
+                        <div
+                            id="paypal-button-container"
+                            class="payment-container mt-4"
+                        ></div>
+
+                        <div class="payment-divider">
+                            <span class="payment-divider-text">or</span>
+                        </div>
+                        <div id="card-form" class="card_container">
+                            <div id="card-name-field-container"></div>
+                            <div id="card-number-field-container"></div>
+                            <div id="card-expiry-field-container"></div>
+                            <div id="card-cvv-field-container"></div>
+                        </div>
+                        }
                     </mat-tab>
                     }
                 </mat-tab-group>
-                <mat-button-toggle-group
-                    class="full-width d-flex"
-                    [formControl]="paymentOption"
-                >
-                    <mat-button-toggle value="credit" class="flex-fill"
-                        >Pay with Credit Card</mat-button-toggle
-                    >
-                    @if (totalPrice >= 100 && totalPrice <= 1000) {
-                    <mat-button-toggle
-                        value="po"
-                        class="flex-fill"
-                        (click)="updatePricingForPO()"
-                        >Pay with Purchase Order (PO)</mat-button-toggle
-                    >
-                    } @if (totalPrice > 1000) {
-                    <mat-button-toggle
-                        value="split"
-                        class="flex-fill"
-                        (click)="updatePricingForPOSplit()"
-                        >Pay 50% Credit 50% PO</mat-button-toggle
-                    >
-                    }
-                </mat-button-toggle-group>
                 <button
                     mat-raised-button
                     class="primary-button"
@@ -380,21 +392,6 @@
                 }
             </div> -->
             <hr class="solid" />
-            @if (paymentOption.value === 'po' || paymentOption.value ===
-            'split') {
-            <div class="order-item order-total">
-                <span class="order-label">PO Payment</span>
-                <span class="order-value"
-                    >${{ poPrice | number : "1.2-2" }}</span
-                >
-            </div>
-            <div class="order-item order-total">
-                <span class="order-label">Amount Due</span>
-                <span class="order-value"
-                    >${{ creditPrice | number : "1.2-2" }}</span
-                >
-            </div>
-            } @else {
             <div class="order-item order-total">
                 <span class="order-label">Total</span>
                 <span class="order-value"
@@ -402,7 +399,6 @@
                 >
                 <!-- <span class="order-value">${{ subTotal + taxAmount }}</span> -->
             </div>
-            }
         </div>
     </div>
     @if (isLoading) {

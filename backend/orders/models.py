@@ -97,30 +97,32 @@ class OrderItem(models.Model):
         ('ready_for_delivery', 'Ready For Delivery'),
         ('arrived', 'Arrived'),
     ]
+    # required fields
     order_item_id = models.AutoField(primary_key=True)
     order_class = models.CharField()
-    work_period = models.CharField(blank=True, null=True)
-    est_delivery_date = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
     order_placed_date = models.DateTimeField(default=datetime.now)
+    product_sku = models.CharField(max_length=30)
+    product_name = models.CharField(default="Product Name")
+    unit_price = models.DecimalField(decimal_places=2, max_digits=10)
+    total_price = models.DecimalField(decimal_places=2, max_digits=10)
+    unit_size = models.CharField()
+    quantity = models.IntegerField(default=0)
+    url = models.CharField()
+    # optional fields
+    work_period = models.CharField(blank=True, null=True)
+    est_delivery_date = models.DateField(blank=True, null=True)
     order_process_date = models.DateTimeField(blank=True, null=True)
     shipping_date = models.DateField(null=True, blank=True)
     delivery_date = models.DateField(null=True, blank=True)
     billing_date = models.DateField(null=True, blank=True)
     transaction_status = models.CharField(blank=True)
-    ready_status = models.CharField()
+    ready_status = models.CharField(blank=True, null=True)
     fulfilled = models.BooleanField(default=False)
     refunded = models.BooleanField(default=False)
     paid = models.BooleanField(default=True)
-    product_sku = models.CharField(max_length=30)
-    product_name = models.CharField(default="Product Name")
-    unit_price = models.DecimalField(decimal_places=2, max_digits=10)
-    total_price = models.DecimalField(decimal_places=2, max_digits=10)
     adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
-    unit_size = models.CharField()
-    quantity = models.IntegerField(default=0)
-    discount_code = models.CharField(blank=True, max_length=20)
-    url = models.CharField()
+    discount_code = models.CharField(blank=True, null=True, max_length=20)
     # attribute names
     function_type_name = models.CharField(blank=True, null=True)
     structure_type_name = models.CharField(blank=True, null=True)
@@ -218,6 +220,7 @@ class Cart(object):
         Remove a product from the cart
         """
         if product_id in self.cart:
+            CartItem.objects.get(id=product_id).delete()
             self.cart.remove(product_id)
             self.save()
     
@@ -252,6 +255,7 @@ class Cart(object):
 
     def clear(self):
         # clear cart items in session
+        CartItem.objects.filter(session_key=self.session.session_key).delete()
         cart = self.session[settings.CART_SESSION_ID] = []
         self.cart = cart
         self.save()
