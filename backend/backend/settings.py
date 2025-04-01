@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-hytyud87s@4*51a3$=@%s^h7mtj81pl9t--@9)3^1@(d@8lvip
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if debug_flag == "True" else False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '127.0.0.1:4200', 'localhost:4200', 'https://bioarktech.com', 'https://www.bioarktech.com', 'api.bioarktech.com', '18.205.216.234']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '127.0.0.1:4200', 'localhost:4200', 'https://bioarktech.com', 'https://www.bioarktech.com', 'api.bioarktech.com', '93.127.217.163']
 
 
 # Application definition

@@ -11,14 +11,18 @@ class Quote(models.Model):
     request_date = models.DateTimeField()
     quote_number = models.CharField()
     quote_file = models.FileField(upload_to='quote_files/')
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     shelf_status = models.BooleanField()
     quantity = models.IntegerField()
-    amount = models.CharField()
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    unit_price = models.DecimalField(decimal_places=2, max_digits=10)
+    unit_size = models.CharField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    price = models.DecimalField(decimal_places=2, max_digits=10)
     total_price = models.DecimalField(decimal_places=2, max_digits=10)
     work_period_days = models.IntegerField()
+    # additional fields required by cart
+    product_sku = models.CharField(max_length=30)
+    product_name = models.CharField(default="Product Name")
+    url = models.CharField()
 
     class Meta:
         db_table = 'quotes'
@@ -27,7 +31,7 @@ class Invoice(models.Model):
     order_placed_date = models.DateTimeField(default=datetime.now)
     order_number = models.CharField()
     order_status = models.CharField(default='Effective')
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     service_finished = models.BooleanField(default=False)
     invoice_sent = models.BooleanField(default=False)
     delivery_date = models.DateField(null=True, blank=True)
@@ -75,7 +79,7 @@ class Order(models.Model):
     notes = models.CharField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     # PO billing information
-    invoice = models.OneToOneField(Invoice, on_delete=models.PROTECT, blank=True, null=True)
+    invoice = models.OneToOneField(Invoice, on_delete=models.CASCADE, blank=True, null=True)
     invoice_number = models.CharField(blank=True, null=True)
     invoice_amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
     invoice_maximum_amount = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
@@ -152,17 +156,19 @@ class CloningRNAiItem(OrderItem):
 
 
 class CartItem(models.Model):
-    session_key = models.CharField(max_length=40, null=True, blank=True)
-    ready_status = models.CharField()
+    # required fields
     product_sku = models.CharField(max_length=30)
     product_name = models.CharField(default="Product Name")
     price = models.DecimalField(decimal_places=2, max_digits=10)
-    adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+    url = models.CharField()
     unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
-    discount_code = models.CharField(max_length=20)
-    url = models.CharField()
-    # attribute names
+    # optional fields
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+    ready_status = models.CharField(blank=True, null=True)
+    adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
+    discount_code = models.CharField(max_length=20, null=True, blank=True)
+    # attribute names - optional
     function_type_name = models.CharField()
     structure_type_name = models.CharField()
     promoter_name = models.CharField()
@@ -195,13 +201,7 @@ class Cart(object):
         """
         Add product to the cart or update its quantity
         """
-        cart_item, created = CartItem.objects.get_or_create(session_key=self.session.session_key, product_sku=cart_item['product_sku'], product_name=cart_item['product_name'],
-                                                            price=cart_item['price'], adjusted_price=cart_item['adjusted_price'], unit_size=cart_item['unit_size'], url=cart_item['url'], ready_status=cart_item['ready_status'],
-                                                            function_type_name=cart_item['function_type_name'], structure_type_name=cart_item['structure_type_name'],
-                                                            promoter_name=cart_item['promoter_name'], protein_tag_name=cart_item['protein_tag_name'],
-                                                            fluorescene_marker_name=cart_item['fluorescene_marker_name'], selection_marker_name=cart_item['selection_marker_name'],
-                                                            bacterial_marker_name=cart_item['bacterial_marker_name'], target_sequence=cart_item['target_sequence'],
-                                                            delivery_format_name=cart_item['delivery_format_name'])
+        cart_item, created = CartItem.objects.get_or_create(session_key=self.session.session_key, **cart_item)
         if created:
             self.cart.append(cart_item.id)
         

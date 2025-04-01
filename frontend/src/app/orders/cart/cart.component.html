@@ -28,6 +28,24 @@
             </div>
             }
 
+            <mat-form-field class="quote-input" appearance="outline">
+                <mat-label>Quote Number</mat-label>
+                <input
+                    matInput
+                    placeholder="Enter quote number"
+                    [formControl]="quoteNumber"
+                />
+                <button
+                    class="mr-2"
+                    mat-stroked-button
+                    matSuffix
+                    (click)="addQuoteToCart()"
+                    [disabled]="!quoteNumber.valid"
+                >
+                    Apply
+                </button>
+            </mat-form-field>
+
             <!-- <div class="promo-code">🏷️ Enter a promo code</div>
 
             <div class="note">📝 Add a note</div> -->
@@ -70,4 +88,5 @@
             <div class="secure-text">🔒 Secure Checkout</div>
         </div>
     </div>
+    <div *ngIf="errorMsg !== ''" class="error-message">{{ errorMsg }}</div>
 </body>

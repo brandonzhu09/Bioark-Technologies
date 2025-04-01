@@ -27,7 +27,6 @@ export class CheckoutService {
     formData.append('address', JSON.stringify(data.address));
     formData.append('credit_price', data.credit_price);
     formData.append('po_price', data.po_price);
-    console.log(JSON.stringify(data.cart))
 
     return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/pay-with-purchase-order/`, formData, {
       headers: headers,

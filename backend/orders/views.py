@@ -226,6 +226,36 @@ def pay_with_purchase_order(request):
     return Response({"message": "Payment successful.", "payment_token": payment_token}, status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+def add_quote_to_cart(request, quote_number):
+    try:
+        if not request.user.is_authenticated:
+            return Response({"error": "User not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        cart = Cart(request)
+        quote = Quote.objects.get(quote_number=quote_number, user=request.user)
+
+        cart_item = {
+            "product_sku": quote.product_sku,
+            "product_name": quote.product_name,
+            "price": quote.price,
+            "url": quote.url,
+            "unit_size": quote.unit_size
+        }
+        
+        cart.add(
+            cart_item=cart_item,
+            quantity=quote.quantity,
+        )
+
+        cart.save()
+
+        return Response({"message": "Quote added to cart successfully.", "cart": list(cart.__iter__())}, status=status.HTTP_200_OK)
+
+    except Quote.DoesNotExist:
+        return Response({"detail": "Quote not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
 class CartAPI(APIView):
     """
     Single API to handle cart operations

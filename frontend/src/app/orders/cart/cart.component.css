@@ -19,6 +19,8 @@ body {
     background: white;
     border-radius: 8px;
     padding: 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 h1,
@@ -73,6 +75,11 @@ h2 {
     color: #ef4444;
 }
 
+.quote-input {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
 .promo-code,
 .note {
     margin-top: 24px;
@@ -94,7 +101,7 @@ h2 {
 .order-row {
     display: flex;
     justify-content: space-between;
-    margin: 24px 0;
+    margin: 12px 0;
     color: #1f2937;
     font-size: 18px;
 }

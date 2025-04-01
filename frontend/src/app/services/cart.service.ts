@@ -151,4 +151,15 @@ export class CartService {
       this.setCartCount(currentCount - 1);
     }
   }
+
+  addQuoteToCart(quote_number: string) {
+    const headers = new HttpHeaders({
+      'X-CSRFToken': this.authService.getCookie('csrftoken') || ''
+    });
+
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/orders/cart/add-quote-to-cart/${quote_number}`, {}, {
+      headers: headers,
+      withCredentials: true
+    });
+  }
 }

@@ -153,7 +153,7 @@ def verify_email(request, token):
         else:
             return JsonResponse({"status": "not_activated", "message": "Email verified successfully, redirecting to set password page.", "email": user.email})
     else:
-        return JsonResponse({"status": "not_verified", "message": "Verification link expired or invalid."})
+        return JsonResponse({"status": "not_verified", "message": "Verification link expired or invalid."}, status=400)
 
 @require_POST
 def send_contact_form(request):
@@ -168,7 +168,7 @@ def send_contact_form(request):
     send_mail(
         subject=f"New message from Bioark Tech: {subject}",
         message=f"Customer: {last_name}, {first_name}\nEmail: {email}\nPhone: {phone}\n{message}",
-        from_email=settings.EMAIL_HOST_USER,
+        from_email="no-reply@bioarktech.com",
         recipient_list=["no-reply@bioarktech.com"],
     )
 

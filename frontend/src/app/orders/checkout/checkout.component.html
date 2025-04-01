@@ -384,16 +384,22 @@
             'split') {
             <div class="order-item order-total">
                 <span class="order-label">PO Payment</span>
-                <span class="order-value">${{ poPrice }}</span>
+                <span class="order-value"
+                    >${{ poPrice | number : "1.2-2" }}</span
+                >
             </div>
             <div class="order-item order-total">
                 <span class="order-label">Amount Due</span>
-                <span class="order-value">${{ creditPrice }}</span>
+                <span class="order-value"
+                    >${{ creditPrice | number : "1.2-2" }}</span
+                >
             </div>
             } @else {
             <div class="order-item order-total">
                 <span class="order-label">Total</span>
-                <span class="order-value">${{ totalPrice }}</span>
+                <span class="order-value"
+                    >${{ totalPrice | number : "1.2-2" }}</span
+                >
                 <!-- <span class="order-value">${{ subTotal + taxAmount }}</span> -->
             </div>
             }

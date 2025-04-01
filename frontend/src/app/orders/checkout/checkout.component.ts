@@ -19,6 +19,8 @@ import { environment } from '../../../environment/environment';
 import { CheckoutService } from '../../services/checkout.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { CommonModule } from '@angular/common';
+
 
 declare var paypal_sdk: any;
 
@@ -41,7 +43,7 @@ interface OrderSummary {
   standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule,
     MatError, MatExpansionModule, MatIconModule, MatDividerModule, MatSelectModule,
-    MatProgressSpinnerModule, PrimaryButtonComponent, MatTabsModule, MatButtonToggleModule],
+    MatProgressSpinnerModule, PrimaryButtonComponent, MatTabsModule, MatButtonToggleModule, CommonModule],
 })
 export class CheckoutComponent implements AfterViewInit {
   signupForm: FormGroup;
@@ -478,8 +480,6 @@ export class CheckoutComponent implements AfterViewInit {
     this.poPrice = Number((this.totalPrice / 2).toFixed(2));
     this.creditPrice = this.totalPrice - this.poPrice;
     this.renderPayPalButton();
-
-    console.log(this.poPrice, this.creditPrice);
   }
 
 }
