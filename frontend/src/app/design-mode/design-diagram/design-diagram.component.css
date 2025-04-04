@@ -1,9 +1,10 @@
 /* Summary Table for Structure Type Form */
 
-.container {
+.main-container {
     display: flex;
-    gap: 110px;
+    gap: 50px;
     height: 500px;
+    margin-right: 20px;
 }
 
 .lego-diagram {
@@ -13,62 +14,66 @@
 
 .lego-diagram img {
     margin-top: 30px;
-    margin-left: 100px;
+    margin-left: 50px;
     width: 350px;
 }
 
 .s1 {
     position: relative;
     bottom: 200px;
-    left: 455px;
+    left: 405px;
 }
 
 .s2 {
     position: relative;
-    bottom: 70px;
-    left: 410px;
+    bottom: 50px;
+    left: 320px;
 }
 
 .s3 {
     position: relative;
     bottom: 40px;
-    left: 250px;
+    left: 200px;
 }
 
 .s4 {
     position: relative;
     bottom: 110px;
-    left: 80px;
+    left: 30px;
 }
 
 .s5 {
     position: relative;
     bottom: 220px;
-    left: 60px;
+    left: 10px;
 }
 
 .s6 {
     position: relative;
     bottom: 480px;
-    left: 250px;
+    left: 200px;
 }
 
 .short-name {
+    margin-left: 20px;
     position: relative;
     bottom: 300px;
-    left: 200px;
+    /* left: 200px; */
+    left: 50%;
+    transform: translateX(-50%);
     color: red;
     font-size: 14px;
     font-weight: bold;
+    text-align: center;
 }
 
 .s-hidden {
     opacity: 0;
 }
 
-/* .table {
-    width: 800px;
-} */
+.table {
+    width: 1200px;
+}
 
 .header {
     background-color: #f9f9f9;

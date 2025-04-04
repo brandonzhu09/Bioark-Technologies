@@ -36,6 +36,7 @@ import { authGuard } from './guards/auth.guard';
 import { checkoutGuard } from './guards/checkout.guard';
 import { DesignDiagramComponent } from './design-mode/design-diagram/design-diagram.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
+import { InvoiceCheckoutComponent } from './orders/invoice-checkout/invoice-checkout.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -52,6 +53,7 @@ const routes: Routes = [
   { path: 'product/featured/:catalog-number', component: FeaturedProductPageComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [checkoutGuard] },
+  { path: 'checkout/:order-number', component: InvoiceCheckoutComponent },
   { path: 'testing', component: TestingComponent },
   { path: 'products/item/:product-sku', component: ProductSummaryComponent },
   { path: 'products/:url', component: ProductModePageComponent },

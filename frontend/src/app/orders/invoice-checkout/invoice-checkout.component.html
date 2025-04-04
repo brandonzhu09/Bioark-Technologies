@@ -1,0 +1,70 @@
+<div class="main-container">
+    <div class="checkout-container">
+        <mat-accordion>
+            <!-- Billing Panel -->
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> 1. Billing Information </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div
+                    id="paypal-button-container"
+                    class="payment-container mt-4"
+                ></div>
+
+                <div class="payment-divider">
+                    <span class="payment-divider-text">or</span>
+                </div>
+                <div id="card-form" class="card_container">
+                    <div id="card-name-field-container"></div>
+                    <div id="card-number-field-container"></div>
+                    <div id="card-expiry-field-container"></div>
+                    <div id="card-cvv-field-container"></div>
+                </div>
+
+                <button
+                    mat-raised-button
+                    class="primary-button"
+                    type="submit"
+                    (click)="checkoutOrder()"
+                >
+                    🔒 Pay ${{ totalPrice }}
+                </button>
+                @if (paymentErrorMsg !== '') {
+                <div class="error-message">
+                    {{ paymentErrorMsg }}
+                </div>
+                }
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="order-review-container full-width">
+        <h2 class="order-review-title">Order Review</h2>
+        <div class="order-summary">
+            <div class="order-item">
+                <span class="order-label">Invoice</span>
+                <span class="order-value">{{ invoiceNumber }}</span>
+            </div>
+            <div class="order-item">
+                <span class="order-label">Due Date</span>
+                <span class="order-value">{{ billingDate }}</span>
+            </div>
+            <div class="order-item">
+                <span class="order-label">Invoice Amount</span>
+                <span class="order-value">${{ totalPrice }}</span>
+            </div>
+            <hr class="solid" />
+            <div class="order-item order-total">
+                <span class="order-label">Total</span>
+                <span class="order-value"
+                    >${{ totalPrice | number : "1.2-2" }}</span
+                >
+            </div>
+        </div>
+    </div>
+    @if (isLoading) {
+    <div class="spinner-overlay">
+        <mat-spinner></mat-spinner>
+    </div>
+    }
+</div>

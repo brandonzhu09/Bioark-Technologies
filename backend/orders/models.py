@@ -44,6 +44,7 @@ class Invoice(models.Model):
     billing_address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True, related_name="billing_invoices")
     shipping_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="shipping_invoices")
     # credit billing
+    payment_token = models.CharField(blank=True, null=True)
     is_paid = models.BooleanField(default=False)
     payment_date = models.DateTimeField(null=True, blank=True)
     receipt_number = models.CharField()
@@ -73,7 +74,7 @@ class Order(models.Model):
     shipping_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="shipping_orders")
     billing_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="billing_orders")
     transaction_status = models.CharField(null=True, blank=True)
-    fulfilled = models.BooleanField(default=False)
+    fulfilled = models.BooleanField(default=True)
     refunded = models.BooleanField(default=False)
     paid = models.BooleanField(default=True)
     notes = models.CharField(blank=True, null=True)

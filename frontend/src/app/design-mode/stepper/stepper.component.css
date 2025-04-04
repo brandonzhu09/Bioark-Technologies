@@ -178,7 +178,8 @@ tbody td {
 
 .custom-stepper {
     width: 65%;
-    margin: auto;
+    margin: 0 auto;
+    background-color: white;
 }
 
 /* Customize the stepper header */

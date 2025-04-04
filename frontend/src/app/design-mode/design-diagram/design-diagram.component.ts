@@ -19,7 +19,7 @@ export class DesignDiagramComponent {
   @Input() fluoresceneMarkerName: string = '';
   @Input() selectionMarkerName: string = '';
   @Input() bacterialMarkerName: string = '';
-  @Input() targetSequence: string = 'XXXXXX';
+  @Input() targetSequence: string = '';
   @Input() geneSymbol: string = '';
   @Input() sku: string = '';
 
@@ -44,7 +44,7 @@ export class DesignDiagramComponent {
     if (this.functionTypeName !== '') {
       this.longName += this.functionTypeName + ' ';
     }
-    if (this.structureTypeName !== '' && this.structureTypeName !== null) {
+    if (this.structureTypeName !== '') {
       this.longName += this.structureTypeName + ' Kit';
     }
     if (this.geneSymbol !== '') {
@@ -60,6 +60,7 @@ export class DesignDiagramComponent {
 
       this.longName += "; " + res.product_sku;
     }
+    console.log(this.sku)
   }
 
   getShortName() {

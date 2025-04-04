@@ -106,15 +106,15 @@ export class StepperComponent {
             Validators.required,
             Validators.minLength(1),
         ]),
-        proteinTagName: new FormControl('None', [
+        proteinTagName: new FormControl('', [
             Validators.required,
             Validators.minLength(1),
         ]),
-        fluoresceneMarkerName: new FormControl('None', [
+        fluoresceneMarkerName: new FormControl('', [
             Validators.required,
             Validators.minLength(1),
         ]),
-        selectionMarkerName: new FormControl('None', [
+        selectionMarkerName: new FormControl('', [
             Validators.required,
             Validators.minLength(1),
         ]),
@@ -128,7 +128,7 @@ export class StepperComponent {
             Validators.required,
             Validators.minLength(1),
         ]),
-        targetSequence: new FormControl('XXXXXX', [
+        targetSequence: new FormControl('', [
             Validators.required,
             Validators.minLength(6),
         ]),
@@ -206,12 +206,12 @@ export class StepperComponent {
         }
         if (index <= 3) {
             this.fourthFormGroup.reset();
-            this.fourthFormGroup.patchValue({
-                promoterName: 'PCMV', // Restore the default value
-                proteinTagName: 'None',
-                fluoresceneMarkerName: 'None',
-                selectionMarkerName: 'None',
-            });
+            // this.fourthFormGroup.patchValue({
+            //     promoterName: 'PCMV', // Restore the default value
+            //     proteinTagName: 'None',
+            //     fluoresceneMarkerName: 'None',
+            //     selectionMarkerName: 'None',
+            // });
         }
         if (index <= 2) {
             this.thirdFormGroup.reset();
@@ -257,6 +257,10 @@ export class StepperComponent {
                     this.selectionMarkerCards = response.selection_markers;
                     this.fourthFormGroup.controls.bacterialMarkerName.setValue(
                         response.bacterial_markers[0].bacterial_marker_name)
+                    // set default values for protein tag, fluorescene marker, selection marker
+                    this.fourthFormGroup.controls.proteinTagName.setValue('None');
+                    this.fourthFormGroup.controls.fluoresceneMarkerName.setValue('None');
+                    this.fourthFormGroup.controls.selectionMarkerName.setValue('None');
                 });
         }
     }
@@ -311,10 +315,10 @@ export class StepperComponent {
     }
 
     getTargetSequence() {
-        if (this.fifthFormGroup.value.targetSequence == null || this.fifthFormGroup.value.targetSequence === "IGNORE") {
-            return "XXXXXX";
-        }
-        return this.fifthFormGroup.value.targetSequence;
+        // if (this.fifthFormGroup.value.targetSequence == null || this.fifthFormGroup.value.targetSequence === "IGNORE") {
+        //     return "XXXXXX";
+        // }
+        return this.fifthFormGroup.value.targetSequence!;
     }
 
     getGeneSymbol() {
@@ -327,7 +331,7 @@ export class StepperComponent {
         else if (this.fifthFormGroup.value.geneOption == "geneSearch" && this.fifthFormGroup.value.geneSymbol) {
             return this.fifthFormGroup.value.geneSymbol;
         }
-        return "Template";
+        return "";
     }
 
     // loadSummaryResources() {

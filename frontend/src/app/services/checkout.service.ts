@@ -40,4 +40,10 @@ export class CheckoutService {
     }
     return 43;
   }
+
+  getInvoice(order_number: string) {
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/orders/get-invoice/${order_number}`, {
+      withCredentials: true
+    });
+  }
 }

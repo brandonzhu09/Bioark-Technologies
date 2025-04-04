@@ -40,7 +40,7 @@ from paypalserversdk.api_helper import ApiHelper
 
 from .models import *
 from users.models import Address
-from .serializers import OrderItemSerializer
+from .serializers import *
 
 load_dotenv()
 
@@ -104,13 +104,20 @@ def capture_order(request, order_id):
         shipping_amount = body.get("shipping_amount")
         tax_amount = body.get("tax_amount", 0)
         tax_amount = 0 if tax_amount == None else tax_amount
+        order_number = body.get("order_number", None)
 
         order = orders_controller.orders_capture(
             {"id": order_id, "prefer": "return=representation"}
         )
         data = json.loads(ApiHelper.json_serialize(order.body))
+
         payment_token = data["purchase_units"][0]["payments"]["captures"][0]["id"]
         total_price = data["purchase_units"][0]["amount"]["value"]
+
+        # Check if order is an invoice repayment
+        if order_number:
+            invoice_repayment(request, order_number, payment_token)
+            return Response(data)
 
         payment_source = "Made with PayPal"
         last_digits = None
@@ -147,7 +154,7 @@ def capture_order(request, order_id):
     except Exception as e:
         return Response({"error": "Failed to capture order. Please try again."}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(json.loads(ApiHelper.json_serialize(order.body)))
+    return Response(data)
 
 
 @api_view(['POST'])
@@ -212,7 +219,8 @@ def pay_with_purchase_order(request):
             "invoice_maximum_amount": calculate_maximum_invoice(total_price),
             "po_number": order_number,
             "po_address": address_obj,
-            "receipt_number": receipt_number
+            "receipt_number": receipt_number,
+            "fulfilled": False
         }
         order_obj = Order.objects.create(**order_data)
 
@@ -250,12 +258,45 @@ def add_quote_to_cart(request, quote_number):
 
         cart.save()
 
-        print(list(cart.__iter__()))
-
         return Response({"message": "Quote added to cart successfully.", "cart": list(cart.__iter__())}, status=status.HTTP_200_OK)
 
     except Quote.DoesNotExist:
         return Response({"detail": "Quote not found. Make sure to check for typos and that you are logged in the account where you received the quote."}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def get_invoice(request, order_number):
+    try:
+        if not request.user.is_authenticated:
+            return Response({"detail": "Redirect to login page to proceed checkout."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        invoice = Order.objects.get(payment_token=order_number, user=request.user).invoice
+
+        if invoice.is_paid:
+            return Response({"detail": "Invoice has already been paid."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = InvoiceSerializer(invoice)
+
+        return Response({"invoice": serializer.data}, status=status.HTTP_200_OK)
+
+    except Invoice.DoesNotExist:
+        return Response({"detail": "Invoice not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
+def invoice_repayment(request, order_number, payment_token):
+    body = request.data
+    total_price = body.get("total_price")
+
+    order = Order.objects.get(order_number=order_number, user=request.user)
+    order.fulfilled = True
+    order.save()
+
+    invoice = order.invoice
+    invoice.is_paid = True
+    invoice.payment_date = datetime.now()
+    invoice.invoice_payment = total_price
+    invoice.payment_token = payment_token
+    invoice.save()
 
 
 class CartAPI(APIView):

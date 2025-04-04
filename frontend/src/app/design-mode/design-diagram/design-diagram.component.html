@@ -1,28 +1,26 @@
-<h1>{{ longName }}</h1>
-<div class="container">
+<h1 [ngClass]="{ 'pt-4 pl-4': sku === '' }">{{ longName }}</h1>
+<div class="main-container">
     <div class="lego-diagram">
         <img src="../../../assets/Lego-diagram.png" />
         <div class="s1" [ngClass]="{ 's-hidden': promoterName == '' }">
-            {{ promoterName }}
+            {{ promoterName == "" ? "X" : promoterName }}
         </div>
         <div class="s2" [ngClass]="{ 's-hidden': functionTypeName == '' }">
-            {{ functionTypeName }}
+            {{ functionTypeName == "" ? "X" : functionTypeName }}
         </div>
         <div class="s3" [ngClass]="{ 's-hidden': proteinTagName == '' }">
-            {{ proteinTagName }}
+            {{ proteinTagName == "" ? "X" : proteinTagName }}
         </div>
         <div class="s4" [ngClass]="{ 's-hidden': fluoresceneMarkerName == '' }">
-            {{ fluoresceneMarkerName }}
+            {{ fluoresceneMarkerName == "" ? "X" : fluoresceneMarkerName }}
         </div>
         <div class="s5" [ngClass]="{ 's-hidden': selectionMarkerName == '' }">
-            {{ selectionMarkerName }}
+            {{ selectionMarkerName == "" ? "X" : selectionMarkerName }}
         </div>
         <div class="s6" [ngClass]="{ 's-hidden': bacterialMarkerName == '' }">
-            {{ bacterialMarkerName }}
+            {{ bacterialMarkerName == "" ? "X" : bacterialMarkerName }}
         </div>
-        <div class="short-name">
-            {{ getShortName() }}
-        </div>
+        <div class="short-name">{{ getShortName() }}</div>
     </div>
     <div class="table">
         <div class="header">Design Overview</div>

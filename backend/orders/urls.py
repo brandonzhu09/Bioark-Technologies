@@ -9,4 +9,5 @@ urlpatterns = [
     path('cart/', CartAPI.as_view(), name='cart'),
     path('pay-with-purchase-order/', views.pay_with_purchase_order, name='purchase_order'),
     path('cart/add-quote-to-cart/<str:quote_number>', views.add_quote_to_cart, name='quote_to_cart'),
+    path('get-invoice/<str:order_number>', views.get_invoice, name='get_invoice'),
 ]
