@@ -157,6 +157,21 @@ class CloningRNAiItem(OrderItem):
         proxy = True
         verbose_name = 'Cloning RNAi Order Item'
 
+class OpenOrderItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Tracking Open Order'
+
+class InProcessOrderItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Tracking In Process Order'
+
+class FinalizedOrderItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Tracking Finalized Order'
+
 
 class CartItem(models.Model):
     # required fields

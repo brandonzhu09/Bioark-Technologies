@@ -57,6 +57,36 @@ class CloningRNAiOrderItemAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.filter(order_class="Cloning-RNAi")
 
+@admin.register(OpenOrderItem)
+class OpenOrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
+    # search_fields = ('name',)  # Add search functionality
+
+    def get_queryset(self, request):
+        # Override to ensure the filtered queryset
+        qs = super().get_queryset(request)
+        return qs.filter(status="in_progress")
+
+@admin.register(InProcessOrderItem)
+class InProcessOrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
+    # search_fields = ('name',)  # Add search functionality
+
+    def get_queryset(self, request):
+        # Override to ensure the filtered queryset
+        qs = super().get_queryset(request)
+        return qs.filter(status="ready_for_delivery")
+
+@admin.register(FinalizedOrderItem)
+class FinalizedOrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
+    # search_fields = ('name',)  # Add search functionality
+
+    def get_queryset(self, request):
+        # Override to ensure the filtered queryset
+        qs = super().get_queryset(request)
+        return qs.filter(status="arrived")
+
 @admin.register(WorkSchedule)
 class WorkScheduleAdmin(ImportExportActionModelAdmin):
     resources = [WorkScheduleResource]

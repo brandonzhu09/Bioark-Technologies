@@ -23,7 +23,7 @@ from rest_framework.response import Response
 from products.serializers import ProductSerializer
 from users.models import User
 from api.models import EmailVerificationToken
-from products.models import Product
+from products.models import *
 
 FRONTEND_DOMAIN = os.environ.get('FRONTEND_DOMAIN')
 
@@ -168,6 +168,7 @@ def send_contact_form(request):
     send_mail(
         subject=f"New message from Bioark Tech: {subject}",
         message=f"Customer: {last_name}, {first_name}\nEmail: {email}\nPhone: {phone}\n{message}",
+        html_message="<h1>New message from Bioark Tech</h1>",
         from_email="no-reply@bioarktech.com",
         recipient_list=["no-reply@bioarktech.com"],
     )
@@ -252,6 +253,46 @@ def search_product(request):
         search_query |= Q(product_name__icontains=keyword)
         search_query |= Q(product_sku__icontains=keyword)
         search_query |= Q(description__icontains=keyword)
+
+        if FunctionType.objects.filter(function_type_name__icontains=keyword).exists():
+            function_type_codes = FunctionType.objects.filter(function_type_name__icontains=keyword).values('function_type_symbol')
+            search_query |= Q(function_type_code__in=function_type_codes)
+
+        if StructureType.objects.filter(structure_type_name__icontains=keyword).exists():
+            structure_type_codes = StructureType.objects.filter(structure_type_name__icontains=keyword).values('structure_type_symbol')
+            search_query |= Q(structure_type_code__in=structure_type_codes)
+        
+        if Promoter.objects.filter(promoter_name__icontains=keyword).exists():
+            promoter_codes = Promoter.objects.filter(promoter_name__icontains=keyword).values('promoter_code')
+            search_query |= Q(promoter_code__in=promoter_codes)
+
+        if PromoterSpecialCase.objects.filter(promoter_name__icontains=keyword).exists():
+            promoter_codes = PromoterSpecialCase.objects.filter(promoter_name__icontains=keyword).values('promoter_code')
+            search_query |= Q(promoter_code__in=promoter_codes)
+
+        if Property.objects.filter(property_name__icontains=keyword).exists():
+            property_codes = Property.objects.filter(property_name__icontains=keyword).values('property_code')
+            search_query |= Q(property_code__in=property_codes)
+
+        if ProteinTag.objects.filter(protein_tag_name__icontains=keyword).exists():
+            protein_tag_codes = ProteinTag.objects.filter(protein_tag_name__icontains=keyword).values('protein_tag_code')
+            search_query |= Q(protein_tag_code__in=protein_tag_codes)
+        
+        if FluoresceneMarker.objects.filter(fluorescene_marker_name__icontains=keyword).exists():
+            fluorescene_marker_codes = FluoresceneMarker.objects.filter(fluorescene_marker_name__icontains=keyword).values('fluorescene_marker_code')
+            search_query |= Q(fluorescene_marker_code__in=fluorescene_marker_codes)
+
+        if SelectionMarker.objects.filter(selection_marker_name__icontains=keyword).exists():
+            selection_marker_codes = SelectionMarker.objects.filter(selection_marker_name__icontains=keyword).values('selection_marker_code')
+            search_query |= Q(selection_marker_code__in=selection_marker_codes)
+
+        if BacterialMarker.objects.filter(bacterial_marker_name__icontains=keyword).exists():
+            bacterial_marker_codes = BacterialMarker.objects.filter(bacterial_marker_name__icontains=keyword).values('bacterial_marker_code')
+            search_query |= Q(bacterial_marker_code__in=bacterial_marker_codes)
+
+        if BacterialMarkerSpecialCase.objects.filter(bacterial_marker_name__icontains=keyword).exists():
+            bacterial_marker_codes = BacterialMarkerSpecialCase.objects.filter(bacterial_marker_name__icontains=keyword).values('bacterial_marker_code')
+            search_query |= Q(bacterial_marker_code__in=bacterial_marker_codes)
 
     products = Product.objects.filter(search_query).order_by("product_name")
     paginator = Paginator(products, page_size)

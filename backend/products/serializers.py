@@ -35,6 +35,7 @@ class DeliveryFormatTableSerializer(serializers.BaseSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     function_type_name = serializers.SerializerMethodField()
+    structure_type_name = serializers.SerializerMethodField()
     delivery_type_name = serializers.SerializerMethodField()
     promoter_name = serializers.SerializerMethodField()
     protein_tag_name = serializers.SerializerMethodField()
@@ -42,16 +43,22 @@ class ProductSerializer(serializers.ModelSerializer):
     selection_marker_name = serializers.SerializerMethodField()
     bacterial_marker_name = serializers.SerializerMethodField()
     delivery_format_name = serializers.SerializerMethodField()
-    target_sequence = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['product_id', 'product_sku', 'product_name', 'description', 'function_type_name', 'delivery_type_name', 'promoter_name', 'protein_tag_name', 'fluorescene_marker_name', 'selection_marker_name', 'bacterial_marker_name', 'delivery_format_name', 'target_sequence', 'unit_price', 'list_price']
+        fields = ['product_id', 'product_sku', 'product_name', 'description', 'function_type_name', 'structure_type_name', 'delivery_type_name', 'promoter_name', 'protein_tag_name', 'fluorescene_marker_name', 'selection_marker_name', 'bacterial_marker_name', 'delivery_format_name', 'target_sequence', 'unit_price', 'list_price']
     
     def get_function_type_name(self, product):
         try:
-            function_type = FunctionType.objects.filter(symbol=product.function_type_code).first()
+            function_type = FunctionType.objects.filter(function_type_symbol=product.function_type_code).first()
             return function_type.function_type_name
+        except Exception:
+            return None
+    
+    def get_structure_type_name(self, product):
+        try:
+            structure_type = StructureType.objects.filter(structure_type_symbol=product.structure_type_code).first()
+            return structure_type.structure_type_name
         except Exception:
             return None
 
@@ -105,15 +112,6 @@ class ProductSerializer(serializers.ModelSerializer):
         try:
             delivery_format = DeliveryLibrary.objects.filter(delivery_format_symbol=product.delivery_format_code).first()
             return delivery_format.delivery_format_name
-        except Exception:
-            return None
-
-    def get_target_sequence(self, product):
-        try:
-            if product.gene_id:
-                gene = GeneLibrary.objects.get(gene_library_id=product.gene_id)
-                return gene.target_sequence
-            return None
         except Exception:
             return None
 
