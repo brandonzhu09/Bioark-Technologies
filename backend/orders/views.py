@@ -44,10 +44,19 @@ from .serializers import *
 
 load_dotenv()
 
+PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
+PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET")
+DEBUG = os.getenv("DEBUG_FLAG")
+
+if DEBUG == "True":
+    PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID_DEV")
+    PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET_DEV")
+
+
 paypal_client: PaypalserversdkClient = PaypalserversdkClient(
     client_credentials_auth_credentials=ClientCredentialsAuthCredentials(
-        o_auth_client_id=os.getenv("PAYPAL_CLIENT_ID"),
-        o_auth_client_secret=os.getenv("PAYPAL_CLIENT_SECRET"),
+        o_auth_client_id=PAYPAL_CLIENT_ID,
+        o_auth_client_secret=PAYPAL_CLIENT_SECRET,
     ),
     # logging_configuration=LoggingConfiguration(
     #     log_level=logging.INFO,
@@ -99,7 +108,7 @@ def capture_order(request, order_id):
         address = body.get("address")
         cart = body.get("cart")
         quantity = body.get("quantity")
-        discount_code = body.get("discount_code")
+        discount_code = body.get("discount_code", "")
         subtotal = body.get("subtotal")
         shipping_amount = body.get("shipping_amount")
         tax_amount = body.get("tax_amount", 0)
@@ -112,12 +121,7 @@ def capture_order(request, order_id):
         data = json.loads(ApiHelper.json_serialize(order.body))
 
         payment_token = data["purchase_units"][0]["payments"]["captures"][0]["id"]
-        total_price = data["purchase_units"][0]["amount"]["value"]
-
-        # Check if order is an invoice repayment
-        if order_number:
-            invoice_repayment(request, order_number, payment_token)
-            return Response(data)
+        total_price = float(data["purchase_units"][0]["amount"]["value"])
 
         payment_source = "Made with PayPal"
         last_digits = None
@@ -136,14 +140,16 @@ def capture_order(request, order_id):
             "subtotal": subtotal,
             "shipping_amount": shipping_amount,
             "tax_amount": tax_amount,
-            "discount_code": discount_code,
-            "payment_source": payment_source,
-            "last_digits": last_digits,
             "total_price": total_price,
+            "total_paid": total_price,
+            "minimum_payment": calculate_minimum_payment(total_price),
+            "payment_source": payment_source,
             "quantity": quantity,
             "shipping_address": address_obj,
             "billing_address": address_obj,
-            "user": request.user
+            "user": request.user,
+            "last_digits": last_digits,
+            "discount_code": discount_code,
         }
 
         order_obj = Order.objects.create(**order_data)
@@ -152,6 +158,99 @@ def capture_order(request, order_id):
         create_order_items(cart, order_obj)
 
     except Exception as e:
+        raise e
+        return Response({"error": "Failed to capture order. Please try again."}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(data)
+
+
+@api_view(['POST'])
+def capture_order_po(request, order_id):
+    try:
+        order = orders_controller.orders_capture(
+            {"id": order_id, "prefer": "return=representation"}
+        )
+        data = json.loads(ApiHelper.json_serialize(order.body))
+        # get request parameters
+        order_number = request.data.get("order_number")
+        po_file = request.FILES.get("po_file")
+        cart = json.loads(request.data.get("cart"))
+        quantity = int(request.data.get("quantity"))
+        subtotal = int(request.data.get("subtotal"))
+        shipping_amount = int(request.data.get("shipping_amount"))
+        tax_amount = int(request.data.get("tax_amount", 0))
+        tax_amount = 0 if tax_amount == None else tax_amount
+        total_price = int(request.data.get("total_price"))
+        address = json.loads(request.data.get("address"))
+        credit_price = int(request.data.get("credit_price"))
+        po_price = int(request.data.get("po_price"))
+
+        payment_token = data["purchase_units"][0]["payments"]["captures"][0]["id"]
+        total_paid = data["purchase_units"][0]["amount"]["value"]
+        invoice_number = "IV-" + payment_token
+        receipt_number = "RT-" + payment_token
+
+        payment_source = "Made with PayPal"
+        last_digits = None
+        if "card" in data["payment_source"]:
+            payment_source = data["payment_source"]["card"]["brand"]
+            last_digits = data["payment_source"]["card"]["last_digits"]
+        
+        print(address, type(address))
+
+        address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
+                                                            city=address["city"],
+                                                            state=address["state"],
+                                                            zipcode=address["zipcode"])
+
+        # Create invoice object
+        invoice_data = {
+            "order_number": payment_token,
+            "user": request.user,
+            "billing_date": datetime.now() + timedelta(days=30),
+            "invoice_number": invoice_number,
+            "invoice_due": po_price,
+            "po_file": po_file,
+            "po_number": order_number,
+            "po_address": address_obj,
+            "billing_address": address_obj,
+            "shipping_address": address_obj,
+            "receipt_number": receipt_number
+        }
+        invoice_obj = Invoice.objects.create(**invoice_data)
+
+        # Create order dictionary
+        order_data = {
+            "payment_token": payment_token,
+            "subtotal": subtotal,
+            "shipping_amount": shipping_amount,
+            "tax_amount": tax_amount,
+            "total_price": total_price,
+            "total_paid": total_paid,
+            "minimum_payment": calculate_minimum_payment(total_price),
+            "payment_source": payment_source,
+            "quantity": quantity,
+            "shipping_address": address_obj,
+            "billing_address": address_obj,
+            "user": request.user,
+            "last_digits": last_digits,
+            "invoice": invoice_obj,
+            "invoice_number": invoice_number,
+            "invoice_amount": po_price,
+            "invoice_maximum_amount": calculate_maximum_invoice(total_price),
+            "po_number": order_number,
+            "po_address": address_obj,
+            "receipt_number": receipt_number,
+            "fulfilled": False
+        }
+
+        order_obj = Order.objects.create(**order_data)
+
+        # Create order items
+        create_order_items(cart, order_obj)
+
+    except Exception as e:
+        raise e
         return Response({"error": "Failed to capture order. Please try again."}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response(data)

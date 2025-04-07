@@ -80,7 +80,9 @@ export class CheckoutComponent implements AfterViewInit {
   shippingFee: number = 0;
   discountCode: string = '';
   cardField: any;
+  cardFieldPO: any;
   paypalButton: any;
+  paypalButtonPO: any;
 
   signupErrorMsg: string = '';
   paymentErrorMsg: string = '';
@@ -116,13 +118,13 @@ export class CheckoutComponent implements AfterViewInit {
     })
 
     this.shippingForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      address: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      address_line_1: ['', Validators.required],
       apt: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
+      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]]
     });
 
     this.billingAddressForm = this.fb.group({
@@ -152,13 +154,13 @@ export class CheckoutComponent implements AfterViewInit {
   autoFillShippingForm() {
     this.authService.getUserInfo().subscribe((res) => {
       this.shippingForm.patchValue({
-        firstName: res.first_name,
-        lastName: res.last_name,
-        address: res.shipping_address.address_line_1,
+        first_name: res.first_name,
+        last_name: res.last_name,
+        address_line_1: res.shipping_address.address_line_1,
         apt: res.shipping_address.apt_suite,
         city: res.shipping_address.city,
         state: res.shipping_address.state,
-        zipCode: res.shipping_address.zipcode
+        zipcode: res.shipping_address.zipcode
       });
     })
   }
@@ -199,9 +201,9 @@ export class CheckoutComponent implements AfterViewInit {
   updateShippingPreview() {
     const formValue = this.shippingForm.value;
     this.shippingPreview = {
-      name: `${formValue.firstName} ${formValue.lastName}`,
-      address: formValue.address,
-      cityStateZip: `${formValue.city}, ${formValue.state} ${formValue.zipCode}`
+      name: `${formValue.first_name} ${formValue.last_name}`,
+      address: formValue.address_line_1,
+      cityStateZip: `${formValue.city}, ${formValue.state} ${formValue.zipcode}`
     };
   }
 
@@ -227,7 +229,7 @@ export class CheckoutComponent implements AfterViewInit {
   }
 
   calculateSalesTax() {
-    this.orderService.calculateSalesTax(this.shippingForm.controls['zipCode'].value).subscribe(res => {
+    this.orderService.calculateSalesTax(this.shippingForm.controls['zipcode'].value).subscribe(res => {
       this.taxRate = Number(res[0]["total_rate"]);
       this.taxAmount = this.subTotal * this.taxRate;
       this.taxAmount = parseFloat(this.taxAmount.toFixed(2));
@@ -239,18 +241,119 @@ export class CheckoutComponent implements AfterViewInit {
   }
 
   renderPayPalButton() {
-    if (this.paypalButton) {
-      this.paypalButton.close();
-    }
-    this.paypalButton = paypal_sdk.Buttons(
-      {
-        // Call your server to set up the transaction
-        createOrder: this.createOrderCallback,
-        // Call your server to finalize the transaction
-        onApprove: this.onApproveCallback
+    setTimeout(() => {
+      const paypalContainer = document.getElementById('paypal-button-container');
+      if (paypalContainer) {
+        paypalContainer.innerHTML = ''; // Clear the container
+  
+        this.paypalButton = paypal_sdk.Buttons({
+          createOrder: this.createOrderCallback,
+          onApprove: this.onApproveCallback,
+        }).render('#paypal-button-container');
+  
+        this.initCardFields();
+      } else {
+        console.error('PayPal button container does not exist in the DOM.');
       }
-    ).render('#paypal-button-container');
-    this.initCardFields();
+    }, 0); // Delay execution to allow DOM updates
+  }
+
+  renderPayPalButtonInPO() {
+    setTimeout(() => {
+      const paypalContainer = document.getElementById('paypal-button-container-po');
+      if (paypalContainer) {
+        paypalContainer.innerHTML = ''; // Clear the container
+  
+        this.paypalButtonPO = paypal_sdk.Buttons({
+          createOrder: this.createOrderCallback,
+          onApprove: this.onApprovePOCallback,
+        }).render('#paypal-button-container-po');
+  
+        this.initCardFieldsInPO();
+      } else {
+        console.error('PayPal button container does not exist in the DOM.');
+      }
+    }, 0); // Delay execution to allow DOM updates
+  }
+
+  initCardFields = () => {
+    this.cardField = paypal_sdk.CardFields({
+      createOrder: this.createOrderCallback,
+      onApprove: this.onApproveCallback,
+      style: {
+        input: {
+          "font-size": "16px",
+          "font-family": "courier, monospace",
+          "font-weight": "lighter",
+          color: "#ccc",
+        },
+        ".invalid": { color: "purple" },
+      },
+    });
+
+    console.log(this.cardField.isEligible());
+
+    if (this.cardField.isEligible()) {
+
+      const nameField = this.cardField.NameField({
+        style: { input: { color: "blue" }, ".invalid": { color: "purple" } },
+      });
+      nameField.render("#card-name-field-container");
+
+      const numberField = this.cardField.NumberField({
+        style: { input: { color: "blue" } },
+      });
+      numberField.render("#card-number-field-container");
+
+      const cvvField = this.cardField.CVVField({
+        style: { input: { color: "blue" } },
+      });
+      cvvField.render("#card-cvv-field-container");
+
+      const expiryField = this.cardField.ExpiryField({
+        style: { input: { color: "blue" } },
+      });
+      expiryField.render("#card-expiry-field-container");
+    }
+  }
+
+  initCardFieldsInPO = () => {
+    this.cardFieldPO = paypal_sdk.CardFields({
+      createOrder: this.createOrderCallback,
+      onApprove: this.onApprovePOCallback,
+      style: {
+        input: {
+          "font-size": "16px",
+          "font-family": "courier, monospace",
+          "font-weight": "lighter",
+          color: "#ccc",
+        },
+        ".invalid": { color: "purple" },
+      },
+    });
+
+    if (this.cardFieldPO.isEligible()) {
+
+      const nameField = this.cardFieldPO.NameField({
+        style: { input: { color: "blue" }, ".invalid": { color: "purple" } },
+      });
+      nameField.render("#card-name-field-container-po");
+
+      const numberField = this.cardFieldPO.NumberField({
+        style: { input: { color: "blue" } },
+      });
+      numberField.render("#card-number-field-container-po");
+
+      const cvvField = this.cardFieldPO.CVVField({
+        style: { input: { color: "blue" } },
+      });
+      cvvField.render("#card-cvv-field-container-po");
+
+      const expiryField = this.cardFieldPO.ExpiryField({
+        style: { input: { color: "blue" } },
+      });
+      expiryField.render("#card-expiry-field-container-po");
+    }
   }
 
   createOrderCallback = () => {
@@ -280,12 +383,7 @@ export class CheckoutComponent implements AfterViewInit {
       },
       credentials: 'include',
       body: JSON.stringify({
-        address: {
-          address_line_1: this.shippingForm.controls["address"].value,
-          city: this.shippingForm.controls["city"].value,
-          state: this.shippingForm.controls["state"].value,
-          zipcode: this.shippingForm.controls["zipCode"].value
-        },
+        address: this.shippingForm.value,
         cart: this.cartItems,
         quantity: this.quantity,
         discount_code: this.discountCode,
@@ -337,45 +435,75 @@ export class CheckoutComponent implements AfterViewInit {
     });
   }
 
-  initCardFields = () => {
-    this.cardField = paypal_sdk.CardFields({
-      createOrder: this.createOrderCallback,
-      onApprove: this.onApproveCallback,
-      style: {
-        input: {
-          "font-size": "16px",
-          "font-family": "courier, monospace",
-          "font-weight": "lighter",
-          color: "#ccc",
-        },
-        ".invalid": { color: "purple" },
-      },
-    });
-
-    console.log(this.cardField.isEligible());
-
-    if (this.cardField.isEligible()) {
-
-      const nameField = this.cardField.NameField({
-        style: { input: { color: "blue" }, ".invalid": { color: "purple" } },
-      });
-      nameField.render("#card-name-field-container");
-
-      const numberField = this.cardField.NumberField({
-        style: { input: { color: "blue" } },
-      });
-      numberField.render("#card-number-field-container");
-
-      const cvvField = this.cardField.CVVField({
-        style: { input: { color: "blue" } },
-      });
-      cvvField.render("#card-cvv-field-container");
-
-      const expiryField = this.cardField.ExpiryField({
-        style: { input: { color: "blue" } },
-      });
-      expiryField.render("#card-expiry-field-container");
+  onApprovePOCallback = (data: any, actions: any) => {
+    if (!this.purchaseOrderForm.valid) {
+      this.paymentErrorMsg = 'Please fill in all required Purchase Order (PO) fields.';
+      return;
     }
+    const formData = new FormData();
+    formData.append('order_number', this.purchaseOrderForm.controls['order_number'].value);
+    formData.append('po_file', this.purchaseOrderForm.controls['po_file'].value, this.purchaseOrderForm.controls['po_file'].value.name);
+    formData.append('cart', JSON.stringify(this.cartItems));
+    formData.append('quantity', this.quantity.toString());
+    formData.append('subtotal', this.subTotal.toString());
+    formData.append('shipping_amount', this.shippingFee.toString());
+    formData.append('tax_amount', this.taxAmount.toString());
+    formData.append('total_price', this.totalPrice.toString());
+    console.log(JSON.stringify(this.shippingForm.value));
+    formData.append('address', JSON.stringify(this.shippingForm.value));
+    formData.append('credit_price', this.creditPrice.toString());
+    formData.append('po_price', this.poPrice.toString());
+
+    return fetch(`${environment.apiBaseUrl}/api/orders/capture/po/` + data.orderID, {
+      method: 'post',
+      headers: {
+        'X-CSRFToken': this.authService.getCookie('csrftoken') || '',      
+      },
+      credentials: 'include',
+      body: formData,
+      
+    }).then(function (res) {
+      return res.json();
+    }).then((orderData) => {
+      console.log(orderData);
+      // Three cases to handle:
+      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+      //   (2) Other non-recoverable errors -> Show a failure message
+      //   (3) Successful transaction -> Show confirmation or thank you
+
+      // This example reads a v2/checkout/orders capture response, propagated from the server
+      // You could use a different API or structure for your 'orderData'
+      var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+
+      if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
+        return actions.restart(); // Recoverable state, per:
+        // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+      }
+
+      if (errorDetail) {
+        var msg = 'Sorry, your transaction could not be processed.';
+        if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+        if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+        return alert(msg); // Show a failure message (try to avoid alerts in production environments)
+      }
+
+      // Successful capture! For demo purposes:
+      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+      var transaction = orderData.purchase_units[0].payments.captures[0];
+      // alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+      // Redirect to order confirmation page
+      this.cartService.clearCart().subscribe(() => {
+        this.router.navigate(['/order-confirmation', transaction.id]).then(() => {
+          window.location.reload();
+        });
+      });
+    }
+    ).catch((error: any) => {
+      console.log(error);
+    }).finally(() => {
+      this.isLoading = false;
+    });
   }
 
   checkoutOrder = () => {
@@ -386,7 +514,7 @@ export class CheckoutComponent implements AfterViewInit {
         this.submitCardField();
       }
 
-      else if (this.purchaseOrderForm.valid && this.paymentTabGroup.selectedIndex === 1) {
+      else if (this.purchaseOrderForm.valid && this.paymentTabGroup.selectedIndex === 1 && this.totalPrice >= 100 && this.totalPrice < 1000) {
         const po_data = {
           order_number: this.purchaseOrderForm.controls['order_number'].value,
           po_file: this.purchaseOrderForm.controls['po_file'].value,
@@ -396,31 +524,23 @@ export class CheckoutComponent implements AfterViewInit {
           shipping_amount: this.shippingFee,
           tax_amount: this.taxAmount,
           total_price: this.totalPrice,
-          address: {
-            address_line_1: this.shippingForm.controls["address"].value,
-            city: this.shippingForm.controls["city"].value,
-            state: this.shippingForm.controls["state"].value,
-            zipcode: this.shippingForm.controls["zipCode"].value
-          },
+          address: this.shippingForm.value,
           credit_price: this.creditPrice,
           po_price: this.poPrice
         }
 
         let payment_token = '';
         this.checkoutService.payWithPurchaseOrder(po_data).subscribe((res) => {
-          payment_token = res.payment_token;
-          if (this.totalPrice >= 1000) {
-            // this.submitCardField();
-          }
-          else if (this.totalPrice >= 100 && this.totalPrice < 1000) {
-            // Redirect to order confirmation page
-            this.cartService.clearCart().subscribe(() => {
-              this.router.navigate(['/order-confirmation', payment_token]).then(() => {
-                window.location.reload();
-              });
+          this.cartService.clearCart().subscribe(() => {
+            this.router.navigate(['/order-confirmation', payment_token]).then(() => {
+              window.location.reload();
             });
-          }
+          });
         });
+      }
+
+      else if (this.purchaseOrderForm.valid && this.paymentTabGroup.selectedIndex === 1 && this.totalPrice >= 1000) {
+        this.submitCardFieldInPO();
       }
 
       else {
@@ -459,6 +579,35 @@ export class CheckoutComponent implements AfterViewInit {
 
   }
 
+  submitCardFieldInPO = () => {
+    this.isLoading = true;
+    this.cardFieldPO.submit()
+      .then(() => {
+        // submit successful
+      })
+      .catch((error: any) => {
+        this.paymentErrorMsg = 'An error occurred while processing your card. Please try again.';
+
+        console.log(error);
+        console.log(error.details);
+        console.log(error.message);
+
+        if (error.message == "INVALID_NUMBER") {
+          this.paymentErrorMsg = 'Invalid card number. Please check and try again.';
+        }
+        else if (error.message == "INVALID_CVV") {
+          this.paymentErrorMsg = 'Invalid CCV. Please check and try again.';
+        }
+        else if (error.message == "INVALID_EXPIRY") {
+          this.paymentErrorMsg = 'Invalid expiry date. Please check and try again.';
+        }
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
+
+  }
+
   onPOFileUpload = (event: any) => {
     const file = event.target.files[0];
     this.purchaseOrderForm.controls['po_file'].setValue(file);
@@ -466,21 +615,19 @@ export class CheckoutComponent implements AfterViewInit {
 
   updatePricingForCredit() {
     this.creditPrice = this.totalPrice;
-    console.log(this.creditPrice);
     this.renderPayPalButton();
   }
 
   updatePricingForPO() {
     this.poPrice = this.totalPrice;
     this.creditPrice = 0;
-    console.log(this.creditPrice, this.poPrice);
-    this.renderPayPalButton();
+    this.renderPayPalButtonInPO();
   }
 
   updatePricingForPOSplit() {
     this.poPrice = Number((this.totalPrice / 2).toFixed(2));
     this.creditPrice = this.totalPrice - this.poPrice;
-    this.renderPayPalButton();
+    this.renderPayPalButtonInPO();
   }
 
   onPaymentTabChange(selectedIndex: number) {

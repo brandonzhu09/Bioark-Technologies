@@ -55,6 +55,7 @@ class Invoice(models.Model):
 
 
 class Order(models.Model):
+    # required fields
     order_id = models.AutoField(primary_key=True)
     payment_token = models.CharField()
     subtotal = models.DecimalField(max_digits=8, decimal_places=2)
@@ -64,21 +65,22 @@ class Order(models.Model):
     total_paid = models.DecimalField(max_digits=8, decimal_places=2)
     minimum_payment = models.DecimalField(max_digits=8, decimal_places=2)
     payment_source = models.CharField()
-    last_digits = models.DecimalField(max_digits=4, decimal_places=0, blank=True, null=True)
     quantity = models.IntegerField()
-    discount_code = models.CharField(null=True, blank=True)
-    order_placed_date = models.DateTimeField(default=datetime.now)
-    order_process_date = models.DateTimeField(blank=True, null=True)
-    delivery_date = models.DateField(null=True, blank=True)
-    billing_date = models.DateField(null=True, blank=True)
     shipping_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="shipping_orders")
     billing_address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="billing_orders")
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    # optional fields
+    order_placed_date = models.DateTimeField(default=datetime.now)
+    last_digits = models.DecimalField(max_digits=4, decimal_places=0, blank=True, null=True)
+    delivery_date = models.DateField(null=True, blank=True)
+    billing_date = models.DateField(null=True, blank=True)
+    order_process_date = models.DateTimeField(blank=True, null=True)
+    discount_code = models.CharField(null=True, blank=True)
     transaction_status = models.CharField(null=True, blank=True)
     fulfilled = models.BooleanField(default=True)
     refunded = models.BooleanField(default=False)
     paid = models.BooleanField(default=True)
     notes = models.CharField(blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
     # PO billing information
     invoice = models.OneToOneField(Invoice, on_delete=models.CASCADE, blank=True, null=True)
     invoice_number = models.CharField(blank=True, null=True)

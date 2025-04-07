@@ -89,3 +89,12 @@ body {
     background: white;
     padding: 1rem;
 }
+
+.alert-fixed {
+    position: fixed;
+    top: 200px;
+    left: 70%;
+    width: 25%;
+    z-index: 9999;
+    border-radius: 0px;
+}

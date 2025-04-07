@@ -90,11 +90,11 @@
                             <mat-label>First Name</mat-label>
                             <input
                                 matInput
-                                formControlName="firstName"
+                                formControlName="first_name"
                                 required
                             />
                             @if
-                            (shippingForm.controls['firstName'].hasError('required'))
+                            (shippingForm.controls['first_name'].hasError('required'))
                             {
                             <mat-error> First name is required </mat-error>
                             }
@@ -107,10 +107,10 @@
                             <mat-label>Last Name</mat-label>
                             <input
                                 matInput
-                                formControlName="lastName"
+                                formControlName="last_name"
                                 required
                             />
-                            @if (shippingForm.get('lastName')
+                            @if (shippingForm.get('last_name')
                             ?.hasError('required')) {
                             <mat-error> Last name is required </mat-error>
                             }
@@ -119,8 +119,13 @@
 
                     <mat-form-field appearance="outline" class="full-width">
                         <mat-label>Address</mat-label>
-                        <input matInput formControlName="address" required />
-                        @if (shippingForm.get('address')?.hasError('required'))
+                        <input
+                            matInput
+                            formControlName="address_line_1"
+                            required
+                        />
+                        @if
+                        (shippingForm.get('address_line_1')?.hasError('required'))
                         {
                         <mat-error> Address is required </mat-error>
                         }
@@ -162,14 +167,14 @@
                             <mat-label>ZIP Code</mat-label>
                             <input
                                 matInput
-                                formControlName="zipCode"
+                                formControlName="zipcode"
                                 required
                             />
-                            @if (shippingForm .get('zipCode')
+                            @if (shippingForm .get('zipcode')
                             ?.hasError('required')) {
                             <mat-error> ZIP code is required </mat-error>
                             } @if
-                            (shippingForm.get('zipCode')?.hasError('pattern')) {
+                            (shippingForm.get('zipcode')?.hasError('pattern')) {
                             <mat-error>
                                 Please enter a valid ZIP code
                             </mat-error>
@@ -323,7 +328,7 @@
                         </form>
                         @if (totalPrice >= 1000) {
                         <div
-                            id="paypal-button-container"
+                            id="paypal-button-container-po"
                             class="payment-container mt-4"
                         ></div>
 
@@ -331,10 +336,10 @@
                             <span class="payment-divider-text">or</span>
                         </div>
                         <div id="card-form" class="card_container">
-                            <div id="card-name-field-container"></div>
-                            <div id="card-number-field-container"></div>
-                            <div id="card-expiry-field-container"></div>
-                            <div id="card-cvv-field-container"></div>
+                            <div id="card-name-field-container-po"></div>
+                            <div id="card-number-field-container-po"></div>
+                            <div id="card-expiry-field-container-po"></div>
+                            <div id="card-cvv-field-container-po"></div>
                         </div>
                         }
                     </mat-tab>
@@ -342,17 +347,12 @@
                 </mat-tab-group>
                 <button
                     mat-raised-button
-                    class="primary-button"
+                    class="primary-button mt-4"
                     type="submit"
                     (click)="checkoutOrder()"
                 >
                     Place Order
                 </button>
-                @if (paymentErrorMsg !== '') {
-                <div class="error-message">
-                    {{ paymentErrorMsg }}
-                </div>
-                }
             </mat-expansion-panel>
             }
         </mat-accordion>
@@ -407,3 +407,19 @@
     </div>
     }
 </div>
+
+@if (paymentErrorMsg !== '') {
+<div
+    class="alert alert-danger alert-dismissible fade show alert-fixed"
+    role="alert"
+>
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    {{ paymentErrorMsg }}
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+    ></button>
+</div>
+}
