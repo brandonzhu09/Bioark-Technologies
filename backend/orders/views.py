@@ -42,10 +42,12 @@ from .models import *
 from users.models import Address
 from .serializers import *
 
+import requests
+
 load_dotenv()
 
-PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
-PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET")
+PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID_DEV")
+PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET_DEV")
 DEBUG = os.getenv("DEBUG_FLAG")
 
 if DEBUG == "True":
@@ -75,31 +77,75 @@ paypal_client: PaypalserversdkClient = PaypalserversdkClient(
 orders_controller: OrdersController = paypal_client.orders
 payments_controller: PaymentsController = paypal_client.payments
 
+PAYPAL_API_BASE = "https://api-m.sandbox.paypal.com"
+
+# Step 1: Obtain Access Token
+def get_access_token():
+    url = f"{PAYPAL_API_BASE}/v1/oauth2/token"
+    headers = {
+        "Accept": "application/json",
+        "Accept-Language": "en_US",
+    }
+    data = {
+        "grant_type": "client_credentials",
+    }
+    response = requests.post(url, headers=headers, data=data, auth=(PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET))
+    response.raise_for_status()
+    return response.json()["access_token"]
+
+
 @api_view(['POST'])
 def create_order(request):
-    # use the cart information passed from the front-end to calculate the order amount details
-    # cart = request.GET["cart"]
     data = json.loads(request.body)
     total_price = data.get("total_price")
-    order = orders_controller.orders_create(
-        {
-            "body": OrderRequest(
-                intent=CheckoutPaymentIntent.CAPTURE,
-                purchase_units=[
-                    PurchaseUnitRequest(
-                        amount=AmountWithBreakdown(
-                            currency_code="USD",
-                            value=total_price,
-                        ),
 
-                    )
-                ],
+    access_token = get_access_token()
 
-            )
-        }
-    )
-    return Response(json.loads(ApiHelper.json_serialize(order.body)))
-    # return Response(ApiHelper.json_serialize(order.body), content_type="application/json")
+    url = f"{PAYPAL_API_BASE}/v2/checkout/orders"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {access_token}",
+    }
+    payload = {
+        "intent": "CAPTURE",
+        "purchase_units": [
+            {
+                "amount": {
+                    "currency_code": "USD",
+                    "value": str(total_price),
+                }
+            }
+        ]
+    }
+    response = requests.post(url, headers=headers, json=payload)
+    response.raise_for_status()
+    return Response(response.json())
+
+# @api_view(['POST'])
+# def create_order(request):
+#     # use the cart information passed from the front-end to calculate the order amount details
+#     # cart = request.GET["cart"]
+#     data = json.loads(request.body)
+#     total_price = data.get("total_price")
+#     order = orders_controller.orders_create(
+#         {
+#             "body": OrderRequest(
+#                 intent=CheckoutPaymentIntent.CAPTURE,
+#                 purchase_units=[
+#                     PurchaseUnitRequest(
+#                         amount=AmountWithBreakdown(
+#                             currency_code="USD",
+#                             value=total_price,
+#                         ),
+
+#                     )
+#                 ],
+
+#             )
+#         }
+#     )
+#     return Response(json.loads(ApiHelper.json_serialize(order.body)))
+#     # return Response(ApiHelper.json_serialize(order.body), content_type="application/json")
 
 @api_view(['POST'])
 def capture_order(request, order_id):
@@ -115,10 +161,16 @@ def capture_order(request, order_id):
         tax_amount = 0 if tax_amount == None else tax_amount
         order_number = body.get("order_number", None)
 
-        order = orders_controller.orders_capture(
-            {"id": order_id, "prefer": "return=representation"}
-        )
-        data = json.loads(ApiHelper.json_serialize(order.body))
+        access_token = get_access_token()
+
+        url = f"{PAYPAL_API_BASE}/v2/checkout/orders/{order_id}/capture"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {access_token}",
+        }
+        response = requests.post(url, headers=headers)
+        response.raise_for_status()
+        data = response.json()
 
         payment_token = data["purchase_units"][0]["payments"]["captures"][0]["id"]
         total_price = float(data["purchase_units"][0]["amount"]["value"])
@@ -167,10 +219,15 @@ def capture_order(request, order_id):
 @api_view(['POST'])
 def capture_order_po(request, order_id):
     try:
-        order = orders_controller.orders_capture(
-            {"id": order_id, "prefer": "return=representation"}
-        )
-        data = json.loads(ApiHelper.json_serialize(order.body))
+        access_token = get_access_token()
+        url = f"{PAYPAL_API_BASE}/v2/checkout/orders/{order_id}/capture"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {access_token}",
+        }
+        response = requests.post(url, headers=headers)
+        response.raise_for_status()
+        data = response.json()
         # get request parameters
         order_number = request.data.get("order_number")
         po_file = request.FILES.get("po_file")
