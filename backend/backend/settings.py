@@ -33,7 +33,10 @@ SECRET_KEY = 'django-insecure-hytyud87s@4*51a3$=@%s^h7mtj81pl9t--@9)3^1@(d@8lvip
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if debug_flag == "True" else False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '127.0.0.1:4200', 'localhost:4200', 'https://bioarktech.com', 'https://www.bioarktech.com', 'api.bioarktech.com', '93.127.217.163']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '127.0.0.1:4200',
+                 'localhost:4200', 'https://bioarktech.com',
+                 'https://www.bioarktech.com', 'https://store.bioarktech.com',
+                 'api.bioarktech.com', '93.127.217.163']
 
 
 # Application definition
@@ -105,15 +108,15 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': '/var/log/django/debug-prod.log',
         },
-        # 'mail_admins': {
-        #     'level': 'ERROR',
-        #     'class': 'django.utils.log.AdminEmailHandler',
-        #     'include_html': True,
-        # }
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        }
     },
     'loggers': {
         '': {
-            'handlers': ['file'],
+            'handlers': ['file', 'mail_admins'],
             'level': 'DEBUG',
         },
     },
@@ -124,16 +127,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 AUTH_USER_MODEL = 'users.User'
 
 CSRF_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SECURE = True  # Development only; don't use this in production
+CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SECURE = True  # Development only
+SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_HTTPONLY = True
 # SESSION_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = ['http://localhost:4200', 'http://127.0.0.1:4200', 'https://bioarktech.com', 'https://www.bioarktech.com', 'https://api.bioarktech.com']
-
-# PROD ONLY
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:4200', 'http://127.0.0.1:4200', 'https://bioarktech.com', 'https://www.bioarktech.com', 'https://api.bioarktech.com', 'https://store.bioarktech.com']
 
 CART_SESSION_ID = 'cart'
 
@@ -144,7 +143,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'no-reply@bioarktech.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PW')
-SERVER_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = 'brandonzhu123@gmail.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 DEFAULT_FROM_EMAIL = 'no-reply@bioarktech.com'
@@ -231,7 +230,8 @@ CORS_ALLOWED_ORIGINS = [
    "http://127.0.0.1:4200",
    "https://bioarktech.com",
    "https://www.bioarktech.com",
-   "https://api.bioarktech.com"
+   "https://api.bioarktech.com",
+   "https://store.bioarktech.com"
 ]
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken', 'Access-Control-Allow-Origin']
 CORS_ALLOW_CREDENTIALS = True
