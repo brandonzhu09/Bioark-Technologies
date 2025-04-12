@@ -32,19 +32,27 @@ def view_order(request, payment_token):
 
 @api_view(['GET'])
 def view_orders(request):
-    orders = Order.objects.filter(user_id=request.user.id)
-    order_items = OrderItem.objects.filter(order_id__in=orders)
-    serializer = OrderItemSerializer(order_items, many=True)
-
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def view_cloning_crispr_orders(request):
     page_number = request.query_params.get('page_number', 1)
     page_size = request.query_params.get('page_size', 5)
+    order_class = request.query_params.get('order_class', None)
+    status = request.query_params.get('status', None)
 
     orders = Order.objects.filter(user_id=request.user.id)
-    order_items = OrderItem.objects.filter(order_id__in=orders, order_class='Cloning-CRISPR').order_by('-order_placed_date')
+    order_items = OrderItem.objects.filter(order_id__in=orders).order_by('-order_placed_date')
+
+    # filter order items by order class
+    if order_class:
+        order_items = OrderItem.objects.filter(order_class=order_class)
+    
+    # view open orders
+    if status == 'open':
+        order_items = order_items.filter(status=status)
+    # view orders in process -> status is in_progress OR ready_for_delivery
+    elif status == 'in_progress':
+        order_items = order_items.filter(status__in=['in_progress', 'ready_for_delivery'])
+    # view completed orders -> status is invoiced OR paid
+    elif status == 'completed':
+        order_items = order_items.filter(status__in=['invoiced', 'paid'])
 
     paginator = Paginator(order_items, page_size)
     page_obj = paginator.get_page(page_number)
@@ -58,45 +66,6 @@ def view_cloning_crispr_orders(request):
 
     return Response(data)
 
-@api_view(['GET'])
-def view_cloning_overexpression_orders(request):
-    page_number = request.query_params.get('page_number', 1)
-    page_size = request.query_params.get('page_size', 5)
-
-    orders = Order.objects.filter(user_id=request.user.id)
-    order_items = OrderItem.objects.filter(order_id__in=orders, order_class='Cloning-Overexpression').order_by('-order_placed_date')
-    
-    paginator = Paginator(order_items, page_size)
-    page_obj = paginator.get_page(page_number)
-    
-    serializer = OrderItemSerializer(page_obj, many=True)
-
-    data = {
-        'total': order_items.count(),
-        'order_items': serializer.data
-    }
-
-    return Response(data)
-
-@api_view(['GET'])
-def view_cloning_rnai_orders(request):
-    page_number = request.query_params.get('page_number', 1)
-    page_size = request.query_params.get('page_size', 5)
-    
-    orders = Order.objects.filter(user_id=request.user.id)
-    order_items = OrderItem.objects.filter(order_id__in=orders, order_class='Cloning-RNAi').order_by('-order_placed_date')
-    
-    paginator = Paginator(order_items, page_size)
-    page_obj = paginator.get_page(page_number)
-
-    serializer = OrderItemSerializer(page_obj, many=True)
-
-    data = {
-        'total': order_items.count(),
-        'order_items': serializer.data
-    }
-
-    return Response(data)
 
 @api_view(['GET'])
 def view_user_info(request):

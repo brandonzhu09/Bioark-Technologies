@@ -96,14 +96,16 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     STATUS_CHOICES = [
+        ('open', 'Open'),
         ('in_progress', 'In Progress'),
         ('ready_for_delivery', 'Ready For Delivery'),
-        ('arrived', 'Arrived'),
+        ('invoiced', 'Invoiced'),
+        ('paid', 'Paid'),
     ]
     # required fields
     order_item_id = models.AutoField(primary_key=True)
     order_class = models.CharField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     order_placed_date = models.DateTimeField(default=datetime.now)
     product_sku = models.CharField(max_length=30)
     product_name = models.CharField(default="Product Name")

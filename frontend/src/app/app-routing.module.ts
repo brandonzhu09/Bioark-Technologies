@@ -43,7 +43,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'search', component: SearchPageComponent },
   { path: 'profile', component: UserPageComponent, canActivate: [authGuard] },
-  { path: 'profile/orders', component: OrderPageComponent, canActivate: [authGuard] },
+  { path: 'profile/orders/:status', component: OrderPageComponent, canActivate: [authGuard] },
   { path: 'profile/settings', component: UserSettingsComponent, canActivate: [authGuard] },
   { path: 'profile/services/:service', component: ServiceFormComponent, canActivate: [authGuard] },
   { path: 'profile/messages', component: MessagePageComponent, canActivate: [authGuard] },

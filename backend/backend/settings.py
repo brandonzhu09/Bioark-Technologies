@@ -143,7 +143,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'no-reply@bioarktech.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PW')
-SERVER_EMAIL = 'brandonzhu123@gmail.com'
+SERVER_EMAIL = 'no-reply@bioarktech.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 DEFAULT_FROM_EMAIL = 'no-reply@bioarktech.com'

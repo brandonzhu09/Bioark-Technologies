@@ -15,8 +15,14 @@ export class UserService {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-order/${payment_token}`, { withCredentials: true });
   }
 
-  viewOrders() {
-    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-orders/`, { withCredentials: true });
+  viewOrders(order_class: string, status: string, page_number: number = 1, page_size: number = 5) {
+    const params = {
+      "order_class": order_class,
+      "status": status,
+      "page_number": page_number,
+      "page_size": page_size,
+    }
+    return this.http.get<any>(`${environment.apiBaseUrl}/api/users/view-orders/`, { params: params, withCredentials: true });
   }
 
   viewCloningCRISPROrders(page_number: number = 1, page_size: number = 5) {
