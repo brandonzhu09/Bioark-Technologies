@@ -58,9 +58,9 @@ export class DesignDiagramComponent {
         this.proteinTagName, this.fluoresceneMarkerName, this.selectionMarkerName, this.bacterialMarkerName, this.targetSequence
       ))
 
-      this.longName += "; " + res.product_sku;
+      this.longName += " (" + res.product_sku + ")";
     }
-    console.log(this.sku)
+
   }
 
   getShortName() {

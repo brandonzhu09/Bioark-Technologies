@@ -9,6 +9,7 @@
     display: flex;
     width: 65%;
     margin: 0 auto;
+    gap: 30px;
 }
 
 .heading-section {
@@ -190,14 +191,8 @@ ol {
 }
 
 .product-sidebar {
-    width: 25%;
+    width: auto;
     margin-top: 40px;
-}
-
-.main-content {
-    /* margin-left: 22%; */
-    /* Adjust this value to create space for the sidebar */
-    width: 75%;
 }
 
 .product-card {
@@ -347,21 +342,31 @@ ul li a {
 
 @media (max-width: 1624px) {
     .main-container {
-        width: 90%;
-    }
-
-    .product-sidebar {
-        width: 20%;
-    }
-
-    .main-content {
-        width: 70%;
+        width: 95%;
     }
 
 }
 
-@media (max-width: 1300px) {
-    .services-section {
+@media (max-width: 940px) {
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        /* Stack the children vertically */
+        flex-wrap: wrap;
+        /* Allow wrapping */
+    }
+
+    .main-content {
+        order: 1;
+        /* Place main-content on top */
         width: 100%;
+        /* Ensure it takes full width */
+    }
+
+    .product-sidebar {
+        order: 2;
+        /* Place product-sidebar at the bottom */
+        width: 100%;
+        /* Ensure it takes full width */
     }
 }
