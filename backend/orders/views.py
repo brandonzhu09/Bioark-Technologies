@@ -96,7 +96,7 @@ def create_order(request):
             {
                 "amount": {
                     "currency_code": "USD",
-                    "value": str(1),
+                    "value": str(total_price),
                 }
             }
         ]

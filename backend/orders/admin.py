@@ -65,17 +65,17 @@ class OpenOrderItemAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         # Override to ensure the filtered queryset
         qs = super().get_queryset(request)
-        return qs.filter(status="in_progress")
+        return qs.filter(status="open")
 
-@admin.register(InProcessOrderItem)
-class InProcessOrderItemAdmin(admin.ModelAdmin):
+@admin.register(InProgressOrderItem)
+class InProgressOrderItemAdmin(admin.ModelAdmin):
     list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
     # search_fields = ('name',)  # Add search functionality
 
     def get_queryset(self, request):
         # Override to ensure the filtered queryset
         qs = super().get_queryset(request)
-        return qs.filter(status="ready_for_delivery")
+        return qs.filter(status__in=["in_progress", "ready_for_delivery"])
 
 @admin.register(FinalizedOrderItem)
 class FinalizedOrderItemAdmin(admin.ModelAdmin):
@@ -85,7 +85,7 @@ class FinalizedOrderItemAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         # Override to ensure the filtered queryset
         qs = super().get_queryset(request)
-        return qs.filter(status="arrived")
+        return qs.filter(status__in=["invoiced", "paid"])
 
 @admin.register(WorkSchedule)
 class WorkScheduleAdmin(ImportExportActionModelAdmin):

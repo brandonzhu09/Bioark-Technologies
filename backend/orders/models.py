@@ -166,10 +166,10 @@ class OpenOrderItem(OrderItem):
         proxy = True
         verbose_name = 'Tracking Open Order'
 
-class InProcessOrderItem(OrderItem):
+class InProgressOrderItem(OrderItem):
     class Meta:
         proxy = True
-        verbose_name = 'Tracking In Process Order'
+        verbose_name = 'Tracking In Progress Order'
 
 class FinalizedOrderItem(OrderItem):
     class Meta:
