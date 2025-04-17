@@ -14,15 +14,15 @@ class Quote(models.Model):
     description = models.TextField(blank=True, null=True)
     shelf_status = models.BooleanField()
     quantity = models.IntegerField()
-    unit_size = models.CharField()
+    unit_size = models.CharField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     total_price = models.DecimalField(decimal_places=2, max_digits=10)
-    work_period_days = models.IntegerField()
+    work_period_days = models.IntegerField(blank=True, null=True)
     # additional fields required by cart
     product_sku = models.CharField(max_length=30)
     product_name = models.CharField(default="Product Name")
-    url = models.CharField()
+    url = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'quotes'
@@ -104,17 +104,17 @@ class OrderItem(models.Model):
     ]
     # required fields
     order_item_id = models.AutoField(primary_key=True)
-    order_class = models.CharField()
+    order_class = models.CharField(default='')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     order_placed_date = models.DateTimeField(default=datetime.now)
     product_sku = models.CharField(max_length=30)
     product_name = models.CharField(default="Product Name")
     unit_price = models.DecimalField(decimal_places=2, max_digits=10)
     total_price = models.DecimalField(decimal_places=2, max_digits=10)
-    unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
-    url = models.CharField()
     # optional fields
+    unit_size = models.CharField(blank=True, null=True)
+    url = models.CharField(blank=True, null=True)
     work_period = models.CharField(blank=True, null=True)
     est_delivery_date = models.DateField(blank=True, null=True)
     order_process_date = models.DateTimeField(blank=True, null=True)
@@ -182,24 +182,24 @@ class CartItem(models.Model):
     product_sku = models.CharField(max_length=30)
     product_name = models.CharField(default="Product Name")
     price = models.DecimalField(decimal_places=2, max_digits=10)
-    url = models.CharField()
-    unit_size = models.CharField()
     quantity = models.IntegerField(default=0)
     # optional fields
+    url = models.CharField(blank=True, null=True)
+    unit_size = models.CharField(blank=True, null=True)
     session_key = models.CharField(max_length=40, null=True, blank=True)
     ready_status = models.CharField(blank=True, null=True)
     adjusted_price = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
     discount_code = models.CharField(max_length=20, null=True, blank=True)
     # attribute names - optional
-    function_type_name = models.CharField()
-    structure_type_name = models.CharField()
-    promoter_name = models.CharField()
-    protein_tag_name = models.CharField()
-    fluorescene_marker_name = models.CharField()
-    selection_marker_name = models.CharField()
-    bacterial_marker_name = models.CharField()
-    target_sequence = models.CharField()
-    delivery_format_name = models.CharField()
+    function_type_name = models.CharField(blank=True, null=True)
+    structure_type_name = models.CharField(blank=True, null=True)
+    promoter_name = models.CharField(blank=True, null=True)
+    protein_tag_name = models.CharField(blank=True, null=True)
+    fluorescene_marker_name = models.CharField(blank=True, null=True)
+    selection_marker_name = models.CharField(blank=True, null=True)
+    bacterial_marker_name = models.CharField(blank=True, null=True)
+    target_sequence = models.CharField(blank=True, null=True)
+    delivery_format_name = models.CharField(blank=True, null=True)
 
     def get_total_price(self):
         return self.product.price * self.quantity

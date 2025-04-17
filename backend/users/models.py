@@ -49,14 +49,14 @@ class Address(models.Model):
 class User(AbstractUser):
     username = None
     email = models.EmailField(max_length=255, unique=True)
-    title = models.CharField()
-    mobile = models.CharField()
-    telephone = models.CharField()
-    company = models.CharField()
-    job_title = models.CharField()
-    address = models.ForeignKey(Address, related_name='address', on_delete=models.PROTECT, null=True)
-    billing_address = models.ForeignKey(Address, related_name='billing_address', on_delete=models.PROTECT, null=True)
-    shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.PROTECT, null=True)
+    title = models.CharField(blank=True, null=True)
+    mobile = models.CharField(blank=True, null=True)
+    telephone = models.CharField(blank=True, null=True)
+    company = models.CharField(blank=True, null=True)
+    job_title = models.CharField(blank=True, null=True)
+    address = models.ForeignKey(Address, related_name='address', on_delete=models.PROTECT, null=True, blank=True)
+    billing_address = models.ForeignKey(Address, related_name='billing_address', on_delete=models.PROTECT, null=True, blank=True)
+    shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.PROTECT, null=True, blank=True)
     has_set_password = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"

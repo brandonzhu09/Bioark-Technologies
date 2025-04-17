@@ -546,8 +546,10 @@ def get_order_class(product_sku):
         return 'Cloning-Overexpression'
     elif obj_class == 'SH':
         return 'Cloning-RNAi'
-    else:
+    elif obj_class != '':
         return 'Reagents'
+    else:
+        return 'Other'
 
 
 def get_work_period(product_sku, ready_status):
