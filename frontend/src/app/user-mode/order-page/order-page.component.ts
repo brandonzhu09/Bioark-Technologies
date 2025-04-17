@@ -17,10 +17,12 @@ export class OrderPageComponent {
   overexpressionOrdersData: any;
   rnaiOrdersData: any;
   reagentOrdersData: any;
+  otherOrdersData: any;
   crisprOrders: MatTableDataSource<any>;
   overexpressionOrders: MatTableDataSource<any>;
   rnaiOrders: MatTableDataSource<any>;
   reagentOrders: MatTableDataSource<any>;
+  otherOrders: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -31,6 +33,7 @@ export class OrderPageComponent {
   overexpressionNumItems = 0;
   rnaiNumItems = 0;
   reagentNumItems = 0;
+  otherNumItems = 0;
 
   constructor(private userService: UserService, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
@@ -41,6 +44,7 @@ export class OrderPageComponent {
     this.overexpressionOrders = new MatTableDataSource(this.overexpressionOrdersData);
     this.rnaiOrders = new MatTableDataSource(this.rnaiOrdersData);
     this.reagentOrders = new MatTableDataSource(this.reagentOrdersData);
+    this.otherOrders = new MatTableDataSource(this.otherOrdersData);
   }
 
   viewOrders() {
@@ -57,12 +61,18 @@ export class OrderPageComponent {
     this.userService.viewOrders('Cloning-RNAi', this.status).subscribe(res => {
       this.rnaiOrdersData = res.order_items;
       this.rnaiNumItems = res.total;
+      console.log(res.order_items);
       this.rnaiOrders = new MatTableDataSource(this.rnaiOrdersData);
     })
     this.userService.viewOrders('Reagents', this.status).subscribe(res => {
       this.reagentOrdersData = res.order_items;
       this.reagentNumItems = res.total;
       this.reagentOrders = new MatTableDataSource(this.reagentOrdersData);
+    })
+    this.userService.viewOrders('Other', this.status).subscribe(res => {
+      this.otherOrdersData = res.order_items;
+      this.otherNumItems = res.total;
+      this.otherOrders = new MatTableDataSource(this.otherOrdersData);
     })
   }
 
@@ -82,6 +92,9 @@ export class OrderPageComponent {
 
     this.reagentOrders.paginator = this.paginator;
     this.reagentOrders.sort = this.sort;
+
+    this.otherOrders.paginator = this.paginator;
+    this.otherOrders.sort = this.sort;
   }
 
   applyCrisprFilter(event: Event) {
@@ -117,6 +130,15 @@ export class OrderPageComponent {
 
     if (this.reagentOrders.paginator) {
       this.reagentOrders.paginator.firstPage();
+    }
+  }
+
+  applyOtherFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.otherOrders.filter = filterValue.trim().toLowerCase();
+
+    if (this.otherOrders.paginator) {
+      this.otherOrders.paginator.firstPage();
     }
   }
 
@@ -184,6 +206,14 @@ export class OrderPageComponent {
       this.reagentOrdersData = res.order_items;
       this.reagentNumItems = res.total;
       this.reagentOrders = new MatTableDataSource(this.reagentOrdersData);
+    })
+  }
+
+  handleOtherPageEvent(event: any) {
+    this.userService.viewOrders('Other', this.status, event.pageIndex + 1, event.pageSize).subscribe(res => {
+      this.otherOrdersData = res.order_items;
+      this.otherNumItems = res.total;
+      this.otherOrders = new MatTableDataSource(this.otherOrdersData);
     })
   }
 

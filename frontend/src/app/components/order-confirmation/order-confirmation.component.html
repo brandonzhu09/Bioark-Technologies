@@ -2,17 +2,17 @@
     <div class="header">
         <div class="header-text">
             <h1>Thank you for your order #{{ token }}</h1>
-            <p>
+            <!-- <p>
                 We'll send you an email with tracking information when your item
                 ships.
-            </p>
+            </p> -->
         </div>
         <a href="#" class="secondary-button">Continue Shopping</a>
     </div>
 
     <div class="order-box">
         <p><strong>Order placed:</strong> {{ order_placed_date }}</p>
-        <p><strong>Arrives by:</strong> {{ delivery_date }}</p>
+        <!-- <p><strong>Arrives by:</strong> {{ delivery_date }}</p> -->
         <p><strong>Shipping Address:</strong></p>
         <p>{{ first_name }} {{ last_name }}</p>
         <p>{{ shipping_address.address_line_1 }}</p>

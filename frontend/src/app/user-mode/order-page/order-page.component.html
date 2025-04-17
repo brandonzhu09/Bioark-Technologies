@@ -289,11 +289,7 @@
                                     Product Name
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <a
-                                        href="/products/item/{{
-                                            row.product_sku
-                                        }}"
-                                    >
+                                    <a href="{{ row.url }}">
                                         {{ row.product_name }}</a
                                     >
                                 </td>
@@ -450,11 +446,7 @@
                                     Product Name
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <a
-                                        href="/products/item/{{
-                                            row.product_sku
-                                        }}"
-                                    >
+                                    <a href="{{ row.url }}">
                                         {{ row.product_name }}</a
                                     >
                                 </td>
@@ -607,11 +599,7 @@
                                     Product Name
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <a
-                                        href="/products/item/{{
-                                            row.product_sku
-                                        }}"
-                                    >
+                                    <a href="{{ row.url }}">
                                         {{ row.product_name }}</a
                                     >
                                 </td>
@@ -764,11 +752,7 @@
                                     Product Name
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <a
-                                        href="/products/item/{{
-                                            row.product_sku
-                                        }}"
-                                    >
+                                    <a href="{{ row.url }}">
                                         {{ row.product_name }}</a
                                     >
                                 </td>
@@ -836,6 +820,159 @@
                             [length]="reagentNumItems"
                             [pageSizeOptions]="[5, 10, 25, 100]"
                             (page)="handleReagentPageEvent($event)"
+                        ></mat-paginator>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Other">
+                    <mat-form-field class="mt-4">
+                        <mat-label>Filter</mat-label>
+                        <input
+                            matInput
+                            (keyup)="applyOtherFilter($event)"
+                            placeholder="Ex. Mia"
+                            #input
+                        />
+                    </mat-form-field>
+
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="otherOrders" matSort>
+                            <ng-container matColumnDef="order_id">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Order ID
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.order_id }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="order_placed_date">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Order Placed Date
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.order_placed_date }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="work_period">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Work Period
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.work_period }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="est_delivery_date">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Est. Delivery Date
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.est_delivery_date }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="product_sku">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Product SKU
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.product_sku }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="product_name">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Product Name
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a href="{{ row.url }}">
+                                        {{ row.product_name }}</a
+                                    >
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="quantity">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Quantity
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.quantity }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="total_price">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Total Price
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    ${{ row.total_price }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Status
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <span
+                                        class="badge"
+                                        [ngClass]="getBadgeClass(row.status)"
+                                        >{{ getStatus(row.status) }}</span
+                                    >
+                                </td>
+                            </ng-container>
+                            <tr
+                                mat-header-row
+                                *matHeaderRowDef="displayedColumns"
+                            ></tr>
+                            <tr
+                                mat-row
+                                *matRowDef="let row; columns: displayedColumns"
+                            ></tr>
+
+                            <!-- Row shown when there is no matching data. -->
+                            <tr class="mat-row no-data-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="10">
+                                    No data matching the filter "{{
+                                        input.value
+                                    }}"
+                                </td>
+                            </tr>
+                        </table>
+
+                        <mat-paginator
+                            [length]="otherNumItems"
+                            [pageSizeOptions]="[5, 10, 25, 100]"
+                            (page)="handleOtherPageEvent($event)"
                         ></mat-paginator>
                     </div>
                 </mat-tab>
