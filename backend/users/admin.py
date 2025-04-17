@@ -22,3 +22,7 @@ class SessionAdmin(admin.ModelAdmin):
         user_id = decoded_data.get('_auth_user_id', None)
         user = User.objects.get(id=user_id)
         return user.email
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ('address_line_1', 'apt_suite', 'city', 'state', 'country', 'zipcode')

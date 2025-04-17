@@ -245,12 +245,12 @@ export class CheckoutComponent implements AfterViewInit {
       const paypalContainer = document.getElementById('paypal-button-container');
       if (paypalContainer) {
         paypalContainer.innerHTML = ''; // Clear the container
-  
+
         this.paypalButton = paypal_sdk.Buttons({
           createOrder: this.createOrderCallback,
           onApprove: this.onApproveCallback,
         }).render('#paypal-button-container');
-  
+
         this.initCardFields();
       } else {
         console.error('PayPal button container does not exist in the DOM.');
@@ -263,12 +263,12 @@ export class CheckoutComponent implements AfterViewInit {
       const paypalContainer = document.getElementById('paypal-button-container-po');
       if (paypalContainer) {
         paypalContainer.innerHTML = ''; // Clear the container
-  
+
         this.paypalButtonPO = paypal_sdk.Buttons({
           createOrder: this.createOrderCallback,
           onApprove: this.onApprovePOCallback,
         }).render('#paypal-button-container-po');
-  
+
         this.initCardFieldsInPO();
       } else {
         console.error('PayPal button container does not exist in the DOM.');
@@ -457,11 +457,11 @@ export class CheckoutComponent implements AfterViewInit {
     return fetch(`${environment.apiBaseUrl}/api/orders/capture/po/` + data.orderID, {
       method: 'post',
       headers: {
-        'X-CSRFToken': this.authService.getCookie('csrftoken') || '',      
+        'X-CSRFToken': this.authService.getCookie('csrftoken') || '',
       },
       credentials: 'include',
       body: formData,
-      
+
     }).then(function (res) {
       return res.json();
     }).then((orderData) => {
@@ -531,6 +531,7 @@ export class CheckoutComponent implements AfterViewInit {
 
         let payment_token = '';
         this.checkoutService.payWithPurchaseOrder(po_data).subscribe((res) => {
+          payment_token = res.payment_token;
           this.cartService.clearCart().subscribe(() => {
             this.router.navigate(['/order-confirmation', payment_token]).then(() => {
               window.location.reload();

@@ -317,9 +317,10 @@ def pay_with_purchase_order(request):
         receipt_number = "RT-" + payment_token
 
         address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
-                                                            city=address["city"],
-                                                            state=address["state"],
-                                                            zipcode=address["zipcode"])
+                                                             apt_suite=address["apt"],
+                                                             city=address["city"],
+                                                             state=address["state"],
+                                                             zipcode=address["zipcode"])
 
         # Create invoice object
         invoice_data = {
