@@ -37,12 +37,12 @@ def view_orders(request):
     order_class = request.query_params.get('order_class', None)
     status = request.query_params.get('status', None)
 
-    orders = Order.objects.filter(user_id=request.user.id)
-    order_items = OrderItem.objects.filter(order_id__in=orders).order_by('-order_placed_date')
+    orders = Order.objects.filter(user=request.user)
+    order_items = OrderItem.objects.filter(order__in=orders).order_by('-order_placed_date')
 
     # filter order items by order class
     if order_class:
-        order_items = OrderItem.objects.filter(order_class=order_class)
+        order_items = order_items.filter(order_class=order_class)
     
     # view open orders
     if status == 'open':

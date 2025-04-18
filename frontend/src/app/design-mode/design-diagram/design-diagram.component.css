@@ -2,9 +2,18 @@
 
 .main-container {
     display: flex;
-    gap: 50px;
-    max-height: 440px;
+    gap: 120px;
+    max-height: 400px;
     margin-right: 20px;
+}
+
+.titleName {
+    font-weight: bold;
+}
+
+.titleSku {
+    font-size: 14px;
+    font-weight: normal;
 }
 
 .lego-diagram {
@@ -71,10 +80,19 @@
     opacity: 0;
 }
 
-.table {
+.design-overview {
+    margin-top: 20px;
     width: 100%;
-    margin-right: 20px;
     padding: 0;
+}
+
+.design-overview strong {
+    display: inline-block;
+    width: 200px;
+}
+
+.design-overview p {
+    margin: 0;
 }
 
 .header {

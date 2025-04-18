@@ -13,7 +13,10 @@
         <div class="filter-bar"></div>
         <div class="results-container">
             @for (result of search_results; track result.product_id) {
-            <a class="result-item" href="">
+            <a
+                class="result-item"
+                href="/products/item/{{ result.product_sku }}"
+            >
                 <div class="result-title">{{ result.product_name }}</div>
                 <div class="result-price">
                     ${{ result.unit_price | number : "1.2-2" }}

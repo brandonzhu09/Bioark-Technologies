@@ -25,9 +25,9 @@
 }
 
 .button-card {
-    width: 160px;
+    width: 150px;
     /* Fixed width */
-    height: 160px;
+    height: 150px;
     /* Fixed height, making it square */
     background-color: #ffffff;
     /* White background, adjust as needed */

@@ -1,4 +1,6 @@
-<p class="h5" [ngClass]="{ 'pt-4 pl-4': sku === '' }">{{ longName }}</p>
+<p class="h5 titleName" [ngClass]="{ 'pt-4 pl-4': sku === '' }">
+    {{ longName }} <span class="titleSku">{{ product_sku }}</span>
+</p>
 <div class="main-container">
     <div class="lego-diagram">
         <img src="../../../assets/Lego-diagram.png" />
@@ -22,10 +24,27 @@
         </div>
         <div class="short-name">{{ getShortName() }}</div>
     </div>
-    <div class="table">
-        <div class="header">Design Overview</div>
+    <div class="design-overview">
+        <div class="alert alert-info" role="alert">
+            @if (description == '') { Click on a design button below to view
+            more information!} @else {
+            {{ description }}
+            }
+        </div>
+        <p><strong>Category:</strong>{{ category }}</p>
+        <p><strong>Function Type:</strong>{{ functionTypeName }}</p>
+        <p><strong>Structure Type:</strong>{{ structureTypeName }}</p>
+        <br />
+        <p><strong>Promoter:</strong>{{ promoterName }}</p>
+        <p><strong>Protein Tag:</strong>{{ proteinTagName }}</p>
+        <p><strong>Fluorescence Marker:</strong>{{ fluoresceneMarkerName }}</p>
+        <p><strong>Selection Marker:</strong>{{ selectionMarkerName }}</p>
+        <p><strong>Antibiotics:</strong>{{ bacterialMarkerName }}</p>
+        <br />
+        <p><strong>Target Sequence:</strong>{{ targetSequence }}</p>
 
-        <!-- Products Section -->
+        <!-- <div class="header">Design Overview</div>
+
         <div class="section-header">Products</div>
         <div class="grid-item">
             <span class="label">Category:</span>
@@ -40,7 +59,6 @@
             <span class="value">{{ structureTypeName }}</span>
         </div>
 
-        <!-- Structure Section -->
         <div class="section-header">Structure</div>
         <div class="grid-item">
             <span class="label">Promoter:</span>
@@ -63,13 +81,12 @@
             <span class="value">{{ bacterialMarkerName }}</span>
         </div>
 
-        <!-- Target Gene Section -->
         <div class="section-header">Target Gene</div>
         <div class="grid-3-cols">
             <div class="grid-item full-width">
                 <span class="label">Target Sequence:</span>
                 <span class="value">{{ targetSequence }}</span>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

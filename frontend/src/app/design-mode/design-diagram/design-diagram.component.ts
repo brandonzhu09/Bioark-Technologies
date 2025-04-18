@@ -22,6 +22,7 @@ export class DesignDiagramComponent {
   @Input() targetSequence: string = '';
   @Input() geneSymbol: string = '';
   @Input() sku: string = '';
+  @Input() description: string = '';
 
   longName: string = '';
   product_sku: string = '';
@@ -47,18 +48,22 @@ export class DesignDiagramComponent {
     if (this.structureTypeName !== '') {
       this.longName += this.structureTypeName + ' Kit';
     }
-    if (this.geneSymbol !== '') {
-      this.longName += '--Gene ' + this.targetSequence;
+    if (this.geneSymbol !== '' && this.geneSymbol != 'IGNORE') {
+      if (this.targetSequence === '000000') {
+        this.longName = this.functionTypeName + ' ' + this.structureTypeName + ' Ctrl Kit'
+      }
+      else if (this.targetSequence !== 'XXXXXX') {
+        this.longName += '--Gene ' + this.targetSequence;
+      }
     }
-    if (this.sku !== '') {
-      this.longName += "; " + this.sku;
-    }
-    else if (this.promoterName !== '') {
+    if (this.promoterName !== '') {
       const res = await firstValueFrom(this.productService.getProductSku(this.functionTypeName, this.structureTypeName, this.promoterName,
         this.proteinTagName, this.fluoresceneMarkerName, this.selectionMarkerName, this.bacterialMarkerName, this.targetSequence
       ))
 
-      this.longName += " (" + res.product_sku + ")";
+      console.log(res.product_sku)
+
+      this.product_sku = "(" + res.product_sku + ")";
     }
 
   }

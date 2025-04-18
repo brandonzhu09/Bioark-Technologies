@@ -17,6 +17,7 @@
         [targetSequence]="this.getTargetSequence()"
         [geneSymbol]="this.getGeneSymbol()"
         [sku]="this.product_sku"
+        [description]="description"
     ></design-diagram>
     <mat-stepper [linear]="isLinear" #stepper [selectedIndex]="selectedStep">
         <ng-template matStepperIcon="edit">
@@ -271,7 +272,7 @@
                                 class="bi bi-3-circle fs-5"
                                 style="margin-right: 1rem"
                             ></i>
-                            Fluorescene Marker
+                            Fluorescence Marker
                         </ng-template>
                         <div class="container">
                             @for (card of fluoresceneMarkerCards; track

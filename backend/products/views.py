@@ -296,13 +296,16 @@ def generate_product_sku(function_type_name, structure_type_name, promoter_name,
     
     if selection_marker_name != '':
         selection_marker_code = SelectionMarker.objects.get(selection_marker_name=selection_marker_name).selection_marker_code
-    
+
     if delivery_format_name:
         delivery_format_code = DeliveryFormat.objects.get(delivery_format_name=delivery_format_name).delivery_format_symbol
     else:
         delivery_format_code = ""
 
-    product_sku = function_type_code + structure_type_code + "-" + promoter_code + 'X' + protein_tag_code + fluorescene_marker_code + selection_marker_code + bacterial_marker_code + "-" + target_sequence + delivery_format_code
+    product_sku = function_type_code + structure_type_code + "-" + promoter_code + 'X' + protein_tag_code + fluorescene_marker_code + selection_marker_code + bacterial_marker_code
+    
+    if target_sequence != 'null' and target_sequence != 'IGNORE':
+        product_sku += "-" + target_sequence + delivery_format_code
 
     return product_sku
 
