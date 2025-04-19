@@ -194,7 +194,7 @@
             label="Select structure map"
         >
             <form [formGroup]="fourthFormGroup" (ngSubmit)="resetFormsAfter(4)">
-                <mat-tab-group class="custom-tab-group" #tabGroup>
+                <mat-tab-group class="custom-tab-group" #tabGroup dynamicHeight>
                     <mat-tab>
                         <ng-template mat-tab-label class="tab-label">
                             <i

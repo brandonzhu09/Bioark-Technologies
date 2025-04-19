@@ -230,10 +230,20 @@ tbody td {
     line-height: 1.6;
 }
 
-@media (max-width: 1300px) {
+.mat-mdc-tab-label-container {
+    /* For Angular Material v16+ */
+    height: 31px;
+}
+
+.mat-mdc-tab-header {
+    --mat-tab-header-label-text-line-height: 31px;
+    --mdc-secondary-navigation-tab-container-height: 31px;
+}
+
+@media (max-width: 1650px) {
     .custom-stepper {
-        width: 100%;
-        padding: 0 20px;
+        width: 90%;
+        /* padding: 0 20px; */
     }
 
     .manual-container {

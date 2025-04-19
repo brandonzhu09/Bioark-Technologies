@@ -1,7 +1,7 @@
 .signup-container {
-    max-width: 40%;
+    width: 65%;
     margin: 40px auto;
-    padding: 30px;
+    /* padding: 30px; */
     position: relative;
     font-family: Monterserrat, sans-serif;
     color: #281A39;
@@ -69,4 +69,10 @@ label {
 
 .signup-button:hover {
     opacity: 0.9;
+}
+
+@media (max-width: 1650px) {
+    .signup-container {
+        width: 90%;
+    }
 }

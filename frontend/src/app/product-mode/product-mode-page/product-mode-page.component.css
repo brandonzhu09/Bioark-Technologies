@@ -340,9 +340,9 @@ ul li a {
 }
 
 
-@media (max-width: 1624px) {
+@media (max-width: 1650px) {
     .main-container {
-        width: 95%;
+        width: 90%;
     }
 
 }

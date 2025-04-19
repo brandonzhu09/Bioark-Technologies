@@ -40,8 +40,8 @@
   /* Change this to your desired color */
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1650px) {
   .carousel {
-    width: 95%;
+    width: 90%;
   }
 }

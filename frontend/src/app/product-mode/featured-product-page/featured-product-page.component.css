@@ -1,11 +1,13 @@
-.container {
+.main-container {
     display: flex;
     width: 65%;
     margin: 0 auto;
+    gap: 30px;
+    margin-bottom: 30px;
 }
 
 .product-sidebar {
-    width: 25%;
+    width: auto;
     margin-top: 40px;
 }
 
@@ -16,8 +18,6 @@
     padding: 1rem;
     margin: auto;
     margin-top: 40px;
-    margin-bottom: 40px;
-    width: 75%;
 }
 
 h1 {
@@ -272,46 +272,33 @@ input[type="number"] {
     border: 1px solid red;
 }
 
-@media (max-width: 1600px) {
-    .diagram .main-image {
-        max-width: 400px;
-    }
-
-    .description {
-        padding-left: 0;
-    }
-
-    /* .container {
-        flex-direction: column;
-    } */
-
-    .container {
-        gap: 60px;
+@media (max-width: 1650px) {
+    .main-container {
+        width: 90%;
     }
 }
 
-@media (max-width: 1300px) {
-    /* .content {
+
+@media (max-width: 940px) {
+    .main-container {
+        display: flex;
         flex-direction: column;
-        justify-content: center;
-    } */
+        /* Stack the children vertically */
+        flex-wrap: wrap;
+        /* Allow wrapping */
+    }
 
-    .container {
+    .main-content {
+        order: 1;
+        /* Place main-content on top */
         width: 100%;
-        padding: 0 20px;
+        /* Ensure it takes full width */
     }
 
-    .diagram .main-image {
-        align-items: center;
-        justify-content: center;
-        max-width: 350px;
-    }
-
-    .preview {
-        justify-content: left;
-    }
-
-    .description {
-        padding-left: 0;
+    .product-sidebar {
+        order: 2;
+        /* Place product-sidebar at the bottom */
+        width: 100%;
+        /* Ensure it takes full width */
     }
 }
