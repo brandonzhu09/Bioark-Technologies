@@ -154,6 +154,7 @@ class DeliveryFormat(models.Model):
     delivery_format_symbol = models.CharField(unique=True)
     delivery_format_name = models.CharField(unique=True)
     description = models.CharField(blank=True, null=True)
+    priority = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'delivery_formats'

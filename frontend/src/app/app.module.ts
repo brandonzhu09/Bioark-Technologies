@@ -64,6 +64,7 @@ import { FeaturedProductPageComponent } from './product-mode/featured-product-pa
 import { QuantityInputComponent } from './components/quantity-input/quantity-input.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { DesignDiagramComponent } from './design-mode/design-diagram/design-diagram.component';
+import { MessageFormComponent } from './components/message-form/message-form.component';
 
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
@@ -108,6 +109,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     ServiceModePageComponent,
     FeaturedProductPageComponent,
     SearchPageComponent,
+    MessageFormComponent,
   ],
   imports: [
     StepperComponent,

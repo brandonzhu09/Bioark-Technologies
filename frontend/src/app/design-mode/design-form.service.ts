@@ -41,10 +41,16 @@ export class DesignFormService {
         );
     }
 
-    getGeneTableBySymbol(symbol: string) {
-        return this.http.get<any[]>(
+    getGeneTableBySymbol(symbol: string, page_number: number = 1, page_size: number = 5) {
+        const params = {
+            "symbol": symbol,
+            "page_number": page_number,
+            "page_size": page_size,
+        }
+
+        return this.http.get<any>(
             `${environment.apiBaseUrl}/api/products/get-gene-table-by-symbol/`,
-            { params: { symbol: symbol } }
+            { params: params }
         );
     }
 

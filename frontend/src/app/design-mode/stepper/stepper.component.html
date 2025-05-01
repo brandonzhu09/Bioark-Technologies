@@ -418,12 +418,12 @@
                 </div>
                 @if (showSearchGeneGroup) {
                 <label class="form-label fs-5 mb-3">Enter Gene Symbol</label>
-                <div class="input-group">
+                <div class="input-group mb-4">
                     <input
                         type="text"
                         formControlName="geneSymbol"
                         class="form-control border-end-0"
-                        placeholder="Search"
+                        placeholder="Search Gene Symbol"
                     />
                     <button
                         class="btn btn-outline-secondary border bi bi-search"
@@ -467,6 +467,11 @@
                         }
                     </tbody>
                 </table>
+                <mat-paginator
+                    [length]="geneSearchNumItems"
+                    [pageSizeOptions]="[10, 25, 50]"
+                    (page)="handleSearchGenePageEvent($event)"
+                ></mat-paginator>
                 }
                 <div>
                     <button mat-button matStepperPrevious>Back</button>

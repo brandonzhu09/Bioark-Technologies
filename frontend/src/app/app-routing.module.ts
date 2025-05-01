@@ -37,6 +37,7 @@ import { checkoutGuard } from './guards/checkout.guard';
 import { DesignDiagramComponent } from './design-mode/design-diagram/design-diagram.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { InvoiceCheckoutComponent } from './orders/invoice-checkout/invoice-checkout.component';
+import { MessageFormComponent } from './components/message-form/message-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactPageComponent },
   { path: 'quote', component: QuoteFormComponent },
   { path: 'quote/:serviceType', component: QuoteFormComponent },
+  { path: 'message', component: MessageFormComponent },
   { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: 'resend-verification', component: ResendVerificationComponent },
   { path: 'order-confirmation/:token', component: OrderConfirmationComponent, canActivate: [authGuard] },

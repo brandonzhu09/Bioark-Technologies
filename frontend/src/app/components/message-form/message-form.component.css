@@ -1,0 +1,104 @@
+.contact-form {
+    width: 65%;
+    margin: 20px auto;
+    padding-bottom: 80px;
+}
+
+h1 {
+    font-size: 56px;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.contact-item i {
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #281A39;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 120px;
+}
+
+label {
+    font-size: 14px;
+}
+
+.required {
+    color: #281A39;
+}
+
+button {
+    background-color: #281A39;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    float: right;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.about-container {
+    margin-bottom: 100px;
+}
+
+.heading-section {
+    margin: auto;
+    /* width: 65%; */
+    text-align: left;
+}
+
+.heading-section h2 {
+    font-size: 56px;
+    font-weight: bold;
+    line-height: 1em;
+}
+
+.about-section {
+    border-radius: 3px;
+    border: 1px solid #eaeaea;
+    background: white;
+    padding: 1rem;
+}
+
+.about-section p {
+    font-size: 16px;
+    /* font-weight: 400; */
+    line-height: 21px;
+    color: #777777
+}
+
+@media (max-width: 1650px) {
+    .contact-section {
+        width: 90%;
+    }
+}

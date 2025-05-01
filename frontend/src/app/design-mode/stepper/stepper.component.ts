@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DesignDiagramComponent } from '../design-diagram/design-diagram.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector: 'stepper',
@@ -36,7 +37,8 @@ import { DesignDiagramComponent } from '../design-diagram/design-diagram.compone
         MatTabsModule,
         SummaryComponent,
         MatIconModule,
-        DesignDiagramComponent
+        DesignDiagramComponent,
+        MatPaginator
     ],
 })
 export class StepperComponent {
@@ -66,6 +68,7 @@ export class StepperComponent {
     geneTable: any[] = [];
     initialGeneSymbol: string = '';
     description: string = '';
+    geneSearchNumItems: number = 0;
 
     selectedTargetSequence: string | null | undefined = '';
 
@@ -275,11 +278,12 @@ export class StepperComponent {
                 this.initialGeneSymbol = gene_symbol;
                 this.designFormService
                     .getGeneTableBySymbol(gene_symbol)
-                    .subscribe((response) => {
-                        if (response.length == 0) {
+                    .subscribe((res) => {
+                        if (res.gene_items.length == 0) {
                             this.geneTable = [];
                         } else {
-                            this.geneTable = response;
+                            this.geneTable = res.gene_items;
+                            this.geneSearchNumItems = res.total;
                         }
                     });
                 this.toggleSummaryStep = true;
@@ -430,5 +434,16 @@ export class StepperComponent {
 
     updateDescription(description: string) {
         this.description = description;
+    }
+
+    handleSearchGenePageEvent(event: any) {
+        let gene_symbol = this.fifthFormGroup.value.geneSymbol!;
+        this.designFormService.getGeneTableBySymbol(gene_symbol, event.pageIndex + 1, event.pageSize).subscribe(res => {
+            if (res.gene_items.length == 0) {
+                this.geneTable = [];
+            } else {
+                this.geneTable = res.gene_items;
+            }
+        })
     }
 }

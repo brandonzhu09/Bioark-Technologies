@@ -8,6 +8,8 @@ from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from orders.models import OrderItem
 from genes.models import *
+from django.core.paginator import Paginator
+
 
 # Create your views here.
 @api_view(['GET'])
@@ -108,22 +110,24 @@ def get_code_p_parameters(request):
     }
     return Response(data)
 
-@api_view(['GET'])
-def get_product_search_results(request):
-    product_name = request.GET["product_name"]
-    symbol = symbol.upper()
-    queryset = GeneLibrary.objects.filter(__contains=symbol)[:10]
-    serializer = GeneLibrarySerializer(queryset, many=True)
-    return Response(serializer.data)
-
 
 @api_view(['GET'])
 def get_gene_table_by_symbol(request):
-    symbol = request.GET["symbol"]
-    symbol = symbol.upper()
-    queryset = GeneLibrary.objects.filter(symbol__contains=symbol)[:10]
-    serializer = GeneLibrarySerializer(queryset, many=True)
-    return Response(serializer.data)
+    page_number = request.query_params.get('page_number', 1)
+    page_size = request.query_params.get('page_size', 10)
+    symbol = request.GET["symbol"].upper()
+
+    gene_items = GeneLibrary.objects.filter(symbol__contains=symbol)
+    paginator = Paginator(gene_items, page_size)
+    page_obj = paginator.get_page(page_number)
+    serializer = GeneLibrarySerializer(page_obj, many=True)
+
+    data = {
+        'total': gene_items.count(),
+        'gene_items': serializer.data
+    }
+
+    return Response(data)
 
 
 @api_view(['GET'])

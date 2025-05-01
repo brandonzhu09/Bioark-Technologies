@@ -36,8 +36,8 @@ export class ProductModePageComponent {
     this.activeTab = tab;
   }
 
-  goToQuotePage() {
-    this.router.navigate(['/quote']);
+  goToQuotePage(product: string) {
+    this.router.navigate(['/message'], { queryParams: { 'product': product } });
   }
 
 }

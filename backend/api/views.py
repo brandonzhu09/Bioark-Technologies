@@ -159,15 +159,16 @@ def verify_email(request, token):
 def send_contact_form(request):
     data = json.loads(request.body)
     subject = data.get('subject')
-    first_name = data.get('firstName')
-    last_name = data.get('lastName')
+    first_name = data.get('firstName', 'First Name')
+    last_name = data.get('lastName', 'Last Name')
     email = data.get('email')
-    phone = data.get('phone')
+    phone = data.get('phone', 'Not specified')
     message = data.get('message')
+    product = data.get('product', 'N/A')
     
     send_mail(
         subject=f"New message from Bioark Tech: {subject}",
-        message=f"Customer: {last_name}, {first_name}\nEmail: {email}\nPhone: {phone}\n{message}",
+        message=f"Customer: {last_name}, {first_name}\nEmail: {email}\nPhone: {phone}\n{message}\nProduct: {product}",
         html_message="<h1>New message from Bioark Tech</h1>",
         from_email="no-reply@bioarktech.com",
         recipient_list=["no-reply@bioarktech.com"],

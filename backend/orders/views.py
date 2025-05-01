@@ -380,7 +380,11 @@ def add_quote_to_cart(request, quote_number):
             return Response({"detail": "Please login before applying the quote."}, status=status.HTTP_401_UNAUTHORIZED)
 
         cart = Cart(request)
-        quote = Quote.objects.get(quote_number=quote_number, user=request.user)
+
+        if request.user.is_staff:
+            quote = Quote.objects.get(quote_number=quote_number)
+        else:
+            quote = Quote.objects.get(quote_number=quote_number, user=request.user)
 
         cart_item = {
             "product_sku": quote.product_sku,
