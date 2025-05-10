@@ -39,10 +39,11 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
 import { InvoiceCheckoutComponent } from './orders/invoice-checkout/invoice-checkout.component';
 import { MessageFormComponent } from './components/message-form/message-form.component';
 import { InvoiceConfirmationComponent } from './components/invoice-confirmation/invoice-confirmation.component';
+import { signupGuard } from './guards/signup.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent, canActivate: [signupGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [signupGuard] },
   { path: 'search', component: SearchPageComponent },
   { path: 'profile', component: UserPageComponent, canActivate: [authGuard] },
   { path: 'profile/orders/:status', component: OrderPageComponent, canActivate: [authGuard] },

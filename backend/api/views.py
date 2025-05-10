@@ -34,7 +34,7 @@ def get_csrf(request):
 @require_POST
 def signup_view(request):
     data = json.loads(request.body)
-    email = data.get('email')
+    email = data.get('email').lower()
     password = data.get('password')
     first_name = data.get('firstName', '')
     last_name = data.get('lastName', '')
