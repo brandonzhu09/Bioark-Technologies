@@ -38,6 +38,7 @@ import { DesignDiagramComponent } from './design-mode/design-diagram/design-diag
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { InvoiceCheckoutComponent } from './orders/invoice-checkout/invoice-checkout.component';
 import { MessageFormComponent } from './components/message-form/message-form.component';
+import { InvoiceConfirmationComponent } from './components/invoice-confirmation/invoice-confirmation.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -66,6 +67,7 @@ const routes: Routes = [
   { path: 'verify-email/:token', component: EmailVerificationComponent },
   { path: 'resend-verification', component: ResendVerificationComponent },
   { path: 'order-confirmation/:token', component: OrderConfirmationComponent, canActivate: [authGuard] },
+  { path: 'invoice-confirmation/:token', component: InvoiceConfirmationComponent, canActivate: [authGuard] },
   { path: 'blog/:id', component: BlogPostComponent },
   { path: '', component: LandingComponent, pathMatch: 'full' },
   { path: 'test', component: SearchPageComponent },

@@ -21,7 +21,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
-    list_display = ('order_number', 'user', 'order', 'billing_date', 'invoice_due', 'po_file', 'po_number', 'is_paid', 'invoice_payment')
+    list_display = ('order_number', 'user', 'order', 'billing_date', 'is_paid', 'invoice_due', 'invoice_payment', 'po_file', 'po_number')
 
 @admin.register(Quote)
 class QuoteAdmin(admin.ModelAdmin):

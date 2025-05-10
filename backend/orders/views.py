@@ -164,6 +164,23 @@ def capture_order(request, order_id):
         if "card" in data["payment_source"]:
             payment_source = data["payment_source"]["card"]["brand"]
             last_digits = data["payment_source"]["card"]["last_digits"]
+        
+        # handle invoice order
+        if order_number:
+            order = Order.objects.get(payment_token=order_number)
+            order.paid = True
+            order.total_paid = order.total_price
+            order.payment_source = payment_source
+            order.last_digits = last_digits
+            order.save()
+
+            invoice = Invoice.objects.get(order_number=order_number)
+            invoice.is_paid = True
+            invoice.payment_token = payment_token
+            invoice.invoice_payment = total_price
+            invoice.save()
+
+            return Response(data)
 
         address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
                                                             city=address["city"],
@@ -280,7 +297,8 @@ def capture_order_po(request, order_id):
             "po_number": order_number,
             "po_address": address_obj,
             "receipt_number": receipt_number,
-            "fulfilled": False
+            "fulfilled": False,
+            "paid": False
         }
 
         order_obj = Order.objects.create(**order_data)
@@ -359,7 +377,8 @@ def pay_with_purchase_order(request):
             "po_number": order_number,
             "po_address": address_obj,
             "receipt_number": receipt_number,
-            "fulfilled": False
+            "fulfilled": False,
+            "paid": False
         }
         order_obj = Order.objects.create(**order_data)
 

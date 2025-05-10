@@ -68,6 +68,9 @@ export class InvoiceCheckoutComponent {
       this.totalPrice = Number(res.invoice.invoice_due);
       this.invoiceNumber = res.invoice.invoice_number;
       this.billingDate = this.formatDate(res.invoice.billing_date);
+    }, (err) => {
+      alert(err.error.detail);
+      this.router.navigate(['/']);
     })
   }
 
@@ -164,7 +167,7 @@ export class InvoiceCheckoutComponent {
 
       // Redirect to order confirmation page
       this.cartService.clearCart().subscribe(() => {
-        this.router.navigate(['/order-confirmation', transaction.id]).then(() => {
+        this.router.navigate(['/invoice-confirmation', this.orderNumber]).then(() => {
           window.location.reload();
         });
       });

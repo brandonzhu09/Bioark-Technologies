@@ -1,0 +1,52 @@
+<div class="order-confirmation-container">
+    <div class="header">
+        <div class="header-text">
+            <h1>Payment of ${{ total_price }} USD received!</h1>
+        </div>
+        <a href="#" class="secondary-button">Continue Shopping</a>
+    </div>
+
+    <div class="order-box">
+        <p><strong>Invoice Number:</strong> IV-{{ token }}</p>
+        <p><strong>Date: </strong>{{ order_placed_date }}</p>
+        <p>{{ first_name }} {{ last_name }}</p>
+        <p>{{ shipping_address.address_line_1 }}</p>
+        <p>
+            {{ shipping_address.city }}, {{ shipping_address.state }}
+            {{ shipping_address.zipcode }}
+        </p>
+        <p>{{ email }}</p>
+    </div>
+
+    <div class="info-container">
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <hr />
+            <p class="total">Total: ${{ total_price }}</p>
+        </div>
+
+        <div class="payment-info">
+            <h2>Payment Type</h2>
+            <hr />
+            @if (payment_source === 'Made with PayPal') {
+            <p>Paid with PayPal</p>
+            } @else if (payment_source === 'Paid with Purchase Order (PO)') {
+            <p>Paid with Purchase Order</p>
+            } @else {
+            <p>{{ payment_source }} ending in {{ last_digits }}</p>
+            }
+        </div>
+
+        <div class="billing-info">
+            <h2>Billing Address</h2>
+            <hr />
+            <p>{{ first_name }} {{ last_name }}</p>
+            <p>{{ shipping_address.address_line_1 }}</p>
+            <p>
+                {{ shipping_address.city }}, {{ shipping_address.state }}
+                {{ shipping_address.zipcode }}
+            </p>
+            <p>{{ email }}</p>
+        </div>
+    </div>
+</div>

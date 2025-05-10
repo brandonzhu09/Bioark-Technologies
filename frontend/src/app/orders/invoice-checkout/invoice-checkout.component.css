@@ -1,5 +1,5 @@
 .main-container {
-    width: 1200px;
+    width: 65%;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -353,4 +353,10 @@ hr.solid {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+}
+
+@media (max-width: 1650px) {
+    .main-container {
+        width: 90%;
+    }
 }

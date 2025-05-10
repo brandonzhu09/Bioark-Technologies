@@ -65,6 +65,7 @@ import { QuantityInputComponent } from './components/quantity-input/quantity-inp
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { DesignDiagramComponent } from './design-mode/design-diagram/design-diagram.component';
 import { MessageFormComponent } from './components/message-form/message-form.component';
+import { InvoiceConfirmationComponent } from './components/invoice-confirmation/invoice-confirmation.component';
 
 
 export function initializeApp(authService: AuthService, cartService: CartService) {
@@ -110,6 +111,7 @@ export function initializeApp(authService: AuthService, cartService: CartService
     FeaturedProductPageComponent,
     SearchPageComponent,
     MessageFormComponent,
+    InvoiceConfirmationComponent,
   ],
   imports: [
     StepperComponent,
