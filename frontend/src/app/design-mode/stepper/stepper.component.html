@@ -213,7 +213,10 @@
                                         fourthFormGroup.value.promoterName ===
                                         card.promoter_name
                                 }"
-                                (click)="handlePromoterClick(card)"
+                                (click)="
+                                    handlePromoterClick(card);
+                                    updateDescription(card.description)
+                                "
                             >
                                 <i class="bi bi-box-seam h1"></i>
                                 <div class="text">{{ card.promoter_name }}</div>
@@ -239,7 +242,10 @@
                                         fourthFormGroup.value.proteinTagName ===
                                         card.protein_tag_name
                                 }"
-                                (click)="handleProteinTagClick(card)"
+                                (click)="
+                                    handleProteinTagClick(card);
+                                    updateDescription(card.description)
+                                "
                                 [disabled]="!card.enabled"
                             >
                                 <i class="bi bi-box-seam h1"></i>
@@ -285,7 +291,10 @@
                                             .fluoresceneMarkerName ===
                                         card.fluorescene_marker_name
                                 }"
-                                (click)="handleFluoresceneMarkerClick(card)"
+                                (click)="
+                                    handleFluoresceneMarkerClick(card);
+                                    updateDescription(card.description)
+                                "
                             >
                                 <i class="bi bi-box-seam h1"></i>
                                 <div class="text">
@@ -330,7 +339,10 @@
                                             .selectionMarkerName ===
                                         card.selection_marker_name
                                 }"
-                                (click)="handleSelectionMarkerClick(card)"
+                                (click)="
+                                    handleSelectionMarkerClick(card);
+                                    updateDescription(card.description)
+                                "
                             >
                                 <i class="bi bi-box-seam h1"></i>
                                 <div class="text">
@@ -397,7 +409,12 @@
                             selected:
                                 fifthFormGroup.value.geneOption === 'control'
                         }"
-                        (click)="handleTargetSequenceClick('control', '000000')"
+                        (click)="
+                            handleTargetSequenceClick('control', '000000');
+                            updateDescription(
+                                'Scramble control for customer-designed gRNA or target gene'
+                            )
+                        "
                     >
                         <i class="bi bi-virus h1"></i>
                         <div class="text">Control (or Scramble)</div>
@@ -409,7 +426,11 @@
                                 fifthFormGroup.value.geneOption === 'template'
                         }"
                         (click)="
-                            handleTargetSequenceClick('template', 'XXXXXX')
+                            handleTargetSequenceClick('template', 'XXXXXX');
+                            updateDescription(
+                                'Non-insert backbone or customizable template for customer-designed
+gRNA or target gene'
+                            )
                         "
                     >
                         <i class="bi bi-virus h1"></i>

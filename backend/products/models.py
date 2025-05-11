@@ -11,6 +11,7 @@ class Promoter(models.Model):
     promoter_code = models.CharField()
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'promoters'
@@ -22,6 +23,7 @@ class PromoterSpecialCase(models.Model):
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
     function_type_symbol = models.CharField()
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'promoters_special_case'
@@ -33,6 +35,7 @@ class Property(models.Model):
     property_code = models.CharField()
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'property'
@@ -44,6 +47,7 @@ class ProteinTag(models.Model):
     protein_tag_code = models.CharField()
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'protein_tags'
@@ -55,6 +59,7 @@ class FluoresceneMarker(models.Model):
     fluorescene_marker_code = models.CharField()
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'fluorescene_markers'
@@ -66,6 +71,7 @@ class SelectionMarker(models.Model):
     selection_marker_code = models.CharField()
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'selection_markers'
@@ -77,6 +83,7 @@ class BacterialMarker(models.Model):
     bacterial_marker_code = models.CharField()
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'bacterial_markers'
@@ -89,6 +96,7 @@ class BacterialMarkerSpecialCase(models.Model):
     priority = models.IntegerField(default=1)
     enabled = models.BooleanField(default=True)
     structure_type_symbol = models.CharField()
+    description = models.CharField(blank=True, null=True)
 
     class Meta:
         db_table = 'bacterial_markers_special_case'

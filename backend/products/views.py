@@ -414,25 +414,25 @@ def get_promoters(function_type_symbol, structure_type_symbol):
     #     return list(queryset)
     
     # return the default promoter options
-    queryset = Promoter.objects.all().order_by('priority').values("promoter_name", "promoter_code", "enabled")
+    queryset = Promoter.objects.all().order_by('priority').values("promoter_name", "promoter_code", "enabled", "description")
     return list(queryset)
 
 def get_protein_tags():
-    queryset = ProteinTag.objects.all().order_by('priority').values("protein_tag_name", "protein_tag_code", "enabled")
+    queryset = ProteinTag.objects.all().order_by('priority').values("protein_tag_name", "protein_tag_code", "enabled", "description")
     return list(queryset)
 
 def get_fluorescene_markers():
-    queryset = FluoresceneMarker.objects.all().order_by('priority').values("fluorescene_marker_name", "fluorescene_marker_code", "enabled")
+    queryset = FluoresceneMarker.objects.all().order_by('priority').values("fluorescene_marker_name", "fluorescene_marker_code", "enabled", "description")
     return list(queryset)
 
 def get_selection_markers():
-    queryset = SelectionMarker.objects.all().order_by('priority').values("selection_marker_name", "selection_marker_code", "enabled")
+    queryset = SelectionMarker.objects.all().order_by('priority').values("selection_marker_name", "selection_marker_code", "enabled", "description")
     return list(queryset)
 
 def get_bacterial_markers(structure_type_symbol):
     # check the special case for bacterial marker options
-    queryset = BacterialMarkerSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).order_by('priority').values("bacterial_marker_name", "bacterial_marker_code", "enabled")
+    queryset = BacterialMarkerSpecialCase.objects.filter(structure_type_symbol=structure_type_symbol).order_by('priority').values("bacterial_marker_name", "bacterial_marker_code", "enabled", "description")
     if len(queryset) > 0:
         return list(queryset)
-    queryset = BacterialMarker.objects.all().order_by('priority').values("bacterial_marker_name", "bacterial_marker_code", "enabled")
+    queryset = BacterialMarker.objects.all().order_by('priority').values("bacterial_marker_name", "bacterial_marker_code", "enabled", "description")
     return list(queryset)

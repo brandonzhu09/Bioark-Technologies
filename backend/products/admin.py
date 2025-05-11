@@ -79,4 +79,24 @@ class PromoterSpecialCaseAdmin(admin.ModelAdmin):
 
 @admin.register(BacterialMarkerSpecialCase)
 class BacterialMarkerSpecialCaseAdmin(admin.ModelAdmin):
-    list_display = ('bacterial_marker_id',)
+    list_display = ('bacterial_marker_name',)
+
+@admin.register(Promoter)
+class PromoterAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(ProteinTag)
+class ProteinTagAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(FluoresceneMarker)
+class FluoresceneMarkerAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(SelectionMarker)
+class SelectionMarkerAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(BacterialMarker)
+class BacterialMarkerAdmin(admin.ModelAdmin):
+    pass
