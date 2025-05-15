@@ -451,6 +451,16 @@ gRNA or target gene'
                         type="submit"
                     ></button>
                 </div>
+                <div>
+                    <label class="form-label fs-5 mb-3">Species</label>
+                    <mat-radio-group
+                        [formControl]="species"
+                        (change)="handleSpecies()"
+                    >
+                        <mat-radio-button value="Human">Human</mat-radio-button>
+                        <mat-radio-button value="Mouse">Mouse</mat-radio-button>
+                    </mat-radio-group>
+                </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>

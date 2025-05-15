@@ -19,6 +19,7 @@ import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DesignDiagramComponent } from '../design-diagram/design-diagram.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
     selector: 'stepper',
@@ -38,7 +39,8 @@ import { MatPaginator } from '@angular/material/paginator';
         SummaryComponent,
         MatIconModule,
         DesignDiagramComponent,
-        MatPaginator
+        MatPaginator,
+        MatRadioModule
     ],
 })
 export class StepperComponent {
@@ -139,6 +141,8 @@ export class StepperComponent {
             Validators.minLength(1),
         ]),
     });
+
+    species = new FormControl('')
 
     // Errors
     addErrorMessage(message: string) {
@@ -277,7 +281,7 @@ export class StepperComponent {
                 this.fifthFormGroup.controls.targetSequence.reset();
                 this.initialGeneSymbol = gene_symbol;
                 this.designFormService
-                    .getGeneTableBySymbol(gene_symbol)
+                    .getGeneTableBySymbol(gene_symbol, this.species.value!)
                     .subscribe((res) => {
                         if (res.gene_items.length == 0) {
                             this.geneTable = [];
@@ -437,13 +441,31 @@ export class StepperComponent {
     }
 
     handleSearchGenePageEvent(event: any) {
-        let gene_symbol = this.fifthFormGroup.value.geneSymbol!;
-        this.designFormService.getGeneTableBySymbol(gene_symbol, event.pageIndex + 1, event.pageSize).subscribe(res => {
-            if (res.gene_items.length == 0) {
-                this.geneTable = [];
-            } else {
-                this.geneTable = res.gene_items;
-            }
-        })
+        if (this.fifthFormGroup.value.geneSymbol) {
+            let gene_symbol = this.fifthFormGroup.value.geneSymbol!;
+            this.designFormService.getGeneTableBySymbol(gene_symbol, this.species.value!, event.pageIndex + 1, event.pageSize).subscribe(res => {
+                if (res.gene_items.length == 0) {
+                    this.geneTable = [];
+                } else {
+                    this.geneTable = res.gene_items;
+                    this.geneSearchNumItems = res.total;
+                }
+            })
+        }
+    }
+
+    handleSpecies() {
+        if (this.fifthFormGroup.value.geneSymbol) {
+            let gene_symbol = this.fifthFormGroup.value.geneSymbol!;
+            this.designFormService.getGeneTableBySymbol(gene_symbol, this.species.value!).subscribe(res => {
+                if (res.gene_items.length == 0) {
+                    this.geneTable = [];
+                } else {
+                    this.geneTable = res.gene_items;
+                    this.geneSearchNumItems = res.total;
+                }
+            })
+        }
+
     }
 }

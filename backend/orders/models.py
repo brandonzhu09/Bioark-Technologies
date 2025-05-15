@@ -166,10 +166,30 @@ class OpenOrderItem(OrderItem):
         proxy = True
         verbose_name = 'Tracking Open Order'
 
-class InProgressOrderItem(OrderItem):
+class CRISPRInProgressOrderItem(OrderItem):
     class Meta:
         proxy = True
-        verbose_name = 'Tracking In Progress Order'
+        verbose_name = 'Tracking In Progress CRISPR Order'
+
+class OverexpressionInProgressOrderItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Tracking In Progress Overexpression Order'
+
+class RNAiInProgressOrderItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Tracking In Progress RNAi Order'
+
+class ReagentInProgressOrderItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Tracking In Progress Reagents Order'
+
+class OtherInProgressOrderItem(OrderItem):
+    class Meta:
+        proxy = True
+        verbose_name = 'Tracking In Progress Other Order'
 
 class FinalizedOrderItem(OrderItem):
     class Meta:

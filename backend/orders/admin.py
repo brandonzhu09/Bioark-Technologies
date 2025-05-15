@@ -67,15 +67,55 @@ class OpenOrderItemAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.filter(status="open")
 
-@admin.register(InProgressOrderItem)
-class InProgressOrderItemAdmin(admin.ModelAdmin):
+@admin.register(CRISPRInProgressOrderItem)
+class CRISPRInProgressOrderItemAdmin(admin.ModelAdmin):
     list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
     # search_fields = ('name',)  # Add search functionality
 
     def get_queryset(self, request):
         # Override to ensure the filtered queryset
         qs = super().get_queryset(request)
-        return qs.filter(status__in=["in_progress", "ready_for_delivery"])
+        return qs.filter(order_class='Cloning-CRISPR', status__in=["in_progress", "ready_for_delivery"])
+
+@admin.register(OverexpressionInProgressOrderItem)
+class OverexpressionInProgressOrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
+    # search_fields = ('name',)  # Add search functionality
+
+    def get_queryset(self, request):
+        # Override to ensure the filtered queryset
+        qs = super().get_queryset(request)
+        return qs.filter(order_class='Cloning-Overexpression', status__in=["in_progress", "ready_for_delivery"])
+
+@admin.register(RNAiInProgressOrderItem)
+class RNAiInProgressOrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
+    # search_fields = ('name',)  # Add search functionality
+
+    def get_queryset(self, request):
+        # Override to ensure the filtered queryset
+        qs = super().get_queryset(request)
+        return qs.filter(order_class='Cloning-RNAi', status__in=["in_progress", "ready_for_delivery"])
+
+@admin.register(ReagentInProgressOrderItem)
+class ReagentInProgressOrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
+    # search_fields = ('name',)  # Add search functionality
+
+    def get_queryset(self, request):
+        # Override to ensure the filtered queryset
+        qs = super().get_queryset(request)
+        return qs.filter(order_class='Reagents', status__in=["in_progress", "ready_for_delivery"])
+
+@admin.register(OtherInProgressOrderItem)
+class OtherInProgressOrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order_item_id', 'order_id', 'product_sku', 'product_name', 'ready_status', 'total_price', 'unit_size', 'quantity', 'status', 'order_placed_date', 'work_period', 'est_delivery_date', 'shipping_date', 'delivery_date', 'billing_date')
+    # search_fields = ('name',)  # Add search functionality
+
+    def get_queryset(self, request):
+        # Override to ensure the filtered queryset
+        qs = super().get_queryset(request)
+        return qs.filter(order_class='Other', status__in=["in_progress", "ready_for_delivery"])
 
 @admin.register(FinalizedOrderItem)
 class FinalizedOrderItemAdmin(admin.ModelAdmin):

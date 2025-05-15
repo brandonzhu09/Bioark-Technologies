@@ -41,9 +41,10 @@ export class DesignFormService {
         );
     }
 
-    getGeneTableBySymbol(symbol: string, page_number: number = 1, page_size: number = 5) {
+    getGeneTableBySymbol(symbol: string, species: string, page_number: number = 1, page_size: number = 10) {
         const params = {
             "symbol": symbol,
+            "species": species,
             "page_number": page_number,
             "page_size": page_size,
         }

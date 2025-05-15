@@ -115,9 +115,14 @@ def get_code_p_parameters(request):
 def get_gene_table_by_symbol(request):
     page_number = request.query_params.get('page_number', 1)
     page_size = request.query_params.get('page_size', 10)
-    symbol = request.GET["symbol"].upper()
+    symbol = request.query_params.get("symbol").upper()
+    species = request.query_params.get("species", "")
 
     gene_items = GeneLibrary.objects.filter(symbol__contains=symbol)
+
+    if species != '':
+        gene_items = gene_items.filter(species=species)
+
     paginator = Paginator(gene_items, page_size)
     page_obj = paginator.get_page(page_number)
     serializer = GeneLibrarySerializer(page_obj, many=True)
