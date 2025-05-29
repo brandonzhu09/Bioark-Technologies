@@ -88,7 +88,7 @@ def signup_view(request):
 @require_POST
 def login_view(request):
     data = json.loads(request.body)
-    email = data.get('email')
+    email = data.get('email').lower()
     password = data.get('password')
 
     if email is None or password is None:

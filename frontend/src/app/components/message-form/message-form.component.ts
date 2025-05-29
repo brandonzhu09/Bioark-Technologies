@@ -43,6 +43,7 @@ export class MessageFormComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.product = params['product'] || 'N/A';
+      this.contactForm.controls.subject.setValue('Inquiry for ' + this.product);
     });
   }
 

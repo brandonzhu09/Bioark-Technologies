@@ -42,6 +42,7 @@ export class DesignDiagramComponent {
 
   async getLongName() {
     this.longName = '';
+    this.product_sku = '';
     if (this.functionTypeName !== '') {
       this.longName += this.functionTypeName + ' ';
     }

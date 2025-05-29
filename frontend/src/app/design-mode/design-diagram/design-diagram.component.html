@@ -3,7 +3,15 @@
 </p>
 <div class="main-container">
     <div class="lego-diagram">
-        <img src="../../../assets/Lego-diagram.png" />
+        @if (promoterName) {
+        <img src="../../../assets/Lego-Diagram-Full.png" />
+        } @else if (!promoterName && structureTypeName) {
+        <img src="../../../assets/Lego-Diagram-2.png" />
+        } @else if (functionTypeName) {
+        <img src="../../../assets/Lego-Diagram-1.png" />
+        } @else if (!functionTypeName) {
+        <img src="../../../assets/Lego-Diagram-0.png" />
+        }
         <div class="s1" [ngClass]="{ 's-hidden': promoterName == '' }">
             {{ promoterName == "" ? "X" : promoterName }}
         </div>

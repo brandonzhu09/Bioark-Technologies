@@ -183,6 +183,7 @@ def capture_order(request, order_id):
             return Response(data)
 
         address_obj, created = Address.objects.get_or_create(address_line_1=address["address_line_1"],
+                                                            apt_suite=address["apt"],
                                                             city=address["city"],
                                                             state=address["state"],
                                                             zipcode=address["zipcode"])

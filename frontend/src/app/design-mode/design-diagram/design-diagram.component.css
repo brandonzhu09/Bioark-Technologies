@@ -22,51 +22,50 @@
 }
 
 .lego-diagram img {
-    margin-top: 30px;
-    margin-left: 50px;
-    width: 350px;
+    margin-left: 25px;
+    width: 450px;
 }
 
 .s1 {
     position: relative;
-    bottom: 200px;
-    left: 405px;
+    bottom: 195px;
+    left: 435px;
 }
 
 .s2 {
     position: relative;
-    bottom: 50px;
-    left: 320px;
+    bottom: 70px;
+    left: 385px;
 }
 
 .s3 {
     position: relative;
-    bottom: 40px;
-    left: 200px;
+    bottom: 45px;
+    left: 225px;
 }
 
 .s4 {
     position: relative;
-    bottom: 110px;
-    left: 30px;
+    bottom: 105px;
+    left: 80px;
 }
 
 .s5 {
     position: relative;
     bottom: 220px;
-    left: 10px;
+    left: 20px;
 }
 
 .s6 {
     position: relative;
-    bottom: 480px;
-    left: 200px;
+    bottom: 490px;
+    left: 240px;
 }
 
 .short-name {
     margin-left: 20px;
     position: relative;
-    bottom: 300px;
+    bottom: 310px;
     /* left: 200px; */
     left: 50%;
     transform: translateX(-50%);
